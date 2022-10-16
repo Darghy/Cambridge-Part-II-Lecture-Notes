@@ -1,4 +1,4 @@
-# Cambridge-Part-II-Lecture-Notes
+# Cambridge Part II Lecture Notes
 
 These are my personal lecture notes from Michaelmas Term 2022 for Galois Theory, Graph Theory, Number Theory, and the non-examinable Part III Analytic Number Theory course. The LaTeX files are also available.
 
@@ -10,7 +10,7 @@ These are my personal lecture notes from Michaelmas Term 2022 for Galois Theory,
 
 [Analytic Number Theory](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/III%20Analytic%20Number%20Theory/ANT.pdf), [tex file](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/III%20Analytic%20Number%20Theory/ANT.tex) (these notes are less well-written than the other ones)
 
-As per usual with these kinds of documents, assume all errors are made by me and not the lecturers. Feel free to modify/use these files for your own purposes (and if you feel up for it, message me if you do to make me happy that someone is using them)
+As per usual with these kinds of documents, assume all errors are made by me and not the lecturers. Feel free to modify/use these files for your own purposes (and if you feel up for it, message me if you do so - it'd make me happy to find out that these are useful for someone).
 
 ## How do I take notes in LaTeX?
 
