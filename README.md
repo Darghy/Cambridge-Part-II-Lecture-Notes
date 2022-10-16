@@ -4,9 +4,9 @@ These are my personal lecture notes from Michaelmas Term 2022 for Galois Theory,
 
 [Galois Theory](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/II%20Galois%20Theory/Galois_Theory.pdf), [tex file](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/II%20Galois%20Theory/Galois_Theory.tex)
 
-[Graph Theory](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/II%Graph%20Theory/Graph_Theory.pdf), [tex file](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/II%Graph%20Theory/Graph_Theory.tex)
+[Graph Theory](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/II%20Graph%20Theory/Graph_Theory.pdf), [tex file](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/II%20Graph%20Theory/Graph_Theory.tex)
 
-[Number Theory](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/II%Number%20Theory/Number_Theory.pdf), [tex file](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/II%Number%20Theory/Number_Theory.tex)
+[Number Theory](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/II%N20umber%20Theory/Number_Theory.pdf), [tex file](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/II%20Number%20Theory/Number_Theory.tex)
 
 [Analytic Number Theory](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/III%20Analytic%20Number%20Theory/ANT.pdf), [tex file](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/III%20Analytic%20Number%20Theory/ANT.tex) (these notes are less well-written than the other ones)
 
