@@ -1,0 +1,10 @@
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.gz
+*.md
+*.toc
+II*Stochastic*Financial*Models/*
+II*Statistical*Modelling/*

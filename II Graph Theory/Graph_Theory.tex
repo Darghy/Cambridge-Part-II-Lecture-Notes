@@ -1,0 +1,402 @@
+\documentclass{article}
+%build with recipe latexmk
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+%\addtolength{\headwidth}{\marginparwidth}
+%\addtolength{\headwidth}{\marginparsep}
+%\addtolength{\headwidth}{\marginparsep}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+\usepackage{babel}
+\usepackage{enumerate}
+\usepackage{amsmath, amssymb, amsthm}
+%\usepackage{a4wide}
+\usepackage{float}
+\usepackage{bbm}
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\graphicspath{ {./images/} }
+\usepackage{setspace}
+\setstretch{1.1}
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=black,  %choose some color if you want links to stand out
+}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{example}{Example}[section]
+\newtheorem{defn}{Definition}[section]
+
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\title{ Part II - Graph Theory
+    \\ \large
+    Lectured by Dr J. Sahasrabudhe
+}
+\author{Artur Avameri}
+\date{Michaelmas 2022}
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
+
+\setcounter{section}{-1}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\marginpar{07 Oct 2022, Lecture 1}
+
+
+\textbf{Notation.} We write $[n]$ for $\{1,2,\ldots, n\}$. For a set $X$ and $k \in \mathbb{N}$, define $X^{(k)} = \{S \subset X ~|~ |S| = k\}$, i.e. the set of all subsets of size $k$.
+
+\section{Fundamentals}
+
+\begin{defn}
+    A \textbf{graph} is an object $G = (V, E)$ where $V$ is a set and ${E \subseteq V^{(2)}}$.
+\end{defn}
+
+$V$ is the set of vertices, and $E$ is the set of edges.
+
+$V(G)$ will denote $V$, $E(G)$ will denote $E$, and we define $|G| = |V(G)|$ (sometimes called the order) and $e(G)=|E(G)|$ (sometimes called the size).
+
+\begin{example}
+    The \textbf{complete graph} on $n$ vertices is denoted $K_n$. This is the graph where $V(K_n) = [n]$ and $E(K_n) = [n]^{(2)}$.
+\end{example}
+
+\textbf{Remark.} We assume the following:
+\begin{itemize}
+    \item We don't order edges;
+    \item We don't allow loops (an edge joining a vertex to itself);
+    \item We don't allow multiple edges;
+    \item Most of the time, $V(G)$ will be finite (we will explicitly say when it's not).
+\end{itemize}
+
+\begin{example}
+    The \textbf{empty graph} on $n$ vertices, denoted $\overline{K_n}$, has $V(\overline{K_n}) = [n]$ and $E(\overline{K_n})= \emptyset$.
+\end{example}
+\begin{example}
+    The path of length $n$, denoted $P_n$, is a path: it has $V(P_n) = [n+1]$ and $E(P_n) = \{\{i, i+1\} ~|~ 1\le i\le n\}$.
+\end{example}
+\begin{example}
+    The cycle of length $n$, denoted $C_n$, has $V(C_n) = [n]$ and $E(C_n) = \{\{i, i+1\} ~|~ 1\le i \le n-1\} \cup \{\{1,n\}\}$.
+\end{example}
+
+Let $G$ be a graph and $x \in V(G)$. The \textbf{neighborhood} of $x$ is $N(x) = \{y ~|~ xy \in E(G)\}$, i.e. all the vertices connected to $x$. If $y \in N(x)$, we write $x \sim y$ and say $y$ is a \textbf{neighbor} of $x$ or that $y$ is \textbf{adjacent} to $x$.
+
+\vspace{1mm}
+
+The \textbf{degree} of $x$ is $\text{deg}(x) = |N(x)|$.
+
+Just as a formality, we define graph isomorphism: let $G, H$ be graphs. A graph isomorphism is a bijection $\phi : V(G) \to V(H)$ such that it maps edges to edges, i.e. $uv \in E(G) \iff \phi(u)\phi(v) \in E(H)$.
+
+\begin{defn}[Subgraph]
+    We say $H$ is a \textbf{subgraph} of $G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$.
+\end{defn}
+
+Two subgraph types that are important enough to have their own notation:
+
+\begin{itemize}
+    \item If $G$ is a graph, and $xy \in E(G)$, define $G - xy$ to be the graph $(V(G), E(G) \setminus \{xy\})$.
+    \item For $x,y \in V(G)$, define $G+xy$ to be the graph $(V(G), E(G) \cup \{xy\})$.
+\end{itemize}
+
+\begin{defn}[Path]
+    Let $G$ be a graph, $x,y \in V(G)$. A \textbf{$x-y$ path in $G$} is a sequence $x_1, \ldots, x_k$ where $x_1 = x, ~x_k = y$ and $x_ix_{i+1} \in E(G) ~\forall 1\le i \le k-1$ and all the $x_i$ are distinct.     
+\end{defn}
+
+\begin{defn}
+    A graph is \textbf{connected} if $~\forall x \neq y \in V(G)$, there exists an $x-y$ path in $G$.
+\end{defn}
+
+\textbf{Remark.} A little annoyingly, if $P$ is a $x-y$ path and $P'$ is a $y-z$ path, then the concatenation $PP'$ may not be a path (since the vertices of the new path might not be unique).
+
+So let an $x-y$ \textbf{walk} in a graph $G$ be a sequence $x_1,\ldots, x_k$ where ${x_1 = x}$, $x_k = y$ and $x_ix_{i+1} \in E(G) ~\forall 1\le i\le k-1$. Then a concatenation of walks is again a walk.
+
+\vspace{1mm}
+
+\begin{prop}
+    If $W$ is an $xy$ walk, then $W$ contains a $xy$ path.
+\end{prop}
+\begin{proof}
+Let $W' \subseteq W$ be a minimal $xy$ walk. We claim this is a path. If not, then some vertex $x_i$ must be visited at least twice, say $W' = x_1x_2\ldots x_i \ldots x_i x_l \ldots x_k$. Then take $W'' = x_1x_2\ldots x_i x_l \ldots x_k$. This contradicts the minimality of $W'$, so we're done.
+\end{proof}
+
+\marginpar{10 Oct 2022, Lecture 2}
+
+\textbf{Remark.} We may define a \textbf{distance} on $V(G)$: for $x,y \in V(G)$, let $d(x,y)$ be the length of the shortest $xy$ path. If $G$ is connected, then this distance defines a metric on $V(G)$. 
+
+\subsection{Trees}
+\begin{defn}
+    A graph $G$ is \textbf{acyclic} if it does not contain a cycle as a subgraph.
+\end{defn}
+\begin{defn}
+    A graph $G$ is a \textbf{tree} if it is acyclic and connected.
+\end{defn}
+\begin{prop}
+    The following are equivalent:
+    \begin{enumerate}
+        \item $G$ is a tree;
+        \item $G$ is minimally connected ($~\forall xy \in E(G)$, $G-xy$ is not connected);
+        \item $G$ is maximally acyclic ($~\forall  xy \not\in E(G)$, $G+xy$ contains a cycle).
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    (a) $\implies $(b): A tree is connected. Assume for contradiction that $\exists  xy \in E(G)$ such that $G - xy$ is connected. Let $P$ be a $xy$ path in $G-xy$. But then $P$ defines a cycle in $G$, contradiction.
+    \vspace{1mm}
+    
+    (b) $\implies $(a): Minimally connected implies connected. For acyclicness, assume for contradiction that $G$ contains a cycle $C$. Let $xy \in E(C)$. We claim that $G-xy$ is connected. Choose $u \neq v \in V(G-xy)$. Let $P$ be a $uv$ path in $G$. If $P$ does not contain $xy$, we're done. If $P$ does contain $xy$, then take paths $u \to x$; $x \to y$ along our cycle without using $xy$; $y \to v$. The concatenation of these gives a $uv$ walk, which contains a $uv$ path. Hence $G-xy$ is connected, contradiction.
+    \vspace{1mm}
+    
+    (a) $\implies $(c): A tree is acyclic. Let $xy \not\in E(G), x\neq y$. Let $P$ be a $xy$ path. Then $P$ defines a cycle in $G+xy$.
+    \vspace{1mm}
+    
+    (c) $\implies $(a): We have acyclicity. If $G$ is not connected, $\exists x \neq y \in V(G)$ with no $xy$ path. Then $G+xy$ is acyclic.
+\end{proof}
+
+\begin{defn}
+    If $T$ is a tree and $v \in V(T)$ with $\text{deg}(v) = 1$, we call $v$ a \textbf{leaf}.
+\end{defn}
+\begin{defn}
+    Let $G$ be a graph and $X \subseteq V(G)$. Then $$G[X] = (X, E(G) \cap \{(u,v)~|~ u,v \in X\}).$$ We call this \textbf{the graph induced on $X$}. 
+\end{defn}
+\begin{defn}
+    If $x \in V(G)$, define $G-x = G[V(G) \setminus \{x\}]$.
+\end{defn}
+\begin{prop}
+    Let $T$ be a tree, $|T|\ge 2$. Then $T$ has a leaf.
+\end{prop}
+\begin{proof}
+    Let $P = x_1\ldots x_k$ be the a longest possible path in $T$. Note $N(x_k) \subseteq \{x_1,\ldots,x_{k-1}\}$. If $x_i \sim x_k$ for some $1\le i\le k-2$, there is a cycle in $T$, contradiction. Thus $N(x_k) = \{x_{k-1}\} \implies X_k$ is a leaf.
+\end{proof}
+\textbf{Remark.} We can show that any $T$ has two leaves, but we can't do any better (consider a path).
+
+\textbf{Remark.} We could have also proved this by taking a non-backtracking walk in $G$ (i.e. go out of a different edge then you came in on). Either we return (hence have a cycle) or get stuck (hence have a leaf).
+
+\begin{prop}
+    Let $T$ be a tree on $n\ge 1$ vertices. Then $e(G) = n-1$.
+\end{prop}
+\begin{proof}
+    By induction. $n=1$ is trivial. Assume the claim holds for $n$. Take a tree $T$ with $n+1$ vertices. Let $x \in V(T)$ be a leaf. Then $T-x$ is connected and acyclic, therefore a tree, thus $e(T-x) = n-1$. But $e(G) = e(G-x)+1$ and $|V(G)| = |V(G-x)|+1$, hence we're done. 
+\end{proof}
+\begin{defn}
+    Let $G$ be a connected graph. Then a subgraph $T$ of $G$ is a \textbf{spanning tree} if $T$ is a tree on $V(G)$.
+\end{defn}
+\begin{prop}
+    Every connected graph contains a spanning tree.
+\end{prop}
+\begin{proof}
+    Start with the graph $G$, then throw away edges of $E(G)$ one by one subject to keeping the graph connected. At some point, the removal of any further edge will disconnect the graph, at which point we have a minimal connected subgraph of $G$, which by Prop. 1.2 is a tree.
+\end{proof}
+
+\subsection{Bipartite graphs}
+
+\begin{defn}
+    Let $G = (V,E)$ be a graph. $G$ is \textbf{bipartite} if there exists a partition $V = A \cup B$ such that $E(G) \subseteq \{uv ~|~ u \in A, v \in B\}$.
+\end{defn}
+\begin{defn}
+    The \textbf{complete bipartite graph} $K_{n,m}$ is the graph with vertex set $A \cup B$, $A = \{x_1,\ldots,x_n\}, B = \{y_1,\ldots,y_m\}$ and edge set $E(K_{n,m}) = \{x_iy_j ~|~ x_i \in A, y_j \in B\}$.
+\end{defn}
+
+\textbf{Remark.} There obviously exist non-bipartite graphs: odd cycles are not bipartite.
+
+\begin{defn}
+    A \textbf{circuit} is a sequence $x_1,x_2,\ldots x_l x_{l+1}$, where $x_ix_{i+1} \in E(G)$ and $x_{l+1}=x_1$. The length of this circuit is $l$. We say a circuit is \textbf{odd} if its length is odd.
+\end{defn}
+\begin{prop}
+    Let $C$ be an odd circuit in a graph $G$. Then $C$ contains an odd cycle.
+\end{prop}
+
+\begin{proof}
+    Let $x_1 x_2 \ldots x_i x_{i+1} \ldots x_i x_k \ldots x_lx_1$ be an odd circuit. Consider the circuits $C_1 = x_1\ldots x_i x_k \ldots x_l x_1$ and $C_2 = x_i x_{i+1} \ldots x_{k-2} x_i$. Then one of $C_1, C_2$ has odd length and is strictly shorter, so we're done by induction.
+\end{proof}
+
+\begin{theorem}
+    Let $G$ be a graph. Then \[
+    G \text{ is bipartite} \iff G \text{ does not contain an odd cycle}.
+    \]
+\end{theorem}
+\begin{proof}
+    $(\implies )$: If $G$ contains an odd cycle, then as odd cycles are not bipartite, $G$ cannot be bipartite.
+
+    $(\impliedby)$: We may assume that $G$ is connected. Let us fix $x_0 \in V(G)$. Let 
+    \begin{align*}
+        &V_0 = \{x \in V(G) ~|~ d(x,x_0) \equiv 0 \pmod{2}\}\\ 
+        &V_1 = \{x \in V(G) ~|~ d(x,x_0) \equiv 1 \pmod{2}\}.
+    \end{align*}
+    We claim this is a bipartition of $G$. Assume for contradiction that $\exists u,v \in V_0$ s.t. $uv \in E(G)$. But there is an even $ux_0$ path and and an even $vx_0$ path, thus putting these three paths together gives an odd circuit in $G$. By Prop 1.6, $G$ contains an odd cycle, contradiction. (Analogous proof for $V_1$).
+\end{proof}
+
+\marginpar{12 Oct 2022, Lecture 3}
+
+\subsection{Planar graphs}
+
+\begin{defn}
+    A \textbf{planar graph} is a graph that can be drawn in the plane with no edge crossings.
+\end{defn}
+\begin{example}
+    $K_4$ is planar. A path $P_n$ is planar.
+\end{example}
+\begin{defn}
+    A \textbf{plane graph} is one such drawing of a graph in the plane without edge crossings.
+\end{defn}
+Note that this is important, since we can draw $K_4$ in a way that it does have edges crossing.
+\begin{example}
+    $K_{2,3}$ is planar. $K_{3,3}$ is not planar. $K_5$ is not planar (we don't prove this right now).
+\end{example}
+
+\textbf{Question.} What graphs are planar? Is there a (simple) method to decide if a graph is planar?
+
+\begin{defn}
+    Let $G$ be a plane graph. Consider $\mathbb{R}^2 \setminus G$. This is broken into finitely many regions. These are called the \textbf{faces} of the plane graph.
+\end{defn}
+\begin{defn}
+    The \textbf{boundary} of a face $F$ is the collection of vertices and edges on the topological boundary.
+\end{defn}
+\textbf{Remark.} The boundary of a face need not be a cycle. It need also not be connected. In fact, the boundary need not contain a cycle at all (consider a tree). 
+
+\textbf{Remark.} We also note that two different drawings of a graph in the plane can be fundamentally different. 
+
+\begin{theorem}[Euler]
+    Let $G$ be a connected plane graph with $n$ vertices, $m$ edges and $f$ faces. Then $n-m+f = 2$.
+\end{theorem}
+\begin{proof}
+    We induct on $m$. $m=1$ is clear. If $G$ is acyclic, then $G$ is a tree, so $m=n-1$, $f=1$ and we're done.
+    
+    So assume $G$ contains a cycle and let $e$ be an edge on this cycle. Delete $e$. Then $n$ stays fixed, $m$ decreases by $1$, and $f$ decreases by 1, so by induction, $n- (m-1) + (f-1) = 2$ and we're done.
+\end{proof}
+\textbf{Remark.} We really do need the graph to be connected, consider $t$ triangles in the plane as a counterexample.
+
+\begin{cor}
+    Let $G$ be a planar graph, $|G| \ge 3$. Then $e(G) \le 3|G| - 6$.
+\end{cor}
+\begin{proof}
+    Draw $G$ in the plane. We may assume that $G$ is connected. Let $F$ be a face, let $\text{deg}(F) =$ the number of edges in $G$ that touch $F$. Note $\text{deg}(F) \ge 3$. Now note that since every edge touches at most two faces, we get $$3f \le \sum_{F \text{ a face}}^{} \text{deg}(F) \le 2 e(G) \implies f\le \frac{2}{3}e(G).$$
+    Put this into Euler's formula to get $$n - \frac{1}{3}e(G) \ge n - e(G) + f =2 \implies 3(n-2) \ge e(G).$$
+\end{proof}
+\textbf{Remarks.} (i): This is a statement about planar graphs only.
+
+(ii): This is quite restrictive. $K_n$ has ${{n} \choose {2}} \approx n^2/2$ edges, while our above corollary says the number of edges of a planar graph is linear in $n$.
+
+\begin{cor}
+    $K_5$ is not planar.
+\end{cor}
+\begin{proof}
+    We have $e(K_5)=10, n=5$, so $10 e(G) \not \le 3|G|-6 = 9$, so we're done by the above corollary.
+\end{proof}
+But $K_{3,3}$ does not fail this test. So we need to improve our argument:
+\begin{cor}
+    Let $G$ be a planar graph, $|G|\ge 4$ and $G$ has no cycles of length $3$. Then $e(G) \le 2|G| - 4$.
+\end{cor}
+\begin{proof}
+    Repeat the proof of Corollary 1.9, but use $\text{deg}(F) \ge 4$ for every face.
+\end{proof}
+Now we can see that $K_{3,3}$ is not planar. $K_{3,3}$ has no cycle of length 3 by definition, $n=6$, $e(G)=9$, so $9 = e(G) \not \le 2\cdot (6-2) = 8$.
+
+\marginpar{14 Oct 2022, Lecture 4}
+
+\begin{defn}
+    A \textbf{subdivision}  of a graph $G$ is a subgraph where we replace some of the edges of $G$ with disjoint paths.
+\end{defn}
+\textbf{Observation.} A subdivision of a \textbf{non-planar}  graph is non-planar.
+
+\textbf{Observation.} If $G$ contains a $K_{3,3}$ or $K_5$ subdivision as a subgraph, then $G$ is non-planar.
+
+\begin{theorem}[Kuratowski's theorem]
+    $G$ is planar $\iff$ $G$ does not contain a subdivided $K_{3,3}$ or $K_5$. 
+\end{theorem}
+
+We do not prove this, but the proof is actually not too hard.
+
+\newpage
+\section{Connectivity \& matching}
+
+\subsection{Matching in bipartite graphs}
+
+Let $G = (X \sqcup Y, E)$ be bipartite with bipartition $X,Y$.
+\begin{defn}
+    A \textbf{matching from $X$ to $Y$} is a set of edges $\{xy_x ~|~ x \in X, y_x \in Y\}$ and $x \to y_x$ is an injection. 
+\end{defn}
+
+\textbf{Question.} When does a bipartite graph have a $X$ to $Y$ matching?
+
+We can first think about examples where we do not have a matching. For example, we clearly have no matching if $|X| > |Y|$. 
+\begin{defn}
+    Let $G$ be a graph, $A \subseteq V(G)$. Define $N_G(A) = \bigcup_{x \in A} N(x)$.
+\end{defn}
+Then we clearly also don't have a matching if we have $A \subset X$ such that $|N(A)| < |A|$. But this is actually the only obstruction:
+
+\begin{theorem}[Hall's Marriage Theorem]
+    Let $G$ be a bipartite graph $G = (X \sqcup Y, E)$. Then
+    \[
+    G \text{ has a matching from }X \text{ to }Y \iff ~\forall A \subseteq X, ~|N(A)|\ge A.
+    \]
+    The right-hand side is called Hall's criterion.
+\end{theorem}
+\begin{proof}
+    $(\implies)$ is the easy direction.
+
+    Now let $M$ be a matching and let $A \subseteq X$. Then if $\{y_1,\ldots,y_{|A|}\}$ are matched to $A$, we show $|N(A)| \ge  |\{y_1,\ldots,y_{|A|}\}| \ge |A|$.
+
+    $(\impliedby)$: Apply induction on $|X|$. If $|X|=1$, we're done. For the induction step, consider the following question: is there $\emptyset \neq A \subsetneq X$ such that $|N(A)|=|A|$? 
+    \vspace{1mm}
+    
+    If the answer is no, then $~\forall A \subsetneq X$ we have $|N(A)| \ge |A| + 1$. Let $xy \in E(G)$ and let $G' = G[X\setminus \{x\} \cup Y\setminus \{y\}]$. We now check Hall's criterion for $G'$. If $B \subseteq X\setminus \{x\}$, then $|N_{G'}(B)| \ge |N_G(B)|-1 \ge |B|$, so done by induction.
+    \vspace{1mm}
+    
+    If the answer is yes, then let $G_1 = G[A \cup N(A)]$ and $G_2 = G[X\setminus A \cup Y\setminus N(A)]$. 
+    
+    Claim 1: $G_1$ satisfies Hall's criterion. Let $B \subseteq A$, then $$|N_{G_1}(B)| = |N_G(B)| \ge B.$$
+
+    Claim 2: $G_2$ satisfies Hall's criterion. Let $B \subset X\setminus A.$ Consider $N_G(A \cup B)$. One the one hand, $|N_G(A \cup B)| \ge |A| + |B|$. On the other hand, $|N_G(A)| + |N_{G_2}(B)| = |N_G(A \cup B)|$. As $|N(A)|=|A|$, we get $|N_{G_2}(B)| \ge |B|$.
+
+    From claims 1 and 2 we can apply induction in $G_1,G_2$ to get a matching in these graphs, and then put them together to get a matching in $G$.
+\end{proof}
+\begin{defn}
+    A matching of deficiency of $d$ from $X$ to $Y$ is a matching from $X'$ to $Y$ where $X' \subseteq X$, $|X|-d = |X'|$.
+\end{defn}
+\begin{theorem}[Defect Hall's Theorem]
+    \[
+    G \text{ contains a matching of deficiency }d \iff ~\forall A \subseteq X,~ |N(A)| \ge |A| - d.
+    \]
+\end{theorem}
+\begin{proof}
+    $(\implies ):$ easy.
+    
+    $(\impliedby):$ Add $d$ phantom vertices to $Y$, which we join to all vertices in $X$, so we now satisfy Hall's condition. Apply Hall to get a matching, and then remove the $d$ vertices we added, which removes at most $d$ elements of $X$.
+\end{proof}
+
+\begin{defn}
+    Let $G$ be a graph. The \textbf{minimum degree} in $G$ is $\delta(G) = \min_{x \in V(G)} d(x)$, and the \textbf{maximal degree} in $G$ is $\Delta(G) = \max_{x \in V(G)} d(x)$. 
+\end{defn}
+\begin{defn}
+    A graph is \textbf{regular} if $\delta(G)=\Delta(G)$.
+\end{defn}
+
+\end{document}
