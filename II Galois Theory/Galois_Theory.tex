@@ -32,14 +32,11 @@
 
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}{Lemma}[section]
-\newtheorem{cor}{Corollary}[section]
-\newtheorem{prop}{Proposition}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{prop}[theorem]{Proposition}
 \newtheorem{example}{Example}[section]
 \newtheorem{defn}{Definition}[section]
-
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
 
 \title{ Part II - Galois Theory
     \\ \large
@@ -397,5 +394,66 @@ Recall $K[X] = \{p(x)\}$ and $K(x) = \{\frac{p(x)}{q(x)}~|~ q(x) \neq 0\}$ for $
 \end{proof}
 \textbf{Remark.} The key ingredient here is the tower law.
 
+\marginpar{15 Oct 2022, Lecture 5}
+
+\begin{example}
+We saw earlier that $z = e^{2 \pi i /p}$ for $p$ an odd prime has min. poly. of degree $p-1$.
+
+Consider now $x = 2\cos\frac{2\pi}{p} = z + z^{-1} \in \mathbb{Q}(z)$ (so $x$ is algebraic over $\mathbb{Q}$).
+
+We have $\mathbb{Q}(z) \supset \mathbb{Q}(x) \supset \mathbb{Q}$, and $z^2-xz+1 = 0$. So $\text{deg}_{\mathbb{Q}(x)}(z) \le 2$, and we know $[\mathbb{Q}(z) : \mathbb{Q}] = p-1$, so $[\mathbb{Q}(z) : \mathbb{Q}(x)]$ is either 1 or 2.
+
+But $z \not\in \mathbb{Q}(x) \subset \mathbb{R}$, so $[\mathbb{Q}(z) : \mathbb{Q}(x)] = 2$ and hence $\text{deg}_{\mathbb{Q}}(x) = \frac{p-1}{2}$.
+
+To actually find this polynomial, write $$z^{\frac{p-1}{2}}+z^{\frac{p-3}{2}} + \ldots + z^{\frac{-(p-1)}{2}} = 0,$$ which remains unchanged under $z \mapsto \frac{1}{z}$, and hence we can express the above polynomial in terms of $z + \frac{1}{z} = x$ as a polynomial of degree $\frac{p-1}{2}$.
+\end{example}
+\begin{example}
+    $x = \sqrt{m} + \sqrt{n}$ for $m,n \in \mathbb{Z}$, $m,n,mn$ not squares. We have \[
+    n = (x - \sqrt{m})^2 \stackrel{\star}{=}  x^2 - 2\sqrt{m}x + m
+    ,\] so $[\mathbb{Q}(x) : \mathbb{Q}(\sqrt{m})] \le 2$. Similarly, $[\mathbb{Q}(x) : \mathbb{Q}(\sqrt{n})] \le 2$. Also note that $\star$ implies that $\sqrt{m} \in \mathbb{Q}(x)$.
+    
+    So (by the tower law), either $[\mathbb{Q}(x):\mathbb{Q}]=4$, or $[\mathbb{Q}(x):\mathbb{Q}]=2$ and $\mathbb{Q}(x)=\mathbb{Q}(m)=\mathbb{Q}(n)$ (since $m,n$ not squares implies $[\mathbb{Q}(m): \mathbb{Q}] = [\mathbb{Q}(n): \mathbb{Q}] = 2$). But then $\mathbb{Q}(m)=\mathbb{Q}(n) \implies \sqrt{m}=a+b\sqrt{n}$ for $a,b \in \mathbb{Q} \implies m = a^2 + b^2 n + 2ab \sqrt{n}$. So $ab=0$, whence either $b=0$, so $m=a^2$ is a square, or $a=0$, so $mn=b^2n^2$ is a square. This forces $[\mathbb{Q}(x): \mathbb{Q}] = 4$.
+\end{example}
+
+\begin{defn}
+    An extension $[L:K]$ is \textbf{algebraic} if every $x \in L$ is algebraic over $K$.
+\end{defn}
+\begin{prop}
+    \begin{enumerate}[(i)]
+        \item Finite extensions are algebraic.
+        \item $K(x)$ is algebraic over $K$ if and only if $x$ is algebraic over $K$.
+        \item If $M/L/K$, then $M/K$ is algebraic if and only if both $M/L$ and $L/K$ are algebraic.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[(i)]
+        \item $[L:K] <\infty \implies ~\forall x \in L, [K(x):K] <\infty \implies x$ is algebraic over $K$.
+        \item $\implies$ follows by definition, $\impliedby$ follows by (i).
+        \item Assume $M/K$ is algebraic. Then $~\forall x \in M$, $x$ is algebraic over $K$, so it is certainly algebraic over $L$. So $M/L$ is algebraic. As $L \subset M$, $L$ is algebraic over $K$.
+        
+        The other direction follows from the following lemma:
+        \begin{lemma}
+            Suppose we have $M/L/K$ with $L/K$ algebraic. Let $x \in M$, and suppose $X$ is algebraic over $L$. Then $x$ is algebraic over $K$.
+        \end{lemma}
+        \begin{proof}
+            $\exists f = T^n + a_{n-1}T^{n-1} + \ldots + a_0 \in L[T]$ with $f \neq 0$ and $f(x) = 0$. Let $L_0 = K(a_0,\ldots,a_{n-1})$. As each $a_i$ is algebraic over $K$, by Corollary 4.2, $[L_0:K]$ is finite. As $f \in L_0[T]$, $x$ is algebraic over $L_0$. So $[L_0(x) : L_0]< \infty$, so $[L_0(x) : K] < \infty$ by the tower law, so $[K(x) : K] < \infty$ and we're done.
+        \end{proof}
+    \end{enumerate}
+\end{proof}
+
+\begin{example}
+    Say $K = \mathbb{Q}, L = \{x \in \mathbb{C} ~|~ x \text{ is algebraic over }\mathbb{Q}\}$, usually written $\overline{\mathbb{Q}}$.
+    Obviously $L/\mathbb{Q}$ is algebraic, but it is not finite - for every $n\ge 1, \sqrt[n]{2} \in L$, and so $[\mathbb{Q}(\sqrt[n]{2}): \mathbb{Q}] = n$ (as $T^n-2$ is irreducible over $\mathbb{Q}$). So as this holds for all $n$, $L$ cannot be finite over $\mathbb{Q}$. 
+\end{example}
+We will see other fields like $\overline{\mathbb{Q}}$ later on. They are called \textbf{algebraically closed fields}.
+
+\section{Algebraic numbers in $\mathbb{R}$ and $\mathbb{C}$}
+Traditionally, we say that $x \in \mathbb{C}$ is \textbf{algebraic}  if it is algebraic over $\mathbb{Q}$. Otherwise, we say it's transcendental. $\overline{\mathbb{Q}} = \{\text{algebraic }x\}$ is a subfield of $\mathbb{C}$. It is easy to see that $\overline{\mathbb{Q}} \subsetneq \mathbb{C}$, as $\mathbb{Q}[T]$ and hence $\overline{\mathbb{Q}}$ are countable, while $\mathbb{C}$ is uncountable. So in a sense, basically all complex numbers are transcendental. However, it is a lot harder to write one down explicitly, or to show that some given number is transcendental.
+
+Aside: some history. Liouville showed that $\sum_{n\ge 1}^{} \frac{1}{10^{n!}}$ is transcendental ("algebraic numbers can't be very well approximated by rationals").
+
+Hermite, Lindemann: $e$ and $\pi$ are transcendental.
+
+Gelfond-Schneider ($20^{\text{th}}$ century): if $x,y$ are algebraic ($x\neq 0,1$), then $x^y$ is algebraic if and only if $y$ is rational (e.g. $\sqrt{2}^{\sqrt{3}}$ is transcendental, and $e^{\pi} = (-1)^{-i/2}$ is transcendental). End of aside.
 
 \end{document}
