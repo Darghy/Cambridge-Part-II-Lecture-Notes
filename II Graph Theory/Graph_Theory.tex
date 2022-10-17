@@ -392,7 +392,87 @@ Then we clearly also don't have a matching if we have $A \subset X$ such that $|
     Let $G$ be a graph. The \textbf{minimum degree} in $G$ is $\delta(G) = \min_{x \in V(G)} d(x)$, and the \textbf{maximal degree} in $G$ is $\Delta(G) = \max_{x \in V(G)} d(x)$. 
 \end{defn}
 \begin{defn}
-    A graph is \textbf{regular} if $\delta(G)=\Delta(G)$.
+    A graph is \textbf{regular} if $\delta(G)=\Delta(G)$. It is \textbf{k-regular} if $k=\delta(G)=\Delta(G)$.
 \end{defn}
+
+\marginpar{17 Oct 2022, Lecture 5}
+
+\begin{cor}
+    For $k\ge 1$, if $G=(X \sqcup Y, E)$ is a $k$-regular bipartite graph, then there exists a matching from $X$ to $Y$.
+\end{cor}
+\begin{proof}
+    We check Hall's criterion. Let $A \subseteq X$. On the one hand, $$e(G[A \cup N(A)]) = \sum_{v \in A}^{} \text{deg}(v) = k|A|.$$ On the other hand, $$e(G[A \cup N(A)]) \le  \sum_{v \in N(A)}^{} \text{deg}(v) \le k|N(A)|.$$
+    Hence $|N(A)|\ge |A|$ and we're done.
+\end{proof}
+
+Let $\Gamma$ be a finite group and let $H$ be a subgroup of $\Gamma$. Let $L_1,\ldots,L_n$ be the set of left cosets and $R_1,\ldots,R_n$ be the right cosets (of the forms $gH$ and $Hg$ respectively).
+
+\textbf{Question.} Is there $g_1,\ldots,g_n \in \Gamma$ such that $g_1H,\ldots,g_nH$ are the left cosets and $Hg_1,\ldots, Hg_n$ are the right cosets?
+\begin{cor}
+    There exist $g_1,\ldots,g_n \in \Gamma \ge H$ such that $g_1H,\ldots,g_nH$ are the left cosets and $Hg_1,\ldots,Hg_n$ are the right cosets.
+\end{cor}
+\begin{proof}
+    It is enough to find a pairing $L_i \leftrightarrow R_{\sigma(i)}$ such that $L_i \cap R_{\sigma(i)} \neq \emptyset ~\forall i$. Then choose $g_i \in L_i \cap R_{\sigma(i)}$ and we have $g_i H =L_i$, $Hg_i = R_{\sigma(i)}$.
+    \vspace{1mm}
+    
+    Define $X = \{R_1,\ldots,R_n\}$ and $Y=\{L_1,\ldots, L_n\}$, and define $R_i \sim L_j$ when $R_i \cap L_j \neq \emptyset ~\forall i,j$. Let $A = \{r_{i_1},\ldots,R_{i_k}\}$. Note
+    \[
+    \left|\bigcup_{j=1}^k R_{i_j}\right| = k|H|.
+    \] 
+    But $L_1,\ldots,L_n$ partition $\Gamma$ and $|L_i|=|H|$, so at least $k$ left cosets must intersect $\bigcup R_{i_j}$. Thus Hall's criterion is satisfied and we're done.
+\end{proof}
+
+\subsection{Connectivity}
+
+For a tree, $G-x$ (where $x$ is any non-leaf) is disconnected. On the other hand, remove any 2 vertices from the Petersen graph and it stays connected (but if you remove any 3, you disconnect it).
+\vspace{1mm}
+
+\textbf{Notation.} Let $S \subseteq V(G)$, and let $G - S = G[V(G) \setminus S]$.
+
+\begin{defn}
+    Let $G$ be a graph, $|G|\ge 1$. Define $$\kappa(G) = \min \{|S| ~|~ \exists S \subseteq V(G), G-S \text{ is disconnected or a single vertex}\}.$$
+    We say a graph $G$ is \textbf{$k$-connected}  if $\kappa(G) \ge k$.
+\end{defn}
+
+In other words, $G$ is $k$-connected if and only if $G-S$ is connected for all $ S \subseteq V(G), |S|\le k-1$.
+
+\begin{example}
+    \begin{itemize}
+        \item $\kappa(\text{Tree})=1$.
+        \item $\kappa(\text{Petersen graph}) = 3$, so we can say the Petersen graph is 3-connected.
+        \item $\kappa(\text{Cycle}) = 2$.
+        \item $\kappa(K_n) = n-1$.
+    \end{itemize}
+\end{example}
+
+We have another natural definition of connectivity.
+
+\begin{defn}
+    Let $G$ be a graph and let $a,b \in V(G)$. Say that $ab$ paths $P_1,\ldots,P_k$ are \textbf{disjoint} if $V(P_i) \cap V(P_j) = \{a,b\} ~\forall i \neq j$.
+\end{defn}
+
+Amazingly, we have Menger's theorem: These two notions of connectivity (\# of disjoint paths and $\kappa(G)$) are equivalent.
+\vspace{1mm}
+
+\textbf{Remarks:} 
+\begin{itemize}
+    \item We have $\delta(G)\ge \kappa(G)$. To see this, delete $N(x)$ for $x \in V(G) $ of minimal degree, then $G-N(x)$ is disconnected (or a single vertex).
+    \item We have $\kappa(G-x) \ge \kappa(G) - 1$. This is clear: if $S \subset V(G-x)$ disconnects $G-x$ with $|S|\le \kappa(G)-2$, then $S \cup \{x\}$ disconnects $G$, contradiction.
+    \item We can have $\kappa(G-x) > \kappa(G)$. For example, a cycle is 2-connected, but a cycle with one protruding edge is 1-connected.
+\end{itemize}
+
+
+\begin{defn}
+    A \textbf{component} in $G$ is a maximal connected subgraph.
+\end{defn}
+\begin{defn}
+    Let $G$ be a graph, let $a,b \in V(G), a\neq b, a \not\sim b$. Say $S \subseteq V(G) \setminus \{a,b\}$is a $a-b$ \textbf{separator} if $G-S$ disconnects $a$ from $b$ (i.e. $a,b$ are in different components of $G-S$).
+\end{defn}
+\begin{theorem}[Menger's theorem, form 1]
+    Let $G$ be a graph and fix $a,b \in V(G), a\neq b, a \not\sim b$. Then the minimum size of an $a-b$ separator is equal to the maximal number of disjoint paths from $a$ to $b$.
+    \vspace{1mm}
+    
+    In other words, if all $a-b$ separators have size $\ge k$, then there exist $P_1,\ldots,P_k$, disjoint paths between $a$ and $b$.
+\end{theorem}
 
 \end{document}
