@@ -539,4 +539,112 @@ For the case $p=2$, let $G = \{a \in (\mathbb{Z}/2^n\mathbb{Z})^{\times} ~|~ a \
 
 \textbf{Exercise.} For which $n$ is $(\mathbb{Z}/n\mathbb{Z})^{\times}$ cyclic? 
 
+\marginpar{18 Oct 2022, Lecture 6}
+
+\section{Quadratic residues}
+
+Let $p$ be an odd prime and $a \in \mathbb{Z}$. By Lagrange's theorem, the congruence $x^2 \equiv a \pmod{p}$ has at most 2 solutions. If $a \not\equiv 0\pmod{p}$, then there are either 0 or 2 solutions. Indeed, if $x$ is a solution, then so is $-x \not\equiv x \pmod{p}$.
+
+\begin{defn}
+    Suppose $a \not\equiv 0\pmod{p}$. We say $a$ is a \textbf{quadratic residue} (QR) if $x^2 \equiv a\pmod{p}$ is soluble. We say $a$ is a \textbf{quadratic nonresidue} (NQR) if $x^2\equiv a \pmod{p}$ is unsoluble.
+\end{defn}
+\begin{example}
+    $p=7$. $1,2,4$ are QRs and $3,5,6$ are QNRs.
+\end{example}
+\begin{lemma}
+    Let $p$ be an odd prime. Then there are $\frac{p-1}{2}$ quadratic residues mod $p$ (and hence also $\frac{p-1}{2}$ quadratic nonresidues).
+\end{lemma}
+\begin{proof}[Proof 1.]
+    Let $\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$ (a field with $p$ elements). We show that the map $\mathbb{F}_p^\times \to \mathbb{F}_p^\times$ by $x \mapsto x^2$ is exactly 2--to--1. 
+    
+    Indeed, if $x^2 \equiv y^2 \pmod{p}$, then $p \mid x^2-y^2$, so $p \mid (x-y)$ or $p \mid (x+y)$, so $x \equiv \pm y \pmod{p}$.
+\end{proof}
+\begin{proof}[Proof 2.]
+    Let $g$ be a primitive root mod $p$. Then $\mathbb{F}_p^\times = \{1,g,g^2,\ldots,g^{p-2}\}$.
+
+    We claim that $g^i$ is a QR $\iff$ $i$ is even.
+    \vspace{1mm}
+    
+    $\impliedby$ is clear. For $\implies$, suppose $g^i \equiv x^2\pmod{p}$. Then we can write $x = g^j \pmod{p}$, so $g^i \equiv g^{2j} \pmod{p} \implies i \equiv 2j \pmod{p-1}$. But $p-1$ is even, so $i = 2j + k(p-1)$ is even.
+\end{proof}
+
+\begin{defn}[Legendre symbol]
+    Let $p$ be an odd prime, $a \in \mathbb{Z}$. Then
+    \[
+    \left(\frac{a}{p}\right) = \begin{cases}
+        0 &\text{ if } p \mid a\\
+        1 &\text{ if } a \text{ is a QR mod } p\\
+        -1&\text{ if } a \text{ is a QNR mod } p
+    \end{cases}
+    \]
+\end{defn}
+\begin{theorem}[Euler's Criterion]
+    Let $p$ be an odd prime and $a \in \mathbb{Z}$. Then 
+    \[
+        \left(\frac{a}{p}\right) \equiv a^{\frac{p-1}{2}} \pmod{p}.
+    \]
+\end{theorem}
+\begin{proof}
+    This is obvious if $p \mid a$, so suppose $(a,p)=1$. By Fermat's little theorem, $a^{p-1}\equiv 1\pmod{p} \implies a^{\frac{p-1}{2}} \equiv \pm 1 \pmod{p}$.
+
+    If $\left(\frac{a}{p}\right) =1$, then $a \equiv b^2 \pmod{p}$ for some $b \in \mathbb{Z}$, but then $a^{\frac{p-1}{2}} \equiv b^{p-1} \equiv 1 \pmod{p}$. This gives $\frac{p-1}{2}$ solutions to the congruence $x^{\frac{p-1}{2}} \equiv 1 \pmod{p}$. By Lagrange's theorem, these are all the solutions. Hence if $\left(\frac{a}{p}\right) = -1$, then $a^{\frac{p-1}{2}}\not\equiv 1\pmod{p}$, so $a^{\frac{p-1}{2}} \equiv -1 \pmod{p}$ and we're done.
+\end{proof}
+\begin{cor} % Corolalry 3.2 in lectures
+    $\left(\frac{ab}{p}\right) = \left(\frac{a}{p}\right)\left(\frac{b}{p}\right)$.
+\end{cor}
+\begin{proof}
+    \[
+    \left(\frac{ab}{p}\right) \equiv (ab)^{\frac{p-1}{2}} \equiv a^{\frac{p-1}{2}}b^{\frac{p-1}{2}} \equiv \left(\frac{a}{p}\right)\left(\frac{b}{p}\right) \pmod{p}.
+    \]
+    Since $0, \pm 1$ are distinct mod $p$, we have equality in the above.
+\end{proof}
+The corollary is equivalent to the statements:
+\begin{itemize}
+    \item $\mathcal{X}: \mathbb{F}_p^{\times} \to \{\pm 1\}$ by $a \mapsto \left(\frac{a}{p}\right)$ is a group homomorphism.
+    \item \begin{enumerate}[(i)]
+        \item QR $\cdot$ QR $=$ QR
+        \item QR $\cdot$ QNR $=$ QNR
+        \item QNR $\cdot$ QNR $=$ QR
+    \end{enumerate}    
+\end{itemize}
+We can give an alternative proof for this:
+\begin{enumerate}[(i)]
+    \item $a \equiv x^2\pmod{p}, b \equiv y^2 \pmod{p} \implies ab \equiv (xy)^2 \pmod{p}$.
+    \item If $a \equiv x^2$ and $ab \equiv z^2 \pmod{p}$, then $b \equiv (x^{-1}z)^2 \pmod{p}$, a contradiction.
+    \item Suppose $a$ is a QNR. The map $\mathbb{F}_p^\times \to \mathbb{F}_p^\times$ by $x \mapsto ax$ is a bijection sending QRs to NQRs by (ii). By Lemma 3.1, it sends QNRs to QRs, done.
+\end{enumerate}
+\textbf{Remark.} We can also prove Euler's criterion using primitive roots.
+
+\begin{cor}
+    Let $p$ be a odd prime. Then 
+    \[
+        \left(\frac{-1}{p}\right) = (-1)^{\frac{p-1}{2}} = \begin{cases}
+            1 &\text{ if } p \equiv 1\pmod{4}.\\
+            -1 &\text{ if } p \equiv -1 \pmod{4}.
+        \end{cases}
+    \]
+\end{cor}
+In the next lecture, we show 
+\[
+\left(\frac{2}{p}\right) = (-1)^{\frac{p^2-1}{8}} = \begin{cases}
+    1 &\text{ if } p \equiv \pm 1\pmod{8}.\\
+    -1 &\text{ if } p \equiv \pm 3 \pmod{8}.
+\end{cases}
+\]
+Let $p,q$ be distinct odd primes. The law of quadratic reciprocity gives a relation between $\left(\frac{p}{q}\right)$ and $\left(\frac{q}{p}\right)$. Generalizing this result (in many different ways) has been one of the main goals of number theory ever since.
+
+\begin{theorem}[Law of quadratic reciprocity]
+    Let $p,q$ be distinct odd primes. Then 
+    \[
+    \left(\frac{q}{p}\right) = \begin{cases}
+        \left(\frac{p}{q}\right) &\text{ if } p\equiv 1\pmod{4} \text{ or }q \equiv 1 \pmod{4}. \\
+        -\left(\frac{p}{q}\right) &\text{ if } p \equiv q \equiv 3 \pmod{4}.
+    \end{cases}
+    \]
+\end{theorem}
+\begin{example}
+    $$\left(\frac{19}{73}\right) = \left(\frac{73}{19}\right) = \left(\frac{16}{19}\right) = 1.$$
+\end{example}
+
+
 \end{document}
