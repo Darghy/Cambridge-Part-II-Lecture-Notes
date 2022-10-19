@@ -1,6 +1,6 @@
 # Cambridge Part II Lecture Notes
 
-These are my personal lecture notes from Michaelmas Term 2022 for Galois Theory, Graph Theory, Number Theory, and the non-examinable Part III Analytic Number Theory course. The LaTeX files are also available.
+These are my personal lecture notes from Michaelmas Term 2022 for Galois Theory, Graph Theory, and Number Theory. The LaTeX files are also available.
 
 [Galois Theory](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/II%20Galois%20Theory/Galois_Theory.pdf), [tex file](https://github.com/Darghy/Cambridge-Part-II-Lecture-Notes/blob/main/II%20Galois%20Theory/Galois_Theory.tex)
 
