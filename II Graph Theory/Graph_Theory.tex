@@ -469,10 +469,60 @@ Amazingly, we have Menger's theorem: These two notions of connectivity (\# of di
     Let $G$ be a graph, let $a,b \in V(G), a\neq b, a \not\sim b$. Say $S \subseteq V(G) \setminus \{a,b\}$is a $a-b$ \textbf{separator} if $G-S$ disconnects $a$ from $b$ (i.e. $a,b$ are in different components of $G-S$).
 \end{defn}
 \begin{theorem}[Menger's theorem, form 1]
-    Let $G$ be a graph and fix $a,b \in V(G), a\neq b, a \not\sim b$. Then the minimum size of an $a-b$ separator is equal to the maximal number of disjoint paths from $a$ to $b$.
+    Let $G$ be a connected graph and fix $a,b \in V(G), a\neq b, a \not\sim b$. Then the minimum size of an $a-b$ separator is equal to the maximal number of disjoint paths from $a$ to $b$.
     \vspace{1mm}
     
     In other words, if all $a-b$ separators have size $\ge k$, then there exist $P_1,\ldots,P_k$, disjoint paths between $a$ and $b$.
 \end{theorem}
+
+\marginpar{19 Oct 2022, Lecture 6}
+
+\textbf{Note.} Define $\kappa_{a,b}(G)$ be the size of the minimal $a-b$ separator.
+
+\textbf{Note.} Recall $\kappa(G-x)\ge \kappa(G)-1$, and also $\kappa(G-xy)\ge \kappa(G)-1$. We also have $\kappa_{a,b}(G-x)\ge \kappa_{a,b}(G)-1$ and  $\kappa_{a,b}(G-xy)\ge \kappa_{a,b}(G)-1$ (exercise, not hard).
+
+\begin{proof}
+    Assume for contradiction that the statement of the theorem is false. Let $G$ be a minimal counterexample to the theorem that 
+    \begin{enumerate}[(a)]
+        \item minimizes $k$;
+        \item subject to (a), choose $G$ to minimize $e(G)$.
+    \end{enumerate}
+    Now let $S$ be a minimal $a,b$ separator in $G$. We have $|S|=k$. Note that the theorem is true for $k=1$, so assume $k\ge 2$.
+
+    If $S \neq N(A)$ and $S\neq N(B)$, consider $G-S$ and let $A$ be the component containing $a$ and $B$ be the component containing $B$.
+    \vspace{1mm}
+    
+    Define $G_a = G[A \cup S]$ along with a vertex $c$ joined to each vertex in $S$, and $G_b = G[B \cup S]$ along with a vertex $c$ joined to each vertex in $S$. Note that $\kappa_{a,c}(G_a) \ge k$, since any $a-c$ separator in $G_a$ is a $a,b$ separator in $G$. Likewise, $\kappa_{b,c}(G_b)\ge k$.
+
+    \vspace{1mm}
+    
+    Note that $e(G_a) < e(G), e(G_b) < e(G)$ since $ N(a) \not\subset S, N(b) \not\subset S$. So there exists a neighbor $x$ of $b$ in $B$ with $\text{deg}(x) \ge 2$, else we can remove $x$ and apply minimality. 
+    
+    So by minimality of $G$, we can find $k$ disjoint $a,c$ paths, say $P_1,\ldots,P_k$ in $G_a$, and likewise we can find $k$ $b,c$ paths $Q_1,\ldots,Q_k$ in $G_b$. We can put these paths together to get paths $P_1Q_{\sigma(1)},\ldots,P_kQ_{\sigma(k)}$, which are $k$ disjoint $a,b$ paths, contradiction, done.
+    \vspace{1mm}
+    
+    Let us now assume WLOG that $S=N(a)$. 
+    \vspace{1mm}
+    
+    \textbf{Claim}: $N(a) \cap N(b) = \emptyset$.
+    
+    Indeed, if $\exists x \in N(a) \cap N(b)$, consider $G-x$. We have $\kappa_{a,b}(G-x)\ge k-1$. Thus, by minimality, we can find $k-1$ disjoint $ab$ paths in $G-x$, so all of these, plus $axb$, gives us $k$ disjoint $ab$ paths in $G$, contradiction.
+    \vspace{1mm}
+    
+    Let $ax_1\ldots x_l b$ be a shortest $ab$ path. Note that $l\ge 2$ and $x_2 \neq b$. Consider $G-x_1x_2$. We must have $\kappa_{a,b}(G-x_1x_2)\le k-1$ by minimality, so $\kappa_{a,b}(G-x_1x_2)=k-1$. So there is a $a,b$ separator $\tilde{S}$, $|\tilde{S}| = k-1$ in $G-x_1x_2$. We see that $\tilde{S} \cup \{x_1\}$ and $\tilde{S} \cup \{x_2\}$ are $a,b$ separators in $G$ of size at most $k$. Now either $\tilde{S} \cup \{x_1\} \neq N(a),N(b)$ or $\tilde{S} \cup \{x_2\} \neq N(a),N(b)$, so we're done.
+\end{proof}
+\begin{cor}[Menger's theorem, form 2]
+    Let $G$ be a connected graph, $|G|\ge 2$. Then $G$ is $k$-connected $\iff$ $~\forall a,b \in V(G), a \neq b$, there exist $k$ disjoint $ab$ paths in $G$.
+\end{cor}
+\begin{proof}
+    $\impliedby$ is the easy direction. Say $G-S$ is disconnected and let $a,b$ be in different components of $G-S$. Note $a \not\sim b$. Then $\exists $ $k$ disjoint $a-b$ paths and $S$ must intersect each of these, so $|S| \ge k$.
+
+    $\implies $. Let $a,b \in V(G), a\neq b$. If $a \not\sim b$, then just apply Menger form 1 and we're done. If $a \sim b$, then consider $G-ab$. We have $\kappa_{a,b}(G-ab)\ge k-1$, so apply Menger form 1 to get $k-1$ disjoint paths and add back $ab$ as a $k^{\text{th}}$ path.
+\end{proof}
+
+\subsubsection{Edge connectivity}
+
+Let $G$ be a graph. Let $\lambda(G) = \min \{|W| ~|~ W \subseteq E(G), G-W \text{ is disconnected}\}$. We say that $G$ is \textbf{$k$-edge connected} if $\lambda(G) \ge k$. 
+
 
 \end{document}
