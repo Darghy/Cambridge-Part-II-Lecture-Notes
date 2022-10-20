@@ -668,7 +668,7 @@ We can use the same idea to compute $a^{\frac{p-1}{2}}$ mod $p$:
 
     Can any two differ by a sign? No, since $a_i \equiv -a_j \implies ia \equiv -ja \implies i \equiv -j \pmod{p}$.
 
-    Hence $a_1,\ldots,a_m$ are $\pm1,\pm2, \ldots, \pm m$ in some order with some choice of signs. Taking the product gives $$a_1\ldots a_m \equiv (-1)^D 1\ldots m \pmod{p} \implies a^m m! \equiv (-1)^\nu m! \pmod{p}.$$
+    Hence $a_1,\ldots,a_m$ are $\pm1,\pm2, \ldots, \pm m$ in some order with some choice of signs. Taking the product gives $$a_1\ldots a_m \equiv (-1)^\nu 1\cdot \ldots \cdot m \pmod{p} \implies a^m m! \equiv (-1)^\nu m! \pmod{p}.$$
     So by Euler's criterion, $\left(\frac{a}{p}\right) \equiv  a^m \equiv (-1)^\nu \pmod{p}$.
 \end{proof}
 
@@ -703,12 +703,12 @@ We can use the same idea to compute $a^{\frac{p-1}{2}}$ mod $p$:
     Claim: $$\nu = \sum_{i=1}^{2n} (-1)^{i} \left\lfloor \frac{ip}{2a} \right\rfloor$$ where $n = \left\lfloor \frac{a}{2} \right\rfloor$. Moreover, $\frac{ip}{2a} \not\in \mathbb{Z} ~\forall~1\le i\le 2n$.
     \vspace{1mm}
     
-    Proof: Consider all multiples of $a$ less than $\frac{ap}{2}$ ($=np$ or $(n+\frac{1}{2}p)$). Hence $\nu$ is the number of multiples of $a$ in the intervals $[\frac{1}{2}p,p], [\frac{3}{2}p, 2p],\ldots, [(n-\frac{1}{2})p,np]$. On dividing through by $a$, we see that $\nu$ is the number of integers in $[\frac{p}{2a},\frac{2p}{2a}],[\frac{3p}{2a},\frac{4p}{2a}],\ldots,[\frac{(2n-1)p}{2n},\frac{2np}{2n}]$. The end points are not in $\mathbb{Z}$, since the end points of the original intervals are not multiples of $a$. Hence $\# ([\alpha,\beta \cap \mathbb{Z}]) = \left\lfloor \beta \right\rfloor - \left\lfloor \alpha \right\rfloor$. This proves the claim.
+    Proof: Consider all multiples of $a$ less than $\frac{ap}{2}$ ($=np$ or $(n+\frac{1}{2})p)$. Hence $\nu$ is the number of multiples of $a$ in the intervals $$\left[\frac{1}{2}p,p\right], \left[\frac{3}{2}p, 2p\right],\ldots, \left[(n-\frac{1}{2})p,np\right].$$ On dividing through by $a$, we see that $\nu$ is the number of integers in $$\left[\frac{p}{2a},\frac{2p}{2a}\right],\left[\frac{3p}{2a},\frac{4p}{2a}\right],\ldots,\left[\frac{(2n-1)p}{2a},\frac{2np}{2a}\right].$$ The end points are not in $\mathbb{Z}$, since the end points of the original intervals are not multiples of $a$. Hence $\# ([\alpha,\beta] \cap \mathbb{Z}) = \left\lfloor \beta \right\rfloor - \left\lfloor \alpha \right\rfloor$. This proves the claim.
     \vspace{1mm}
     
     Step 2: Let $p_1,p_2$ be primes and $a \in \mathbb{Z}$ coprime to $p_1p_2$. By Gauss' lemma, $\left(\frac{a}{p_i}\right) = (-1)^{\nu_i}$.
     \begin{enumerate}[(i)]
-        \item Suppose $p_1 \equiv p_2 \pmod{4a}$. Then $\left\lfloor \frac{ip_1}{2a} \equiv \frac{ip_2}{2a} \right\rfloor \pmod{2}$. By Step 1, we have $\nu_1 \equiv \nu_2 \pmod{2}$. Hence $\left(\frac{a}{p_1}\right) = \left(\frac{a}{p_2}\right)$.
+        \item Suppose $p_1 \equiv p_2 \pmod{4a}$. Then $\left\lfloor \frac{ip_1}{2a} \right\rfloor \equiv \left\lfloor \frac{ip_2}{2a} \right\rfloor \pmod{2}$. By Step 1, we have $\nu_1 \equiv \nu_2 \pmod{2}$. Hence $\left(\frac{a}{p_1}\right) = \left(\frac{a}{p_2}\right)$.
         \item Suppose $p_1 \equiv -p_2 \pmod{4a}$. Then $\left\lfloor \frac{ip_1}{2a} \right\rfloor \equiv \left\lfloor \frac{ip_2}{2a} \right\rfloor +1 \pmod{2}$. (We use the fact that if $\alpha \in \mathbb{R}/\mathbb{Z}$, then $\left\lfloor -\alpha \right\rfloor = -\left\lfloor \alpha \right\rfloor-1$). By Step 1, we again deduce $\left(\frac{a}{p_1}\right) = \left(\frac{a}{p_2}\right)$.
     \end{enumerate}
     \vspace{1mm}
@@ -719,7 +719,7 @@ We can use the same idea to compute $a^{\frac{p-1}{2}}$ mod $p$:
         \[
             \left(\frac{p}{q}\right)\left(\frac{q}{p}\right) \equiv (-1)^{\frac{p-1}{2}\frac{q-1}{2}}.
         \]
-        \item Suppose $p \neq q \pmod{4}$, say $p+q \equiv 4a$. Then $\left(\frac{p}{q} \right) = \left(\frac{4a-q}{q} \right) = \left(\frac{a}{q} \right)$ and $\left(\frac{q}{p}  \right) = \left(\frac{4a-p}{p} \right) = \left(\frac{a}{p} \right)$. But $p \equiv -q \pmod{4a} \stackrel{\text{Step 2(ii)}}{\implies} \left(\frac{a}{p} \right) = \left(\frac{a}{q} \right)$, so $\left(\frac{p}{q} \right) =\left(\frac{q}{p} \right)$, done.
+        \item Suppose $p \neq q \pmod{4}$, say $p+q = 4a$. Then $\left(\frac{p}{q} \right) = \left(\frac{4a-q}{q} \right) = \left(\frac{a}{q} \right)$ and $\left(\frac{q}{p}  \right) = \left(\frac{4a-p}{p} \right) = \left(\frac{a}{p} \right)$. But $p \equiv -q \pmod{4a} \stackrel{\text{Step 2(ii)}}{\implies} \left(\frac{a}{p} \right) = \left(\frac{a}{q} \right)$, so $\left(\frac{p}{q} \right) =\left(\frac{q}{p} \right)$, done.
     \end{enumerate}
     
 \end{proof}
