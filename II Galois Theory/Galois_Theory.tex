@@ -522,4 +522,94 @@ For example, if $F=\mathbb{Q}$, then the Fundamental Theorem of Algebra says tha
 \end{example}
 Questions: Is $L_f$ unique? How do we find the remaining roots?
 
+\marginpar{20 Oct 2022, Lecture 7}
+\vspace{1mm}
+
+We start off by redoing what we did last time.
+
+\begin{theorem}
+    Let $f \in K[T]$ be irreducible and monic. Let $L_f = K[T]/(f)$ and $t \subset L_f$ the residue class $T$ mod $(f)$. Then $L_f/K$ is a finite extension of fields, $[L_f : K] = \text{deg}(f)$ and $f$ is the minimal polynomial of $t$ over $K$. 
+\end{theorem}
+So we have an extension of $K$ in which $f$ has at least one root. To what extent is this unique?
+
+Also recall that if $x$ is algebraic over $K$, then $K(x) \cong K[T]/(m_{x,K})$, where $m_{x,K}$ is the minimal polynomial.
+
+\begin{defn}
+    Let $K$ be a field and $M/K$, $L/K$ two extensions of $K$. Then a \textbf{$K$-homomorphism} from $L$ to $M$ is a field homomorphism $\sigma : L \to M$ which is the identity on $K$. (We might also call this a \textbf{$K$-embedding}, since $\sigma$ is an injection.)
+\end{defn}
+\begin{theorem}\label{6.2}
+    Let $f \in K[T]$ be irreducible and $L/K$ an arbitrary extension. Then
+    \begin{enumerate}[(i)]
+        \item If $x \in L$ is a root of $f$, then there exists a unique $K$-homomorphism $\sigma : L_f = K[T]/(f) \to L$ sending $T$ mod $(f) \mapsto x$.
+        \item Every $K$-homomorphism $L_f \to L$ arises as in (i). So there is a bijection between
+        \begin{align*}
+            \{K\text{-homomorphisms } L_f \stackrel{\sigma}{\to} L\} \cong \{\text{roots of }f \text{ in }L\}
+        \end{align*}
+        In particular, there are at most $\text{deg}(f)$ such $\sigma$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    $f(x)=0 \iff \text{ev}_x(f)=0$, where $\text{ev}_x : K[T] \to L$ is the homomorphism $g \mapsto g(x)$, i.e. "evaluate at $x$" $\iff \text{ker}(\text{ev}_x) = (f) \iff \text{ev}_x$ comes from a homomorphism $\sigma : K[T]/(f) \to L$ which is identity on $K$.
+\end{proof}
+\begin{cor}
+    If $L = K(x)$ for $x$ algebraic over $K$, then there exists a unique \textbf{isomorphism} $\sigma : L_f \to K(x)$ such that $\sigma(t)=X$, where $f=m_{x,K}$.  
+\end{cor}
+\begin{proof}
+    Take $L = K(x)$ in the above theorem.
+\end{proof}
+\begin{defn}
+    Let $x,y$ be algebraic over $K$. Say $x,y$ are \textbf{$K$-conjugate}  if they have the same minimal polynomial. 
+\end{defn}
+Then both $K(x)$ and $K(y)$ are isomorphic to $L_f$ (with $f=m_{x,K}=m_{y,K}$), and more precisely:
+\begin{cor}
+    $x,y$ are $K$-conjugate if and only there exists a $K$-isomorphism $\sigma : K(x) \to K(y)$ with $\sigma(x)=y$.
+\end{cor}
+\begin{proof}
+    By Corollary 6.3, $\impliedby $follows since $~\forall  g \in K[T], \sigma(g(x))=g(\sigma(x))$, so $x,y$ have the same miimal polynomial.
+\end{proof}
+So the roots of an irreducible polynomial are algebraically indistinguishable.
+\vspace{1mm}
+
+It is useful for inductive arguments to have a generalization of Theorem \ref{6.2}:
+\begin{defn}
+    Let $L/K$ and $L'/K'$ be field extensions, and let $\sigma : K \to K'$ a field homomorphism. If $\tau : L \to L'$ is a homomorphism such that $\tau(x) = \sigma(x) ~\forall x \in K$, we say $\tau$ a \textbf{$\sigma$-homomorphism} from $L$ to $L'$.
+
+    We also say $\tau$ \textbf{extends} $\sigma$, or that $\sigma$ is the \textbf{restriction} of $\tau$ onto $K$, and write $\sigma = \tau|_K$.
+\end{defn}
+\begin{theorem}[Variant of Theorem \ref{6.2}]
+    Let $f \in K[T]$ be irreducible, and $\sigma : K \to L$ any homomorphism of fields. Let $\sigma f$ be the polynomial given by applying $\sigma$ to all the coefficients of $f$. Then
+    \begin{enumerate}[(i)]
+        \item If $x \in L$ is a root of $\sigma f$, then there exists a unique $\sigma$-homomorphism $\tau : L_f \to L$ such that $\tau(t)= x$.
+        \item Every $\sigma$-homomorphism $L_f \to L$ is of this form and we have a bijection
+        \begin{align*}
+            \{\sigma\text{-homomorphisms }L_f \to L\} \cong \{\text{roots of }\sigma f \text{ in }L\}. 
+        \end{align*}
+    \end{enumerate}
+\end{theorem}
+\begin{example}
+    $\sigma$ might not be the obvious homomorphism. Take $K = \mathbb{Q}(\sqrt{2}) \subset \mathbb{R}$ and $L = \mathbb{C}$. There is a homomorphism $\sigma : K \to \mathbb{C}$ by $\sqrt{2} \mapsto -\sqrt{2}$. So if we take $f = T^2 - (1+\sqrt{2})$, so the map $L_f \stackrel{\tau}{\to} \mathbb{C}$ must take $t$ to $\pm \sqrt{1-\sqrt{2}} = \pm i \sqrt{\sqrt{2}-1} \in \mathbb{C}$. 
+    
+    If instead we take $\sigma$ to be the inclusion, then $\tau$ takes $t$ to $\sqrt{\sqrt{2}+1}$.
+\end{example}
+What about all roots?
+\begin{defn}
+    Suppose $f \in K[T]$ is a nonzero polynomial. We say an extension $L/K$ is a \textbf{splitting field} for $f$ over $K$ if:
+    \begin{enumerate}[(i)]
+        \item $f$ splits into linear factors in $L[T]$, 
+        \item $L = K(x_1,\ldots,x_n)$, where the $x_i$ are the roots of $f$ in $L$.
+    \end{enumerate}
+\end{defn}
+\textbf{Remark.} (ii) says that $f$ doesn't split into linear factors over any field $L'$ with $K \subset L' \subsetneq L$.
+
+\textbf{Remark.} A splitting field is necessarily finite over $K$ (all $x_i$ are algebraic).
+\begin{theorem}
+    Every nonzero polynomial in $K[T]$ has a splitting field.
+\end{theorem}
+\begin{proof}
+    By induction on $\text{deg}(f)$ (for all $K$). If $\text{deg}(f)$ is 0 or 1, then $K$ is a spltting field, so we're done. So assume that for all fields $K'$ and all polynomials of degree $<\text{deg}(f)$ there is a splitting field.
+    \vspace{1mm}
+    
+    Consider $g$, an irreducible factor of $f$. Consider $K' = L_g = K[T]/(g)$ and let $x_1 = T$ mod $(g)$. Then $g(x_1)=0$, so $f = (T-x_1)f_1$ for $f_1 \in K'[T]$ and $\text{deg}(f_1)<\text{deg}(f)$. So by induction, $\exists$ a spltting field $L$ for $f_1$ over $K'$. Let $x_2,\ldots,x_n \in L$ be the roots of $f_1$ in $L$. Then $f$ splits into linear factors in $L$ with roots $x_1,\ldots,x_n$, and $L=K'(x_2,\ldots,x_n) = K(x_1,\ldots,x_n)$. So $L$ is a splitting field for $f$ over $K$.
+\end{proof}
+
 \end{document}
