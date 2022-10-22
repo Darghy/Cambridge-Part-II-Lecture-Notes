@@ -721,8 +721,111 @@ We can use the same idea to compute $a^{\frac{p-1}{2}}$ mod $p$:
         \]
         \item Suppose $p \neq q \pmod{4}$, say $p+q = 4a$. Then $\left(\frac{p}{q} \right) = \left(\frac{4a-q}{q} \right) = \left(\frac{a}{q} \right)$ and $\left(\frac{q}{p}  \right) = \left(\frac{4a-p}{p} \right) = \left(\frac{a}{p} \right)$. But $p \equiv -q \pmod{4a} \stackrel{\text{Step 2(ii)}}{\implies} \left(\frac{a}{p} \right) = \left(\frac{a}{q} \right)$, so $\left(\frac{p}{q} \right) =\left(\frac{q}{p} \right)$, done.
     \end{enumerate}
-    
 \end{proof}
 
+\marginpar{22 Oct 2022, Lecture 8}
+\begin{example}
+    Compute the Legendre symbol $\left(\frac{7411}{9283} \right)$. In fact, 7411 and 9283 are both prime. Hence
+    \begin{align*}
+        \left(\frac{7411}{9283}\right) = -\left(\frac{9283}{7411} \right) = -\left(\frac{1872}{7411} \right).  
+    \end{align*}
+    As $1872 = 2^4 \cdot 3^2 \cdot 13$, we get
+    \begin{align*}
+        -\left(\frac{1872}{8411} \right) = -\left(\frac{13}{7411} \right) = - \left(\frac{7411}{13} \right) = -\left(\frac{1}{13} \right) = -1.   
+    \end{align*}
+    Hence $7411$ is not a QR mod $9283$.
+\end{example}
+Recall that the Legendre symbol $\left(\frac{a}{p} \right) $ is only defined for $p$ an odd prime.
+\begin{defn}
+    Let $n$ be an odd positive integer, say $n=p_1\ldots p_k$ for $p_i$ (not necessarily distinct) odd primes. Let $a \in \mathbb{Z}$. We define the \textbf{Jacobi symbol} as \[
+    \left(\frac{a}{n} \right) = \prod_{i=1}^{k} \left(\frac{a}{p_i} \right).
+    \]
+\end{defn}
+\textbf{Remark.} If $(a,n)\neq 1$, then $\left(\frac{a}{n} \right)=0$.
+\begin{prop}
+    \begin{enumerate}[(i)]
+        \item $\left(\frac{a}{n} \right) $ depends only on $a$ mod $n$.
+        \item $\left(\frac{ab}{n} \right) =\left(\frac{a}{n} \right)\left(\frac{b}{n} \right)$ and $\left(\frac{a}{mn} \right) = \left(\frac{a}{m} \right) \left(\frac{a}{n} \right)$.
+        \item $\left(\frac{-1}{n} \right) = (-1)^{\frac{n-1}{2}}$.
+        \item $\left(\frac{2}{n} \right) =(-1)^{\frac{n^2-1}{8}}$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[(i)]
+        \item Clear, since the Legendre symbol only depends on $a$ mod $p$.
+        \item The first part follows since the Legendre symbol is totally multiplicative, and the second follows from the definition of the Jacobi symbol.
+        \item This holds for $n=p$ a prime by previous results. We will now show that if they hold for odd integers $m,n$, then they hold for $mn$. But \[
+        \left(\frac{-1}{mn} \right) = \left(\frac{-1}{m} \right) \left(\frac{-1}{n} \right) = (-1)^{\frac{m-1}{2}}(-1)^{\frac{n-1}{2}} \stackrel{\star}{=} (-1)^{\frac{mn-1}{2}},
+        \]
+        where we can check that $\star$ holds, since $(m-1)(n-1) \equiv  0 \pmod{4}$, which gives $mn-1 \equiv (m-1) + (n-1) \pmod{4}$.
+        \item This is analogous to above, except we get \[
+        (-1)^{\frac{m^2-1}{8}} (-1)^{\frac{n^2-1}{8}} = (-1)^{\frac{(mn)^2-1}{8}},
+        \]
+        since $(m^2-1)(n^2-1)\equiv 0 \pmod{16}$, so $(mn)^2-1 \equiv (m^2-1)+(n^2-1) \pmod{16}$.
+    \end{enumerate}
+\end{proof}
+\begin{theorem}[Law of Quadratic Reciprocity for Jacobi Symbols]
+    If $m,n$ are odd positive integers, then \[
+    \left( \frac{m}{n} \right) = (-1)^{\frac{m-1}{2}\frac{n-1}{2}} \left(\frac{n}{m} \right).
+    \]
+\end{theorem}
+\textbf{Remark.} If $(m,n) \neq 1$, this says $0=0$.
+\begin{proof}
+    Again, we deduce this from the corresponding result for the Legendre symbol. Assume $(m,n)=1$. Write $m = \prod_{i=1}^{k} p_i$ and $n=\prod_{j=1}^{l} q_j$ for $p_i,q_j$ (not necessarily distinct) primes.
+    \vspace{1mm}
+    
+    Let $r$ count the number of $p_i$ with $p_i \equiv 3 \pmod{4}$ and $s$ count the number of $q_j$ with $q_j \equiv 3 \pmod{4}$. Then
+    \begin{align*}
+        \left(\frac{m}{n} \right) = \prod_{i=1}^{k} \prod_{j=1}^{l} \left(\frac{p_i}{q_j} \right) = \prod_{i=1}^{k} \prod_{j=1}^{l} (-1)^{\frac{p_i-1}{2}\frac{q_j-1}{2}} \left(\frac{q_j}{p_i} \right) = \\
+        (-1)^{rs} \prod_{i=1}^{k} \prod_{j=1}^{l} \left(\frac{q_j}{p_i} \right) = (-1)^{rs} \left(\frac{n}{m}\right).  
+    \end{align*}
+    But $m \equiv 1 \pmod{4} \iff r$ is even, and $n \equiv 1 \pmod{4} \iff s$ is even, hence $(-1)^{rs} = (-1)^{\frac{m-1}{2}\frac{n-1}{2}}$. 
+\end{proof}
+\textbf{Remark.} The Jacobi symbol $\left(\frac{a}{n} \right) $ tells us surprisingly little about whether the congruence $x^2 \equiv a \pmod{n}$ is soluble. 
+
+If $x^2 \equiv a\pmod{n}$ is soluble, then so is $x^2\equiv  a \pmod{p}$ for all primes $p \mid n$. So $\left(\frac{a}{p} \right) = 1 ~\forall p \mid n$, hence $\left(\frac{a}{n} \right) = 1$.
+
+But the converse is false. For example, $\left(\frac{2}{15} \right) = \left(\frac{2}{3} \right) \left(\frac{2}{5} \right) = (-1)\cdot (-1) = 1$, yet $x^2 \equiv 2 \pmod{15}$ is not soluble.
+
+The point of the Jacobi symbol is rather that it allows us to compute Legendre symbols without having to factor (except for removing powers of 2).
+\begin{example}
+    \[
+    \left(\frac{33}{73} \right) = \left(\frac{73}{33} \right) = \left(\frac{7}{33} \right) = \left(\frac{33}{7} \right) = \left(\frac{5}{7} \right) = -1, 
+    \]    
+    so $33$ is not a QR mod $73$.
+\end{example}
+
+Three tricks to evaluate Legendre symbols:
+\begin{example}
+    \begin{enumerate}[(i)]
+        \item $\sum_{a=1}^{p-1} \left(\frac{a}{p} \right) = 0$
+        \item $\sum_{a=1}^{p-1} a \left(\frac{a}{p} \right) \equiv 0\pmod{p}$ if $p > 3$.
+        \item $\sum_{a=1}^{p-1} \left(\frac{a(a+1)}{p} \right) \equiv -1$.
+    \end{enumerate}
+\end{example}
+\begin{proof}
+    \begin{enumerate}[(i)]
+        \item We have already done this since we have an equal number of QRs and QNRs. However, alternate proof:
+        \vspace{1mm}
+        
+        Let $b$ be a QNR $\pmod{p}$. Then 
+        \[
+        \sum_{a=1}^{p-1} \left(\frac{a}{p} \right) = \sum_{a=1}^{p-1} \left(\frac{ab}{p} \right) = \left(\frac{b}{p} \right) \sum_{a=1}^{p-1} \left(\frac{a}{p} \right) = - \sum_{a=1}^{p-1} \left(\frac{a}{p} \right), 
+        \]
+        so $\sum_{a=1}^{p-1} \left(\frac{a}{p} \right) = 0$.
+        \item Since $p>3$, we can choose $b \not\equiv 0, \pm 1 \pmod{p}$, whence \[
+        \sum_{a=1}^{p-1} a \left(\frac{a}{p} \right) \equiv  \sum_{a=1}^{p-1} ab \left(\frac{ab}{p} \right) \equiv  \pm b \sum_{a=1}^{p-1} a \left(\frac{a}{p} \right) \pmod{p}.
+        \]
+        Since $b \not\equiv \pm 1 \pmod{p}$, we deduce $\sum_{a=1}^{p-1} a \left(\frac{a}{p} \right) \equiv 0 \pmod{p}$.
+        \item  If $ab \equiv 1\pmod{p}$, then \[
+        \left(\frac{a(a+1)}{p} \right) \equiv \left(\frac{a^2(1+b)}{p} \right) = \left(\frac{b+1}{p} \right).  
+        \]
+        Then \[
+        \sum_{a=1}^{p-1} \left(\frac{a(a+1)}{p} \right) = \sum_{b=1}^{p-1} \left(\frac{b+1}{p} \right) = -1.
+        \]
+    
+        
+    \end{enumerate}
+\end{proof}
 
 \end{document}

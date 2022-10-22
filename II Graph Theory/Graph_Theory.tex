@@ -524,5 +524,91 @@ Amazingly, we have Menger's theorem: These two notions of connectivity (\# of di
 
 Let $G$ be a graph. Let $\lambda(G) = \min \{|W| ~|~ W \subseteq E(G), G-W \text{ is disconnected}\}$. We say that $G$ is \textbf{$k$-edge connected} if $\lambda(G) \ge k$. 
 
+\marginpar{21 Oct 2022, Lecture 7}
+
+
+\begin{example}
+    \begin{itemize}
+        \item A cycle has $\kappa(C_n)=2, \lambda(C_n)=2$.
+        \item A "bowtie graph" has $\kappa(G)=1, \lambda(G)=2$. We can generalize this and take two copies of $K_n$ which intersect in one vertex, then $\kappa(G)=1$ and $\lambda(G)=n-1$.
+    \end{itemize}
+\end{example}
+\begin{defn}
+    We say paths $P_1,\ldots,P_k$ are \textbf{edge disjoint} if $$E(P_i) \cap E(P_j) = \emptyset ~\forall i\neq j.$$
+\end{defn}
+\begin{theorem}[Menger, edge version]\label{2.7}
+    Let $G$ be a connected graph and $a,b \in V(G), a \neq b$. Then, every $W \subseteq E(G)$ that separates $a$ from $b$ having size $\ge k \implies \exists k$ edge disjoint $a-b$ paths $P_1,\ldots,P_k$.
+\end{theorem}
+\begin{defn}
+    Let $G$ be a graph. The \textbf{line graph} of $G$, denoted $L(G)$, is defined to be the graph 
+    \begin{align*}
+        V(L(G)) &= E(G); \\
+        \text{If } e,f \in E(G), &\text{ then } e\sim f \text{ if they share a vertex.}
+    \end{align*}
+\end{defn}
+\begin{proof}[Proof of Thorem \ref{2.7}]
+    Given $G$, define a new graph $G'$ by taking the line graph of $G$ and adding a vertex $a'$, which we join to all edges incident to $a \in G$, and similarly adding a vertex $b'$, which we join to all edges incident to $b \in G$.
+    \vspace{1mm}
+    
+    Note that there is a $ab$ path in $G$ if and only if there is an $a'b'$ path in $G'$. Thus $W \subseteq V(G') \setminus \{a,b\}$ is a $a'b'$ separator if and only if $W \subseteq E(G)$ is an $ab$ separator. Hence $\kappa_{a,b}(G')\ge k$.
+    \vspace{1mm}
+    
+    Now apply Menger (form 1) to find $k$ disjoint $ab$ paths $P_1,\ldots,P_k$ in $G'$. These describe edge disjoint walks in $G$ from $a$ to $b$. Thus there are disjoint paths $\tilde{P_1} \subseteq P_1,\ldots,\tilde{P_k} \subseteq P_k$ and we're done.
+\end{proof}
+
+\begin{theorem}[Menger, edge version 2]
+    Let $G$ be a connected graph. Then $\lambda(G)\ge k \iff ~\forall a,b \in V(G)$ with $a\neq b, \exists k$ edge disjoint $ab$ paths.
+\end{theorem}
+\begin{proof}
+    $\impliedby$ is the easy direction. To separate any two vertices, say $a,b$, we must remove an edge from each of the $ab$ paths, so $\lambda(G)\ge k$.
+    $\implies$ follows from Menger, edge version 1.
+\end{proof}
+
+\section{Graph coloring}
+\begin{defn}
+    We say that $c : V(G) \to \{1,\ldots,k\}$ is a \textbf{$k$-coloring} (or a proper $k$-coloring) if $c(x)\neq c(y) ~\forall x\sim y$. 
+\end{defn}
+\begin{defn}
+    The \textbf{chromatic number of $G$} is \[
+    \mathcal{X}(G) = \min \{k ~|~ \exists \text{ a }k\text{coloring of }G\}.
+    \]
+\end{defn}
+\begin{example}
+    \begin{itemize}
+        \item A path has chromatic number 2. $\mathcal{X}(P_n)=2$.
+        \item For a cycle, $\mathcal{X}(G) = \begin{cases}
+            2 &\text{ if }n \text{ is even.}\\
+            3 &\text{ if }n \text{ is odd.}
+        \end{cases}$
+        \item A tree has chromatic number 2 by induction.
+        \item A complete graph has $\mathcal{X}(K_n) = n$.
+        \item A bipartite graph has $\mathcal{X}(K_{m,n}) = 2$. In fact, a graph $G$ is bipartite if and only if $\mathcal{X}(G)=2$.
+    \end{itemize}
+\end{example}
+\begin{prop}
+    Let $G$ be a graph. Then $\mathcal{X}(G) \ge \Delta(G) + 1$.
+\end{prop}
+\begin{proof}
+    Let $x_1,\ldots,x_n$ be an ordering of $V(G)$. We color the $(x_i)$ one at a time in this order. When we come to vertex $x_i$, at most $\Delta$ colors have been used in $N(x_i)$, so there is a free color for $x_i$.
+\end{proof}
+\textbf{Remark.} This proposition is sharp (e.g. on $K_n$).
+
+\textbf{Remark.} This is sometimes called a greedy coloring. But a greedy coloring may produce a coloring that is not optimal!
+
+\subsection{Coloring planar graphs}
+\textbf{Observation.} Let $G$ be a planar graph. Then $\delta(G)\le 5$.
+\begin{proof}
+    The average degree of $G$ is $$\frac{1}{n}\sum_{v \in V(G)}^{} \text{deg}(v) = \frac{2e(G)}{n} \le \frac{2(3n-6)}{n} = 6 - \frac{12}{n} < 6.$$
+    But all degrees of vertices are integers, so the minimal degree is $\le 5$.
+\end{proof}
+\begin{prop}
+    If $G$ is planar, then $\mathcal{X}(G)\le 6$.
+\end{prop}
+\begin{proof}
+    We induct. Base step: if $|G| \le 6$, then we're clearly done.
+    \vspace{1mm}
+    
+    Induction step: Given a graph $G$, let $x$ be a vertex with $\text{deg}(x)\le 5$. Apply induction to $G-x$, which gives a coloring of $G-x$ with 6 colors. But $x$ has degree $\le 5$, thus there is a free color to color $x$ with.
+\end{proof}
 
 \end{document}
