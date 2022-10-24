@@ -565,7 +565,7 @@ Then both $K(x)$ and $K(y)$ are isomorphic to $L_f$ (with $f=m_{x,K}=m_{y,K}$), 
     $x,y$ are $K$-conjugate if and only there exists a $K$-isomorphism $\sigma : K(x) \to K(y)$ with $\sigma(x)=y$.
 \end{cor}
 \begin{proof}
-    By Corollary 6.3, $\impliedby $follows since $~\forall  g \in K[T], \sigma(g(x))=g(\sigma(x))$, so $x,y$ have the same miimal polynomial.
+    By Corollary 6.3, $\impliedby $follows since $~\forall  g \in K[T], \sigma(g(x))=g(\sigma(x))$, so $x,y$ have the same minimal polynomial.
 \end{proof}
 So the roots of an irreducible polynomial are algebraically indistinguishable.
 \vspace{1mm}
@@ -576,7 +576,7 @@ It is useful for inductive arguments to have a generalization of Theorem \ref{6.
 
     We also say $\tau$ \textbf{extends} $\sigma$, or that $\sigma$ is the \textbf{restriction} of $\tau$ onto $K$, and write $\sigma = \tau|_K$.
 \end{defn}
-\begin{theorem}[Variant of Theorem \ref{6.2}]
+\begin{theorem}[Variant of Theorem \ref{6.2}]\label{6.5}
     Let $f \in K[T]$ be irreducible, and $\sigma : K \to L$ any homomorphism of fields. Let $\sigma f$ be the polynomial given by applying $\sigma$ to all the coefficients of $f$. Then
     \begin{enumerate}[(i)]
         \item If $x \in L$ is a root of $\sigma f$, then there exists a unique $\sigma$-homomorphism $\tau : L_f \to L$ such that $\tau(t)= x$.
@@ -613,7 +613,7 @@ What about all roots?
 \end{proof}
 
 \marginpar{22 Oct 2022, Lecture 8}
-Recall from last time that we have a field $K$, $f \in K[T]$ nonzero, and conditions for $L/K$ to be a splitting field. We proved that splitting fields exist. 
+
 \vspace{1mm}
 
 \textbf{Remark.} If $K \subset \mathbb{C}$, this is no big deal, since we can take $x_1,\ldots,x_n \in \mathbb{C}$ to be the roots of $f$ in $\mathbb{C}$ (by FTA), then $K(x_1,\ldots,x_n) \subset \mathbb{C}$ is a splitting field.
@@ -635,13 +635,13 @@ Our next result is nontrivial, even for subfields of $\mathbb{C}$.
     \begin{enumerate}[(i)]
         \item Induction on $n = [L:K]$. If $n=1$, then $L=K$ and we're done.
         
-        Now let $x \in L \setminus K$ be some root of an irreducible factor $g \in K[T]$ of $f$ with $\text{deg}(g)>1$. Let $y \in M$ be a root of $\sigma g \in M[T]$. By Theorem \ref{6.6} \footnote{(or was it 6.5? 6.4 in lectures, check and fix later)}, there exists $\sigma_1 : K(x) \to M$ such that $\sigma_1(x) = y$ and $\sigma_1$ extends $\sigma.$ Now, $[L : K(x)] < [L : K]$, and $L$ is certainly a splitting field for $f$ over $K(x)$, and $\sigma_1 f =\sigma f$ splits in $M$. So by induction, we can extend $\sigma_1 : K(x) \to M$ to a homomorphism $\tau : L \to M$.
+        Now let $x \in L \setminus K$ be some root of an irreducible factor $g \in K[T]$ of $f$ with $\text{deg}(g)>1$. Let $y \in M$ be a root of $\sigma g \in M[T]$. By Theorem \ref{6.5}, there exists $\sigma_1 : K(x) \to M$ such that $\sigma_1(x) = y$ and $\sigma_1$ extends $\sigma.$ Now, $[L : K(x)] < [L : K]$, and $L$ is certainly a splitting field for $f$ over $K(x)$, and $\sigma_1 f =\sigma f$ splits in $M$. So by induction, we can extend $\sigma_1 : K(x) \to M$ to a homomorphism $\tau : L \to M$.
         \item Assume $M$ is a splitting field for $\sigma f$ over $\sigma K$. Let $\tau$ be as in (i), and $\{x_i\}$ the roots of $f$ in $L$. Then the roots of $\sigma f$ in $M$ are just $\{\tau(x_i)\}$. So $M = \sigma K (\tau(x_1),\ldots,\tau(x_n)) = \tau L$ as $L = K(x_1,\ldots,x_n)$. So $\tau$ is an isomorphism. If $K \subset M$ and $\sigma$ is the inclusion map, then $\tau$ is a $K$-isomorphism $L \to M$. 
     \end{enumerate}
 \end{proof}
 \begin{example}
     \begin{enumerate}[(i)]
-        \item $f = T^3-2 \in \mathbb{Q}[T]$. In $\mathbb{C}$, we have $f=(T-\sqrt[3]{2})(T-\omega \sqrt[3]{2})(T-\omega^2\sqrt[3]{2})$, where $\omega = e^{2 \pi i /3}$. So a splitting field for $f$ over $\mathbb{Q}$ is $L=\mathbb{Q}(\sqrt[3]{2}, \omega) \subset \mathbb{C}$. 
+        \item $f = T^3-2 \in \mathbb{Q}[T]$. In $\mathbb{C}$, we have $$f=(T-\sqrt[3]{2})(T-\omega \sqrt[3]{2})(T-\omega^2\sqrt[3]{2}),$$ where $\omega = e^{2 \pi i /3}$. So a splitting field for $f$ over $\mathbb{Q}$ is $L=\mathbb{Q}(\sqrt[3]{2}, \omega) \subset \mathbb{C}$. 
         
         We have $[\mathbb{Q}[\sqrt[3]{2}] : \mathbb{Q}] = 3$, and $\mathbb{Q}(\sqrt[3]{2}) \subset \mathbb{R}$ but $\omega \not\in \mathbb{R}$, $\omega^2+w+1=0$, so $[L : \mathbb{Q}(\sqrt[3]{2})] = 2$ and $[L:\mathbb{Q}]=6$. In particular, $f/(T-\sqrt[3]{2})$ is irreducible in $\mathbb{Q}(\sqrt[3]{2})[T].$
         \item $f = \frac{T^5-1}{T-1} = T^4 + T^3+T^2+T+1 \in \mathbb{Q}[T]$. Let $z = e^{2\pi i/5}$. Then $f = \prod_{1\le a\le 4}^{} (T-z^{a})$. So $\mathbb{Q}(z)$ is already a splitting field for $f$ over $\mathbb{Q}$, and $[\mathbb{Q}(z):\mathbb{Q}]=4$.
@@ -649,7 +649,7 @@ Our next result is nontrivial, even for subfields of $\mathbb{C}$.
     \end{enumerate}
 \end{example}
 \section{Normal extensions}
-    We have this nice philosophy to pass from polynomials and their properties to fields generated by the roots of polynomials. ?? ?? "intrinsic" characterization of splitting fields.
+    We have this nice philosophy to pass from polynomials and their properties to fields generated by the roots of polynomials. Here we'll give an "intrinsic" characterization of splitting fields.
 \begin{defn}
     $L/K$ is a \textbf{normal} extension if $L/K$ is algebraic, and for every $x \in L$, $m_{x,K}$ splits into linear factors over $L$.
 \end{defn}

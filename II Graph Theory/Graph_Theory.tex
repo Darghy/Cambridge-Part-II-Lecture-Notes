@@ -570,7 +570,7 @@ Let $G$ be a graph. Let $\lambda(G) = \min \{|W| ~|~ W \subseteq E(G), G-W \text
 \end{defn}
 \begin{defn}
     The \textbf{chromatic number of $G$} is \[
-    \mathcal{X}(G) = \min \{k ~|~ \exists \text{ a }k\text{coloring of }G\}.
+    \mathcal{X}(G) = \min \{k ~|~ \exists \text{ a }k\text{-coloring of }G\}.
     \]
 \end{defn}
 \begin{example}
@@ -586,7 +586,7 @@ Let $G$ be a graph. Let $\lambda(G) = \min \{|W| ~|~ W \subseteq E(G), G-W \text
     \end{itemize}
 \end{example}
 \begin{prop}
-    Let $G$ be a graph. Then $\mathcal{X}(G) \ge \Delta(G) + 1$.
+    Let $G$ be a graph. Then $\mathcal{X}(G) \le \Delta(G) + 1$.
 \end{prop}
 \begin{proof}
     Let $x_1,\ldots,x_n$ be an ordering of $V(G)$. We color the $(x_i)$ one at a time in this order. When we come to vertex $x_i$, at most $\Delta$ colors have been used in $N(x_i)$, so there is a free color for $x_i$.
@@ -634,7 +634,7 @@ Let $G$ be a graph. Let $\lambda(G) = \min \{|W| ~|~ W \subseteq E(G), G-W \text
 \begin{theorem}[Four color theorem, non-examinable]
     If $G$ is planar, then $\mathcal{X}(G)\le 4$.
 \end{theorem}
-To see this is equivalent to the map version, take the dual of our graph (place a vertex inside each face (and one for the infinite face) and connect by an edge if the two faces have any common boundary).
+To see this is equivalent to the map version, take the dual of our graph (place a vertex inside each face (and one for the infinite face) and connect two vertices by an edge if the two faces have any common boundary).
 \vspace{1mm}
 
 Kempe "proved" the four colour theorem in 1879, but his proof had a mistake. It was then proved in 1976 by reducing the problem to about 2000 configurations and checking them by computer.
@@ -642,11 +642,13 @@ Kempe "proved" the four colour theorem in 1879, but his proof had a mistake. It 
 
 Also, this is the best we can do, since $K_4$ is planar - there is no "three color theorem".
 
+\subsection{Coloring graphs}
+
 \begin{prop}
     Let $G$ be connected and $\delta(G)<\Delta(G)$. Then $\mathcal{X}(G)\le \Delta(G)$.
 \end{prop}
 \begin{proof}
-    Let $x_n$ have $\text{deg}(x_n) < \Delta(G)$. Then choose $x_{n-1}$ to be adjacent to $x_n$, $x_{n-2}$ to be adjacent to one of $\{x_n,x_{n-1}\}$, etc. Since $G$ is connected, we eventually order everything and the ordering has the property that all vertices have less than $\Delta(G)$ edges going forward, so color greedily and we're done.
+    Let $x_n$ have $\text{deg}(x_n) < \Delta(G)$. Then choose $x_{n-1}$ to be adjacent to $x_n$, $x_{n-2}$ to be adjacent to one of $\{x_n,x_{n-1}\}$, etc. Since $G$ is connected, we eventually order everything and the ordering has the property that all vertices have less than $\Delta(G)$ edges going to vertices with smaller index, so color greedily and we're done.
 \end{proof}
 
 \begin{theorem}[Brooks]
