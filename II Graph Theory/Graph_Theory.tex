@@ -611,4 +611,66 @@ Let $G$ be a graph. Let $\lambda(G) = \min \{|W| ~|~ W \subseteq E(G), G-W \text
     Induction step: Given a graph $G$, let $x$ be a vertex with $\text{deg}(x)\le 5$. Apply induction to $G-x$, which gives a coloring of $G-x$ with 6 colors. But $x$ has degree $\le 5$, thus there is a free color to color $x$ with.
 \end{proof}
 
+\marginpar{24 Oct 2022, Lecture 8}
+
+\begin{theorem}
+    If $G$ is planar, then $\mathcal{X}(G) \le 5$. 
+\end{theorem}
+\begin{proof}
+    We apply induction on $|G|$. If $|G|\le 5$, we're done.
+    
+    Now let $G$ be a planar graph  and $x \in V(G)$ with $\text{deg}(x)\le 5$. Apply induction to $G-x$. Let neighbor $x_i$ of $x$ have color $i$, ordered clockwise around $x$. 
+    \vspace{1mm}
+    
+    Question: Can we get from $x_1$ to $x_3$ only walking along vertices colored $1$ and $3$?
+
+    If no, let $C$ be the component of $G$ of vertices colored 1 or 3 that contains $x_1$, so $x_3 \not\in C$. "Swap" the colours 1 and 3 on $C$. This is a proper coloring of $G-x$, so we can color $x$ with color 1 and we're done.
+    
+    If yes, ask the same question for $x_2$ and $x_4$ - if the answer is no, swap colors on the 2--4 component containing $x_2$, and we can color $x$ with color 2.
+
+    If the answer is again yes, then we get a contradiction to planarity since the 1--3 path and the 2--4 path have to intersect somewhere and we're done.
+\end{proof}
+
+\begin{theorem}[Four color theorem, non-examinable]
+    If $G$ is planar, then $\mathcal{X}(G)\le 4$.
+\end{theorem}
+To see this is equivalent to the map version, take the dual of our graph (place a vertex inside each face (and one for the infinite face) and connect by an edge if the two faces have any common boundary).
+\vspace{1mm}
+
+Kempe "proved" the four colour theorem in 1879, but his proof had a mistake. It was then proved in 1976 by reducing the problem to about 2000 configurations and checking them by computer.
+\vspace{1mm}
+
+Also, this is the best we can do, since $K_4$ is planar - there is no "three color theorem".
+
+\begin{prop}
+    Let $G$ be connected and $\delta(G)<\Delta(G)$. Then $\mathcal{X}(G)\le \Delta(G)$.
+\end{prop}
+\begin{proof}
+    Let $x_n$ have $\text{deg}(x_n) < \Delta(G)$. Then choose $x_{n-1}$ to be adjacent to $x_n$, $x_{n-2}$ to be adjacent to one of $\{x_n,x_{n-1}\}$, etc. Since $G$ is connected, we eventually order everything and the ordering has the property that all vertices have less than $\Delta(G)$ edges going forward, so color greedily and we're done.
+\end{proof}
+
+\begin{theorem}[Brooks]
+    Let $G$ be a connected graph which is not an odd cycle or a complete graph. Then $\mathcal{X}(G)\le \Delta(G)$.
+\end{theorem}
+\begin{proof}
+    Apply induction on $|G|$. The claim is clearly is true for $|G|\le 3$. 
+
+    Note that we may assume that $\Delta\ge 3$ (where $\Delta=\Delta(G)$).
+    \vspace{1mm}
+    
+    \textbf{Claim 1.} If $G$ is 3-connected, then we're done.
+    \vspace{1mm}
+    
+    Proof. Define an ordering of $G$ as in the proposition above. Let $x_n$ have $\text{deg}(x_n) = \Delta$ and choose $x_1,x_2 \in N(x_n)$ with $x_1 \neq x_2, x_1 \not\sim x_2$. This is possible, since $G$ is not $K_{\Delta+1}$.
+
+    Now consider $G \setminus \{x_1,x_2\}$. We order this in the same way as above: connect $x_{n-1}$ to $x_n$, $x_{n-2}$ to $x_{n-1}$ or $x_n$, etc. Since $G\setminus \{x_1,x_2\}$ is connected, we eventually order every vertex. Hence we're done by coloring greedily.
+    \vspace{1mm}
+    
+    \textbf{Claim 2.} If $\kappa(G)=1$, we're done.
+    \vspace{1mm}
+    
+    Proof. Let $x$ be a cut vertex and let $C_1,\ldots,C_k$ be the components of $G-x$. By induction, we can color each $G[C_i \cup x]$. Then permute colors to have $x$ always be the same color, and put everything back together to get a coloring of $G$.
+\end{proof}
+
+
 \end{document}
