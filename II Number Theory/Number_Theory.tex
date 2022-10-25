@@ -823,9 +823,96 @@ Three tricks to evaluate Legendre symbols:
         Then \[
         \sum_{a=1}^{p-1} \left(\frac{a(a+1)}{p} \right) = \sum_{b=1}^{p-1} \left(\frac{b+1}{p} \right) = -1.
         \]
-    
-        
     \end{enumerate}
 \end{proof}
 
+\section{Binary quadratic forms}
+
+\marginpar{25 Oct 2022, Lecture 9}
+
+\textbf{Question.} Which numbers can be written as the sum of two squares?
+
+Fermat gave an answer around 1630, and Euler published the first proof in 1749.
+
+\begin{theorem}
+    Let $N$ be a positive integer. Then $N$ is the sum of two squares if and only if every prime $p \equiv 3 \pmod{4}$ that divides $N$ divides it to an even power.
+\end{theorem}
+\begin{proof}[Proof of the easy direction.]
+    $\implies$: Suppose $N=x^2+y^2$ and $p \mid N$, then $x^2 + y^2 \equiv 0 \pmod{p}$. If $p \equiv 3 \pmod{4}$, then $\left(\frac{-1}{p} \right) = -1$, so we must have $x\equiv y \equiv 0 \pmod{p}$. Then divide $N$ by $p^2$ and repeat until $p \nmid N$.
+    \vspace{1mm}
+    
+    $\impliedby$: Since $(x^2+y^2)(z^2+t^2)=(xz-yt)^2+(xt+yz)^2$, it suffices to prove the result the case $N=p$ with $p=2$ or $p \equiv 1\pmod{4}$. $p=2$ is easy, but $p \equiv 1 \pmod{4}$ is a little more involved, and we will prove it a later lecture.
+\end{proof}
+
+Euler also studied $x^2+2y^2, x^2+3y^2$, etc. In this section we study \textbf{binary quadratic forms} with integer coefficients, i.e. $f(x,y)=ax^2+bxy+cy^2$ for $a,b,c \in \mathbb{Z}$.
+\begin{defn}
+    We say $f$ \textbf{represents} n if $f(x,y)=n$ for some $x,y \in \mathbb{Z}$.
+\end{defn}
+We may write $f$ as $(a,b,c)$ or in matrix notation as $$f(x,y) = \begin{pmatrix} x & y \end{pmatrix} \begin{pmatrix} a & \frac{b}{2} \\ \frac{b}{2} & c \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix}.$$
+\begin{example}
+    $f(x,y)=x^2+y^2$ may be written as $(1,0,1)$ or $\begin{pmatrix} 1 & 0\\0&1 \end{pmatrix}$.
+
+    $g(x,y) = 4x^2 + 12xy + 10y^2$ may be written as $(4,12,10)$ or $\begin{pmatrix} 4 & 6 \\6 & 10 \end{pmatrix}$.
+\end{example}
+Note that $g(x,y) = (2x+3y)^2+y^2 = f(2x+3y,y)$. Do $f$ and $g$ represent the same numbers? No, as $g$ only represents even numbers.
+\vspace{1mm}
+
+Let $X=2x+3y, Y=y$, then $$\begin{pmatrix} X\\Y \end{pmatrix} = \begin{pmatrix} 2 & 3\\0 & 1 \end{pmatrix}\begin{pmatrix} x \\y \end{pmatrix} \implies \begin{pmatrix} x\\y \end{pmatrix} = \frac{1}{2}\begin{pmatrix} 1 & -3 \\0 & 2 \end{pmatrix}\begin{pmatrix} X \\ Y \end{pmatrix}.$$
+Note that we can have $X,Y \in \mathbb{Z}$, yet $x,y \not\in \mathbb{Z}$. 
+
+\begin{defn}
+    A \textbf{unimodular substitution} is one of the form $X = \alpha x + \gamma y, Y = \beta X + \delta Y$ where $\alpha,\beta,\gamma,\delta \in \mathbb{Z}$ and $\alpha \delta - \beta \gamma = 1$. 
+\end{defn}
+\begin{defn}
+    Two BQFs $f$ and $g$ are \textbf{equivalent}, written $f\sim g$, if they are related by a unimodular substitution.
+\end{defn}
+Exercise: Check $\sim$ is an equivalence relation (this is on the example sheet).
+
+\textbf{Note.} Equivalent forms represent the same integers.
+\vspace{1mm}
+
+The group $SL_2(\mathbb{Z}) = \left\{\begin{pmatrix} \alpha &\beta \\ \gamma& \delta \end{pmatrix} ~|~ \alpha,\beta,\gamma,\delta \in \mathbb{Z}, \alpha \delta - \beta \gamma = 1\right\}$ acts on the set of BQFs via $\begin{pmatrix} \alpha &\beta \\ \gamma&\delta \end{pmatrix} : f(x,y) \mapsto f(\alpha x + \gamma y, \beta x + \delta y)$. The equivalence classes are the orbits of this action.
+
+To check a group action, we need to check 
+\begin{enumerate}[(i)]
+    \item $\begin{pmatrix} 1 & 0\\0&1 \end{pmatrix} f = f$, which is true.
+    \item $\sigma(\tau f) = (\sigma \tau)f ~\forall \sigma, \tau \in SL_2(\mathbb{Z})$.
+\end{enumerate}
+Suppose $f=(a,b,c)$ and $g=(a',b',c')$ are equivalent, say $g = \sigma f$ for $\sigma = \begin{pmatrix}  \alpha & \beta\\ \gamma &\delta \end{pmatrix}$. Then 
+\begin{align*}
+    g(x,y)=f(\alpha x + \gamma y, \beta x + \delta y) = \begin{pmatrix} \alpha x + \gamma y & \beta x + \delta y \end{pmatrix} \begin{pmatrix} a & \frac{b}{2} \\ \frac{b}{2} & c \end{pmatrix} \begin{pmatrix} \alpha x  + \gamma y \\ \beta x + \delta y \end{pmatrix} = \\
+    \begin{pmatrix} x & y \end{pmatrix}\begin{pmatrix} \alpha & \beta \\ \gamma & \delta \end{pmatrix}\begin{pmatrix}  a & \frac{b}{2} \\ \frac{b}{2} & c \end{pmatrix}\begin{pmatrix} \alpha & \gamma \\ \beta & \delta \end{pmatrix}\begin{pmatrix} x \\ y \end{pmatrix}.
+\end{align*}
+Hence $\begin{pmatrix} a' & \frac{b'}{2} \\ \frac{b'}{2} & c' \end{pmatrix} = \sigma \begin{pmatrix} a & \frac{b}{2} \\ \frac{b}{2} & c \end{pmatrix} \sigma^\top$. Call this $(\star)$.
+
+To check (ii), we note that \[
+\sigma\left(\tau \begin{pmatrix} a & \frac{b}{2} \\ \frac{b}{2} & c \end{pmatrix} \tau^\top\right)\sigma^\top = (\sigma \tau)\begin{pmatrix} a & \frac{b}{2} \\ \frac{b}{2} & c \end{pmatrix} (\sigma \tau)^\top.
+\]
+\begin{defn}
+    The \textbf{discriminant} of $f(x,y) = ax^2+bxy+cy^2$ is $$\text{disc}(f) = b^2-4ac.$$
+\end{defn}
+\begin{example}
+    $\text{disc}(1,0,1) = -4, \text{disc}(4,12,10) = -16$.
+\end{example}
+\begin{lemma}
+    Equivalent BQFs have the same discriminant.
+\end{lemma}
+\begin{proof}
+    Taking determinants in $(\star)$ gives
+    \[
+        a'c' - \left(\frac{b'}{2}\right)^2 = \left(\text{det }\sigma\right)^2\left(ac - \left(\frac{b}{2}\right)^2\right).
+    \]
+    But $\det \sigma = 1$, so multiplying both sides by $-4$ gives $(b')^2-4a'c' = b^2-4ac$ as desired.
+\end{proof}
+\textbf{Remark.} The converse is not true, i.e. there exist BQFs with the same discriminant which are not equivalent.
+
+For example, $(1,0,6)$ and $(2,0,3)$ both have discriminant $-24$, but $(1,0,6)$ represents 1 (with $x=1,y=0$), but $(2,0,3)$ does not.
+\begin{lemma}
+    There exists a BQF $f$ with $\text{disc}(f)=d \iff d \equiv 0,1 \pmod{4}$. 
+\end{lemma}
+\begin{proof}
+    $\implies$: $d = b^2-4ac \equiv b^2 \equiv 0,1 \pmod{4}$.
+
+    $\impliedby$: If $d \equiv 0 \pmod{4}$, let $f = (1,0,-\frac{d}{4})$. If $d \equiv 1 \pmod{4}$, take $f = (1,1,\frac{1-d}{4})$.
+\end{proof}
 \end{document}
