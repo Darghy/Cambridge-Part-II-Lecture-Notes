@@ -669,4 +669,90 @@ Our next result is nontrivial, even for subfields of $\mathbb{C}$.
     Now there exists a $K$-isomorphism $K(x) \cong K(y)$, as $x,y$ are roots of the irreducible polynomial $g \in K[T]$. So by the uniqueness of splitting fields, $[L : K (x)] = [L(y) : K(y)]$. Multiply by $[K(x) : K] = [K(y) : K] = \text{deg}(g)$ and use the tower law to get that $[L:K] = [L(y) : K]$. So $L=L(y)$, i.e. $y \in L$.
 \end{proof}
 
+\marginpar{25 Oct 2022, Lecture 9}
+
+A "field-theoretic" version of splitting fields:
+\begin{cor}[Normal closure]
+    Let $L/K$ be an extension. Then there exists a finite extension $M/L$ such that 
+    \begin{enumerate}[(i)]
+        \item $M/K$ is a normal extension,
+        \item If $L \subset M' \subset M$ and $M'/K$ is normal, then $M'=M$.
+    \end{enumerate}
+    Moreover, any two such extensions are $L$--isomorphic.
+\end{cor}
+$M$ is said to be a \textbf{normal closure} of $L/K$.
+\begin{proof}
+    Let $L=K(x_1,\ldots,x_k)$ and let $f = \prod_{i}^{} m_{x_i,K}$. Let $M$ be a splitting field for $f$ over $L$. Then, as the $x_i$ are roots of $f$, $M$ is also a splitting field for $f$ over $K$, so it is normal.
+
+    Let $M'$ be as in (ii), then as $x_i \in M'$, $m_{x_i,K}$ splits in $M'$ (as $M'/K$ is normal). So $M'=M$.
+    \vspace{1mm}
+    
+    For uniqueness: any $M$ satisfying (i) must contain a splitting field for $f$, and by the above, (ii) implies that $M$ is a splitting field for $f$, so the result follows from uniqueness of splitting fields.
+\end{proof}
+
+\section{Separability}
+Over $\mathbb{C}$, we can tell if a polynomial has a multiple zero by looking at its derivative $f'$. Over arbitrary fields, it turns out that the same is true, if we replace analysis by algebra.
+\begin{defn}
+    The \textbf{formal derivative} of $f = \sum_{0\le i\le d}^{} a_iT^i \in K[T]$ is
+    \begin{align*}
+        f' = \sum_{1\le i \le d}^{} ia_i T^{i-1}.
+    \end{align*}
+\end{defn}
+\textbf{Exercise} : Check from the definition that $(f+g)'=f'+g',(fg)'=fg'+f'g$ and $(f^n)'=nf'f^{n-1}$.
+\begin{example}
+    In $K$ of characteristic $p>0$, $f=T^p+ a_0 \implies f' = pT^{p-1}=0$.
+\end{example}
+\begin{prop}
+    Let $f \in K[T]$, $L/K$ an extension and $x \in L$ a root of $f$. Then $x$ is a simple root if and only if $f'(x) \neq 0$.
+\end{prop}
+\begin{proof}
+    Write $f = (T-x)g \in L[T]$. Then $f' = g + (T-x)g'$, so $f'(x)=g(x)$ and $g(x)\neq0$ if and only if $(T-x) \nmid g$, i.e. $f$ has a simple zero at $x$.
+\end{proof}
+\begin{defn}
+    Say $f \in K[T]$ is \textbf{separable} if its splits into distinct linear factors (times a constant) in a splitting field (i.e. has $\text{deg}(f)$ distinct roots).
+\end{defn}
+\begin{cor}
+    $f$ is separable if and only if $\text{gcd}(f,f')=1$.
+\end{cor}
+Aside: we'll take $\text{gcd}(f,g)$ to be the unique monic $h$ such that $\text{gcd}(f,g)=h$. Then $h=af+bg$, and Euclid's algorithm allows us to compute $h,a,b$. End of aside.
+
+Observe that $\text{gcd}(f,g)$ is the same in $K[T]$ as in $L[T]$ for any $K \subset L$, since Euclid's algorithm gives the same result in $K[T]$ and $L[T]$.
+
+\begin{proof}
+    Replace $K$ by a splitting field for $f$, so we may assume $f$ has all its roots in $K$. It is separable if $f, f'$ have no common root, which is true if and only if $\text{gcd}(f,f')=1$.
+\end{proof}
+
+\begin{example}
+    $\text{char}(K)=p>0$, $f = T^p - b, b \in K$. Then $f'=0$, so $\text{gcd}(f,f')=f \neq 1$. So $f$ is inseparable. Let $L$ be any extension of $K$ containing $a \in L, a^p = b$. Then $f=(T-a)^p = T^p + (-a)^p = T^p - b$. 
+
+    So $f$ has only one root in a splitting field. In fact, if $b$ isn't a $p^{\text{th}}$ power in $K$, then $f$ is irreducible (exercise!)
+\end{example}
+\begin{theorem}
+    \begin{enumerate}[(i)]
+        \item Let $f \in K[T]$ be irreducible. Then $f$ is separable if and only if $f' \neq 0$. 
+        \item If $\text{char}(K)=0$, then every irreducible polynomial in $K[T]$ is separable.
+        \item If $\text{char}(K)=p>0$, then an irreducible $f \in K[T]$ is \textbf{inseparable} (i.e. not separable) if and only if $f=g(T^p)$ for some $g \in K[T]$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \begin{enumerate}[(i)]
+        \item Assume WLOG that $f$ is monic. Then, as $f$ is irreducible, we have $\text{gcd}(f,f') = f$ or $1$. If $\text{gcd}(f,f')=f$, then as $\text{deg}(f')<\text{deg}(f)$, we must have $f'=0$ (and the converse is obvious - if the gcd is 1, then $f$ is separable).
+        \item Write $f = \sum_{i=0}^{d} a_iT^i$, so $f' = \sum_{i=1}^{d} ia_iT^{i-1}$, so $f'=0 \iff ia_i = 0$ for all $1\le i\le d$. If $\text{char}(K)=0$, then $a_i=0 ~\forall i \implies f = a_0$ is a constant, so not irreducible.
+        \item Analogously to above, if $\text{char}(K)=p>0$, then $f'=0 \iff a_i=0$ for all $i$ not divisible by $p$ $\iff f=g(T^p) = \sum_{}^{} a_{pi}T^i$. 
+    \end{enumerate}
+\end{proof}
+We now go from polynomials to fields.
+\begin{defn}
+    Let $L/K$ be an extension. We say $x \in L$ is \textbf{separable} over $K$ if $x$ is algebraic over $K$ and its minimal polynomial $m_{x,K}$ is separable. We say $L/K$ is \textbf{separable} if $~\forall x \in L$, $x$ is separable over $K$. 
+    
+    We say an extension is inseparable if it is not separable, i.e. some element is not separable over $K$.
+\end{defn}
+\begin{theorem}
+    Let $x$ be algebraic over $K$, and $L/K$ any extension in which $m_{x,K}$ splits. Then $x$ is separable over $K$ if and only if there are exactly $\text{deg}_K(x)$ $K$--homomorphisms from $K(x) \to L$. 
+\end{theorem}
+\begin{proof}
+    Recall from Theorem \ref{6.2} that the number of such homomorphisms is the number of roots of $m_{x,K}$ in $L$. This is equal to the degree of $x$ if and only if $x$ is separable, because the minimal polynomial splits.
+\end{proof}
+
+
 \end{document}
