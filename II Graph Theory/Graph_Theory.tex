@@ -644,7 +644,7 @@ Also, this is the best we can do, since $K_4$ is planar - there is no "three col
 
 \subsection{Coloring graphs}
 
-\begin{prop}
+\begin{prop}\label{3.5}
     Let $G$ be connected and $\delta(G)<\Delta(G)$. Then $\mathcal{X}(G)\le \Delta(G)$.
 \end{prop}
 \begin{proof}
@@ -672,7 +672,77 @@ Also, this is the best we can do, since $K_4$ is planar - there is no "three col
     \vspace{1mm}
     
     Proof. Let $x$ be a cut vertex and let $C_1,\ldots,C_k$ be the components of $G-x$. By induction, we can color each $G[C_i \cup x]$. Then permute colors to have $x$ always be the same color, and put everything back together to get a coloring of $G$.
+
+    \marginpar{26 Oct 2022, Lecture 9}
+    \vspace{1mm}
+    
+    \textbf{Claim 3.} If $\kappa(G)=2$, we're done.
+    \vspace{1mm}
+    
+    Proof. Let $S \subset V(G)$, $S=\{x,y\}, x\neq y$ be our separator. Let $C_1,\ldots,C_k$ be the components of $G-S$ and let $G_i = G[C_i \cup S]+xy$ for each $i$.
+    \begin{itemize}
+        \item Case 1: $\delta(G_i)<\Delta(G) ~\forall i$. In this case we can always color $C_1,\ldots,C_k$ by Proposition \ref{3.5}. Note that in each of these colorings, $x,y$ have different colors, so we can permute colors in a way that $x,y$ always have the same color, and put everything back together to get a coloring of $G$.
+        \item Case 2: $\delta(G_1)=\Delta(G)$ (wlog assume $i=1$). In this case, $\kappa=2$ and $|N(x) \cap C_1| = \Delta-1$. Also, $|N(x) \cap C_2|=1$ and $|N(y) \cap C_2|=1$. Thus let $x', y' \in C_2$ be such that $x'\sim x, y'\sim y$. Now observe that $\tilde{S}=\{x,y'\}$ is not of this bad form, so we're done by Case 1.
+    \end{itemize}
 \end{proof}
+\subsection{Chromatic polynomials}
+\begin{defn}
+    For a graph $G$, define the \textbf{chromatic polynomial} of $G$ to be the function $P_G : \mathbb{Z}_{\ge 0} \to \mathbb{Z}_{\ge 0}$ by $P_G(t) = $ the number of $t$--colorings of $G$.
+
+    In particular, the minimal value of $t$ for which $P_G(t)>0$ is $t = \mathcal{X}(G)$.
+\end{defn}
+\begin{example}
+    \begin{itemize}
+        \item $P_{\overline{K_n}}(t)=t^n$.
+        \item $P_{K_n}(t)=t(t-1)\ldots(t-(n-1))$.
+        \item $P_{P_{n-1}}(t)=t(t-1)^{n-1}$.
+        \item $P_T(t)=t(t-1)^{n-1}$ where $T$ is a tree with $n$ vertices (proof: take a leaf, induct).
+    \end{itemize}
+\end{example}
+
+\begin{defn}
+    Let $G$ be a graph and $e \in E(G)$. Define $G/e$ to be the \textbf{contraction} of $G$ along $e$, which is the graph 
+    \begin{align*}
+        V(G/e) = V(G)\setminus \{x,y\} \cup \{xy\}, \\
+        E(G) = E(G[V\setminus \{x,y\}]) \cup \{ez ~|~ x \sim z\} \cup \{ez ~|~ y \sim z\}.
+    \end{align*}
+    (In other words, you just "squish" the edge $e$ and its endpoints become a single vertex.)
+\end{defn}
+\begin{prop}
+    Let $G$ be a graph. We have $P_G(t) = P_{G-e}(t) - P_{G/e}(t)$.
+\end{prop}
+\begin{proof}
+    Let $e=xy$. A $t$--coloring of $G-e$ where $x,y$ get different colors corresponds exactly to a $t$--coloring of $G$. On the other hand, a $t$--coloring of $G-e$ where $x,y$ get the same color corresponds exactly to a $t$--coloring of $G/e$. 
+\end{proof}
+\begin{prop}
+    For a graph $G$, $P_G$ is a polynomial.
+\end{prop}
+\begin{proof}
+    Apply induction on $e(G)$. For the base case $e(G)=0$, $P_{\overline{K_n}}(t)=t^n$.
+    Induction step: For $e \in E(G)$, $P_G(t) = P_{G-e}(t) - P_{G/e}(t)$ is a polynomial (as it is the difference of two polynomials), so we're done by induction.
+\end{proof}
+\begin{prop}
+    Let $G$ be a graph with $n$ vertices and $m$ edges. Then $$P_G(t)=t^n - m t^{n-1} + \ldots.$$
+\end{prop}
+\begin{proof}
+    Induction on the number of edges. If $e(G)=0$, then we're done.
+    \vspace{1mm}
+    
+    Induction step: Let $e \in E(G)$ and apply the deletion-contraction relation,
+    $P_G(t)=P_{g-e}(t)- P_{G/e}(t)$. By induction, the leading terms on the RHS are \[
+    (t^n - (m-1)t^{n-1} + \ldots) - (t^{n-1} - e(G/e)t^{n-2} + \ldots) = t^n - mt^{n-1} + \ldots .
+    \]
+\end{proof}
+\textbf{Remarks.} 
+\begin{itemize}
+    \item Other coefficients of $P_G$ contain other information about $G$, e.g. $$P_G = t^n - mt^{n-1} + \left({{n}\choose{2}} - \text{the number of triangles in }G\right)t^{n-2} + \ldots.$$
+    \item If $G$ is planar, then $P_G(2 + \frac{1+\sqrt{5}}{2}) \neq 0$.
+    \item The coefficients of $c_0,\ldots,c_n$ of $P_G(t)$ are log-concave, i.e. $c_i^2 \ge c_{i-1}c_{i+1}$. June Huh won a Fields medal for this in 2021.
+\end{itemize}
+
+
+
+
 
 
 \end{document}
