@@ -747,12 +747,97 @@ We now go from polynomials to fields.
     
     We say an extension is inseparable if it is not separable, i.e. some element is not separable over $K$.
 \end{defn}
-\begin{theorem}
+\begin{theorem}\label{8.4}
     Let $x$ be algebraic over $K$, and $L/K$ any extension in which $m_{x,K}$ splits. Then $x$ is separable over $K$ if and only if there are exactly $\text{deg}_K(x)$ $K$--homomorphisms from $K(x) \to L$. 
 \end{theorem}
 \begin{proof}
     Recall from Theorem \ref{6.2} that the number of such homomorphisms is the number of roots of $m_{x,K}$ in $L$. This is equal to the degree of $x$ if and only if $x$ is separable, because the minimal polynomial splits.
 \end{proof}
 
+\marginpar{27 Oct 2022, Lecture 10}
+
+\textbf{Notation}: We write $\text{Hom}_K(L,M)$ for the set of $K$--homomorphisms from $L$ to $M$ (not to be confused with $K$--linear maps $L$ to $M$). 
+
+\begin{theorem}[Counting embeddings]\label{8.5}
+    Let $L=K(x_1,\ldots,x_k)$ be a finite extension of $K$, and $M/K$ any extension. Then $$|\text{Hom}_K(L,M)|\le [L : K]$$ with equality holding if and only if 
+    \begin{enumerate}[(i)]
+        \item $~\forall i, m_{x_i,K}$ splits into linear factors over $M$; and
+        \item all the $x_i$ are separable over $K$.
+    \end{enumerate}
+\end{theorem}
+\textbf{Remark.} (i), (ii) are just saying that $m_{x_i,K}$ splits into distinct linear factors over $M$.
+
+\textbf{Remark.} There is an obvious variant of this: take any homomorphism $\sigma : K \to M$, then $|\{\sigma \text{-homomorphisms }L \to M\}| \le [L:K]$ with equality if and only if $~\forall i, \sigma m_{x_i,K}$ splits over $M$. 
+
+\begin{proof}
+    Induction on $k$. $k=0$ is obvious.
+    
+    Now write $K_1=K(x_1)$, $\text{deg}_{K}(x_1) = d = [K_1 : K]$. Then, by Theorem \ref{8.4}, $$|\text{Hom}_K(K_1,M)| = e = |\{\text{number of roots of }m_{x_1,K} \text{ in } M\}| \le d.$$
+    
+    Let $\sigma : K_1 \to M$ be a $K$--homomorphism. Apply induction to $L/K_1$, so there exist at most $[L : K_1]$ extensions of $\sigma$ that are a homomorphism $L \to M$. Hence
+    \[
+    |\text{Hom}_K(L,M)| \le e [L:K_1] \le d[L:K_1] = [L:K].
+    \]
+    If equality holds, then $e=d$, i.e. $m_{x_1,K}$ has $d$ distinct roots in $M$. Replacing $x_1$ by another $x_i$, we get (i) and (ii).
+    \vspace{1mm}
+    
+    Conversely, assuming that (i) and (ii) hold, we see by Theorem \ref{8.4} that $|\text{Hom}_K(K_1,M)|=d$. (i) and (ii) still hold over $K_1$, so by induction on $k$, each $\sigma : K_1 \to M$ has $[L:K_1]$ extensions to $L \to M$, so $|\text{Hom}_K(L,M)|=[L:K]$.
+\end{proof}
+This result has two corollaries.
+\begin{theorem}[Separably generated implies separable]\label{8.6}
+    Let $L=K(x_1,\ldots,x_k)$ be a finite extension of $K$. Then $L/K$ is separable if and only if all the $x_i$ are separable over $K$.
+\end{theorem}
+\begin{proof}
+    $L/K$ separable $\implies $ $x_i$ separable by definition.
+    \vspace{1mm}
+    
+    Conversely, assume all the $x_i$ are separable over $K$, and let $M$ be a normal closure (splitting field of $\prod_{}^{} m_{x_i,K}$) over $L$. Then in our theorem above, (i) and (ii) hold, so $|\text{Hom}_K(L,M)|=[L:K]$. But if $x \in L$, then $L = K(x,x_1,\ldots,x_k)$ as well. So by our theorem, $x$ is separable over $K$.
+\end{proof}
+\begin{cor}
+    Let $x,y$ in $L$, an extension of $K$. If $x,y$ are separable over $K$, then so are $x+y,xy$ and $\frac{1}{x}$ (for $x$ nonzero).
+\end{cor}
+\begin{proof}
+    Apply Theorem \ref{8.6} to $K(x,y)$.
+\end{proof}
+So in particular, the elements of $L$ that are separable over $K$ form a subfield of $L$.
+\begin{theorem}[Primitive element theorem for separable extensions]
+    Let $K$ be an infinite field and $L=K(x_1,\ldots,x_k)$, where $x_1,\ldots,x_k$ are separable over $K$. Then $\exists x \in L$ such that $L=K(x)$. (By Theorem \ref{8.6}, $x$ is also separable over $K$).
+\end{theorem}
+\begin{proof}
+    It is enough to consider the case $k=2$. Then $L=K(x,y)$ with $x,y$ separable over $K$. Let $n=[L:K]$, and let $M$ be a normal closure for $L/K$. Then there exist $n$ distinct $K$--homomorphisms $\sigma_i : L \to M$. Let $a \in K$ and consider $z=x+ay$. We will choose $a \in K$ such that $L=K(z)$.
+
+    As $L=K(x,y)$,we have $\sigma_i(x)=\sigma_j(x)$ and $\sigma_i(y)=\sigma_j(y)$ if and only if $x=y$. Consider $\sigma_i(z)=\sigma_i(x) + a \sigma_i(y) \in M$. If $\sigma_i(z)=\sigma_j(z)$, then $$(\sigma_i(x)-\sigma_j(x))+a(\sigma_i(y)-\sigma_j(y))=0.$$ But if $i\neq j$, then at least of the terms in parentheses is nonzero. Therefore there exists at most one $a \in K$ for which $\sigma_i(z)=\sigma_j(z)$.
+
+    As $K$ is infinite, $\exists a \in K$ such that all $\sigma_i(z)$ are distinct. But then $\text{deg}_K(z) = n$, so $L=K(z)$.
+\end{proof}
+For finite fields, the result is easy:
+\begin{theorem}
+    If $L/K$ is an extension of finite fields, then $L=K(x)$ for some $x \in L$.
+\end{theorem}
+\begin{proof}
+    The multiplicative group $L^\times$ is cyclic, so let $x$ be a generator. Then $L=K(x)$.
+\end{proof}
+\section{Galois Theory}
+Automorphisms of fields: $\sigma : L \to L$ is an \textbf{automorphism} of the field $L$ if it is a bijective homomorphism (this is true if and only if it is a homomorphism and has an inverse).
+
+The set of automorphisms of $L$ forms a group (under composition). This is called the automorphism group of $L$, denoted $\text{Aut}(L)$.
+
+If $S \subset \text{Aut}(L)$ is a subset, let \[
+L^S = \{ x \in L \mid ~\forall \sigma \in S, \sigma(x)=x\}.
+\]
+This is a subfield of $L$ (since each $\sigma$ is a homomorphism), called the \textbf{fixed field} of $S$.
+\begin{example}
+    If $L=\mathbb{C}$ and $\sigma$ is complex conjugation, then $L^{\{\sigma\}}=\mathbb{R}$.
+\end{example}
+Let $L/K$ be an extension. Define \[
+\text{Aut}(L/K)= \{K\text{-automorphisms of }L\} = \{\sigma \in \text{Aut}(L) \mid \sigma(x)=x ~\forall x \in K\}.
+\]
+Equivalently, $\sigma \in \text{Aut}(L)$ is in $\text{Aut}(L/K) \iff K \subset L^{\{\sigma\}}$. This is a subgroup of $\text{Aut}(L)$.
+\begin{theorem}
+    Let $L/K$ be finite. Then $|\text{Aut}(L/K)| \le [L:K]$.
+\end{theorem}
+\begin{proof}
+    Take $M=L$ in Theorem \ref{8.5}. Then $\text{Hom}_K(L,M) = \text{Aut}(L/K)$.
+\end{proof}
 
 \end{document}
