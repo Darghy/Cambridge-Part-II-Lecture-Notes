@@ -915,4 +915,87 @@ For example, $(1,0,6)$ and $(2,0,3)$ both have discriminant $-24$, but $(1,0,6)$
 
     $\impliedby$: If $d \equiv 0 \pmod{4}$, let $f = (1,0,-\frac{d}{4})$. If $d \equiv 1 \pmod{4}$, take $f = (1,1,\frac{1-d}{4})$.
 \end{proof}
+
+\marginpar{27 Oct 2022, Lecture 10}
+
+\begin{defn}
+    A quadratic form $f(x_1,\ldots,x_n)=\sum_{i\le j}^{} a_{ij}x_ix_j$ with $a_{ij} \in \mathbb{R}$ is:
+    \begin{itemize}
+        \item \textbf{positive definite} if $f(x)>0 ~\forall 0 \neq x \in \mathbb{R}^n$.
+        \item \textbf{negative definite} if $f(x)<0 ~\forall 0 \neq x \in \mathbb{R}^n$.
+        \item \textbf{indefinite} if $f(x)>0$ and $f(x')<0$ for some $x,x' \in \mathbb{R}^n$. 
+    \end{itemize}
+\end{defn}
+We are interested in the case $n=2$ and $a_{ij} \in \mathbb{Z}$.
+
+\begin{lemma}
+    Let $f(x,y)=ax^2+bxy+cy^2$ be a BQF which has discriminant $d=b^2-4ac$. 
+    \begin{enumerate}[(i)]
+        \item If $d<0$ and $a>0$, then $f$ is positive definite.
+        \item If $d<0$ and $a<0$, then $f$ is negative definite.
+        \item If $d>0$, then $f$ is indefinite.
+        \item If $d=0$, then $f= \lambda(mx+ny)^2$ for $\lambda,m,n \in \mathbb{Z}$.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    \begin{align*}
+        4af(x,y)=4a^2x^2+4abxy+&4acy^2 = \\ 
+        (2ax+by)^2 + &(4ac-b^2)y^2 = (2ax+by)^2 - dy^2.
+    \end{align*}
+
+    (i) and (ii): If $d<0$ and $a\neq 0$, then it follows that $4af(x,y)\ge 0$ with equality if and only if $x=y=0$. The cases $a>0$ and $a<0$ now show $f$ is either positive or negative definite as desired.
+    \vspace{1mm}
+    
+    (iii): Suppose $d>0$. If $a\neq 0$, then the above equation shows us that $4af(1,0)>0$ and $4af(-b,2a)<0$, so $f$ is indefinite. 
+    
+    If $a=0$, then replace $f(x,y) \mapsto f(y,x)$. This works unless $a=c=0$, but then $b\neq 0$, so $f(x,y)=bxy$, which is obviously indefinite.
+    \vspace{1mm}
+    
+    (iv): Omitted (not interesting nor difficult).
+\end{proof}
+
+\textbf{Remark.} It is possible for a BQF $(a,b,c)$ with $a,b,c>0$ to be indefinite, e.g. $(1,3,1)$.
+
+It is also possible for $(a,b,c)$ with $b<0$ to be positive definite, e.g. $(1,-1,2)$.
+\vspace{1mm}
+
+From now on, we will concentrate on positive definite BQFs, i.e. forms $(a,b,c)$ with $d=b^2-4ac<0$ and $a>0$ (and hence $c>0$).
+
+We have an equivalence relation $\sim$ on positive definite BQFs, and we want to study the equivalence classes. It will help if we can specify a "simplest" form for each equivalence class.
+
+\begin{example}
+    Consider $(10,34,29)$. The middle coefficient is large -- can we decrease it? If $f(x) = ax^2+bxy+cy^2$, then one substitution we may try is 
+    \begin{align*}
+        f(x+\lambda y,y)=a(x+\lambda y)^2+ b(x + \lambda y)y + &cy^2 = \\ 
+        ax^2 &+ (b+2\lambda a)xy + (\lambda^2 a + \lambda b + c)y^2.
+    \end{align*}
+    Taking $\lambda = \pm 1$ shows $$(a,b,c) \sim (a,b \pm 2a, a \pm b + c). ~~~~(\dagger)$$
+    In our example, we get $(10,34,29) \sim (10,14,5) \sim (10, -6, 1)$.
+
+    Making the substitution $X=y, Y=-x$ gives $$(a,b,c) \sim (c,-b, a). ~~~~ (\ddagger)$$ In our example we now get $$(10,-6,1) \sim (1, 6, 10) \sim (1,4, 5) \sim (1,2,2) \sim (1,0,1).$$
+\end{example}
+\textbf{Remark.} It is a good idea to check that the discriminant doesn't change (to catch mistakes).
+
+\textbf{Remark.} We can ensure $|b|\le a$ via $(\dagger)$, and $a\le c$ via $(\ddagger)$.
+\begin{defn}
+    A positive definite BQF is \textbf{reduced} if either \[
+    -a < b \le a < c ~\text{, or } ~ 0\le b \le a = c.
+    \]
+\end{defn}
+(Think of this as $|b|\le a \le c$ + some extra conditions).
+\begin{lemma}
+    Every positive definite BQF is equivalent to a reduced form.
+\end{lemma}
+\begin{proof}
+    We have operations $$S : (a,b,c) \mapsto (c, -b, a), ~T_{\pm}:(a,b,c) \mapsto (a, b \pm 2a, a \pm b +c).$$
+    If $a>c$, then use $S$ to decrease $a$ while leaving $|b|$ unchanged. If $a\le c$ and $|b|>a$, then use $T_{\pm}$ to decrease $|b|$ while leaving $a$ unchanged. 
+    
+    Repeat these steps. Each step decreases $a + |b|$, so this procedure must eventually reach a form with $|b|\le a\le c$. Finally, to get the form we want in the lemma:
+
+    \begin{itemize}
+        \item If $b=-a$, then apply $T_+$ to replace $(a,-a,c) \mapsto (a, a, c)$.
+        \item If $a=c$ and $b<0$, then apply $S$ to get $b>0$.
+    \end{itemize}
+\end{proof}
+
 \end{document}
