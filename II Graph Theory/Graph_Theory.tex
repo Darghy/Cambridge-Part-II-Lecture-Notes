@@ -682,7 +682,7 @@ Also, this is the best we can do, since $K_4$ is planar - there is no "three col
     Proof. Let $S \subset V(G)$, $S=\{x,y\}, x\neq y$ be our separator. Let $C_1,\ldots,C_k$ be the components of $G-S$ and let $G_i = G[C_i \cup S]+xy$ for each $i$.
     \begin{itemize}
         \item Case 1: $\delta(G_i)<\Delta(G) ~\forall i$. In this case we can always color $C_1,\ldots,C_k$ by Proposition \ref{3.5}. Note that in each of these colorings, $x,y$ have different colors, so we can permute colors in a way that $x,y$ always have the same color, and put everything back together to get a coloring of $G$.
-        \item Case 2: $\delta(G_1)=\Delta(G)$ (wlog assume $i=1$). In this case, $\kappa=2$ and $|N(x) \cap C_1| = \Delta-1$. Also, $|N(x) \cap C_2|=1$ and $|N(y) \cap C_2|=1$. Thus let $x', y' \in C_2$ be such that $x'\sim x, y'\sim y$. Now observe that $\tilde{S}=\{x,y'\}$ is not of this bad form, so we're done by Case 1.
+        \item Case 2: $\delta(G_1)=\Delta(G)$ (wlog assume $i=1$). In this case, $k=2$ and $|N(x) \cap C_1| = \Delta-1$. Also, $|N(x) \cap C_2|=1$ and $|N(y) \cap C_2|=1$. Thus let $x', y' \in C_2$ be such that $x'\sim x, y'\sim y$. Now observe that $\tilde{S}=\{x,y'\}$ is not of this bad form, so we're done by Case 1.
     \end{itemize}
 \end{proof}
 \subsection{Chromatic polynomials}
@@ -729,19 +729,77 @@ Also, this is the best we can do, since $K_4$ is planar - there is no "three col
     \vspace{1mm}
     
     Induction step: Let $e \in E(G)$ and apply the deletion-contraction relation,
-    $P_G(t)=P_{g-e}(t)- P_{G/e}(t)$. By induction, the leading terms on the RHS are \[
+    $P_G(t)=P_{G-e}(t)- P_{G/e}(t)$. By induction, the leading terms on the RHS are \[
     (t^n - (m-1)t^{n-1} + \ldots) - (t^{n-1} - e(G/e)t^{n-2} + \ldots) = t^n - mt^{n-1} + \ldots .
     \]
 \end{proof}
-\textbf{Remarks.} 
+\textbf{Remarks.} We're going to stop here, but chromatic polynomials have a lot of other properties. For example:
 \begin{itemize}
     \item Other coefficients of $P_G$ contain other information about $G$, e.g. $$P_G = t^n - mt^{n-1} + \left({{n}\choose{2}} - \text{the number of triangles in }G\right)t^{n-2} + \ldots.$$
     \item If $G$ is planar, then $P_G(2 + \frac{1+\sqrt{5}}{2}) \neq 0$.
     \item The coefficients of $c_0,\ldots,c_n$ of $P_G(t)$ are log-concave, i.e. $c_i^2 \ge c_{i-1}c_{i+1}$. June Huh won a Fields medal for this in 2021.
 \end{itemize}
 
+\marginpar{28 Oct 2022, Lecture 10}
 
+\subsection{Edge coloring}
+\begin{defn}
+    For a graph $G$, a $k$--edge coloring is a function $c : E(G) \to [k]$ such that $c(e)\neq c(f)$ whenever $e,f \in E(G)$ share an endpoint.
 
+    Define the \textbf{edge-chromatic number} (sometimes called the \textbf{chromatic index}) to be $$\mathcal{X}'(G) = \min\{k \mid \exists k\text{-edge coloring of }G\}.$$
+\end{defn}
+Note that an edge coloring of $G$ corresponds exactly to a vertex coloring of the line graph of $G$, and so $\mathcal{X}'(G)=\mathcal{X}(L(G))$.
+\vspace{1mm}
+
+\textbf{Remarks.} \begin{itemize}
+    \item $\mathcal{X}'(G) = \begin{cases}
+        2 &\text{ if } n \text{ even.} \\
+        3 &\text{ if } n \text{ odd.}
+    \end{cases}$
+    \item $\Delta(G) \le \mathcal{X}'(G)$.
+    \item We can have $\Delta(G) < \mathcal{X}'(G)$. For example, $\mathcal{X}'(\text{Petersen})=4$.
+    \item $\mathcal{X}'(G)\le 2 \Delta(G)-1$ by coloring greedily.
+    \item $\mathcal{X}$ and $\mathcal{X}'$ can be very different. For example, $\mathcal{X}'(K_{t,1})=t, \mathcal{X}(K_{t,1})=2$.
+\end{itemize}
+
+We now prove Vizing's theorem. First, some setup:
+\begin{defn}
+    Given an edge-coloring $c : E(G) \to [k]$, define the \textbf{color classes} of $c$ to be \[
+    C_i = \{e : c(e)=i\}.
+    \]
+\end{defn}
+\textbf{Question.} What does $(V(G), C_i \cup C_j)$ look like? It is the union of disjoint paths, isolated vertices and even cycles.
+
+We say the components of this graph are $\{i,j\}$--components.
+
+\begin{defn}
+    Let $y \in V(G), c \in [\Delta+1]$. We say that $c$ is \textbf{missing} at $y$ if none of the edges incident at $y$ have color $c$. 
+\end{defn}
+
+\begin{theorem}[Vizing's theorem]
+    Let $G$ be a graph. Then $$\mathcal{X}'(G) \in \{\Delta(G), \Delta(G)+1\}.$$
+\end{theorem}
+\begin{proof}
+    Induction on $e(G)$. If $e(G)=0$, we're done.
+
+    Induction step: given $G$, $e(G)>0$, let $xv \in e(G)$. Apply induction to the graph $G-xv$ to get a $\Delta+1$ edge coloring. We want to extend this coloring to $G$.
+
+    Note that there is a color missing at every vertex and let $c_0$ be the color missing at $x$. Define a sequence of $v_1,\ldots,v_k \in N(x)$ and corresponding colors $c_1,\ldots,c_k$ such that $c_i$ is missing at $v_i$ as follows:
+
+    First set $v_1=v$ and let $c_1$ be any color missing at $v_1$. Now say we have defined $v_i$ and $c_i$. Define $v_{i+1}$ such that $xv_{i+1}$ is colored $c_i$. Continue this way until one of two things happens:
+    \begin{itemize}
+        \item Case 1: Say we have defined $v_k,c_k$ and $c_k$ is missing at $x.$ Then recolor $xv_k$ with color $c_k$, so now $c_{k-1}$ is missing at $x$. Hence recolor $xv_{k-1}$ with color $c_{k-1}$, so now $c_{k-2}$ is missing at $x$, etc, until we color $xv_i$ with color $c_i$ for all $i\le k$. This includes $i=1$, so we're done.
+        \item Case 2: Say $c_k=c_i$ for some $i<k$. Note that we may assume $i=1$ by recoloring as in Case 1 (i.e. uncolor $xv_{i}$ and color $xv_j \to c_j$ for all $j<i$). The question we ask is whether $v_1$ is in the same $\{c_0,c_1\}$--component as $x$.
+        \begin{itemize}
+            \item If not, swap colors on the $\{c_0,c_1\}$--component containing $v_1$. Then $c_0$ is missing at both $x$ and $v_1$, and so we can color $xv_1$ with $c_0$ and we're done.
+            \item If yes, we need another question: Is $x$ in the same $\{c_0,c_1\}$--component as $v_k$?
+            \begin{itemize}
+                \item If the answer is no, then swap colors in the $\{c_0,c_1\}$--component containing $v_k$. So $c_0$ is missing at $v_k$ and $x$, so we are done by Case 1.
+                \item If yes, then $x,v_1,v_k$ are all in the same $\{c_0,c_1\}$--component. But one of $c_0,c_1$ is missing at each of $x,v_1,v_k$. Thus $x,v_1,v_k$ all have to be endpoints of a path in the same $\{c_0,c_1\}$--component, which is a contradiction.
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+\end{proof}
 
 
 
