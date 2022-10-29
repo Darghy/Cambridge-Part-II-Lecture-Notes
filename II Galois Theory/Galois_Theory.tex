@@ -654,7 +654,7 @@ Our next result is nontrivial, even for subfields of $\mathbb{C}$.
     $L/K$ is a \textbf{normal} extension if $L/K$ is algebraic, and for every $x \in L$, $m_{x,K}$ splits into linear factors over $L$.
 \end{defn}
 \textbf{Remark.} The condition is equivalent to: for every $x \in L$, $L$ contains a splitting field for $m_{x,K}$. Or again, for every irreducible $f \in K[T]$, if $f$ has a root in $L$, then it splits in $L[T]$. 
-\begin{theorem}[Splitting fields are normal]
+\begin{theorem}[Splitting fields are normal]\label{7.1}
     Let $L/K$ be a finite extension. Then $L/K$ is normal if and only if $L$ is the splitting field for some $f \in K[T]$ (not necessarily irreducible).
 \end{theorem}
 \begin{proof}
@@ -833,11 +833,83 @@ Let $L/K$ be an extension. Define \[
 \text{Aut}(L/K)= \{K\text{-automorphisms of }L\} = \{\sigma \in \text{Aut}(L) \mid \sigma(x)=x ~\forall x \in K\}.
 \]
 Equivalently, $\sigma \in \text{Aut}(L)$ is in $\text{Aut}(L/K) \iff K \subset L^{\{\sigma\}}$. This is a subgroup of $\text{Aut}(L)$.
-\begin{theorem}
+\begin{theorem}\label{9.1}
     Let $L/K$ be finite. Then $|\text{Aut}(L/K)| \le [L:K]$.
 \end{theorem}
 \begin{proof}
     Take $M=L$ in Theorem \ref{8.5}. Then $\text{Hom}_K(L,M) = \text{Aut}(L/K)$.
 \end{proof}
 
+\marginpar{29 Oct 2022, Lecture 11}
+
+\textbf{Fact.} If $K=\mathbb{Q}$ or $K=\mathbb{F}_p$, then $\text{Aut}(K)=\{1\}$ (since $\sigma=(1_K)=1_K \implies \sigma(m 1_K) = m 1_K ~\forall m \in \mathbb{Z}$, and $\mathbb{Q}$ is the field of fractions of $\mathbb{Z}$).
+
+So for any $L$, $\text{Aut}(L)=\text{Aut}(L/K)$ where $K$ is the prime subfield (copy of $\mathbb{Q}$ or $\mathbb{F}_p$).
+\vspace{1mm}
+
+We now want to have a notion of when $L/K$ has ''many'' symmetries.
+\begin{defn}
+    An extension $L/K$ is \textbf{Galois} if it is algebraic and $$L^{\text{Aut}(L/K)}=K.$$ (Recall that if $S \subset \text{Aut}(L)$ is a subset, then $L^S = \{x \in L \mid \sigma(x)=x ~\forall x \in S\}$, the \textbf{fixed field} of $S$). In other words, the automorphisms detect when an element of $L$ is in $K$.
+\end{defn}
+\begin{example}
+    \begin{itemize}
+        \item Simplest example: $\mathbb{C}/\mathbb{R}$ is Galois. 
+        \item $\mathbb{Q}(i)/\mathbb{Q}$ is Galois.
+        \item If $K/\mathbb{F}_p$ is a finite extension (so $K$ is a finite field), we have the Frobenius automorphism $\phi_p : K \to K, \phi_p(x)=x^p$. Then \[
+        K^{\{\phi_p\}} = \{x \in K \mid x \text{ is a root of }T^p-T\} = \mathbb{F}_p.
+        \]
+        So $K^{\text{(Aut)}(K/\mathbb{F}_p)} = \mathbb{F}_p$, i.e. $K/\mathbb{F}_p$ is a Galois extension.
+    \end{itemize}
+\end{example}
+\begin{defn}
+    If $L/K$ is Galois, we write $\text{Gal}(L/K) = \text{Aut}(L/K)$, the \textbf{Galois group} of $L/K$.
+\end{defn}
+\begin{theorem}[Classification of finite Galois extensions]
+    Let $L/K$ be finite, $G = \text{Aut}(L/K)$. Then the following are equivalent:
+    \begin{enumerate}[(i)]
+        \item $L/K$ is Galois, i.e. $K=L^G$.
+        \item $L/K$ is normal and separable.
+        \item $L$ is a splitting field of a separable polynomial over $K$.
+        \item $|\text{Aut}(L/K)|=[L:K]$ (recall we always have $\le $ here by Theorem \ref{9.1}).
+    \end{enumerate}
+    If any of the above hold, then the minimal polynomial of any $x \in L$ is $m_{x,L}=\prod_{i=1}^{r} (T-x_i)$, where $\{x_1,x_2,\ldots,x_r\} = \{\sigma(x) \mid  x \in G\}$, the orbit of $x$ in $G$ (for $x_i$ distinct).
+\end{theorem}
+\begin{proof}
+    (i) $\implies $ (ii) and the last part: Let $x \in L$, $\{x_1,\ldots,x_r\}$ the orbit of $x$ in $G$, $f = \prod_{}^{} (T-x_i)$, so $f(x)=0$. As $G$ permutes $\{x_i\}$, $f \in L^G[T] = K[T]$, so $m_{x,K} \mid f$. Also, since $m_{x,K}(\sigma(x)) = \sigma(m_{x,K}(x))=0$, every $x_i$ is a root of $m_{x,K}$. So $f = m_{x,K}$, and $x$ is separable over $K$, and $m_{x,K}$ splits in $L$, so $L/K$ is normal and separable.
+    \vspace{1mm}
+    
+    (i) $\implies$ (iii): By Theorem \ref{7.1}, $L$ is a splitting field for some $f \in K[T]$. Write $f = \prod_{}^{} q_ie^i$ where the $q_i$ are irreducible, distinct, and $e_i \ge 1$. As $L/K$ is separable, the $q_i$ are separable, so $g= \prod_{}^{} q_i$ is separable, and $L$ is also a splitting field for $g$.
+    \vspace{1mm}
+    
+    (iii) $\implies$ (iv): Write $L=K(x_1,\ldots,x_k)$ for the splitting field of some separable $f$ with roots $x_i$. Take $M = L$ and apply Theorem \ref{8.5}. As $m_{x,K} \mid f$, the conditions in the theorem are satisfied, so $$|\text{Aut}(L/K)|=|\text{Hom}_K(L,M)|=[L : K].$$
+
+    (iv) $\implies$ (i): Suppose $|G|=[L:K]$ (for $G = \text{Aut}(L/K)$). Then $G \subset \text{Aut}(L/L^G) \subset \text{Aut}(L/K)$, so $G = \text{Aut}(L/L^G)$, and $[L : K] = |G| \le [L : L^G]$. As $K \subset L^G$, this implies that $L^G = K$ by tower law.
+\end{proof}
+\begin{cor}\label{9.3}
+    Let $L/K$ be a finite Galois extension. Then $L=K(x)$ for some $x$, separable over $K$, of degree $[L:K]$.
+\end{cor}
+\begin{proof}
+    By (ii), $L/K$ is separable, so by the primitive element theorem, $L=K(x)$ and the rest follows.
+\end{proof}
+Now we come to one of the main results of Galois theory. We split the theorem into three parts.
+\begin{theorem}[The Galois correspondence]
+    Let $L/K$ be a finite Galois extension with Galois group $G = \text{Gal}(L/K)$.
+    \begin{enumerate}[(a)]
+        \item Suppose $F \subset L$ with $K \subset F$. Then $L/F$ is also a Galois extension, $\text{Gal}(L/F)\subset \text{Gal}(L/K)$, and the map $F \mapsto \text{Gal}(L/F)$ is a bijection \[
+        \{\text{intermediate fields } K \subset F \subset L\} \cong \{\text{subgroups }H \text{ of }G\}
+        \]
+        whose inverse is the map taking $H$ to the fixed field $L^H$. This bijection is inclusion--reversing, and if $F=L^H$, then $[F : K] = [G : H]$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}[Proof of (a)]
+    Let $x \in L$. Then $m_{x,F}$ divides $m_{x,K}$ in $F[T]$. As $m_{x,K}$ splits into distinct linear factors in $L$, so does $m_{x,F}$. So $L/F$ is normal and separable, hence Galois. By definition, $\text{Gal}(L/F)$ is a subgroup of $G$. To check we have a bijection, with the claimed inverse:
+    \begin{itemize}
+        \item $$F \mapsto H = \text{Gal}(L/F) \mapsto L^H \stackrel{?}{=} F.$$
+        But $L^{\text{Gal}(L/F)}=F$ as $L/F$ is Galois, i.e. $L^H = F$.
+        \item $$H \mapsto L^H \mapsto \text{Gal}(L/L^H) \stackrel{?}{=} H.$$
+        It is enough to show that $[L:L^H] \le |H|$, since certainly $H \subset \text{Gal}(L/L^H)$, and $|\text{Gal}(L/L^H)| \le [L : L^H]$. By Corollary \ref{9.3} we get $L=L^H(x)$, and $f = \prod_{\sigma \in H}^{} (T-\sigma(x)) \in L^H[T]$, with $x$ as a root. So $[L : L^H] = \text{deg}_{L^H}(x) \le \text{deg}(f) = |H|$. So we have a bijection. If $F \subset F'$, then $\text{Gal}(L/F') \subset \text{Gal}(L/F)$, so the bijection is inclusion--reversing. Finally, if $F=L^H$, then (as $L/K$ and $L/F$ are both Galois) \[
+        [F:K] = \frac{[L:K]}{L:F} = \frac{|\text{Gal}(L/K|}{|\text{Gal}(L/F)|} = \frac{|G|}{|H|} = [G:H].
+        \]
+    \end{itemize}
+\end{proof}
 \end{document}
