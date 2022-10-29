@@ -982,8 +982,8 @@ We have an equivalence relation $\sim$ on positive definite BQFs, and we want to
     -a < b \le a < c ~\text{, or } ~ 0\le b \le a = c.
     \]
 \end{defn}
-(Think of this as $|b|\le a \le c$ + some extra conditions).
-\begin{lemma}
+(Think of this as $|b|\le a \le c$ with some extra conditions).
+\begin{lemma}\label{4.5}
     Every positive definite BQF is equivalent to a reduced form.
 \end{lemma}
 \begin{proof}
@@ -997,5 +997,63 @@ We have an equivalence relation $\sim$ on positive definite BQFs, and we want to
         \item If $a=c$ and $b<0$, then apply $S$ to get $b>0$.
     \end{itemize}
 \end{proof}
+
+\marginpar{29 Oct 2022, Lecture 11}
+
+\begin{lemma}
+    Let $f=(a,b,c)$ be a reduced positive definite BQF with discriminant $d$. Then $|b|\le a \le \sqrt{\frac{|d|}{3}}$ and $b \equiv d \pmod{2}$.
+\end{lemma}
+\begin{proof}
+    Being reduced implies $|b|\le a\le c$, and $d = b^2-4ac \le ac -4ac = -3ac \le -3a^2 \implies a^2 \le \frac{|d|}{3}$. Also $d = b^2-4ac \implies b \equiv d \pmod{2}$.
+\end{proof}
+\begin{example}
+    Consider $d = -4$. We must have $a=1$ by the lemma above (as $a>0$), and $b=0$ (by parity), so solve for $c$ to get $c=1$, i.e. $x^2+y^2$ is the only positive definite reduced BQF with discriminant $-4$. 
+\end{example}
+
+We can now return to the beginning of this section and answer our original question: which numbers can be written as the sum of two squares?
+\begin{proof}[Proof of Theorem 4.1 (continued)]
+    Let $p$ be a prime, $p \equiv 1\pmod{4}$. We have $\left(\frac{-1}{p} \right) = 1$, so $\exists u \in \mathbb{Z}$ such that $u^2 \equiv -1 \pmod{p} \implies u^2 = -1 + kp$ for some $k \in \mathbb{Z}$. Let $f = (p,2u,k)$, so $\text{disc}(f) = 4u^2 - 4pk = -4$.
+    \vspace{1mm}
+    
+    By Lemma \ref{4.5}, $f \sim g$ for some reduced form $g$, but by our above example, $g(x,y)= x^2+y^2$. Now $f$ represents $p$ (take $x=1,y=0$), so $g$ also represents $p$, i.e. $p$ is the sum of two squares as required.
+\end{proof}
+\textbf{Question.} Can reduced forms be equivalent?
+
+\begin{defn}
+    Let $f$ be a BQF and $n \in \mathbb{Z}$. We say $f$ \textbf{represents} $n$ if $n=f(x,y)$ for some $x,y \in \mathbb{Z}$. We say $f$ \textbf{properly represents} $n$ if $n=f(x,y)$ for some coprime $x,y \in \mathbb{Z}$.
+\end{defn}
+\textbf{Remark.} Equivalent forms properly represent the same integers, since if $X=\alpha x  + \gamma y, Y = \beta x + \delta y$ with $\alpha,\beta,\gamma,\delta \in \mathbb{Z}$, then $\alpha \delta - \beta \gamma = 1$ implies $\gcd(X,Y)=1 \iff \gcd(x,y)=1.$
+\begin{lemma}\label{4.7}
+    The smallest integers properly represented by a reduced positive definite BQF $f=(a,b,c)$ are $a,c, a - |b| + c$ in that order.\footnote{Values on this list are repeated if they are represented in more than one way, not counting repeats of the form $f(x,y)=f(-x,-y)$.}
+\end{lemma}
+\begin{proof}
+    $f$ reduced $\implies |b| \le a \le c \implies a \le c \le a - |b| + c$. We have $f(1,0)=a$, $f(0,1)=c$. If $x=0$, then $\gcd(x,y)=1 \implies y=\pm 1$. Likewise, if $y=0$, then $x = \pm 1$.
+
+    So it remains to show that the smallest number represented by $f$ using nonzero $x,y$ is $a-|b|+c$. But if $|x|\ge |y|\ge 1$, then 
+    \begin{align*}
+        f(x,y)=ax^2+bxy+cy^2\ge ax^2 - |b||x||y| + cy^2 \ge (a-|b|)x^2 + cy^2 \ge a - |b| + c.
+    \end{align*}
+    We can achieve equality with $f(1,\pm 1)$. We proceed similarly if $|y|\ge |x|\ge 1$.
+\end{proof}
+\begin{theorem}
+    Every positive definite BQF is equivalent to a unique reduced form.
+\end{theorem}
+\begin{proof}
+    Existence follows from Lemma \ref{4.5}.
+
+    Uniqueness: Suppose $f=(a,b,c)$ and $g=(a',b',c')$ are equivalent reduced BQFs. We want to show $a=a',b=b',c=c'$. By Lemma \ref{4.7}, $a=a',c=c'$ and $a-|b|+c = a' -|b'|+ c'$, so $(a,b,c)=(a',\pm b',c')$.
+    \vspace{1mm}
+    
+    If $b=0$, we're done. If $b\neq 0$, can $(a,b,c)$ and $(a,-b,c)$ both be reduced? If yes, then $a<c$ (since $a=c$ requires $b\ge 0$ by definition) and $|b| <a$ (since we can't have $b=-a$). Hence $a < c < a - |b| + c$. By Lemma \ref{4.7} again, $f(x,y)=a \iff (x,y) = (\pm 1,0)$ and $f(x,y) = c \iff (x,y) = (0,\pm 1)$, and likewise for $g$.
+    \vspace{1mm}
+    
+    Suppose $g(x,y) = f(\alpha x + \gamma y, \beta x + \delta y) = f(X,Y)$. Then 
+    \begin{align*}
+        (X,Y) = (\pm 1, 0) \iff (x,y) = (\pm 1, 0) \\
+        (X,Y) = (0, \pm 1) \iff (x,y) = (0, \pm 1),
+    \end{align*}
+    i.e. $\begin{pmatrix} \alpha & \beta \\ \gamma & \delta \end{pmatrix} = \begin{pmatrix} \pm 1 & 0 \\ 0 & \pm 1 \end{pmatrix}$. But $\alpha \delta - \beta \gamma = 1$, so $\begin{pmatrix} \alpha & \beta \\ \gamma & \delta \end{pmatrix} = \pm \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$, so $f=g$ as required.
+\end{proof}
+
 
 \end{document}
