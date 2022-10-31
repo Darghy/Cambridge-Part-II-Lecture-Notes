@@ -570,23 +570,23 @@ Let $G$ be a graph. Let $\lambda(G) = \min \{|W| ~|~ W \subseteq E(G), G-W \text
 \end{defn}
 \begin{defn}
     The \textbf{chromatic number of $G$} is \[
-    \mathcal{X}(G) = \min \{k ~|~ \exists \text{ a }k\text{-coloring of }G\}.
+    \chi(G) = \min \{k ~|~ \exists \text{ a }k\text{-coloring of }G\}.
     \]
 \end{defn}
 \begin{example}
     \begin{itemize}
-        \item A path has chromatic number 2. $\mathcal{X}(P_n)=2$.
-        \item For a cycle, $\mathcal{X}(G) = \begin{cases}
+        \item A path has chromatic number 2. $\chi(P_n)=2$.
+        \item For a cycle, $\chi(G) = \begin{cases}
             2 &\text{ if }n \text{ is even.}\\
             3 &\text{ if }n \text{ is odd.}
         \end{cases}$
         \item A tree has chromatic number 2 by induction.
-        \item A complete graph has $\mathcal{X}(K_n) = n$.
-        \item A bipartite graph has $\mathcal{X}(K_{m,n}) = 2$. In fact, a graph $G$ is bipartite if and only if $\mathcal{X}(G)=2$.
+        \item A complete graph has $\chi(K_n) = n$.
+        \item A bipartite graph has $\chi(K_{m,n}) = 2$. In fact, a graph $G$ is bipartite if and only if $\chi(G)=2$.
     \end{itemize}
 \end{example}
 \begin{prop}
-    Let $G$ be a graph. Then $\mathcal{X}(G) \le \Delta(G) + 1$.
+    Let $G$ be a graph. Then $\chi(G) \le \Delta(G) + 1$.
 \end{prop}
 \begin{proof}
     Let $x_1,\ldots,x_n$ be an ordering of $V(G)$. We color the $(x_i)$ one at a time in this order. When we come to vertex $x_i$, at most $\Delta$ colors have been used in $N(x_i)$, so there is a free color for $x_i$.
@@ -602,7 +602,7 @@ Let $G$ be a graph. Let $\lambda(G) = \min \{|W| ~|~ W \subseteq E(G), G-W \text
     But all degrees of vertices are integers, so the minimal degree is $\le 5$.
 \end{proof}
 \begin{prop}
-    If $G$ is planar, then $\mathcal{X}(G)\le 6$.
+    If $G$ is planar, then $\chi(G)\le 6$.
 \end{prop}
 \begin{proof}
     We induct. Base step: if $|G| \le 6$, then we're clearly done.
@@ -614,7 +614,7 @@ Let $G$ be a graph. Let $\lambda(G) = \min \{|W| ~|~ W \subseteq E(G), G-W \text
 \marginpar{24 Oct 2022, Lecture 8}
 
 \begin{theorem}
-    If $G$ is planar, then $\mathcal{X}(G) \le 5$. 
+    If $G$ is planar, then $\chi(G) \le 5$. 
 \end{theorem}
 \begin{proof}
     We apply induction on $|G|$. If $|G|\le 5$, we're done.
@@ -632,7 +632,7 @@ Let $G$ be a graph. Let $\lambda(G) = \min \{|W| ~|~ W \subseteq E(G), G-W \text
 \end{proof}
 
 \begin{theorem}[Four color theorem, non-examinable]
-    If $G$ is planar, then $\mathcal{X}(G)\le 4$.
+    If $G$ is planar, then $\chi(G)\le 4$.
 \end{theorem}
 To see this is equivalent to the map version, take the dual of our graph (place a vertex inside each face (and one for the infinite face) and connect two vertices by an edge if the two faces have any common boundary).
 \vspace{1mm}
@@ -645,14 +645,14 @@ Also, this is the best we can do, since $K_4$ is planar - there is no "three col
 \subsection{Coloring graphs}
 
 \begin{prop}\label{3.5}
-    Let $G$ be connected and $\delta(G)<\Delta(G)$. Then $\mathcal{X}(G)\le \Delta(G)$.
+    Let $G$ be connected and $\delta(G)<\Delta(G)$. Then $\chi(G)\le \Delta(G)$.
 \end{prop}
 \begin{proof}
     Let $x_n$ have $\text{deg}(x_n) < \Delta(G)$. Then choose $x_{n-1}$ to be adjacent to $x_n$, $x_{n-2}$ to be adjacent to one of $\{x_n,x_{n-1}\}$, etc. Since $G$ is connected, we eventually order everything and the ordering has the property that all vertices have less than $\Delta(G)$ edges going to vertices with smaller index, so color greedily and we're done.
 \end{proof}
 
 \begin{theorem}[Brooks]
-    Let $G$ be a connected graph which is not an odd cycle or a complete graph. Then $\mathcal{X}(G)\le \Delta(G)$.
+    Let $G$ be a connected graph which is not an odd cycle or a complete graph. Then $\chi(G)\le \Delta(G)$.
 \end{theorem}
 \begin{proof}
     Apply induction on $|G|$. The claim is clearly is true for $|G|\le 3$. 
@@ -689,7 +689,7 @@ Also, this is the best we can do, since $K_4$ is planar - there is no "three col
 \begin{defn}
     For a graph $G$, define the \textbf{chromatic polynomial} of $G$ to be the function $P_G : \mathbb{Z}_{\ge 0} \to \mathbb{Z}_{\ge 0}$ by $P_G(t) = $ the number of $t$--colorings of $G$.
 
-    In particular, the minimal value of $t$ for which $P_G(t)>0$ is $t = \mathcal{X}(G)$.
+    In particular, the minimal value of $t$ for which $P_G(t)>0$ is $t = \chi(G)$.
 \end{defn}
 \begin{example}
     \begin{itemize}
@@ -735,7 +735,7 @@ Also, this is the best we can do, since $K_4$ is planar - there is no "three col
 \end{proof}
 \textbf{Remarks.} We're going to stop here, but chromatic polynomials have a lot of other properties. For example:
 \begin{itemize}
-    \item Other coefficients of $P_G$ contain other information about $G$, e.g. $$P_G = t^n - mt^{n-1} + \left({{n}\choose{2}} - \text{the number of triangles in }G\right)t^{n-2} + \ldots.$$
+    \item Other coefficients of $P_G$ contain other information about $G$, e.g. $$P_G = t^n - mt^{n-1} + \left({{m}\choose{2}} - \text{the number of triangles in }G\right)t^{n-2} + \ldots.$$
     \item If $G$ is planar, then $P_G(2 + \frac{1+\sqrt{5}}{2}) \neq 0$.
     \item The coefficients of $c_0,\ldots,c_n$ of $P_G(t)$ are log-concave, i.e. $c_i^2 \ge c_{i-1}c_{i+1}$. June Huh won a Fields medal for this in 2021.
 \end{itemize}
@@ -746,20 +746,20 @@ Also, this is the best we can do, since $K_4$ is planar - there is no "three col
 \begin{defn}
     For a graph $G$, a $k$--edge coloring is a function $c : E(G) \to [k]$ such that $c(e)\neq c(f)$ whenever $e,f \in E(G)$ share an endpoint.
 
-    Define the \textbf{edge-chromatic number} (sometimes called the \textbf{chromatic index}) to be $$\mathcal{X}'(G) = \min\{k \mid \exists k\text{-edge coloring of }G\}.$$
+    Define the \textbf{edge-chromatic number} (sometimes called the \textbf{chromatic index}) to be $$\chi'(G) = \min\{k \mid \exists k\text{-edge coloring of }G\}.$$
 \end{defn}
-Note that an edge coloring of $G$ corresponds exactly to a vertex coloring of the line graph of $G$, and so $\mathcal{X}'(G)=\mathcal{X}(L(G))$.
+Note that an edge coloring of $G$ corresponds exactly to a vertex coloring of the line graph of $G$, and so $\chi'(G)=\chi(L(G))$.
 \vspace{1mm}
 
 \textbf{Remarks.} \begin{itemize}
-    \item $\mathcal{X}'(G) = \begin{cases}
+    \item $\chi'(G) = \begin{cases}
         2 &\text{ if } n \text{ even.} \\
         3 &\text{ if } n \text{ odd.}
     \end{cases}$
-    \item $\Delta(G) \le \mathcal{X}'(G)$.
-    \item We can have $\Delta(G) < \mathcal{X}'(G)$. For example, $\mathcal{X}'(\text{Petersen})=4$.
-    \item $\mathcal{X}'(G)\le 2 \Delta(G)-1$ by coloring greedily.
-    \item $\mathcal{X}$ and $\mathcal{X}'$ can be very different. For example, $\mathcal{X}'(K_{t,1})=t, \mathcal{X}(K_{t,1})=2$.
+    \item $\Delta(G) \le \chi'(G)$.
+    \item We can have $\Delta(G) < \chi'(G)$. For example, $\chi'(\text{Petersen})=4$.
+    \item $\chi'(G)\le 2 \Delta(G)-1$ by coloring greedily.
+    \item $\chi$ and $\chi'$ can be very different. For example, $\chi'(K_{t,1})=t, \chi(K_{t,1})=2$.
 \end{itemize}
 
 We now prove Vizing's theorem. First, some setup:
@@ -777,7 +777,7 @@ We say the components of this graph are $\{i,j\}$--components.
 \end{defn}
 
 \begin{theorem}[Vizing's theorem]
-    Let $G$ be a graph. Then $$\mathcal{X}'(G) \in \{\Delta(G), \Delta(G)+1\}.$$
+    Let $G$ be a graph. Then $$\chi'(G) \in \{\Delta(G), \Delta(G)+1\}.$$
 \end{theorem}
 \begin{proof}
     Induction on $e(G)$. If $e(G)=0$, we're done.
@@ -801,6 +801,84 @@ We say the components of this graph are $\{i,j\}$--components.
     \end{itemize}
 \end{proof}
 
+\subsection{Coloring graphs on surfaces}
 
+\marginpar{31 Oct 2022, Lecture 11}
+
+If $G$ is planar, we know that$\chi(G) \le 5$. (And really $\chi(G)\le 4$). If $G$ is drawn on a surface $S$, can we say anything about $\chi(G)$?
+\vspace{1mm}
+
+*picture*
+$K_7$ can be drawn on a Torus without edge crossings, so we don't have a 4 color theorem for the torus. 
+
+\textbf{Question.} Is there a "7 color theorem" for the torus?
+
+\begin{defn}
+    We define the surface of genus $g$ (officialy a compact orientable surface of genus $g$) to be the sphere with $g$ handles attached (or equivalently, the sphere with $g$ holes).
+\end{defn}
+
+Do we have an Euler-type theorem in this setting? Different cycles on the torus give different values for $V-E+F$, we get all of 2, 1, 0. *picture*
+
+\begin{prop}
+    Let $G$ be a graph drawn on a surface of genus $g$ with $n$ vertices, $m$ edges, and $f$ faces. Then $$n-m+f \ge 2 - 2g.$$
+\end{prop}
+\textbf{Remarks.}
+\begin{itemize}
+    \item $E = 2 - 2g$ is the \textbf{Euler characteristic} of the surface of genus $g$.
+    \item This is the direction of Euler's theorem ($\ge $, not $\le$) that we need to bound the number of edges of $G$.
+    \item We do not assume that the graph is connected here.
+    \item The proof is easy: we induct on $e(G)$. Removing an edge reduces $m$ by 1, and reduces $f$ by either 0 or 1.
+\end{itemize} 
+\begin{cor}
+    Let $G$ be a graph with $|G|\ge 3$, drawn on a surface of Euler characteristic $E$. Then $$e(G)\le 3(|G|-E).$$
+\end{cor}
+\begin{proof}
+    If $e(G)\le 2$, we can check the claim holds. When $e(G) \ge 3$, then every face in $G$ has length at least 3, so
+    \begin{align*}
+        3f \le \sum_{F \text{ a face}}^{} \text{deg}(F) \le 2e(G).
+    \end{align*}
+    Thus $f \le \frac{2}{3}e(G)$, so $e(G) \le n + f - E \implies e(G) \le 3(n-E)$.
+\end{proof}
+\begin{theorem}[Heawood's theorem]
+    Let $G$ be a graph drawn on a surface of Euler characteristic $E \le 0$. Then
+    \[
+    \chi(G) \le \left\lfloor \frac{7+\sqrt{49-24E}}{2} \right\rfloor.
+    \]
+\end{theorem}
+\begin{proof}
+    Let $G$ be a graph drawn on a surface of Euler characteristic $E$ and let $k = \chi(G)$. We may assume that $G$ is minimal, i.e. all proper subgraphs of $G$ have $\chi \le k-1$.
+    \vspace{1mm}
+    
+    We esimate $\delta(G)$ in two ways. Note $\delta(G)\ge k-1$: if not, let $x$ be a vertex with $\text{deg}(x)\le k-2$. We have $\chi(G-x)\le k-1$ by minimality, so we can put $x$ back and color it $\implies \chi(G)\le k-1$, contradiction.
+    \vspace{1mm}
+    
+    Note 
+    \begin{align*}
+        \delta(G)\le \text{the average degree of the graph} = \frac{1}{n}\sum_{x \in V(G)}^{} \text{deg}(x) = \\
+        \frac{2e(G)}{n} \le \frac{6(n-E)}{n} = 6 - \frac{6E}{n} \le 6 - \frac{6E}{k}
+    \end{align*}
+    because $n\ge k$ and $E \le 0$. So 
+    \begin{align*}
+        k-1 \le 6 - \frac{6E}{k} \implies k^2 - 7k + 6E \le 0 \implies k \le \frac{7 + \sqrt{49-24E}}{2}.
+    \end{align*}
+    As $k$ is an integer, we're done.
+\end{proof}
+\textbf{Remarks.} 
+\begin{itemize}
+    \item Define $H(E) = \left\lfloor \frac{7+\sqrt{49-24E}}{2} \right\rfloor$.
+    \item Did we just prove the four color theorem, since the above gives $H(2)=4$? No, since we assumed $E\le 0$.
+    \item Amazingly, Heawood's theorem is sharp. In particular, $K_{H(E)}$ can be drawn in the surface of Euler characteristic $E$ (but this is very hard!).
+\end{itemize}
+
+\section{Extremal graph theory}
+
+\textbf{Question.} What is the minimum number of edges a graph must have before it is forced to have a triangle? In other words, what is the value of $k$ such that if $e(G) > k$, then $K_3 \subset G$?
+\vspace{1mm}
+
+\textbf{Question.} How large does $\delta(G)$ have to be before $G$ is forced to have a cycle of length $|G|$?
+
+\begin{theorem}[Dirac]
+    Let $G$ be a graph, $|G|\ge 2$. If $\delta(G)\ge \frac{|G|}{2}$, then $G$ contains a cycle of length $|G|$.
+\end{theorem}
 
 \end{document}

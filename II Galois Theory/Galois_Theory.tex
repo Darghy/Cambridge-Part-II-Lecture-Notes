@@ -107,7 +107,7 @@ $K[X]$ is also a PID and UFD, so every polynomial is a product of irreducible po
     If $K$ is a field and $f \in K[x]$ is nonzero, then $f$ has at most $\text{deg}(f)$ roots in $K$.\footnote{Note that this is not true if $K$ is a ring.}
 \end{prop}
 \begin{proof}
-    If $f$ has no roots, we're done. Otherwise, let $f(a) = 0$ and write ${f = (X-a)g}$ with $\text{deg}(g) = \text{deg}(f) - 1$. But if $b$ is a root of $f$, then ${f(b) = 0} \implies b=a$ or $g(b)=0$, so $f$ has at most $(1 + \text{number of roots of g})$ roots and the claim follows by induction.
+    If $f$ has no roots, we're done. Otherwise, let $f(a) = 0$ and write ${f = (X-a)g}$ with $\text{deg}(g) = \text{deg}(f) - 1$. But if $b$ is a root of $f$, then ${f(b) = 0} \implies b=a$ or $g(b)=0$, so $f$ has at most $(1 + \text{number of roots of }g)$ roots and the claim follows by induction.
 \end{proof}
 
 \section{Symmetric polynomials}
@@ -552,7 +552,7 @@ Also recall that if $x$ is algebraic over $K$, then $K(x) \cong K[T]/(m_{x,K})$,
     $f(x)=0 \iff \text{ev}_x(f)=0$, where $\text{ev}_x : K[T] \to L$ is the homomorphism $g \mapsto g(x)$, i.e. "evaluate at $x$" $\iff \text{ker}(\text{ev}_x) = (f) \iff \text{ev}_x$ comes from a homomorphism $\sigma : K[T]/(f) \to L$ which is identity on $K$.
 \end{proof}
 \begin{cor}
-    If $L = K(x)$ for $x$ algebraic over $K$, then there exists a unique \textbf{isomorphism} $\sigma : L_f \to K(x)$ such that $\sigma(t)=X$, where $f=m_{x,K}$.  
+    If $L = K(x)$ for $x$ algebraic over $K$, then there exists a unique \textbf{isomorphism} $\sigma : L_f \to K(x)$ such that $\sigma(t)=x$, where $f=m_{x,K}$.  
 \end{cor}
 \begin{proof}
     Take $L = K(x)$ in the above theorem.
