@@ -1000,7 +1000,7 @@ We have an equivalence relation $\sim$ on positive definite BQFs, and we want to
 
 \marginpar{29 Oct 2022, Lecture 11}
 
-\begin{lemma}
+\begin{lemma}\label{4.6}
     Let $f=(a,b,c)$ be a reduced positive definite BQF with discriminant $d$. Then $|b|\le a \le \sqrt{\frac{|d|}{3}}$ and $b \equiv d \pmod{2}$.
 \end{lemma}
 \begin{proof}
@@ -1035,7 +1035,7 @@ We can now return to the beginning of this section and answer our original quest
     \end{align*}
     We can achieve equality with $f(1,\pm 1)$. We proceed similarly if $|y|\ge |x|\ge 1$.
 \end{proof}
-\begin{theorem}
+\begin{theorem}\label{4.8}
     Every positive definite BQF is equivalent to a unique reduced form.
 \end{theorem}
 \begin{proof}
@@ -1055,5 +1055,76 @@ We can now return to the beginning of this section and answer our original quest
     i.e. $\begin{pmatrix} \alpha & \beta \\ \gamma & \delta \end{pmatrix} = \begin{pmatrix} \pm 1 & 0 \\ 0 & \pm 1 \end{pmatrix}$. But $\alpha \delta - \beta \gamma = 1$, so $\begin{pmatrix} \alpha & \beta \\ \gamma & \delta \end{pmatrix} = \pm \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$, so $f=g$ as required.
 \end{proof}
 
+\marginpar{01 Nov 2022, Lecture 12}
+
+\textbf{Question.} How many reduced forms are there with a given discriminant?
+
+\begin{example}
+    Consider $d = -24$. We want to find $f = (a,b,c)$ reduced with $b^2-4ac=-24$. By Lemma \ref{4.6}, $|b|\le a \le \sqrt{8}$ and $b$ is even.
+    \begin{itemize}
+        \item If $a=1$, then $b=0$ and hence $c=6 \implies (1,0,6)$. We can check that this is reduced.
+        \item If $a=2$, then $c=\frac{b^2+24}{8}$.
+        \begin{itemize}
+            \item If $b=0$, then $c=3$. This is reduced.
+            \item If $b=\pm 2$, then $c \not\in \mathbb{Z}$.
+        \end{itemize}
+    \end{itemize}
+    So the only reduced forms with discriminant $-24$ are $(1,0,6)$ and $(2,0,3)$.
+\end{example}
+More generally, Lemma \ref{4.6} shows that for every $d$, there are only finitely many reduced forms with discriminant $d$.
+\begin{defn}
+    The \textbf{class number} of $d$, denoted $h(d)$ is the number of equivalence classes of positive definite BQFs with discriminant $d$.
+\end{defn}
+By Theorem \ref{4.8}, this is the number of reduced forms with discriminant $d$, hence finite by the last remark.
+\begin{example}
+    As we have already seen, $h(-4)=1, h(-24)=2$.
+\end{example}
+\begin{defn}
+    $d \equiv 0,1 \pmod{4}$ is a \textbf{fundamental discriminant} if it is not of the form $d=k^2d_1$ for some integer $k\ge 1$ and $d_1 \equiv 0,1 \pmod{4}$.
+\end{defn}
+
+Aside:
+
+\textbf{Remark.} Let $d<0$ be a fundamental discriminant. Gauss defined a group law on the set of equivalence classes of positive definite BQFs with discriminant $d$. The abelian group obtained in this way is the same as the class group of the field $\mathbb{Q}(\sqrt{d})$ (see Part II Number Fields). We insisted that $\alpha \delta - \beta \gamma = 1$ in the definition of equivalence (not just $=\pm 1$), since otherwise inverse elements in the class group would be the same element, hence it is no longer a group. End of aside.
+
+\textbf{Some theorems about class numbers.}
+
+\begin{enumerate}[(i)]
+    \item (Mertens 1874). \[
+    \sum_{-X<d<0}^{} h(d) \sim \frac{\pi}{18} X^{\frac{3}{2}} \text{ as } X \to \infty.
+    \]
+    \item (Heilbronn 1934) $h(d) \to \infty$ as $|d| \to \infty$.
+    \item (Siegel 1935) For every $\epsilon>0, \exists c>0$ such that $h(d)>c |d|^{\frac{1}{2}-\epsilon}$.
+    \item (Baker-Stark 1967) $h(d)=1 \iff d \in \{-3,-4,-7,-8,-11,-19,-43,-67,-163\}$.
+\end{enumerate}
+End of aside.
+
+\begin{lemma}\label{4.9}
+    Let $f$ be a BQF and $n \in \mathbb{Z}$. Then $f$ properly represents $n$ if and only if $f$ is equivalent to a form with first coefficient $n$.
+\end{lemma}
+\begin{proof}
+    $\impliedby$: Suppose $f \sim g(n,b,c)$. Then $g(1,0)=n \implies g$ properly represents $n$, so $f$ properly represents $n$.
+    \vspace{1mm}
+    
+    $\implies$: $f(\alpha,\beta)=n$ for some $\alpha,\beta \in \mathbb{Z}$ coprime. By Euclid's algorithm, $\exists \gamma,\delta \in \mathbb{Z}$ such that $\alpha \delta - \beta \gamma = 1$. Then $f$ is equivalent to $g(x,y) = f(\alpha x + \gamma y, \beta x + \delta y)$ with first coefficient $g(1,0) = f(\alpha,\beta)=n$.
+\end{proof}
+\begin{theorem}
+    Let $n$ be a positive integer and $d<0$ a discriminant. Then $n$ is properly represented by some positive definite BQF with discriminant $d$ if and only if the congurence $$x^2 \equiv d \pmod{4n}$$ is soluble.
+\end{theorem}
+\begin{proof}
+    $\implies$: Lemma \ref{4.9} shows $f \sim g$ with $g = (n,b,c)$. Then $$d = \text{disc}(f) = \text{disc}(g) = b^2 - 4nc \equiv b^2 \pmod{4n}.$$
+    \vspace{1mm}
+    
+    $\impliedby$: We are given $b,c \in \mathbb{Z}$ such that $b^2 = d + 4nc$. Then $f = (n,b,c)$ is a form of discriminant $d$ and it properly represents $n$ (with $x=1,y=0$).
+\end{proof}
+\begin{example}
+    Which integers are properly represented by $f(x,y)={x^2+xy+2y^2}$?
+    \vspace{1mm}
+    
+    We have $\text{disc}(f)=-7$, so $f$ is positive definite. By Lemma \ref{4.6}, any reduced form with discriminant $-7$ satisfies $|b|\le a \le 1$ and $b$ is odd. Hence $(a,b,c)=(1,1,2)$ or $(a,b,c) = (-1,-1,2)$. But the second one is not reduced, hence $h(-7)=1$ and all positive definite BQFs with discriminant $-7$ are equivalent.
+    \vspace{1mm}
+    
+    Hence $n$ is properly represented by $x^2+xy+2y^2$ if and only if $x^2 \equiv -7 \pmod{4n}$ is soluble.
+\end{example}
 
 \end{document}
