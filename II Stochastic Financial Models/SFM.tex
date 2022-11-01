@@ -1,0 +1,788 @@
+\documentclass{article}
+%build with recipe latexmk
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+%\addtolength{\headwidth}{\marginparwidth}
+%\addtolength{\headwidth}{\marginparsep}
+%\addtolength{\headwidth}{\marginparsep}
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+\usepackage{babel}
+\usepackage{enumerate}
+\usepackage{amsmath, amssymb, amsthm}
+%\usepackage{a4wide}
+\usepackage{float}
+\usepackage{bbm}
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\graphicspath{ {./images/} }
+\usepackage{setspace}
+\setstretch{1.1}
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=black,  %choose some color if you want links to stand out
+}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{example}{Example}[section]
+\newtheorem{defn}{Definition}[section]
+
+\title{Part II - Stochastic Financial Models
+    \\ \large
+    Lectured by Dr M. R. Tehranchi
+}
+
+\author{Artur Avameri}
+\date{Michaelmas 2022}
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
+
+\setcounter{section}{-1}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\marginpar{07 Oct 2022, Lecture 1}
+
+
+The goal of the course is to discuss some financial models. We will put ourself in the position of an investor and ask how we should invest. To do this, we first need to make some simplifying assumptions:
+\begin{itemize}
+    \item No dividends will ever be paid.
+    \item We can buy a continuous spectrum of shares, not only integer amounts.
+    \item There is no bid-ask spread, i.e. each stock only has one price value.
+    \item Our actions have no price impact.
+    \item There are no transaction costs.
+    \item There are no short-selling constraints.
+\end{itemize}
+
+For the next few lectures, we will only consider $t \in \{0,1\}$, i.e. one-period models. After that, we will consider $t \in \{0,1,\ldots\}$, i.e. discrete-time models, and at the end of the course, $t \in \mathbb{R}_{\ge 0}$, i.e. continuous-time models.
+
+\section{One-period models}
+
+Setup: There are $d$ risky assets, and the value of the $i^{\text{th}}$ asset at time $t$ is denoted by $S^i_t$, hence we have a vector of prices $S_t = (S^1_t, \ldots, S^d_t)^{\text{T}} \in \mathbb{R}^d$. There is also a risk-free asset, which pays a constant interest rate $r$. 
+
+\vspace{1mm}
+
+Introduce an investor who picks a portfolio at time 0. We say $\theta^i$ is the number of shares bought at time 0 (if $\theta^i<0$, the investor shorts $|\theta^i|$ shares) and $\theta^0$ is the number of shares the investor has of the risk-free asset.
+
+\vspace{1mm}
+    
+Let $X_t$ be the investor's wealth at time $t$. We hence have 
+\begin{align*}
+    X_0 = \theta^0 + \sum_{i=1}^{d} \theta^i S^i_0 = \theta^0 + \theta^{\text{T}}S_0 \\ X_1 = \theta^0(1+r) + \theta^{\text{T}}S_1.
+\end{align*}
+Eliminating $\theta^0$, we get \[
+X_1 = (1+r)X_0  + \theta^{\text{T}}(S_1 - (1+r)S_0).
+\]
+
+\textbf{Risk.} $r$ and $S_0$ are known constants. $S_1$ is unknown. We will also assume that we are certain of the distribution of $S_1$.
+
+\subsection{Mean-variance analysis}
+
+\textbf{Mean-variance portfolio problem.} (Markovitz, 1952). Given $x$ and $m$, find $\theta \in \mathbb{R}^d$ to minimize $\text{Var}(X_1)$ subject to $X_0 = x$ and $\mathbb{E}[X_1]\ge m$.
+
+Draw a graph of variance and mean on the $x-y$ plane. We get a subset on the right-hand side of the plane consisting of points of the form $(\text{Var}(X_1), \mathbb{E}[X_1])$.
+
+\begin{defn}[Mean-variance efficient frontier]
+    The mean-variance efficient frontier is just the left boundary of the above set, i.e. for every value of $m$, the strategy that minimizes variance while achieving $\mathbb{E}[X_1]=m$.
+\end{defn}
+\begin{defn}
+    A portfolio is \textbf{mean-variance efficient} if it is the optimal solution to a mean-variance portfolio problem for some $x,m$.
+\end{defn}
+
+\textbf{Notation/assumptions.} Assume that $S_1$ is square integrable, let:
+\begin{itemize}
+    \item $\mathbb{E}[S_1]= \mu \in \mathbb{R}^d$
+    \item $\text{Cov}(S_1) = V$, a $d \times d$ matrix, which we assume is positive definite (it is always nonnegative definite, but we want it to be invertible). We have $V  =\mathbb{E}[(S_1- \mu)(S_1 - \mu)^{\text{T}}] = \mathbb{E}[S_1S_1^{\text{T}}]-\mu \mu^{\text{T}}$.
+    \item Assume also that $\mu \neq (1+r)S_0$.
+\end{itemize}
+
+\begin{theorem}
+    The optimal solution to the mean-variance portfolio problem is
+    \begin{align*}
+        \theta^* = \lambda V^{-1}(\mu-(1+r)S_0) \text{,   where } \\
+        \lambda = \frac{(m-(1+r)x)^{+}}{(\mu-(1+r)S_0)^\top V^{-1} (\mu-(1+r)S_0)}
+    \end{align*}
+\end{theorem}
+\textbf{Notation.} For $a \in \mathbb{R}$, we have $a^+ = \max(0,a)$.
+
+\marginpar{10 Oct 2022, Lecture 2}
+
+Before we prove this, let's dwell on it for a bit.
+
+\begin{cor}[Mutual fund theorem]
+    A portfolio is mean-variance efficient if and only if it is a nonnegative scalar multiple of $\theta_{\text{mar}} = V^{-1}(\mu - (1+r)S_0)$.
+\end{cor}
+\begin{defn}
+    $\theta_{\text{mar}} = V^{-1}(\mu - (1+r)S_0)$ is called the \textbf{market portfolio}.
+\end{defn}
+
+\textbf{Remark.} What is the origin of the name "market portfolio"? Suppose there are $n_i$ shares of asset $i$, $1 \le i \le d$. Suppose there are $K$ investors and investor $k$ holds portfolio $\theta_k$. Market clearing (i.e. total supply equals total demand) implies $\sum_{k=1}^{K} \theta_k = n = \begin{pmatrix} n_1 & \ldots & n_d \end{pmatrix}^{\text{T}}$.
+
+Make an additional assumption: assume all investors agree on $\mu$ and $V$ and hold a mean-variance efficient portfolio. Then by the mutual fund theorem, $\theta_k = \lambda_k \theta_{\text{mar}}$ for some scalar $\lambda_k \ge 0$, hence $n = \Lambda \theta_{\text{mar}}$, where $\Lambda = \sum_{}^{} \lambda_k$. So $\theta_{\text{mar}}$, the market portfolio, is really just some scaling of the entire market by some $\Lambda$.
+
+\newpage
+\textbf{Notation for the proof.}
+\begin{itemize}
+    \item $\mathbb{E}[X_1] = (1+r)x + \theta^{\text{T}}(\mu-(1+r)S_0)$
+    \item $\text{Var}(X_1) = \theta^{\text{T}} V \theta$
+\end{itemize}
+So we want to minimize $\frac{1}{2} \theta^{\text{T}} V \theta$ subject to $\theta^{\text{T}}(\mu - (1+r)S_0) \ge m - (1+r)x$.
+
+Note that if we wrote $a = \mu - (1+r)S_0$ and $b = m-(1+r)x$, the condition above would just be $a^{\text{T}}\theta \ge b$. Note also that
+\begin{itemize}
+    \item $(\theta^*)^{\text{T}}(\mu-(1+r)S_0) = (m - (1+r)x)^+ \ge  m -(1+r)x.$ \newline In IB Optimization terms, this is primal feasibility. Using the above notation, this is also $a^{\text{T}}\theta^* \ge b$.
+    \item $\lambda \ge 0$ (dual feasibility).
+    \item $\lambda(m-(1+r)x - (\theta^*)^{\text{T}}(\mu - (1+r)S_0)) \color{red} = 0 \color{black}$. This is $\lambda(b-a^{\text{T}}\theta^*) = 0$, i.e. just complementary slackness.  
+\end{itemize}
+\begin{proof}
+    Now pick a feasible portfolio $\theta$. Note $\frac{1}{2}\theta^{\text{T}} V \theta \ge \frac{1}{2} \theta^{\text{T}} V \theta + \lambda(b - a^{\text{T}}\theta)$ since $\theta$ is feasible. Write this as 
+    \begin{align*}
+        &\frac{1}{2}\theta^{\text{T}} V \theta \ge \frac{1}{2} \theta^{\text{T}} V \theta + \lambda(b - a^{\text{T}}\theta) =\\ 
+        & = \frac{1}{2}(\theta-\theta^*)^{\text{T}} V (\theta-\theta^*) + \lambda b - \frac{1}{2}(\theta^*)^{\text{T}} V \theta^* \ge  \lambda b - \frac{1}{2}(\theta^*)^{\text{T}} V \theta^*   
+    \end{align*}
+    
+    where $\theta^* = \lambda V^{-1} a$, the last inequality follows from $V$ being positive definite, and with equality if and only if $\theta = \theta^*$. (This is just the proof of the Lagrangian sufficiency theorem).
+\end{proof}
+
+\subsection{Capital Asset pricing model}
+Recall a fact from probability: let $X,Y$ be square-integrable random variables (i.e. they have finite variances) with $\text{Var}(X)>0$. Then there exist unique numbers $a,b$ such that $Y = a + bX + Z$ where $\mathbb{E}[Z]=0$ and $\text{Cov}(X,Z) = 0$.
+\begin{proof}
+    Let $Z = Y - a - bX$ for $a,b$ to be determined. Then 
+    \begin{align*}
+        \mathbb{E}[Z] = 0 &\implies \mathbb{E}[Y] =a + b \mathbb{E}[X] \\
+        \text{Cov}(X,Z) = 0 &\implies \text{Cov}(Y,X) = b \text{Var}(X),
+    \end{align*}
+    which has a unique solution $b = \frac{\text{Cov}(Y,X)}{\text{Var}(X)}$ and $a = \mathbb{E}[Y] - b \mathbb{E}[X]$.
+\end{proof}
+\textbf{Remark.} Alternatively, the given values of $a$ and $b$ are the unique minimizers of $\mathbb{E}[(Y-a-bX)^2]$.
+
+Setup: Our investor has initial wealth $X_0$ and portfolio $\theta$. We still have ${X_1 = (1+r)X_0 + \theta^{\text{T}}(S_1 - (1+r)S_0)}$. Market capitalization will be proportional to $\theta_{\text{mar}}^{\text{T}}S_0$ at time 0 and $\theta_{\text{mar}}^{\text{T}}S_1$ at time 1.
+
+\begin{theorem}
+    $$X_1 - (1+r)X_0 = b(X_1^{\text{mar}} - (1+r)X_0^{\text{mar}}) + Z$$ where $\mathbb{E}[Z]=0$ and $\text{Cov}(X_{\text{mar}},Z)=0$.
+\end{theorem}
+\begin{theorem}[Reformulation with returns instead of wealths]
+    Let $R = \frac{X_1}{X_0} - 1$, $R_{\text{mar}} = \frac{X_1^{\text{mar}}}{X_0^{\text{mar}}} - 1$. Then alpha equals zero in a mean-variance efficient market. In other words, if $R - r = \alpha + \beta(R_{\text{mar}} - r) + \epsilon$ where $\mathbb{E}[\epsilon] = 0, \text{Cov}(R_{\text{mar}},\epsilon)=0$, then $\alpha = 0$.
+\end{theorem}
+\textbf{Remark.} This says that if every market participant were mean variance efficient, then we can't "beat" the market index (everyone has the same portfolio up to scaling). This is the CAPM assumption.
+
+\begin{proof}
+    We have
+    \[
+        \mathbb{E}[X_1 - (1+r)X_0] = \theta^{\text{T}}(\mu-(1+r)S_0)    
+    \]
+    and
+    \begin{multline*}
+        \text{Cov}(X_1-(1+r)X_0, X_1^{\text{mar}}-(1+r)X_0^{\text{mar}}) = \theta^{\text{T}} \text{Cov}(S_1)\theta_{\text{mar}} =\\ \theta^{\text{T}} V V^{-1} (\mu-(1+r)S_0) = \mathbb{E}[X_1 - (1+r)X_0].
+    \end{multline*}
+    Choosing $\theta=\theta_{\text{market}}$ in the calculation, we get $$\mathbb{E}[X_1^\text{mar} - (1+r)X_0^{\text{mar}}] = \text{Var}(X_1^{\text{mar}} - (1+r)X_0^{\text{mar}}).$$ 
+    Therefore $$a = \mathbb{E}[X_1 - (1+r)X_0] - b \mathbb{E}[X_1^{\text{mar}} - (1+r)X_0^{\text{mar}}],$$ 
+    but $$b = \frac{\text{Cov}(X_1-(1+r)X_0,X_1^{\text{mar}}-(1+r)X_0^{\text{mar}})}{\text{Var}(X_1^{\text{mar}}-(1+r)X_0^{\text{mar}})} = \frac{\mathbb{E}[X_1 - (1+r)X_0]}{\mathbb{E}[X_1^{\text{mar}} - (1+r)X_0^{\text{mar}}]},$$
+    so $a = 0$.
+\end{proof}
+
+\textbf{Remark.} Markowitz introduced mean-variance analysis, and Sharpe introduced CAPM. They won the Nobel prize in 1990.
+
+\newpage
+
+\marginpar{12 Oct 2022, Lecture 3}
+
+This tells us that \[
+\mathbb{E}[X_1] = (1+r)X_0 + \left(\mathbb{E}[X_1^{\text{mar}}]-(1+r)X_0^{\text{mar}} \right) \frac{\text{Cov}(X_1^{\text{mar}},X_1)}{\text{Var}(X_1^{\text{mar}})},
+\]
+i.e. $\alpha = 0$, i.e. $\theta^{\text{mar}}= \text{const}\cdot (n_1 \ldots n_d)^{\text{T}}$.
+\vspace{1mm}
+
+By similar reasoning to previous analysis, the optimal solution to "minimize $\text{Var}(X_1)$ wrt $X_0 =x$ and $\mathbb{E}[X_1] = m$ (notice the equals sign here instead of the inequality) is $\theta^* = \lambda \theta^{\text{mar}}$, where as before, $\theta^\text{mar} = V^{-1}(\mu - (1+r)S_0)$, but this time \[
+\lambda = \frac{m-(1+r)x}{(\mu-(1+r)S_0)^{\text{T}}V^{-1}(\mu-(1+r)S_0)}
+\]
+(note the lack of positive part in the numerator).
+Plugging this in for variance, we get that the minimized variance is 
+\[
+\text{min}\text{Var}(X_1) = \frac{(m-(1+r)x)^2}{(\mu-(1+r)S_0)^{\text{T}}V^{-1}(\mu-(1+r)S_0)},
+\]
+i.e. the efficient frontier is a parabola.
+
+\subsection{Expected utility}
+
+So far, we have implicitly assumed that an agent prefers $X$ to $Y$ if either 
+\begin{itemize}
+    \item $\mathbb{E}[X] > \mathbb{E}[Y]$ and $\text{Var}(X)=\text{Var}(Y)$, or
+    \item $\mathbb{E}[X]=\mathbb{E}[Y]$ and $\text{Var}(X)<\text{Var}(Y)$.
+\end{itemize}
+
+\textbf{Aside:} This is rather crude. For example, the St Petersburg paradox - toss a coin until you get heads, if it took $n$ tries, I pay you $2^n$ pounds. How much should you pay to play? The expected value is infinite, yet you obviously wouldn't pay me very much. End of aside.
+\vspace{1mm}
+
+The solution to this is to instead consider the \textbf{expected utility} of the payout.\footnote{In the real world, another solution is to consider counterparty risk: surely most people will not be actually be in a situation to give you $2^{40}$ pounds, so you should never pay more than 40 pounds to play.}
+
+\begin{defn}
+    The \textbf{expected utility hypothesis} says that every agent has a \textbf{utility function} $U$ such that the agent prefers random payout $X$ to $Y$ if and only if $\mathbb{E}[U(X)] > \mathbb{E}[U(Y)]$. If $\mathbb{E}[U(X)] = \mathbb{E}[U(Y)]$, we say the agent is \textbf{indifferent} between $X$ and $Y$.
+\end{defn}
+
+\textbf{Aside:} We can show (under some assumptions) that every agent must have a utility function. For random payouts $X,Y,Z$ and $A$ an event independent from $X,Y,Z$, we assume the von Neumann -- Morgenstern axioms:
+\begin{itemize}
+    \item Either $X \succ Y, X \prec Y$ or $X \sim Y$ (Completeness).
+    \item $X \succ Y$ and $Y \succ Z \implies X \succ Z$ (Transitivity).
+    \item $X \succeq Y$ if and only if $\mathbbm{1}_A X  + \mathbbm{1}_{A^C} Z \succeq \mathbbm{1}_A Y + \mathbbm{1}_{A^C} Z$ (Independence).
+    \item If $X \succeq Y \succeq Z$, then $\exists p \in [0,1]$ s.t. if $\mathbb{P}(A)=p$, then $Y = X \mathbbm{1}_A + Z \mathbbm{1}_{A^C}$ (Continuity).
+\end{itemize}
+vN-M proved in 1947 that an agent has expected utility preferences if and only if the vN-M axioms (plus another technical axiom) hold. End of aside.
+
+\subsection{Risk-aversion}
+We have two further usual assumptions about our utility function $U$.
+\begin{itemize}
+    \item Increasing: $x>y \implies U(x)>U(y)$. Even for random variables, if $\mathbb{P}(X>Y)=1$, then $\mathbb{E}[U(X)] > \mathbb{E}[U(Y)]$.
+    \item Concavity: $U(px+qy) \ge p U(x) + q U(y)$ for any $x,y, 0\le p = 1-q \le 1$.
+    \vspace{1mm}
+
+    Recall Jensen's inequality: $\mathbb{E}[U(X)] \le U(\mathbb{E}[X])$ for a concave function $U$. Hence if $U$ is concave, then $\mathbb{E}[X] \succeq X$ for any payout $X$. 
+    \vspace{1mm}
+    
+    Also note that $U$ concave implies $U'$ is decreasing (where we can think of $U'$ as the \textbf{marginal utility}). Furthermore, $U' > 0$ (as the function is increasing) and $U'' < 0$.
+\end{itemize}
+\begin{defn}
+    The Arrow-Pratt \textbf{coefficient of absolute risk aversion } is $$\frac{-U''(x)}{U'(x)}.$$
+\end{defn}
+\begin{defn}
+    The Arrow-Pratt \textbf{coefficient of relative risk aversion} is \[
+    \frac{xU''(x)}{U'(x)}.
+    \] 
+\end{defn}
+The most important examples of utility functions are:
+\begin{itemize}
+    \item Exponential (CARA): $U(x) = -e^{-\gamma x}$ for $\gamma = \frac{-U''(x)}{U'(x)}.$
+    \item Power (CRRA): $U(x) = \frac{1}{1-R}x^{1-R}$, $x>0, R\ge 0, R\neq1$ where $R=\frac{-xU''(x)}{U'(x)}$.
+    \item Logarithmic: $U(x)= \log x$. This is CRRA with $R=1$.
+\end{itemize}
+
+\marginpar{14 Oct 2022, Lecture 4}
+We have the \textbf{utility maximization problem}: Given a concave, increasing utility function $U$ and initial wealth $X_0=x$, find $\theta$ that maximizes $$\mathbb{E}[U(X_1)] = \mathbb{E}[U(x(1+r)-\theta^{\text{T}}(S_1-(1+r)S_0))].$$
+
+\begin{theorem}
+    Suppose $U$ is concave, increasing, and differentiable (i.e. "suitably nice"), then $$\mathbb{E}[U'(X_1^*)(S_1-(1+r)S_0)] = 0,$$ where $X_1^* = x(1+r) + (\theta^*)^{\text{T}}(S_1-(1+r)S_0)$ is the optimal time 1 wealth.
+\end{theorem}
+\textbf{Remark.} There's a hidden assumption here as well that everything is integrable, else the expected value could be infinite. 
+\begin{proof}
+    Differentiate the objective function wrt $\theta$ and pass the derivative inside the expectation.
+\end{proof}
+
+\textbf{Remark.} Notice that $S_0 = \frac{\mathbb{E}[U'(X_1^*)S_1]}{(1+r)\mathbb{E}[U'(X_1^*)]}$. So if $$Z = \frac{U'(X_1^*)}{(1+r)\mathbb{E}[U'(X_1^*)]},$$ then $\mathbb{E}[ZS_1] = S_0$ and $\mathbb{E}[Z]=\frac{1}{1+r}$.
+
+\begin{defn}
+    Given a market model, a \textbf{state price density} or \textbf{pricing kernel} is a positive random variable $Z$ such that $\mathbb{E}[ZS_1]=S_0$ and $\mathbb{E}[Z]=\frac{1}{1+r}$.
+\end{defn}
+
+Our above theorem now says that the marginal utility of maximized wealth is proportional to a state-price density for the model, i.e. our $Z$ above is a state-price model. 
+
+We can recover today's prices in terms of the expectation of tomorrow's prices times the kernel (i.e. averaging tomorrow's prices with respect to this kernel).
+
+Aside: the origin of the name. Consider a market model with $d$ outcomes (states) $\Omega = \{\omega_1,\ldots,\omega_d\}$. Suppose asset $i$ pays 1 if state $i$ happens and $0$ otherwise, so $S^i_1(\omega) = \begin{cases}
+    1 &\text{ if } \omega=\omega_i\\
+    0 &\text{ otherwise}
+\end{cases}.$ Let $Z$ be a state-price density, then \[
+\mathbb{E}[ZS_1] = \sum_{\omega \in \Omega}^{} Z(\omega)S_1^i(\omega)\mathbb{P}(\{\omega\}) = Z(\omega_i)\mathbb{P}(\{\omega_i\}) = S^i_0,
+\]
+so $Z(\omega_i) = \frac{S_0^i}{\mathbb{P}(\{\omega_i\})}$. End of aside.
+
+\subsection{Risk-neutral measures}
+\textbf{Setup:} Given a probability space ($\Omega, \mathcal{F}, \mathbb{P}$), with a set of outcomes $\Omega$, a set of events $\mathcal{F}$ (i.e. subsets of $\Omega$), and a probability measure $\mathbb{P} : \mathcal{F} \to [0,1]$.
+\vspace{1mm}
+
+Let $Y$ be a positive random variable such that $\mathbb{E}^{\mathbb{P}}[Y]=1$. Define a new probability measure $\mathbb{Q}$ by the formula \[
+\mathbb{Q}(A) = \mathbb{E}^{\mathbb{P}}[Y \mathbbm{1}_A]
+\] for any event $A \in \mathcal{F}$. It is a useful fact from measure theory that \[
+\mathbb{E}^{\mathbb{Q}}[X] = \mathbb{E}^{\mathbb{P}}[YX]
+\] for any $\mathbb{Q}$-integrable random variable $X$.
+\vspace{1mm}
+
+\textbf{Notation.} We write $Y = \frac{d \mathbb{Q}}{d \mathbb{P}}$, called the \textbf{density} of $\mathbb{Q}$ with respect to $\mathbb{P}$, or the likelihood ratio, or the Radon-Nikodym derivative.
+
+\begin{defn}
+    Two probability measures $\mathbb{P}$ and $\mathbb{Q}$ are \textbf{equivalent} if and only if $\mathbb{Q}(A) = 0 \iff \mathbb{P}(A) = 0$. Alternatively, $\mathbb{Q}(A) = 1 \iff \mathbb{P}(A) = 1$. Or $\mathbb{Q}(A) > 0 \iff \mathbb{P}(A) > 0$. Or even $\mathbb{Q}(A) < 1 \iff \mathbb{P}(A) < 1$.  
+\end{defn}
+
+A theorem we will not need, but explains the names above:
+\begin{theorem}[Radon-Nikodym theorem]
+    Probability measures $\mathbb{P}$ and $\mathbb{Q}$ that are defined on the same measurable space $(\Omega, \mathcal{F})$ are equivalent if and only if there exists a positive random variable $Y$ such that $\mathbb{Q}(A) = \mathbb{E}^{\mathbb{P}}[Y \mathbbm{1}_A]$ for all events $A$.
+\end{theorem}
+
+\begin{example}
+    Suppose $\Omega = \{\omega_1, \omega_2, \ldots\}$. Suppose $\mathbb{P}(\omega_i)>0, \mathbb{Q}(\omega_i)>0 ~\forall i$. Then $\mathbb{P}$ and $\mathbb{Q}$ are equivalent, and $\frac{d\mathbb{Q}}{d\mathbb{P}}(\omega) = \frac{\mathbb{Q}(\omega)}{\mathbb{P}(\omega)}$.
+\end{example}
+\begin{example}
+    Suppose $X \sim \text{Exp}(\lambda)$ defined on ($\Omega, \mathcal{F}, \mathbb{P}$). Set $Y = \frac{\mu}{\lambda}e^{(\lambda-\mu)X}$. Note $Y>0$ and 
+    \[
+    \mathbb{E}[f(X)] = \mathbb{E}^{\mathbb{P}}[Yf(X)] = \int_{0}^{\infty} \frac{\mu}{\lambda} e^{(\lambda-\mu)x} f(x) \lambda e^{-\lambda x} dx = \int_{0}^{\infty} \mu e^{-\mu x} f(x) dx,
+    \] so $X$ has a new distribution $\text{Exp}(\mu)$ under $\mathbb{Q}$.
+\end{example}
+
+Let us now return to finance. Setup: prices $\{S_t\}_{t \in \{0,1\}}$ are defined on a probability space ($\Omega, \mathcal{F}, \mathbb{P}$). 
+
+\begin{defn}
+    A \textbf{risk-neutral measure} is any probability measure $\mathbb{Q}$ equivalent to $\mathbb{P}$ such that \[
+    \mathbb{E}^{\mathbb{Q}}[S_1] = (1+r)S_0.
+    \]
+\end{defn}
+\textbf{Remark.} Let $\mathbb{Q}$ be equivalent to $\mathbb{P}$ and set $Z =\frac{1}{1+r} \frac{d \mathbb{P}}{d \mathbb{Q}}$. Then $Z$ is a state-price density if and only if $\mathbb{Q}$ is risk-neutral.
+
+So finally, the main theorem about utility maximization reads: if $\theta^*$ is optimal, then $U'(X_1^*)$ is proportional to the density of a risk-neutral measure.
+
+\marginpar{17 Oct 2022, Lecture 5}
+\vspace{1mm}
+
+\textbf{Example} : Utility maximization in one-period a binomial model. We search for $\max \mathbb{E}[U(X_1)]$ given $X_1=x$ and $U$ a concave, increasing, continuously differentiable function. The market model has interest rate $r$, $d=1$ (there is only one risky asset), $S_0$ is given, and $$\mathbb{P}(S_1=(1+b)S_0) = p = 1- \mathbb{P}(S_1 = (1+a)S_0),$$
+where $-1<a<b$ are given, and $p \in (0,1)$.
+
+What are the risk-neutral measures? We need to find $\mathbb{Q} \sim \mathbb{P}$ such that $\mathbb{E}^{\mathbb{Q}}[S_1]=(1+r)S_0$. Let $q = \mathbb{Q}(S_1=(1+b)S_0)$. We need $q \in (0,1)$ and $q(1+b)S_0 + (1-q)(1+a)S_0 = (1+r)S_0$, so $q = \frac{r-a}{b-a}, 1-q = \frac{b-r}{b-a}$.
+\vspace{1mm}
+
+\textbf{Note.} A risk-neutral measure exists only if $a < r < b$ (i.e. this is necessary for a solution to exist to the utility maximization problem). Also, if we have a solution, it is unique.
+\vspace{1mm}
+
+From last time, we know that $U'(X_1^*) = \lambda \frac{d \mathbb{Q}}{d\mathbb{P}}$ for some $\lambda>0$, so $X_1^* = (1+r)x + \theta^*(S_1-(1+r)S_0)$, where $\theta^*$ is the optimal portfolio. 
+
+So we know that
+\[
+\begin{cases}
+    U'((1+r)x + \theta^*(b-r)S_0) = \lambda \frac{q}{p} \\
+    U'((1+r)x + \theta^*(r-a)S_0) = \lambda \frac{1-q}{1-p}.
+\end{cases}
+\]
+Let $I = (U')^{-1}$, i.e. the inverse of the marginal utility, where $I$ is decreasing and continuous. Hence we can look at our formula above and write it as $X_1^* = I(\lambda \frac{d \mathbb{P}}{d\mathbb{Q}})$. Now taking expected values, we find \[
+\mathbb{E}^{\mathbb{Q}}[X_1^*] = (1+r)x + \theta^*\mathbb{E}[S_1-(1+r)S_0] = (1+r)x = \mathbb{E}^{\mathbb{Q}}\left[I\left(\lambda \frac{d \mathbb{P}}{d\mathbb{Q}}\right)\right].
+\]
+So the recipe to find the optimal solution is to let $\lambda$ solve $$\mathbb{E}^{\mathbb{Q}}\left[I \left(\lambda \frac{d \mathbb{P}}{d\mathbb{Q}}\right)\right] = (1+r)x,$$
+i.e. $$q I\left(\lambda\frac{q}{p}\right) + (1-q)I\left(\lambda \frac{1-q}{1-p}\right),$$ and then solve either $U'((1+r)x + \theta^*(b-r)S_0) = \lambda \frac{q}{p}$ or $U'((1+r)x + \theta^*(a-r)S_0) = \lambda \frac{1-q}{1-p}$ to find $\theta^*$.
+\vspace{1mm}
+
+\textbf{Special case}: CRRA, $U(x) = \frac{1}{1-R}x^{1-R}$, $x>0, R>0, R \neq 1$. Then $U'(x)=x^{-R}$, so $I(y)=y^{\frac{-1}{R}}$, so in this case $\lambda$ solves $$\lambda^{\frac{-1}{R}} \mathbb{E}^{\mathbb{Q}}\left[\left(\frac{d \mathbb{P}}{d \mathbb{Q}}\right)^{\frac{-1}{R}}\right] = (1+r)x,$$
+so \[
+\lambda = ((1+r)x)^{-R}\left( \mathbb{E}^{\mathbb{Q}}\left[\frac{d \mathbb{P}}{d \mathbb{Q}}\right]^{\frac{-1}{R}}\right)^R,
+\] and then plug it in to find $\theta^*$.
+
+\subsection{Contingent claims}
+
+\textbf{Contingent claims} are just another name for an asset (they are a derivative whose value depends on some other underlying asset). Idea: some assets are "fundamental", and some are contingent on the value of the fundamental asset.
+
+\begin{example}
+    A \textbf{call option} in the one period-case. Given $d=1$, a call option is the right, but not the obligation, to buy the stock at time $1$ for a fixed price (strike price) $K$.
+\end{example}
+The call option is a contingent claim and has a price $C_0$ at time 0. A question we'd like to answer (and later will) is: what is $C_0$? Note that if $S_1 > K$, it is rational to exercise the option, while if $S_1\le K$, it is rational not to exercise the option, i.e. the buyer's profit is $(S_1-k)^+$.
+
+\subsubsection{Indifference price of contingent claims.} 
+
+Consider a utility maximizing agent. We would prefer to buy one share of the claim with time 1 payout $Y$ at price $\pi$, if $\exists \theta$ such that $$\mathbb{E}[U((1+r)(x-\pi) + \theta^{\text{T}}(S_1 -(1+r)S_0)+ Y)] > \mathbb{E}[U((1+r)x + \phi^{\text{T}}(S_1-(1+r)S_0))] ~\forall \phi.$$
+
+\textbf{Notation.} Let $\mathcal{X} = \{\theta^{\text{T}}(S_1-(1+r)S_0) ~|~ \theta \in \mathbb{R}^d\}$ be the time 1 wealths attainable in the market from 0 initial wealth.
+\vspace{1mm}
+
+\textbf{Assumption.} The model parameters are such that there exists an optimal solution to any utility maximization problem we consider.
+
+\begin{defn}
+    The \textbf{indifference price} $\pi(Y)$ of a contingent claim with time 1 payout $Y$ is the unique solution to 
+    \[
+    \max_{X \in \mathcal{X}} \mathbb{E}[U((1+r)(x-\pi)+X+Y)] = \max_{X \in \mathcal{X}} \mathbb{E}[U((1+r)x + X)],
+    \] where $x = x_0$ is the time 0 initial wealth.     
+\end{defn}
+
+\marginpar{19 Oct 2022, Lecture 6}
+
+We change our notation a little from last time and let 
+\[
+\mathcal{X}(x)=\{(1+r)x + \theta^\top(S_1-(1+r)S_0) ~|~ \theta \in \mathbb{R}^d\}
+\]
+be the set of time-1 wealths attainable from starting wealth $x$.
+This lets us rewrite the above indifference price equation as \[
+\max_{X \in \mathcal{X}(x)} \mathbb{E}[U(X+Y-(1+r)\pi)] = \max_{X \in \mathcal{X}(x)}\mathbb{E}[U(X)]
+\]
+\textbf{Remark.} $\pi \mapsto \max \mathbb{E}[U(X+Y-(1+r)\pi)]$ is decreasing. To see this, look at 
+\begin{align*}
+    \max \mathbb{E}[U(X+Y-(1+r)(\pi+\epsilon))] = \mathbb{E}[U(X_\epsilon + Y -(1+r)(\pi+\epsilon))] < \\
+    \mathbb{E}[U(X_{\epsilon}+Y-(1+r)\pi)] \le \max_{X \in \mathcal{X}(x)} \mathbb{E}[U(X+Y-(1+r)\pi)].
+\end{align*}
+since $U$ is increasing (for $\epsilon>0$, $X_\epsilon$ the value achieving the maximum). Hence the solution is unique.
+
+\textbf{Remark.} $\pi \mapsto \max \mathbb{E}[U(X+Y-(1+r)\pi)]$ is also continuous, but the proof it omitted.
+\vspace{1mm}
+
+
+Warmup: suppose $\mathbb{P}(Y \ge a) = 1$. Then $\pi(Y)\ge \frac{a}{1+r}$. 
+\begin{proof}
+    For $\pi(Y)$, the indifference price of $Y$, we have
+    \begin{align*}
+        \max \mathbb{E}[U(X)] =\max \mathbb{E}[U(X+Y-(1+r)\pi)] \ge \max \mathbb{E}[U(X+a-(1+r)\pi)] = \\ \mathbb{E}[U(X-(1+r)(\pi-\frac{a}{1+r}))].
+    \end{align*}
+    Hence $(\pi-\frac{a}{1+r})\ge 0$ from the remark above (the function is decreasing).
+\end{proof}
+\begin{theorem}
+    The indifference pricing fuction $\pi$ is concave.
+\end{theorem}
+\begin{proof}
+    Fix $Y_0, Y_1$, and let $Y_p = pY_1 + (1-p)Y_0$. Let $\pi_i = \pi(Y_i)$ for $i \in \{0,p,1\}, 0\le p\le 1$. Then $\max \mathbb{E}[U(X+Y_p - (1+r)\pi_p)] = \max \mathbb{E}[U(X)]$ by the definition of the indifference price, but 
+    \begin{align*}
+        &\max \mathbb{E}[U(X)] = \\ 
+        (1-p) \max \mathbb{E}[U(X+Y_0 - (1+r)\pi_0)] &+ p \max \mathbb{E}[U(X+Y_1 -(1+r)\pi_1)] = \\
+        (1-p)\mathbb{E}[U(X_0+Y_0-(1+r)\pi_0)] &+ p \mathbb{E}[U(X_1 + Y_1 - (1+r)\pi_1)] \le \\
+        \mathbb{E}[U((1-p)X_0+pX_1 &+ Y_p -(1+r)(p \pi_1 + (1-p)\pi_0)]
+    \end{align*}
+    by concavity (where $X_0,X_1$ are maximizers of their respective expressions). Note $(1-p)X_0 + pX_1 \in \mathcal{X}(x)$, so the above is 
+    \begin{align*}
+        \le \max \mathbb{E}[U(X+Y_p -(1+r)(p \pi_1 +(1-p)\pi_0))].
+    \end{align*}
+    Hence $p \pi_1 + (1-p)\pi_0 \le \pi_p$ and we're done.
+\end{proof}
+\textbf{Remark.} $\pi(Y)$ is the buyer's indifference price (bid price). Note that the seller's indifference price is $-\pi(-Y)$ (ask price).
+\vspace{1mm}
+
+We predict that $\pi(Y) \le -\pi(-Y)$ (i.e. the bid price is less than the ask price). And this is true: \[
+\frac{1}{2}\pi(Y) + \frac{1}{2}\pi(-Y) \le \pi\left(\frac{Y}{2}-\frac{Y}{2}\right) = \pi(0) = 0
+\] by concavity.
+
+\subsubsection{Marginal utility pricing}
+Fix a claim with payout $Y$. Let $\pi_t = \frac{\pi(tY)}{t}$. On the example sheet, we will show that $t \mapsto \pi_t$ is decreasing (using concavity). We can ask what happens at the limit, i.e. $\lim_{t \to 0}\pi_t = \sup_{t>0}\pi_t < \pi_{-1}$ (note the limit is bounded, so exists).
+
+\begin{theorem}
+    $$\pi_0 = \lim_{t \to 0}\pi_t = \frac{1}{1+r}\mathbb{E}^{\mathbb{Q}}[Y]$$ where $\frac{d \mathbb{Q}}{d \mathbb{P}} \propto U'(X^*)$, i.e. it is proportional to the marginal utility of the time 1 optimal wealth $X^*$, i.e. the maximizer $\mathbb{E}[U(X)]$ over $X \in \mathcal{X}(x)$. 
+\end{theorem}
+\textbf{Remark.} This provides a \textbf{linear} pricing rule for a very small number of shares of the claim.
+
+\textbf{Remark.} $\mathbb{Q}$ is a risk-neutral measure, so $\mathbb{E}^{\mathbb{Q}}[S_1] = (1+r)S_0$ (first order condition for a maximum). This means that for any $X \in \mathcal{X}(x)$, $$\mathbb{E}^{\mathbb{Q}}[X] = (1+r)x + \theta^\top\mathbb{E}^{\mathbb{Q}}[S_1-(1+r)S_0] = (1+r)x.$$
+
+\begin{proof}
+    Let $X_t$ be the maximizer of $$\mathbb{E}[U(X+t(Y-(1+r)\pi_t))]$$ over $X \in \mathcal{X}(x)$ and $t>0$. Then
+    \begin{align*}
+        0 = \frac{1}{t}\mathbb{E}\left[U(X_t+t(Y-(1+r)\pi_t)) - U(X_0)\right] \ge \\
+        \frac{1}{t}\mathbb{E}[U(X_0+t(Y-(1+r)\pi_t)-U(X_0)]
+    \end{align*}
+    As $t \mapsto \pi_t$ is decreasing, so the above is 
+    \begin{align*}
+        \ge \mathbb{E}\left[\frac{U(X_0+t(Y-(1+r)\pi_0)-U(X_0))}{t}\right] \to \mathbb{E}[U'(X_0)](Y-(1+r)\pi_0).
+    \end{align*}
+    Hence $$\pi_0 \ge \frac{1}{1+r}\mathbb{E}^{\mathbb{Q}}[Y] = \frac{\mathbb{E}[U'(X_0)Y]}{(1+r)\mathbb{E}[U'(X_0)]}.$$
+
+    \marginpar{21 Oct 2022, Lecture 7}
+    
+    For the reverse direction, we use the following lemma:
+    \begin{lemma}
+        For any $x,y$ we have \[
+        U(y) \le U(x) + U'(x)(y-x).
+        \]
+    \end{lemma}
+    \begin{proof}
+        For $x<x+\epsilon<y$ we have $\frac{U(y)-U(x)}{y-x}\le \frac{U(x+\epsilon)-U(x)}{\epsilon} \stackrel{\epsilon \to 0}{\to} U'(x)$ by concavity $U((1-p)x+py) \ge (1-p)U(x)+py$ with $p=\frac{\epsilon}{y-x}$. The case $y<x$ is similar.
+    \end{proof}
+
+    Hence
+    \begin{align*}
+        0 = \frac{1}{t}\mathbb{E}[U(X_t+ t(Y-(1+r)\pi_t))-U(X_0)] \le\\
+        \frac{1}{t}\mathbb{E}[U'(X_0)(X_t+t(Y-(1+r)\pi_0)-X_0)] = \\
+        \mathbb{E}[U'(X_0)(Y-(1+r)\pi_t)]
+    \end{align*}
+    where we use the fact that $\mathbb{E}[U'(X_0)X]=(1+r)X$ for any $X \in \mathcal{X}(x)$, so in particular $\mathbb{E}[U'(X_0)(X_t-X_0)]=0$. Hence
+    \[
+    \pi_t \le \frac{\mathbb{E}[U'(X_0)Y]}{(1+r)\mathbb{E}[U'(X_0)]} = \frac{1}{1+r}\mathbb{E}^{\mathbb{Q}}[Y].
+    \]
+    Taking the limit as $t \to 0$ finishes (the case $t<0$ is similar).
+\end{proof}
+
+\subsection{Arbitrage}
+
+Recall our setup: we have one risk-free asset with interest rate $r$, and $d$ risky assets with time $t$ price $S_t$.
+
+\begin{defn}
+    An \textbf{arbitrage} is a portfolio $\phi \in \mathbb{R}^d$ such that
+    \begin{align*}
+        &\phi^\top(S_1-(1+r)S_0) \ge 0 \text{ almost surely, and} \\
+        &\mathbb{P}(\phi^\top(S_1-(1+r)S_0)>0)>0.    
+    \end{align*}
+\end{defn}
+
+Fix some initial wealth $X_0=x$ and an increasing utility function $U$. Consider the problem of maximizing $\mathbb{E}[U(X_1)]$ over $X_1 \in \mathcal{X}(x)$, where $$\mathcal{X}(x) = \{(1+r)x + \theta^\top(S_1-(1+r)S_0) ~|~ \theta \in \mathbb{R}^d\}.$$
+Suppose this has arbitrage $\phi$. Then, given any $X \in \mathcal{X}(x)$, consider $$X^* = X + \phi^\top(S_1-(1+r)S_0).$$ Note that $X^* \in \mathcal{X}(x)$, but also $U(X^*)\ge U(X)$ almost surely and $\mathbb{P}(U(X^*)>U(X))>0$, hence $\mathbb{E}[U(X^*)] > \mathbb{E}[U(X)]$. But $X$ was arbitrary, so there can be no maximizer!
+\vspace{1mm}
+
+Arbitrages are bad for our theory: if $\phi$ is an arbitrage, then by above, the portfolio $\theta + (n+1)\phi$ is better than $\theta+n \phi$ for all $n$. As $n$ gets large, the assumption that an agent can trade with no price impact becomes more and more unrealistic.
+
+\textbf{Remarks.} The definition of arbitrage does not depend on the agent's initial wealth $x$ or utility function $U$. However, it does depend on the agent's beliefs through the probability measure $\mathbb{P}$. Nevertheless, if one agent believes $\phi$ is an arbitrage, then another agent with equivalent beliefs (i.e. agreeing on almost sure events) would also believe that $\phi$ is an arbitrage.
+
+\subsubsection{Fundamental theorem of asset pricing}
+So far, we know that:
+\begin{itemize}
+    \item If there exists an optimal solution to a utility maximization problem, then there exists a risk-neutral measure. 
+    \item If there exists an optimal solution to a utility maximization problem, then there exists no arbitrage.
+\end{itemize} 
+    
+\begin{theorem}[Fundamental theorem of asset pricing]
+    A market model has no arbitrage if and only if there exists a risk-neutral measure.
+\end{theorem}
+\begin{proof}
+    $\impliedby$: This is the easy direction. Let $\phi$ be a portfolio such that \[
+    \mathbb{P}(\phi^\top(S_1-(1+r)S_0)\ge 0)=1.
+    \]
+    Suppose there exists a risk-neutral measure $\mathbb{Q}$. Then, by equivalence, we have $\mathbb{Q}(\phi^\top(S_1-(1+r)S_0)\ge 0)=1$. However, by the definition of risk-neutrality, we get $\mathbb{E}^\mathbb{Q}[\phi^\top(S_1-(1+r)S_0)]=\phi^\top \mathbb{E}^{\mathbb{Q}}[S_1-(1+r)S_0] = 0$.
+
+    Hence, by the pigeonhole principle, $\mathbb{Q}(\phi^\top(S_1-(1+r)S_0)>0)=0$. By equivalence, $\mathbb{P}(\phi^\top(S_1-(1+r)S_0)>0)=0$, so $\phi$ is not an arbitrage and we're done.
+    \vspace{1mm}
+    
+    \marginpar{24 Oct 2022, Lecture 8}
+    
+    $\implies$: Let $\xi = S_1 - (1+r)S_0$. We can assume WLOG that $\mathbb{E}[e^{-\theta^\top \xi}] < \infty$ for all $\theta \in \mathbb{R}^d$ by replacing $\mathbb{P}$ with an equivalent measure $\tilde{\mathbb{P}}$ with density \[
+    \frac{d \tilde{\mathbb{P}}}{d \mathbb{P}} \propto e^{-|\xi|^2}
+    \] 
+    and noting that we have no $\mathbb{P}$--arbitrages iff we have no $\tilde{\mathbb{P}}$--arbitrages.
+    \vspace{1mm}
+    
+    Motivating aside: the existence of an optimal solution to a utility maximization problem $\implies \exists$ a risk-neutral measure with density $\frac{d\mathbb{Q}}{d\mathbb{P}} \propto U'(X_1^*)$. End of aside.
+    \vspace{1mm}
+    
+    Let us try to maximize $\mathbb{E}[U(\theta^\top \xi)]$, where $U(x)=-e^{-x}$. 
+    
+    Let $(\theta_n)_n$ be such that $\mathbb{E}[U(\theta^\top_n \xi)] \to \sup_{\theta \in \mathbb{R}^d} \mathbb{E}[U(\theta^\top \xi)]$. We consider two cases:
+    \begin{itemize}
+        \item $(\theta_n)_n$ is bounded. By Bolzano-Weierstrass, there exists a convergent subsequence, so we may assume that $(\theta_n) \to \theta_0$ for some portfolio $\theta_0$. But $$\mathbb{E}[U(\theta_0^\top \xi)] = \lim \mathbb{E}[U(\theta_0^\top \xi)] = \sup_{\theta \in \mathbb{R}^d} \mathbb{E}[U(\theta^\top \xi)]$$ (by continuity of $\theta \mapsto \mathbb{E}[e^{-\theta^\top\xi}]$). So $\theta_0$ is an optimal portfolio. Hence we're done, as the marginal utility at the optimal wealth, $U'(\theta_0^\top \xi),$ is proportional to the density of a risk-neutral measure.
+        \item Every maximizing sequence $(\theta_n)_n$ is unbounded. Assume for contradiction that there is no arbitrage. We may assume WLOG that the components of $\xi$ are linearly independent, i.e. $(\mathbb{P}(\theta^\top \xi = 0)=1) \implies \theta = 0$. We may assume this since the original market has no arbitrage, so any submarket also has no arbitrage, so just pass to a submarket if need be.
+        \vspace{1mm}
+        
+        We may assume that $|\theta_n| \to \infty$. Let $\varphi_n = \frac{\theta_n}{|\theta_n|}$. Note $(\varphi_n)_n$ is bounded, so by Bolzano-Weierstrass we may assume $\varphi_n \to \varphi_0$ for some $\varphi_0$.
+
+        To finish the proof, we will now show that $\varphi_0^\top \xi \ge 0$ almost surely. Since we have no arbitrage, $\varphi_0^\top\xi=0$ almost surely. By linear independence, this means $\varphi_0 = 0$, contradicting $|\varphi_0|=1$.
+        \vspace{1mm}
+        
+        To show $\varphi_0^\top \xi \ge 0$ almost surely, it is enough to show that $$\mathbb{P}(\varphi_0^\top \xi < -\epsilon, |\epsilon|<r)=0$$ for all $\epsilon,r>0$ (by continuity of probability measures).
+        \vspace{1mm}
+        
+        Note on $\{\varphi_0^\top \xi < -\epsilon, |\xi|<r\}$, we have \[
+        \varphi_n^\top \xi \le (\varphi_n-\varphi_0)^\top \xi + \varphi_0^\top \xi \le |\varphi_n-\varphi_0|r - \epsilon.
+        \]
+        Pick $N$ such that $|\varphi_n-\varphi_0|\le \frac{\epsilon}{2r}$ for $n\ge N$, so the above is $\le -\frac{\epsilon}{2}$.
+        \vspace{1mm}
+        
+        Now, since $\theta=0$ is not optimal, we get
+        \begin{align*}
+            1 = - \mathbb{E}[U(0)] \ge - \mathbb{E}[U(\theta_n^\top \xi)] = \mathbb{E}[\left(e^{-\varphi_n \xi}\right)^{|\theta_n|}] \ge \\
+            \mathbb{E}[\left(e^{-\varphi_n \xi}\right)^{|\theta_n|} \mathbbm{1}_{\{\varphi_0^\top \xi < -\epsilon, |\xi|<r\}}] \ge e^{\frac{\epsilon}{2}|\theta_n|}\mathbb{P}(\varphi_0^\top \xi < -\epsilon, |\xi| < r),
+        \end{align*}
+        so \[
+        \mathbb{P}(\varphi_0^\top \xi < -\epsilon, |\xi|<r) \le e^{-\frac{\epsilon}{2}|\theta_n|} \to 0.
+        \]
+    \end{itemize}
+\end{proof}
+\textbf{Remark.} The details of the above proof are all examinable. The entire proof is a bit longer than the average bookwork question, so the emphasis should be on understanding each part of the proof separately.
+
+\subsection{No-arbitrage pricing}
+Given a market model with $r, S_0, S_1$, and the payout of a contingent claim, we want a time 0 price $\pi$ for the claim. So far we can:
+\begin{itemize}
+    \item Given $X_0=x, U$, calculate the indifference price.
+    \item Given $X_0=x, U$, calculate the marginal utility price.
+\end{itemize}
+Now assume that our original market has no arbitrage, we want to find $\pi$ such that the new market also has no arbitrage.
+\begin{theorem}
+    If the original market has no arbitrage, then the augmented market also has no arbitrage if and only if $\pi = \frac{1}{1+r}\mathbb{E}^\mathbb{Q}[Y]$ for some risk-neutral measure in the original market.
+\end{theorem}
+\begin{proof}
+    By FTAP applied to the original market, there exist risk-neutral measures $\mathbb{Q}$ such that $\mathbb{E}^\mathbb{Q}[S_1]=(1+r)S_0$. By FTAP applied to the augmented market, there is no arbitrage if and only if there exists a risk-neutral measure for the new market, i.e. $\mathbb{E}^\mathbb{Q}\left[\begin{pmatrix} S_1 \\ Y \end{pmatrix}\right] = (1+r)\begin{pmatrix} S_0 \\ \pi \end{pmatrix}$.
+\end{proof}
+\begin{cor}
+    The set of no-arbitrage prices is an interval.
+\end{cor}
+\begin{proof}
+    Let $I$ be the set of no-arbitrage prices for the claim. Suppose $\pi_0,\pi_1 \in I$. By FTAP, $\pi_0 = \frac{1}{1+r} \mathbb{E}^{\mathbb{Q}_0}[Y]$, $\pi_1 = \frac{1}{1+r}\mathbb{E}^{\mathbb{Q}_1}[Y]$. Let $p \in (0,1)$ and $\mathbb{Q}_p = p\mathbb{Q}_1 + (1-p)\mathbb{Q}_0$. Note that 
+    \[
+    \mathbb{E}^{\mathbb{Q}_p}[S_1] = p \mathbb{E}^{\mathbb{Q}_1}[S_1] + (1-p) \mathbb{E}^{Q_0}[S_1] = p(1+r)S_0 + (1-p)(1+r)S_0 = (1+r)S_0,
+    \]
+    so $\mathbb{Q}_p$ is risk-neutral. Hence $\pi_p = \frac{1}{1+r} \mathbb{E}^{\mathbb{Q}_p}[Y] \in I$ by FTAP, but $\pi_p = p \pi_1 + (1-p) \pi_0$, so $I$ is convex. 
+\end{proof}
+
+\subsection{Attainable claims}
+\marginpar{26 Oct 2022, Lecture 9}
+Consider putting $\theta^0$ in the bank and holding $\theta \in \mathbb{R}^d$ in risky assets. The time 1 value is $\theta^0(1+r) + \theta^\top S_1$.
+\begin{defn}
+    A claim is \textbf{attainable} if and only if its time 1 payout $Y$ is $Y = \theta^0(1+r) + \theta^\top S_1$ for some $\theta^0 \in \mathbb{R}, \theta \in \mathbb{R}^d$, i.e. it can be attained in our market.
+\end{defn}
+\textbf{Remark.} We could also write $Y=(1+r)y + \theta^\top(S_1-(1+r)S_0) \in \mathcal{X}(y)$ where $y - \theta^\top S_0 = \theta^0$.
+
+On the example sheet we will show that there is a unique indifference price $\pi = \theta^0 + \theta^\top S_0 = y$ and it is independent of $X_0 = x$ or the utility function $U$. This means that there is a unique marginal utility price.
+
+Now we will show that there is a unique no-arbitrage price.
+
+\begin{theorem}
+    Suppose the original market has no arbitrage.Then an attainable claim has a unique no-arbitrage price, i.e. if it is added to the market, then there is only one initial price such that the augmented market has no arbitrage.
+\end{theorem}
+\begin{proof}[Proof 1, primal proof]
+    Suppose $Y = (1+r)y + \theta^\top(S_1-(1+r)S_0)$. Let $\pi$ be the initial price.
+    \vspace{1mm}
+    
+    Claim: If $\pi=y$, then there is no arbitrage, and if $\pi \neq y$, then there exists arbitrage.
+
+    Proof: Consider a portfolio $(\phi^\top, a)^\top \in \mathbb{R}^{d+1}$, a portfolio in the augmented market. Suppose $\phi^\top(S_1-(1+r)S_0) + a(Y-(1+r)y) \ge 0$ almost surely (in the case where $\pi = y$). But the above is \[
+    (\phi^\top + a \theta)^\top(S_1-(1+r)S_0)\ge 0 \text{ a.s.}
+    \]
+    Since there is no arbitrage in the original market, $$(\phi+a \theta)^\top(S_1-(1+r)S_0)=0 \text{ a.s.}$$
+    This implies that there is no arbitrage in the augmented market.
+    \vspace{1mm}
+    
+    Now let us consider the case $\pi > y$. Our intuition is that we can buy it for price $y$ and sell it for price $\pi$, which is an arbitrage. 
+
+    Consider $(\theta^\top,-1)^\top \in \mathbb{R}^d$. We have \[
+    \theta^\top(S_1-(1+r)S_0)-(Y-(1+r)\pi) = (\pi-y)(1+r)>0,    
+    \]
+    so this is an arbitrage in the augmented market.
+
+    The case $\pi < y$ is analogous, so we're done.
+\end{proof}
+\begin{proof}[Proof 2, "dual" proof]
+    We know there is no arbitrage in the augmented market if and only if there exists a risk-neutral measure $\mathbb{Q}$ for the original market such that $$\pi = \frac{\mathbb{E}^{\mathbb{Q}}[Y]}{1+r} = \frac{\mathbb{E}^\mathbb{Q}[(1+r)y + \theta^\top(S_1-(1+r)S_0)]}{1+r} = y + \frac{\theta^\top}{1+r}\mathbb{E}^{\mathbb{Q}}[S_1-(1+r)S_0] \stackrel{\star}{=} y,$$
+    where $\star$ follows from the definition of a risk-neutral measure.
+\end{proof}
+We also have a converse result:
+\begin{theorem}
+    If a claim has a unique no-arbitrage price, then it is attainable.    
+\end{theorem}
+\begin{proof}
+    Exercise on example sheet 2 (it is a consequence of FTAP).
+\end{proof}
+\begin{example}
+    A forward contract is the right and the obligation to buy a given asset at time 1 for a fixed amount $K$ (the strike price). Let $d=1$, so our payout is $Y=S_1 - K$. This is attainable by holding one share of the asset and borrowing $\frac{K}{1+r}$ from the bank. The initial no-arbitrage price is $\pi = S_0 - \frac{K}{1+r}$.
+    \vspace{1mm}
+
+    Aside: this is the concept of the forward price of an asset. Usually, we choose $K$ such that $\pi = 0$. This special $K=(1+r)S_0$ is called the forward price of an asset. End of aside.
+\end{example}
+\begin{example}
+    Consider the one-period binomial model (that we talked about in lecture 5), where $S_0$ becomes either $S_0(1+b)$ or $S_0(1+a)$ at time 1 with probabilities $p$ and $1-p$. Let $Y=g(S_1)$. Turns out this is attainable for any $g$, since we can solve 
+    \begin{align*}
+        \theta^0(1+r) + \theta S_0 (1+b) &= g(S_0(1+b)) \\
+        \theta^0(1+r) + \theta S_0 (1+a) &= g(S_0(1+a)) \\
+        \implies \theta = \frac{g(S_0(1+b))-g(S_0(1+a))}{S_0(b-a)}&, \theta^0 = \frac{(1+b)g(S_0(1+a))-(1+a)g(S_0(1+b))}{(1+r)(b-a)}.
+    \end{align*}
+    The first of these equations will appear a lot in the upcoming lectures.
+
+    Exercise: Check that $$\theta^0 + \theta S_0 = \frac{\mathbb{E}^{\mathbb{Q}}[g(S_1)]}{1+r},$$ where $$\mathbb{Q}(S_1=(1+b)S_0) = \frac{r-a}{b-a}, ~\mathbb{Q}(S_1=(1+a)S_0) = \frac{b-r}{b-a}.$$
+\end{example}
+
+\section{Multiperiod models}
+\subsection{Introduction to multiperiod models}
+In one period, $S_0$ is constant and $S_1$ is a random vector. In two periods, both $S_1$ and $S_2$ are random. At time 1, we will know $S_1$, but not $S_2$. So $S_2$ is "more random" in a sense.
+
+We want to have three "sets of information" $\mathcal{F}_0, \mathcal{F}_1, \mathcal{F}_2$. $\mathcal{F}_0$ has no information, while $\mathcal{F}_2$ has full information (so we know what all the prices are). $\mathcal{F}_1$ is an intermediate situation, where we know $S_1$, but not $\mathcal{F}_2$.
+
+We also have $\mathcal{F}_0 \subset \mathcal{F}_1 \subset \mathcal{F}_2$. These are filtrations, and we will talk about them in detail later.
+
+What is information? Let $g$ be a "set of information". Intuitively, we have a notion of conditional probability of $A$ given $g$, $\mathbb{P}(A \mid g)$. So our intuitive definition is that an event $A$ is $\mathcal{G}$--measurable if and only if $\mathbb{P}(A \mid \mathcal{G}) \in \{0,1\}$ always.
+\begin{example}
+    Let $\Omega = \{HH,HT,TH,TT\}$, and $\mathcal{F}_1$ the information we get from observing the first coin. Then $A = \{HH,HT\}$ is $\mathcal{F}_1$--measureable, because $\mathbb{P}(A \mid \mathcal{G}) = \begin{cases}
+        1 \text{ if first flip is heads.}\\
+        0 \text{ if first flip is tails.}
+    \end{cases}$
+
+    But if $B = \{HT\}$, then $\mathbb{P}(B \mid \mathcal{G}) = \begin{cases}
+        \frac{1}{2} \text{ if first flip is heads.}\\
+        0 \text{ if first flip is tails.}
+    \end{cases}$
+
+    So $B$ is not $\mathcal{F}_1$--measurable.
+\end{example}
+Idea: the set of information can be identified with the collection of measurable events.
+
+\subsection{Measurability}
+
+\marginpar{28 Oct 2022, Lecture 10}
+
+\begin{defn}
+    Given a sample space $\Omega$ (a set of outcomes), a \textbf{sigma-algebra}  on $\Omega$ is a collection $\mathcal{G}$ of events (subsets of $\Omega$) such that
+    \begin{itemize}
+        \item it is nonempty;
+        \item if $A \in \mathcal{G}$, then $A^c \in \mathcal{G}$;
+        \item if $A_1,A_2,\ldots \in \mathcal{G}$, then $\bigcup_{n} A_n \in \mathcal{G}$.\footnote{If it is nonempty, then some set $A$ and its complement $A^C$ are in the set, so their union, i.e. the empty set,    and its complement $\Omega$ are in our set as well.}
+    \end{itemize} 
+\end{defn}
+\begin{example}
+    If $\Omega = \{HH,HT,TH,TT\}$, then $\mathcal{G} = \{\emptyset, \Omega, \{HH,HT\}, \{TH,TT\}\}$ models the information from the first coin toss.
+\end{example}
+\begin{defn}
+    Given a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ (the sample space, the collection of all events, and a probability measure) and a sub $\sigma$--algebra $\mathcal{G} \subset \mathcal{F}$, a random variable $X$ is \textbf{$\mathcal{G}$--measurable}  if and only if $$\{X \le x\} \in \mathcal{G} ~\forall x \in \mathbb{R}.$$
+\end{defn}
+So intuitively, knowing the information in $\mathcal{G}$ allows you to measure the value of $X$.
+
+\textbf{Remark.} If $x$ is $\mathcal{G}$--measurable, then $\{x \in B\} \in \mathcal{G}$ for any ''nice''\footnote{Here, ''nice'' means a Borel set.} $B \subset \mathbb{R}$.
+
+\textbf{Remark.} If $X$ is discrete, taking values in $\{x_1,x_2,\ldots,\}$, then $X$ is $\mathcal{G}$--measurable if and only if $\{X = x_i\} \in \mathcal{G} ~\forall i$.
+
+\textbf{Exercise.} Let $\mathcal{G} = \{\emptyset, \Omega\}$. Show that if $X$ is $\mathcal{G}$--measurable, then $X$ is a constant.
+\begin{defn}
+    The sigma-algebra generated by a random variable $X$ is the collection of events $\{X \in B\}$ for all ''nice'' $B \subset \mathbb{R}$. We denote this as $\sigma(X)$.
+\end{defn}
+\begin{theorem}
+    A random variable $Y$ is $\sigma(X)$--measurable if and only if we have $Y=f(X)$ for some ''nice'' function $f : \mathbb{R} \to \mathbb{R}$.
+\end{theorem}
+
+Recall the conditional expectation given an event: Let $X$ be integrable and $G \in \mathcal{F}$ such that $\mathbb{P}(G)>0$, then $\mathbb{E}[X \mid G]$ is defined to be\[
+\mathbb{E}[X \mid G] = \frac{\mathbb{E}[X \mathbbm{1}_{G}]}{\mathbb{P}(G)}.
+\]
+Recall also: Let $Y$ take values in $\{y_1,y_2,\ldots\}$ with $\mathbb{P}(Y=y_i)>0 ~\forall i$. Then $\mathbb{E}[X \mid Y]$ is defined as $f(Y)$, where \[
+f(y_i) = \mathbb{E}[X \mid Y=y_i].
+\]
+Note that $\mathbb{E}[X \mid Y]$ is $\sigma(Y)$--measurable (as it is a function of $Y$).
+
+We also have a projection property: $$\mathbb{E}[\mathbb{E}[X \mid Y]Z]=\mathbb{E}[XZ]$$ for any bounded $\sigma(Y)$--measurable $Z$.
+
+\begin{proof} We know that $\exists g$ such that $Z=g(Y)$ (by measurability). Then
+    \begin{align*}
+        \text{LHS}=\mathbb{E}[f(Y)Z]=\mathbb{E}[f(Y)g(Y)] = \sum_{i}^{} \mathbb{P}(Y=y_i)f(y_i)g(y_i) = \\
+        \sum_{i}^{} P(Y=y_i)\mathbb{E}[X \mid Y=y_i]g(y_i) = \sum_{i}^{} \mathbb{E}[X\mathbbm{1}_{\{Y=y_i\}}g(y_i)] = \\
+        \mathbb{E}\left[X(\sum_{}^{} \mathbbm{1}_{\{Y=y_i\}}g(y_i))\right] = \mathbb{E}[Xg(Y)] = \mathbb{E}[XZ] = \text{RHS}.
+    \end{align*}
+\end{proof}
+\begin{defn}
+    Let $X$ be defined on $(\Omega, \mathcal{F}, \mathbb{P})$, suppose $X$ is integrable (i.e. $\mathbb{E}[|X|]<\infty$) and let $\mathcal{G} \subset \mathcal{F}$ be a sub $\sigma$--algebra. \textbf{The conditional expectation of $X$ given $\mathcal{G}$}  (written as $\mathbb{E}[X \mid \mathcal{G}]$) is any $\mathcal{G}$--measurable integrable random variable $Y$ such that $$\mathbb{E}[X \mathbbm{1}_G] = \mathbb{E}[Y \mathbbm{1}_G]$$ for all $G \in \mathcal{G}.$
+\end{defn}
+\begin{theorem}
+    Conditional expectations are almost surely unique (i.e. if $Y_1$ and $Y_2$ are conditional expectations of the same thing, then $\mathbb{P}(Y_1=Y_2)=1$).
+\end{theorem}
+\begin{proof}
+    We have $\mathbb{E}[X \mathbbm{1}_G] = \mathbb{E}[Y_1 \mathbbm{1}_G] = \mathbb{E}[Y_2 \mathbbm{1}_G]$ for any $G \in \mathcal{G}$. It follows that $\mathbb{E}[(Y_1-Y_2) \mathbbm{1}_G]= 0$. Let $G=\{Y_1 > Y_2\}$. This is $\mathcal{G}$--measurable, since both $Y_1$ and $Y_2$ are $\mathcal{G}$--measurable. By pigeonhole, $\mathbb{P}(Y_1 > Y_2) = 0$, and by symmetry, $\mathbb{P}(Y_1 < Y_2) = 0$.
+\end{proof}
+\textbf{Remark.} $\mathbb{E}[XZ] = \mathbb{E}[\mathbb{E}[X \mid \mathcal{G}]Z]$ for any bounded $\mathcal{G}$--measurable $Z$. This is proved using measure theory.
+\begin{theorem}
+    Suppose $X$ is square--integrable (i.e. $\mathbb{E}[X^2]<\infty$). Then $$\mathbb{E}[(X-Y)^2] \ge \mathbb{E}[(X-\mathbb{E}[X \mid \mathcal{G}])^2]$$ for any $\mathcal{G}$--measurable $Y$.
+\end{theorem}
+\begin{proof}[Sketch of proof]
+    Given an arbitrary $\mathcal{G}$--measurable random variable $Y$, let $Z = Y - \mathbb{E}[X \mid \mathcal{G}]$. Then
+    \begin{align*}
+        \mathbb{E}[(X-Y)^2] = \mathbb{E}[(X-\mathbb{E}[X \mid \mathcal{G}] + Z)^2] = \\ 
+        \mathbb{E}[(X-\mathbb{E}[X \mid \mathcal{G}]^2) + 2\mathbb{E}[Z(X-\mathbb{E}[X \mid \mathcal{G}])]] + \mathbb{E}[Z^2] = \\
+        \mathbb{E}[(X-\mathbb{E}[X \mid \mathcal{G}]^2) + \mathbb{E}[Z^2] \ge \mathbb{E}[(X- \mathbb{E}[X \mid  \mathcal{G}])^2].
+    \end{align*}
+\end{proof}
+
+\marginpar{31 Oct 2022, Lecture 11}
+
+
+\end{document}
+
