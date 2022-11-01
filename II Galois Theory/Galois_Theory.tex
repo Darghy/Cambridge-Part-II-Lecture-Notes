@@ -18,6 +18,7 @@
 \usepackage{tikz-cd}
 \usepackage{tikz}
 \usepackage{graphicx}
+\usepackage{caption}
 \usepackage{wrapfig}
 \graphicspath{ {./images/} }
 \usepackage{setspace}
@@ -891,75 +892,95 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
 \begin{proof}
     By (ii), $L/K$ is separable, so by the primitive element theorem, $L=K(x)$ and the rest follows.
 \end{proof}
-Now we come to one of the main results of Galois theory. We split the theorem into three parts.
+
 \begin{theorem}[The Galois correspondence]
     Let $L/K$ be a finite Galois extension with Galois group $G = \text{Gal}(L/K)$.
     \begin{enumerate}[(a)]
         \item Suppose $F \subset L$ with $K \subset F$. Then $L/F$ is also a Galois extension, $\text{Gal}(L/F)\subset \text{Gal}(L/K)$, and the map $F \mapsto \text{Gal}(L/F)$ is a bijection \[
         \{\text{intermediate fields } K \subset F \subset L\} \cong \{\text{subgroups }H \text{ of }G\}
         \]
-        whose inverse is the map taking $H$ to the fixed field $L^H$. This bijection is inclusion--reversing, and if $F=L^H$, then $[F : K] = [G : H]$.\footnote{The index of $H$ in $G$.}
-    \end{enumerate}
-\end{theorem}
-\begin{proof}[Proof of (a)]
-    Let $x \in L$. Then $m_{x,F}$ divides $m_{x,K}$ in $F[T]$. As $m_{x,K}$ splits into distinct linear factors in $L$, so does $m_{x,F}$. So $L/F$ is normal and separable, hence Galois. By definition, $\text{Gal}(L/F)$ is a subgroup of $G$. To check we have a bijection, with the claimed inverse:
-    \begin{itemize}
-        \item $$F \mapsto H = \text{Gal}(L/F) \mapsto L^H \stackrel{?}{=} F.$$
-        But $L^{\text{Gal}(L/F)}=F$ as $L/F$ is Galois, i.e. $L^H = F$.
-        \item $$H \mapsto L^H \mapsto \text{Gal}(L/L^H) \stackrel{?}{=} H.$$
-        It is enough to show that $[L:L^H] \le |H|$, since certainly $H \subset \text{Gal}(L/L^H)$, and $|\text{Gal}(L/L^H)| \le [L : L^H]$. By Corollary \ref{9.3} we get $L=L^H(x)$, and $f = \prod_{\sigma \in H}^{} (T-\sigma(x)) \in L^H[T]$, with $x$ as a root. So $[L : L^H] = \text{deg}_{L^H}(x) \le \text{deg}(f) = |H|$. So we have a bijection. If $F \subset F'$, then $\text{Gal}(L/F') \subset \text{Gal}(L/F)$, so the bijection is inclusion--reversing. Finally, if $F=L^H$, then (as $L/K$ and $L/F$ are both Galois) \[
-        [F:K] = \frac{[L:K]}{L:F} = \frac{|\text{Gal}(L/K|}{|\text{Gal}(L/F)|} = \frac{|G|}{|H|} = [G:H].
-        \]
-    \end{itemize}
-\end{proof}
-
-\marginpar{01 Nov 2022, Lecture 12}
-
-\begin{theorem}[Theorem 9.4, (b)]
-    \begin{enumerate}[(a)]
+        whose inverse is the map taking $H$ to the fixed field $L^H$. This bijection is inclusion--reversing, and if $F=L^H$, then $[F : K] = [G : H]$.\footnote{$[G:H]$ is the index of $H$ in $G$.}
         \item Let $\sigma \in G$, $H \subset G$ a subgroup and $F = L^H$. Then $\sigma H \sigma^{-1}$ corresponds to $\sigma F$.
         \item We have equivalent statements for $H \subset G$:
         \begin{enumerate}[(i)]
             \item $L^H/K$ is Galois;
             \item $L^H/K$ is normal;
-            \item $~\forall \sigma \in G, \sigma(L^H)=L^H$.
+            \item $~\forall \sigma \in G, \sigma(L^H)=L^H$;
             \item $H \subset G$ is a normal subgroup.
         \end{enumerate} 
         If these hold, then $\text{Gal}(L^H/K)\cong G/H$.
     \end{enumerate}
 \end{theorem}
 \begin{proof}
-    (b): Under (a), $\sigma H \sigma^{-1}$ corresponds to 
-    \begin{align*}
-        L^{\sigma H \sigma^{-1}} = \{x \in L \mid \sigma \tau \sigma^{-1}(x)=x ~\forall \tau \in H\}
-    \end{align*}
-    and $\sigma \tau \sigma^{-1}(x)=x \iff \tau \sigma^{-1}(x) = \sigma^{-1}(x) \iff \tau(y)=y$, where ${x = \sigma(y)}$. So $x \in L^{\sigma H \sigma^{-1}} \iff x = \sigma(y), y \in L^H$, i.e. $L^{\sigma H \sigma^{-1}} = \sigma F$.
-    \vspace{1mm}
-    
-    (c): $L/K$ is separable, so $L^H/K$ is separable. So (i) $\iff$ (ii).
+    \marginpar{01 Nov 2022, Lecture 12}
+    \begin{enumerate}[(a)]
+        \item Let $x \in L$. Then $m_{x,F}$ divides $m_{x,K}$ in $F[T]$. As $m_{x,K}$ splits into distinct linear factors in $L$, so does $m_{x,F}$. So $L/F$ is normal and separable, hence Galois. By definition, $\text{Gal}(L/F)$ is a subgroup of $G$. To check we have a bijection with the claimed inverse:
+        \begin{itemize}
+            \item $$F \mapsto H = \text{Gal}(L/F) \mapsto L^H \stackrel{?}{=} F.$$
+            But $L^{\text{Gal}(L/F)}=F$ as $L/F$ is Galois, i.e. $L^H = F$.
+            \item $$H \mapsto L^H \mapsto \text{Gal}(L/L^H) \stackrel{?}{=} H.$$
+            It is enough to show that $[L:L^H] \le |H|$, since certainly $H \subset \text{Gal}(L/L^H)$, and $|\text{Gal}(L/L^H)| \le [L : L^H]$. By Corollary \ref{9.3} we get $L=L^H(x)$, and $f = \prod_{\sigma \in H}^{} (T-\sigma(x)) \in L^H[T]$, with $x$ as a root. So $[L : L^H] = \text{deg}_{L^H}(x) \le \text{deg}(f) = |H|$. So we have a bijection. If $F \subset F'$, then $\text{Gal}(L/F') \subset \text{Gal}(L/F)$, so the bijection is inclusion--reversing. Finally, if $F=L^H$, then (as $L/K$ and $L/F$ are both Galois) \[
+            [F:K] = \frac{[L:K]}{L:F} = \frac{|\text{Gal}(L/K|}{|\text{Gal}(L/F)|} = \frac{|G|}{|H|} = [G:H].
+            \]
+        \end{itemize}
+        \item Under (a), $\sigma H \sigma^{-1}$ corresponds to 
+        \begin{align*}
+            L^{\sigma H \sigma^{-1}} = \{x \in L \mid \sigma \tau \sigma^{-1}(x)=x ~\forall \tau \in H\}
+        \end{align*}
+        and $\sigma \tau \sigma^{-1}(x)=x \iff \tau \sigma^{-1}(x) = \sigma^{-1}(x) \iff \tau(y)=y$, where ${x = \sigma(y)}$. So $x \in L^{\sigma H \sigma^{-1}} \iff x = \sigma(y), y \in L^H$, i.e. $L^{\sigma H \sigma^{-1}} = \sigma F$.
+        \item $L/K$ is separable, so $L^H/K$ is separable. So (i) $\iff$ (ii).
 
-    Let $F = L^H, x \in F$. Then $\{\text{roots of }m_{x,K}\}$ is the orbit of $x$ under $G$. So $m_{x,K}$ splits in $F$ if and only if $~\forall \sigma \in G, \sigma(x) \in F$. As this holds $~\forall x \in F$, $F$ is normal if and only if $\sigma F \subset F$. As $[\sigma F : K] = [F : K]$ ($\sigma F$ is $K$--isomorphic to $F$), this means $\sigma F = F$. By (b), this is equivalent to the statement $~\forall \sigma \in G$, $\sigma H \sigma^{-1} = H$, i.e. $H$ is a normal subgroup.
-    \vspace{1mm}
-    
-    Last part: as $~\forall \sigma \in G, \sigma F = F$, we have a homomorphism $G \to \text{Gal}(F/K)$ given by restricting $\sigma \in G$ to $F$. Its kernel is $H$ (since $F = L^H$), so $G/H$ is isomorphic to a subgroup of $\text{Gal}(F/K)$. But we have an isomorphism, as $[G:H] = [F:K]$ by (a).
+        Let $F = L^H, x \in F$. Then $\{\text{roots of }m_{x,K}\}$ is the orbit of $x$ under $G$. So $m_{x,K}$ splits in $F$ if and only if $~\forall \sigma \in G, \sigma(x) \in F$. As this holds $~\forall x \in F$, $F$ is normal if and only if $\sigma F \subset F$. As $[\sigma F : K] = [F : K]$ ($\sigma F$ is $K$--isomorphic to $F$), this means $\sigma F = F$. By (b), this is equivalent to the statement $~\forall \sigma \in G$, $\sigma H \sigma^{-1} = H$, i.e. $H$ is a normal subgroup.
+        \vspace{1mm}
+        
+        Last part: as $~\forall \sigma \in G, \sigma F = F$, we have a homomorphism $G \to \text{Gal}(F/K)$ given by restricting $\sigma \in G$ to $F$. Its kernel is $H$ (since $F = L^H$), so $G/H$ is isomorphic to a subgroup of $\text{Gal}(F/K)$. But we have an isomorphism, as $[G:H] = [F:K]$ by (a).
+    \end{enumerate}
 \end{proof}
-
+\textbf{Remark.} This is one of the main results of Galois Theory.
 \begin{example}
-    Let $K = \mathbb{Q}$, $L = \mathbb{Q}(\sqrt[3]{2},\omega) \subset \mathbb{C}$, $\omega = e^{2 \pi i /3}$. We know from before that $L$ is a splitting field for $T^3-2$, and $[L:Q]=6$. So $L/\mathbb{Q}$ is the splitting field of a separable polynomial, hence it is Galois. If $G = \text{Gal}(L/K)$, then $|G|=6$.
+    Let $K = \mathbb{Q}$, $L = \mathbb{Q}(\sqrt[3]{2},\omega) \subset \mathbb{C}$, $\omega = e^{2 \pi i /3}$. We know from before that $L$ is a splitting field for $T^3-2$, and $[L:\mathbb{Q}]=6$. So $L/\mathbb{Q}$ is the splitting field of a separable polynomial, hence it is Galois. Let $G = \text{Gal}(L/K)$, then  we also know $|G|=6$.
     \vspace{1mm}
     
-    What obvious subfields of $L$ do we see? We have $F_1 = \mathbb{Q}(\omega)$, $F_2 = \mathbb{Q}(\sqrt[3]{2})$ with $[F_1 : \mathbb{Q}] = 2, [F_2 : \mathbb{Q}] = 3$.
+    What obvious subfields of $L$ do we see? We have $F_1 = \mathbb{Q}(\omega)$, $F_2 = \mathbb{Q}(\sqrt[3]{2})$ with $[F_1 : \mathbb{Q}] = 2, [F_2 : \mathbb{Q}] = 3$. Now draw a picture:
 
-    *Draw a field-group correspondence diagram*.
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[node distance = 2cm]
+            \node (Q) {$\mathbb{Q}$};
+            \node (F_1) [above left of=Q] {$F_1 = \mathbb{Q}(\omega)$};
+            \node (F_2) [above right of=Q] {$F_2 = \mathbb{Q}(\sqrt[3]{2})$};
+            \node (L) [above right of =F_1] {$L$};
+            \node (H_1) [right of =F_2] {$H_1$};
+            \node (1) [above right of =H_1] {$\{1\}$};
+            \node (H_2) [below right of=1] {$H_2$};
+            \node (G) [below right of =H_1] {$G$};
+            
+            \draw (Q) -- (F_1) node[midway,anchor=north east]{2} 
+                -- (L) node[midway, anchor=south east]{3}
+                -- (F_2) node[midway, anchor = south west]{2}
+                -- (Q) node[midway, anchor = north west]{3};
+            \draw (G) -- (H_1) node[midway,anchor=north east]{2} 
+                -- (1) node[midway, anchor=south east]{3}
+                -- (H_2) node[midway, anchor = south west]{2}
+                -- (G) node[midway, anchor = north west]{3};
+        \end{tikzpicture}
+        \captionsetup{labelformat=empty}
+    \caption{\hspace{6mm} Fields \hspace{35mm} Groups}
+    \end{figure}
 
-    Since $|G|=6$, it is isomorphic to either $C_6$ or $S_3$. Note that $F_2 / \mathbb{Q}$ is not normal, as $\omega \sqrt[3]{2} \not\in F_2$. So $H_2 = \text{Gal}(L/F_2)$ is not a normal subgroup. Hence $G$ is nonabelian, so $G \cong S_3$. Hence relabel to get $H_2 \cong \{(12),e\}$ and we must have $F_1 \cong A_3$. We have two other subgroups $\{(13), e\}$ and $\{(23),e\}$. There are the \textbf{conjugates} of $H_2$, so the corresponding subfields are $\{\sigma F_2 \mid \sigma \in G\}$, which are $\mathbb{Q}(\omega \sqrt[3]{2}), \mathbb{Q}(\omega^2 \sqrt[3]{2})$ (the conjugates of $\sigma(\sqrt[3]{2})$, $\sigma \in G$ are the roots of the minimal polynomial).
+    This gives us a subfield lattice with a corresponding subgroup lattice, where each field is the fixed field of the corresponding group. The numbers on the edges correspond to the degrees of field extensions on the left and the indices of the subgroups on the right.
+    \vspace{1mm}
+    
+    Since $|G|=6$, $G$ is isomorphic to either $C_6$ or $S_3$. Note that $F_2 / \mathbb{Q}$ is not normal, as $\omega \sqrt[3]{2} \not\in F_2$, so $H_2 = \text{Gal}(L/F_2)$ is not a normal subgroup. Hence $G$ is nonabelian, so $G \cong S_3$.
+    
+    Hence we have $H_2 \cong \{(12),e\}$ (by relabeling if necessary) and we must have $H_1 \cong A_3$. We have two other subgroups $\{(13), e\}$ and $\{(23),e\}$. There are the \textbf{conjugates} of $H_2$, so the corresponding subfields are $\{\sigma F_2 \mid \sigma \in G\}$, which are $\mathbb{Q}(\omega \sqrt[3]{2}), \mathbb{Q}(\omega^2 \sqrt[3]{2})$ (the conjugates of $\sigma(\sqrt[3]{2})$, $\sigma \in G$ are the roots of the minimal polynomial).
 
     So this describes all $F$ with $\mathbb{Q} \subset F \subset L$.
 \end{example}
 
 In fact, we could have seen at once that $G \cong S_3$:
 
-Suppose $f \in K[T]$ is a separable polynomial, $x_1,\ldots,x_n$ are its roots in a splitting field $L$ (where $n=\text{deg}(f)$). Then $G = \text{Gal}(L/K)$ permutes the $\{x_i\}$ (as $f(\sigma x_i) = \sigma f(x_i) = 0$), and if $\sigma(x_i) = x_i ~\forall i$, then since $L = K(x_1,\ldots,x_n)$, $\sigma = \text{id}$. This gives a homomorphism $G \to S_n$ which is injective. 
+Suppose $f \in K[T]$ is a separable polynomial, $x_1,\ldots,x_n$ are its roots in a splitting field $L$ (where $n=\text{deg}(f)$). Then $G = \text{Gal}(L/K)$ permutes the $\{x_i\}$ (as $f(\sigma x_i) = \sigma f(x_i) = 0$), and if $\sigma(x_i) = x_i ~\forall i$, then since $L = K(x_1,\ldots,x_n)$, $\sigma = \text{id}$. This gives an injective homomorphism $G \to S_n$. 
 
 So in the above example, we have a subgroup of $S_3$ of order $6$, so it must be 
 $S_3$.
