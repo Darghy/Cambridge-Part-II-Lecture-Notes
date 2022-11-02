@@ -818,7 +818,7 @@ $K_7$ can be drawn on a torus without edge crossings, so we definitely don't hav
 \textbf{Question.} Is there a ''7 color theorem'' for the torus?
 
 \begin{defn}
-    We define the surface of genus $g$ (officialy a compact orientable surface of genus $g$) to be the sphere with $g$ handles attached (or equivalently, the sphere with $g$ holes).
+    We define the \textbf{surface of genus $g$} (more formally, a compact orientable surface of genus $g$) to be the sphere with $g$ handles attached (or equivalently, the sphere with $g$ holes).
 \end{defn}
 
 Do we have an Euler-type theorem in this setting? Different cycles on the torus give different values for $V-E+F$, we get all of 2, 1, 0. *picture*
@@ -881,8 +881,68 @@ Do we have an Euler-type theorem in this setting? Different cycles on the torus 
 
 \textbf{Question.} How large does $\delta(G)$ have to be before $G$ is forced to have a cycle of length $|G|$?
 
+\marginpar{02 Nov 2022, Lecture 12}
+
+\begin{defn}
+    A graph is said to be \textbf{Hamiltonian} if it contains a cycle that contains all vertices. Such a cycle is called a \textbf{Hamilton} cycle.
+\end{defn}
 \begin{theorem}[Dirac]
-    Let $G$ be a graph, $|G|\ge 2$. If $\delta(G)\ge \frac{|G|}{2}$, then $G$ contains a cycle of length $|G|$.
+    Let $G$ be a graph on $n$ vertices, $n \ge 3$. If $\delta(G)\ge \frac{n}{2}$, then $G$ is Hamiltonian.
 \end{theorem}
+\textbf{Remark.} This theorem is sharp. If $n$ is even, take two disjoint $K_{n/2}$'s. If $n$ is odd, take two copies of $K_{(n+1)/2}$ that overlap at exactly one vertex.
+
+\begin{proof}
+    First note that $G$ is connected. If $x \not\sim y$, then $N(x), N(y) \subset G-x-y$, but $|N(x)|,|N(y)|\ge \frac{n}{2}$, so $N(x) \cap N(y) \neq \emptyset$ by the pigeonhole principle, so $x$ and $y$ have a common neighbor.
+    \vspace{1mm}
+    
+    Now take a path of maximal length $x_1\ldots x_l$. The claim is that there is no cycle in $G$ of length $l$. Indeed, if such a cycle did exist, then either $l=n$ and we're done, or $l<n$ and we can use this cycle to find a path of length $l+1$ in $G$, contradicting maximality.
+    \vspace{1mm}
+    
+    Observe that $N(x_1) \subset \{x_2,\ldots,x_{l-1}\}$ and $N(x_l) \subset \{x_2,\ldots,x_{l-1}\}$. Now define $N^-(x_1) = \{x_i \mid x_{i+1} \in N(x_1)\}$. Note $$|N^-(X_1) \cup N^-(x_l)| \le \{x_1,x_2,\ldots,x_{l-1}\}\le l-1\le n-1,$$ 
+    but $|N^-(x_1)|,|N(x_2)| \ge \frac{n}{2}$. So there must exist $x_i$ in their intersection.
+    \vspace{1mm}
+    
+    So we have $x_1 \ldots x_{i} x_l x_{l-1} \ldots x_{i+1} x_1$, a cycle of length $l$, a contradiction and we're done.
+\end{proof}
+\textbf{Remark.} Note that there's no interesting theorem of the form ''if $e(G) > K$, then $G$ is Hamiltonian'', since $K_{n-1} + x$ where $x$ has degree 1 is not Hamiltonian.
+
+\begin{theorem}\label{4.2}
+    Let $G$ be a graph on $n$ vertices. Then $e(G) > \frac{n(k-1)}{2} \implies G$ contains a path of length $k$.
+\end{theorem}
+\textbf{Remark.} If $k \mid n$, then this is sharp: take the disjoint union of $\frac{n}{k}$ copies of $K_k$.
+\begin{lemma}\label{4.3}
+    Let $G$ be a graph on $n$ vertices, $n\ge 3$, and let $k<n$. If $G$ is connected and $\delta(G) \ge \frac{k}{2}$, then $G$ contains a path of length $k$.
+\end{lemma}
+\textbf{Remarks.}
+\begin{itemize}
+    \item We need the assumption that $k<n$, otherwise take $K_k$.
+    \item We need the assumption that $G$ is connected, otherwise take a bunch of disjoint $K_k$.
+    \item The $\frac{k}{2}$ is sharp. Take a bunch of $K_k$'s that overlap at a single vertex.
+\end{itemize}
+\begin{proof}
+    Let $x_1\ldots x_l$ be a path of maximum length. We have that there is no cycle of length $l$: If $l=n$, then we're done since $k<n$, and if $l<n$, then use a cycle of length $l$ to build a path of length $l+1$ (since $G$ is connected), a contradiction.
+    \vspace{1mm}
+    
+    So we get $N(x_1) \subset \{x_2,\ldots,x_{l-1}\}, N(x_l) \subset \{x_2,\ldots,x_{l-1}\}$, and $N^-(x_1) = \{x_i \mid x_{i+1} \in N(x_1)\} \subset \{x_1,\ldots,x_{l-2}\}$. Thus
+    \[
+    |N^-(x_1) \cup N(x_l)| \le |\{x_1,\ldots,x_{l-1}\}| \le l-1 \stackrel{(\star)}{\le} k-1 
+    \]
+    (where $(\star)$ follows since else we're immediately done), but $|N^-(x_1)|, |N(x_l)| \ge \frac{k}{2}$, so $N^-(x_1) \cap N(x_l) \neq \emptyset$. So as before, we can build a cycle of length $l$, contradiction, done. 
+\end{proof}
+\begin{proof}[Proof of Theorem \ref{4.2}]
+    If $k=1$, we're done. Now assume $k\ge 2$ and apply induction on $n$, $n=2$ being clear.
+    \vspace{1mm}
+    
+    For the induction step, given a graph $G$ on $n\ge 3$ vertices, first note that $\frac{n(k-1)}{2} < e(G) \le \frac{n(n-1)}{2} \implies k \le n$. 
+    \vspace{1mm}
+    
+    We may assume that $G$ is connected: say $C_1,\ldots,C_r$ are the components of $G$ and $|C_i|=n_i$. Then $\sum_{i=1}^{r} e(G[C_i]) = e(G) > \frac{n(k-1)}{2}$, so since $\sum_{i=1}^{r} n_i = n$, \[
+    \sum_{i=1}^{r} \left(e(G[C_i]) - \frac{n_i(k-1)}{2}\right) > 0.
+    \]
+    So there exists some component $C_i$ that has $e(G[C_i]) > \frac{n_i(k-1)}{2}$, so apply induction to this component and we're done.
+    \vspace{1mm}
+    
+    If $\delta(G)\ge \frac{k}{2}$, then apply Lemma \ref{4.3} to see that $G$ contains a path of length $k$. Otherwise, there exists a vertex $x \in V(G)$ with $\text{deg}(x) \le \frac{k-1}{2}$. Note that we have $$e(G-x) > \frac{n(k-1)}{2} - \frac{k-1}{2} = \frac{(n-1)(k-1)}{2},$$ hence $G$ contains a path of length $k$ and we're done.
+\end{proof}
 
 \end{document}
