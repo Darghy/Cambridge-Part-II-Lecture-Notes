@@ -783,6 +783,83 @@ We also have a projection property: $$\mathbb{E}[\mathbb{E}[X \mid Y]Z]=\mathbb{
 
 \marginpar{31 Oct 2022, Lecture 11}
 
+\subsubsection{Properties of conditional expectations} 
+
+\begin{example}
+    Suppose $\Omega = \bigcup_{n} G_n$ for $(G_n)_n$ disjoint and $\mathbb{P}(G_n)>0 ~\forall n$. Let ${\mathcal{G} = \{\bigcup_{n \in I} G_n \mid I \subset \mathbb{N}\}}$ and let $X$ be integrable. Then \[
+    \mathbb{E}[X \mid \mathcal{G}](\omega) = \mathbb{E}[X \mid G_n], ~\omega \in G_n.
+    \]
+\end{example}
+\textbf{Remark.} Let $Y(\omega) = n$ if $ \omega \in G_n$. Note that $\mathcal{G} = \sigma(Y)$ and $\mathbb{E}[X \mid \mathcal{G}] = \mathbb{E}[X \mid Y]$.
+\vspace{1mm}
+
+\textbf{Notation.} We have by definition $\mathbb{E}[X \mid Y] = \mathbb{E}[X \mid \sigma(Y)]$.
+
+\begin{theorem}
+    Suppose all conditional expectations are defined. We then have:
+    \begin{itemize}
+        \item Additivity: $\mathbb{E}[X+Y \mid \mathcal{G}] = \mathbb{E}[X \mid \mathcal{G}] + \mathbb{E}[Y \mid \mathcal{G}]$.
+        \item Pulling out a known factor: Suppose $Y$ is $\mathcal{G}$--measurable, then $$\mathbb{E}[XY \mid \mathcal{G}] = Y \mathbb{E}[X \mid \mathcal{G}].$$
+        \item Tower property: if $\mathcal{H} \subseteq \mathcal{G}$, then \[
+        \mathbb{E}[\mathbb{E}[X \mid \mathcal{G}] \mid \mathcal{H}] = \mathbb{E}[\mathbb{E}[X \mid \mathcal{H}] \mid \mathcal{G}] = \mathbb{E}[X \mid \mathcal{H}].
+        \]
+        A corollary: $\mathbb{E}[\mathbb{E}[X \mid \mathcal{G}]] = \mathbb{E}[X]$ (by letting $\mathcal{H}= \{\emptyset,\Omega\}$).
+        \item If $X$ is independent of $\mathcal{G}$ (so $\{X \in B\}$ is independent of $G$ for all nice $B$ and $G \in \mathcal{G}$, or even $\mathbb{P}(\{X \in B\} \cap G) = \mathbb{P}(X \in B)\mathbb{P}(G)$), then \[
+        \mathbb{E}[X \mid \mathcal{G}] = \mathbb{E}[X].
+        \]
+        \item Positivity: If $X\ge 0$ almost surely, then $\mathbb{E}[X \mid \mathcal{G}]\ge 0$ almost surely.
+        \item Jensen's inequality: If $f$ is convex, then $\mathbb{E}[f(X) \mid \mathcal{G}] \ge f(\mathbb{E}[X \mid \mathcal{G}])$ almost surely.
+    \end{itemize}
+\end{theorem}
+\begin{proof}[Sketch of proof]
+    The first four: use the definition/uniqueness of conditional expectation. Positivity: use the definition again with $G = \{\mathbb{E}[X \mid G]\le 0\}$.
+
+    Jensen: Suppose $f$ is differentiable. Then we have the supporting hyperplane theorem $f(y)\ge f(x)+f'(x)(y-x)$. Set $y=X, x= \mathbb{E}[X \mid \mathcal{G}]$ to get 
+    \begin{align*}
+        &f(X) \ge f(\mathbb{E}[X \mid \mathcal{G}]) + f'(\mathbb{E}[X \mid \mathcal{G}])(X-\mathbb{E}[X\mid \mathcal{G}]) \\
+        \implies \mathbb{E}[f(X) \mid \mathcal{G}] \ge& \mathbb{E}[f(\mathbb{E}[X \mid \mathcal{G}])\mid  \mathcal{G}] + \mathbb{E}[f'(\mathbb{E}[X \mid \mathcal{G}])(X-\mathbb{E}[X \mid \mathcal{G}]) \mid G] = \\
+        = f(\mathbb{E}[X \mid \mathcal{G}]) &+ f'(\mathbb{E}[X \mid G])\mathbb{E}[X - \mathbb{E}[X \mid G] \mid G] = f(\mathbb{E}[X \mid G]).     
+    \end{align*}
+\end{proof}
+\begin{defn}
+    $\mathbb{P}(A \mid \mathcal{G})=\mathbb{E}[\mathbbm{1}_A \mid \mathcal{G}]$.
+\end{defn}
+\textbf{Remark.} Suppose $\mathbb{P}(A \mid \mathcal{G}) \in \{0,1\}$ almost surely. Then it is an indicator function, so $\mathbb{P}(A \mid \mathcal{G}) = \mathbbm{1}_B$ for some $B$ that is $\mathcal{G}$--measurable.
+
+Thus $\mathbb{P}(A)= \mathbb{E}[\mathbb{P}(A \mid \mathcal{G})] = \mathbb{E}[1_B]=\mathbb{P}(B)$ and $\mathbb{P}(A \cap B) = \mathbb{E}[\mathbb{E}[\mathbbm{1}_A \mathbbm{1}_B \mid \mathcal{G}]] = \mathbb{E}[\mathbbm{1}_B \mathbb{P}(A \mid G)] = \mathbb{E}[1_B] = \mathbb{P}(B)$. So now 
+\[
+\mathbb{E}[(\mathbbm{1}_A - \mathbbm{1}_B)^2] = \mathbb{E}[\mathbbm{1}_A] - 2\mathbb{E}[\mathbbm{1}_A \mathbbm{1}_B] + \mathbb{E}[\mathbbm{1}_B] = \mathbb{P}(A) - 2 \mathbb{P}(A \cap B) + \mathbb{P}(B) = 0,
+\]
+so $\mathbbm{1}_A = \mathbbm{1}_B$ almost surely, so $A$ is almost $B$--measurable.
+
+\section{Adaptedness, filtrations, martingales}
+
+\begin{defn}
+    A \textbf{filtration} $(\mathcal{F}_n)_{n\ge 0}$ is a sequence of $\sigma$--algebras such that $\mathcal{F}_n \subseteq \mathcal{F}_{n+1} ~\forall n$.
+\end{defn}
+\textbf{Convention.} For us, $\mathcal{F}_0$ will always be the trivial $\sigma$--algebra $\{\emptyset, \Omega\}$. That means that $\mathcal{F}_0$--measurable variables are constants.
+
+\begin{defn}
+    A \textbf{(stochastic) process} $(X_n)_{n\ge 0}$ is a sequence of random variables.
+\end{defn}
+\begin{defn}
+    A process $(X_n)_{n\ge 0}$ is \textbf{adapted} to a filtration $(\mathcal{F}_n)_{n\ge 0}$ if and only if $X_n$ is $\mathcal{F}_n$--measurable for all $n$.
+\end{defn}
+\textbf{Remark.} By convention, $X_0$ is constant (not random).
+
+\begin{defn}
+    A \textbf{martingale} is an integrable process $(X_n)_{n\ge 0}$ such that $$\mathbb{E}[(X_n \mid \mathcal{F}_{n-1})] = X_{n-1}$$ almost surely for all $n\ge 1$.
+\end{defn}
+\textbf{Remark.} Alternatively, a martingale is an integrable process that's adapted and $\mathbb{E}[X_n - X_{n-1} \mid \mathcal{F}_n] = 0 ~\forall n\ge 1$.
+
+\begin{example}
+    Flipping a coin twice. $\Omega = \{HH,HT,TH,TT\}$. Let 
+    \begin{align*}
+        &\mathcal{F}_0 = \{\emptyset, \Omega\}, ~\mathcal{F}_1 = \{\emptyset, \Omega, \{HH,HT\}, \{TH,TT\}\},~ \mathcal{F}_2 = 2^{\Omega}.
+    \end{align*}
+    Being a martingale is a lot more restrictive then being adapted: $(X_n)_n$ is adapted (where $X_n$ is the result of the $n^{\text{th}}$ toss), and hence can take 7 values. On the other hand, a martingale $(m_n)_n$ has a lot of structure: $m_1 = \mathbb{E}[m_2 \mid \mathcal{F}_1]$, so assuming $\mathbb{P}(\omega)=\frac{1}{4} ~\forall \omega \in \Omega$, if the four outcomes have values $a,b,c,d$, then the two outcomes in $m_1$ are $\frac{a+b}{2}$ and $\frac{c+d}{2}$, and $m_0$ is $\frac{a+b+c+d}{4}$. So if we have a finite time horizon and we know the final values, then we have completely characterized the martingale, as we can just project backwards.
+\end{example}
+
 
 \end{document}
 
