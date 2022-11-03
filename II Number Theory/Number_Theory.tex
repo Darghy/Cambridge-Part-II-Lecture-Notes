@@ -1119,12 +1119,74 @@ End of aside.
 \end{proof}
 \begin{example}
     Which integers are properly represented by $f(x,y)={x^2+xy+2y^2}$?
-    \vspace{1mm}
     
     We have $\text{disc}(f)=-7$, so $f$ is positive definite. By Lemma \ref{4.6}, any reduced form with discriminant $-7$ satisfies $|b|\le a \le 1$ and $b$ is odd. Hence $(a,b,c)=(1,1,2)$ or $(a,b,c) = (-1,-1,2)$. But the second one is not reduced, hence $h(-7)=1$ and all positive definite BQFs with discriminant $-7$ are equivalent.
     \vspace{1mm}
     
     Hence $n$ is properly represented by $x^2+xy+2y^2$ if and only if $x^2 \equiv -7 \pmod{4n}$ is soluble.
+
+    \marginpar{03 Nov 2022, Lecture 13}
+
+    Assume $n=p$ is prime and $p \neq 2,7$. By CRT, the above is equal to 
+    \[
+    \begin{cases}
+        x^2 \equiv -7 \pmod{4}. \text{ This is soluble.} \\
+        x^2 \equiv  -7 \pmod{p}. \text{This is soluble }\iff \left(\frac{-7}{p} \right) = 1. 
+    \end{cases}
+    \]
+    But $\left(\frac{-7}{p} \right)  = \left(\frac{-1}{p}\right)\left(\frac{7}{p}\right) = (-1)^{\frac{p-1}{2}}(-1)^{\frac{p-1}{2}}\left(\frac{p}{7}\right)=\left(\frac{p}{7}\right)$.
+
+    We conclude that $p = x^2+xy+2y^2$ for some $x,y \in \mathbb{Z}$ means that $p \equiv 1,2,4 \pmod{7}$ or $p=7$ (we check $p=2,7$ separately).
 \end{example}
+\begin{lemma}
+    Let $p$ be an odd prime and $a \in \mathbb{Z}$. If $\left(\frac{a}{p} \right) =1$, then the congruence $x^2 \equiv a \pmod{p^n}$ is soluble $~\forall n\ge 1$.
+\end{lemma}
+\begin{proof}
+    Induction on $n$. The case $n=1$ is clear.
+    \vspace{1mm}
+    
+    Now let $n\ge 1$ and suppose $x^2 \equiv a \pmod{p^n}$, i.e. $x^2 = a +k p^n, k \in \mathbb{Z}$. For $t \in \mathbb{Z}$, we have $(x + tp^n)^2 \equiv x^2 + 2xt p^n \equiv a + (2xt+k)p^n \pmod{p^{n+1}}$. Now we have $(2x,p)=1$, so we can solve $2xt+k \equiv 0\pmod{p}$, so we're done.
+\end{proof}
+\textbf{Remark.} A similar argument shows that $a \in \mathbb{Z}$ with $a \equiv 1\pmod{8}$, then $x^2 \equiv a \pmod{2^n}$ is soluble $~\forall n\ge 1$.
+
+\textbf{Above example continued:} Write $n = 2^{\alpha}7^{\beta}p_1^{\gamma_1}\ldots p_{r}\gamma^r$ for $p_i$ distinct powers. Then
+\[
+x^2 \equiv -7 \pmod{4n} \text{ is soluble} \iff \begin{cases}
+    &x^2 \equiv -7 \pmod{2^{\alpha+2}} \text{ is soluble.} \\
+    &x^2 \equiv -7 \pmod{7^{\beta+1}} \text{ is soluble.} \\
+    &x^2 \equiv -7 \pmod{p_i^{\gamma_i}} \text{ is soluble}~\forall 1\le i\le r. \\
+\end{cases}
+\]
+The first condition is always true by the remark above. The second one has no solutions mod $49$, so hence $\beta\le 1$. For the last condition, use the above lemma to get that we need $\left(\frac{-7}{p_i} \right) = 1 ~\forall 1 \le i \le r$.
+\vspace{1mm}
+
+Hence we want $7^2 \nmid n$ and all primes $p \mid n$ with $p \neq 7$ satisfy $p \equiv 1,2,4 \pmod{7}$.
+\vspace{1mm}
+
+The integers represented by $x^2+xy+y^2$ (not necessarily properly) are then of the form $k^2n$ for $k \in \mathbb{Z}$ and $n$ as described above.
+\vspace{1mm}
+
+\textbf{Conclusion.} $n = x^2+xy+2y^2$ for some $x,y \in \mathbb{Z} \iff$ every prime $p \equiv 3,5,6$ which divides $n$ divides it to an even power.
+\vspace{1mm}
+
+\textbf{Remarks.}
+\begin{enumerate}[(i)]
+    \item If $h(d)=1$, we have shown how to solve the problem of which integers are represented by a given form of discriminant $d<0$.
+    
+    If $h(d)>1$, we can determine which integers are represented by \textit{some} form of discriminant $d$. For some values of $d$ we can still distinguish which forms represent which numbers using congruence conditions.
+    \item What about quadratic forms in more variables?
+    \begin{theorem}[Lagrange 1770]
+        Every positive integer is a sum of four squares.
+    \end{theorem}
+    \begin{theorem}[Legendre 1797]
+        A positive integer $n$ is a sum of 3 squares if and only if $n \neq 4^a(8b+7)$ for some integers $a,b \ge 0$.
+    \end{theorem}
+    \item A geometric way to think about reduction: Let $f(x,y) = ax^2+bxy+cy^2$ be a positive definite BQF, so $d=b^2-4ac<0$. Let $\tau \in \mathbb{C}$ with $f(\tau,1)=0$ and $\text{Im}(\tau)>0$, so $\tau = \frac{-b \pm \sqrt{|d|} i}{2a}$, and $|\tau|^2 = \frac{b^2-d}{4a^2} = \frac{c}{a}$.
+    
+    So $|b|\le a\le c \iff |\text{Re}(\tau)|\le \frac{1}{2}$ and $|\tau| \ge 1$. Let $\mathcal{F}$ be this subregion of $\mathbb{C}$. Then $SL_2(\mathbb{Z}) \subset  SL_2(\mathbb{R})$ acts on $\mathcal{H} = \{\tau \in \mathbb{C} \mid \text{Im}(\tau)>0\}$ via $\begin{pmatrix} a & b\\c &d \end{pmatrix} : \tau \to \frac{a\tau + b}{c\tau + d}$, and the operations $S$ and $T_{\pm}$ in the proof of Lemma \ref{4.5} correspond to the Möbius maps $S: \tau \mapsto \frac{-1}{\tau}$ and $T_{\pm } : \tau \mapsto \tau \pm 1$. So we just start somewhere in the complex plane and apply these transformations until we end up in $\mathcal{F}$.
+
+    \item Extra conditions in the definition of a reduced form correspond to conditions concerning the boundary of $\mathcal{F}$.
+\end{enumerate}
+
 
 \end{document}
