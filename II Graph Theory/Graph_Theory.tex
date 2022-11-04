@@ -831,7 +831,6 @@ Do we have an Euler-type theorem in this setting? Different cycles on the torus 
     \item $E = 2 - 2g$ is the \textbf{Euler characteristic} of the surface of genus $g$.
     \item This is the direction of Euler's theorem ($\ge $, not $\le$) that we need to bound the number of edges of $G$.
     \item We do not assume that the graph is connected here.
-    \item The proof is easy: we induct on $e(G)$. Removing an edge reduces $m$ by 1, and reduces $f$ by either 0 or 1.
 \end{itemize} 
 \begin{cor}
     Let $G$ be a graph with $|G|\ge 3$, drawn on a surface of Euler characteristic $E$. Then $$e(G)\le 3(|G|-E).$$
@@ -944,5 +943,73 @@ Do we have an Euler-type theorem in this setting? Different cycles on the torus 
     
     If $\delta(G)\ge \frac{k}{2}$, then apply Lemma \ref{4.3} to see that $G$ contains a path of length $k$. Otherwise, there exists a vertex $x \in V(G)$ with $\text{deg}(x) \le \frac{k-1}{2}$. Note that we have $$e(G-x) > \frac{n(k-1)}{2} - \frac{k-1}{2} = \frac{(n-1)(k-1)}{2},$$ hence $G$ contains a path of length $k$ and we're done.
 \end{proof}
+
+\marginpar{04 Nov 2022, Lecture 13}
+
+\textbf{Question.} How many edges in a graph with $n$ vertices do we need before we are forced to have a triangle?
+
+\textbf{Note.} For $n$ even, $K_{n/2,n/2}$ contains no triangle and has $\frac{n^2}{4}$ edges.
+
+\begin{theorem}
+    Let $G$ be a graph on $n$ vertices. If $e(G)>\frac{n^2}{4}$, then $G$ contains $K_3$.
+\end{theorem}
+\textbf{Fact} (Jensen). Let $a<b$, $f : [a,b] \to \mathbb{R}$ convex, $x_1,\ldots,x_n \in [a,b]$. Then \[
+\frac{1}{n} \sum_{i=1}^{n} f(x_i) \ge f\left(\frac{1}{n}\sum_{i=1}^{n} x_i\right).
+\]
+\begin{proof}
+    Assume for contradiction that $K_3 \not\subset G$. We may assume that $n\ge 3$. Consider $x \sim y$. We have $d(x) + d(y) \le n$, else we have a triangle (since $x,y$ have a common neighbor by pigeonhole). Thus
+    \begin{align*}
+    n e(G) = \sum_{x\sim y}^{} (d(x)+d(y)) = \frac{1}{2}\sum_{x}^{} \sum_{y}^{} (d(x)+d(y))\mathbbm{1}(x\sim y) = \\
+    \sum_{x}^{} \sum_{y}^{} d(x) \mathbbm{1}(x\sim y) = \sum_{x}^{} d(x) \sum_{y}^{} \mathbbm{1}(x\sim y) = \sum_{x}^{} d(x)^2.
+    \end{align*}
+    Now by Jensen,
+    \begin{align*}
+        ne(G) = n \left(\frac{1}{n} \sum_{x}^{} d(x)^2\right) &\ge n \left(\frac{1}{n}\sum_{x}^{} d(x) \right)^2 = n \left(\frac{2e(G)}{n} \right)^2 \\
+        \implies &e(G) \le \frac{n^2}{4}.
+    \end{align*}
+\end{proof}
+\begin{defn}
+    We say that a graph $G=(V,E)$ is \textbf{$r$--partite} if there is a partition of $V = V_1 \sqcup V_2 \sqcup \ldots \sqcup V_r$ such that $\forall xy \in E$, $\exists V_i,V_j, i \neq j$ s.t. $x \in V_1$ and $y \in V_j$. This is the same as saying $\chi(G)\le r$.
+\end{defn}
+\begin{defn}
+    Given $n_1,\ldots,n_r \in \mathbb{Z}_{\ge 0}$, define $K_{n_1,\ldots,n_r}$ to be the \textbf{complete $r$--partite graph} where $V = V_1 \sqcup V_2 \sqcup \ldots \sqcup V_r$, $|V_i|=n_i ~\forall i$, and $\forall x \in V_i, y \in V_j, i \neq j, xy \in E(K_{n_1,\ldots,n_r})$. 
+\end{defn}
+Note that if $r \mid n$, then \[
+e(K_{\frac{n}{r},\ldots,\frac{n}{r}}) = \frac{n^2}{r^2}{{r}\choose{2}} = \left(1-\frac{1}{r}\right) \frac{n^2}{2}.
+\]
+\begin{theorem}[Turan]
+    Let $G$ be a graph on n vertices, $r\ge 1$. Then \[
+    e(G) > \left(1-\frac{1}{r}\right) \frac{n^2}{2} \implies K_{r+1} \subset G.
+    \]
+\end{theorem}
+\begin{proof}
+    We prove the contrapositive. Apply induction first on $r\ge 1$ and then on $n$. If $n\le r$, we're done. Note that the theorem is trivial if $r=1$, so assume $r\ge 2$. Now let $G$ be a graph, $K_{r+1} \not\subset G$.
+
+    If there is no $K_r$ in $G$, then apply induction (on $r$) to get an even stronger bound $e(G) \le (1-\frac{1}{r-1})\frac{n^2}{2}$.
+    \vspace{1mm}
+    
+    Hence let $K$ be a $K_r$ in $G$. Each vertex in $V(G)\setminus K$ has at most $r-1$ neighbors in $K$ (else we'd have $K_{r+1} \subset G$), So
+    \begin{align*}
+        &e(G) \le {{k}\choose{2}} + (r-1)(n-r) + e(G\setminus K) \le \\
+        &\le {{k}\choose{2}} + (r-1)(n-r) + \left(1-\frac{1}{r}\right)\frac{(n-1)^2}{2} = \left(1-\frac{1}{r}\right)\frac{n^2}{2}.
+    \end{align*}
+\end{proof}
+\begin{defn}
+    The \textbf{Turan graph} $T_{r,n}$ is the graph $K_{n_1,\ldots,n_r}$ where $\sum_{}^{} n_i=n$ and the $\{n_i\}$ are as equal as possible, i.e. $|n_i-n_j|\le 1 ~\forall i,j$.
+\end{defn}
+\textbf{Fact.} Let $G$ be an $r$--partite graph on $n$ vertices. Then $e(G) \le e(T_{r,n})$.
+\begin{proof}
+    Let $G$ be a $r$--partite graph with maximal number of edges. First note $G$ is a complete $r$--partite graph $K_{n_1,\ldots,n_r}$ for some $n_1,\ldots,n_r$. If $\exists i,j$ such that $n_i \ge n_j +2$, move a vertex from part $i$ to part $j$. Then we gain $n_i-1$ edges and lose $n_j$ edges, so we get a graph with more edges, contradiction. Hence $|n_i-n_j|\le 1 ~\forall i,j$, so $G=T_{r,n}$.
+\end{proof}
+\begin{theorem}[Turan, version 2]
+    Let $G$ be a graph on $n$ vertices and $r\ge 2$. If $G$ does not contain a $K_{r+1}$, then $e(G) \le e(T_{r,n})$.
+\end{theorem}
+\begin{proof}[Idea for proof]
+    Given $G$, we ''transform'' $G$ into a complete $r$--partite graph without decreasing the number of edges or creating any $K_{r+1}$'s.
+\end{proof}
+\begin{proof}
+    Say $V(G)=[n]$. Let $\alpha_1,\ldots,\alpha_r$ be transcendental numbers that are linearly independent over $\mathbb{Q}$ and define $\mu(S) = \sum_{i \in S}^{} \alpha_i$ for $S \subset [n]$.
+\end{proof}
+
 
 \end{document}
