@@ -1188,5 +1188,117 @@ The integers represented by $x^2+xy+y^2$ (not necessarily properly) are then of 
     \item Extra conditions in the definition of a reduced form correspond to conditions concerning the boundary of $\mathcal{F}$.
 \end{enumerate}
 
+\section{The distribution of primes}
+
+\marginpar{05 Nov 2022, Lecture 14}
+
+
+Define $\pi(x)$ to the number of primes $\le x$. In lecture 2, we saw that $\pi(x) \to \infty$ as $x \to \infty$ (by Euclid). On Example Sheet 1, we saw $\pi(x) \ge \frac{\log x}{\log \log x}$ if $x\ge 8$.
+\begin{lemma}
+    $\exists c>0$ such that $\pi(x)> c \log x$.
+\end{lemma}
+\begin{proof}
+    For $n \le x$ we can write $n = k^2 p_1^{\alpha_1} p_r^{\alpha_r}$ with $k\le \sqrt{x}$, $p_i$ all the primes $\le x$ and $\alpha_i \in \{0,1\}$ (so $p_1^{\alpha_1} p_r^{\alpha_r}$ is squarefree).
+    \vspace{1mm}
+    
+    There are $\le \sqrt{x}$ choices for $k$ and $\le 2^r$ choices for $\alpha_1,\ldots,\alpha_r$, so $$x \le \sqrt{x}2^{\pi(x)} \implies \pi(x) \ge \frac{\log x}{2\log 2}.$$
+\end{proof}
+The following result gives another proof of the infinitude of primes.
+\begin{theorem}\label{5.2}
+    $\sum_{p}^{} \frac{1}{p}$ diverges and $\prod_{p}^{} (1-\frac{1}{p})^{-1}$ diverges.
+\end{theorem}
+\begin{proof}
+    For $x\ge 2$, we define $P(x)=\prod_{p\le x}^{} (1-\frac{1}{p})^{-1}$ and $S(x)=\sum_{p\le x}^{} \frac{1}{p}$. We show that $P(x) \to \infty$ and $S(x) \to \infty$ as $n \to \infty$.
+    \begin{enumerate}[(i)]
+        \item Let $p_1,\ldots,p_r$ be the primes $\le x$. Then 
+        \begin{align*}
+            P(x) = \prod_{i=1}^{r} (1+\frac{1}{p_i}+\frac{1}{p_i^2}+ \ldots) = \sum_{\alpha_1=0}^{\infty} \ldots \sum_{\alpha_r=0}^{\infty} \frac{1}{p_1^{\alpha_1} \ldots p_r^{\alpha_r}} \ge \sum_{n=1}^{\left\lfloor x \right\rfloor} \frac{1}{n} \stackrel{n \to \infty}{\to} \infty.
+        \end{align*}
+        \item 
+        \begin{align*}
+            \log P(x) = -\sum_{i=1}^{r} \log\left(1-\frac{1}{p_i}\right) \stackrel{(\star)}{=}  \sum_{i=1}^{r} \sum_{m=1}^{\infty} \frac{1}{mp_i^m} = S(x) + \sum_{i=1}^{r} \sum_{m=2}^{\infty} \frac{1}{m p_i^m}
+        \end{align*}
+        where $(\star)$ follows from the Taylor series expansion of $\log(1+x)$. But $\sum_{m=2}^{\infty} \frac{1}{p^m} = \frac{p^{-2}}{1-p^{-1}} = \frac{1}{p(p-1)}$, so \[
+        0 < \log P(x) - S(x) < \frac{1}{2}\sum_{i=1}^{r} \frac{1}{p_i(p_i-1)} \le \frac{1}{2}\sum_{n=2}^{\infty} \frac{1}{n(n-1)} = \frac{1}{2}.
+        \]
+        Thus $S(x) \to \infty$ as $n \to \infty$.
+    \end{enumerate}
+\end{proof}
+\textbf{Remark.} $\sum_{n=1}^{\left\lfloor x \right\rfloor} \frac{1}{n} > \int_{1}^{\left\lfloor x \right\rfloor+1} \frac{\mathrm{d}u}{u} = \log(\left\lfloor x \right\rfloor+1) \ge \log x$. So the proof of (i) shows $P(x) > \log(x)$ and the proof of (ii) shows $S(x) > \log \log x - \frac{1}{2}$. This is a rather good approximation:
+\begin{theorem}[Mertens 1874]\label{5.3}
+    There exists a constant $B$ such that $S(x) = \log \log x + B + O(\frac{1}{\log x})$.
+\end{theorem}
+\begin{proof}
+    Omitted, but a key ingredient is the following theorem which we will later prove.
+\end{proof}
+\begin{theorem}[Tchebychev 1852]
+    There exist constants $a,b >0$ such that $\frac{ax}{\log x} < \pi(x) < \frac{bx}{\log x}$.
+\end{theorem}
+\begin{lemma}
+    If $\frac{p(x) \log x}{x}$ tends to a limit as $x \to \infty$, then that limit must be 1.
+\end{lemma}
+\begin{proof}
+    \begin{align*}
+        S(x) = \sum_{p\le x}^{} \frac{1}{p} = \sum_{n\le x}^{} \frac{\pi(n)-\pi(n-1)}{n} = \sum_{n=2}^{\left\lfloor x \right\rfloor-1} \pi(x)\left(\frac{1}{n}-\frac{1}{n-1}\right) + \frac{\pi(x)}{\left\lfloor x \right\rfloor} = \\
+        \sum_{n=2}^{\left\lfloor x \right\rfloor-1} \int_{n}^{n+1} \frac{\pi(u)}{u^2}\mathrm{d}u + \int_{\left\lfloor x \right\rfloor}^{x} \frac{\pi(u)}{u^2}\mathrm{d}u + \frac{\pi(x)}{x} = \frac{\pi(x)}{x} + \sum_{2}^{x} \frac{\pi(u)}{u^2}\mathrm{d}u.
+    \end{align*}
+    If $\frac{\pi(x)\log x}{x} \to \alpha$ as $x \to \infty$, then we get 
+    \begin{align*}
+        S(x) \sim \alpha \int_{2}^{x} \frac{\mathrm{d}u}{u \log u} = \alpha \left[\log \log u \right]_2^x \implies S(x) \sim \alpha \log \log x. 
+    \end{align*}
+    By Theorem \ref{5.2}, $\alpha\ge 1$, but by Mertens (Theorem \ref{5.3}), $\alpha=1$.
+\end{proof}
+\begin{theorem}[Prime Number Theorem]
+    \[
+    \pi(x) \sim \frac{x}{\log x}.
+    \]
+\end{theorem}
+\textbf{Remarks.}
+\begin{itemize}
+    \item Equivalently, this says $\frac{\pi(x) \log x}{x} \to 1$ as $x \to \infty$.
+    \item This was proved independently by Hadamard and de la Vallee Poussin.
+    \item The proof uses the Riemann zeta function and complex analysis.
+\end{itemize}
+\begin{defn}[Riemann zeta function]
+    For $s \in \mathbb{C}$ with $\text{Re}(s)>1$, we say $$\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s}.$$
+\end{defn}
+\textbf{Remark.} In this context, the convention is to write $s = \sigma + it$.
+\begin{lemma}
+    For $\text{Re}(s)>1$, the series $\sum_{n=1}^{\infty} \frac{1}{n^s}$ converges absolutely. Moreover, for any $\delta>0$, it converges uniformly on $\text{Re}(s)\ge 1+\delta$ (and hence is analytic on $\text{Re}(s)>1$).    
+\end{lemma}
+\begin{proof}
+    For $s = \sigma + it$, we have 
+    \begin{align*}
+        |n^s| = |n^{\sigma + it}| = |e^{(\sigma+it)\log n}| = e^{\sigma \log n} = n^\sigma.
+    \end{align*}
+    But $\sum_{n=1}^{\infty} \frac{1}{n^\sigma}$ converges for $\sigma>1$, and it converges uniformly for $\sigma \ge 1 + \delta$ (by IA Analysis).
+\end{proof}
+The following result links $\zeta$ to the primes.
+\begin{prop}[Euler product for $\zeta$]
+    For $\text{Re}(s)>1$, we have \[
+    \zeta(s) = \prod_{p}^{} \left(1-\frac{1}{p^s}\right)^{-1}. 
+    \]
+\end{prop}
+\begin{proof}
+    The rough idea:
+    \[
+    \prod_{p}^{} \left(1-\frac{1}{p^s}\right)^{-1} = \prod_{p}^{} \left(1+\frac{1}{p^s}+\frac{1}{p^{2s}}+\ldots \right) \stackrel{(\star)}{=} \sum_{n=1}^{\infty} \frac{1}{n^s}
+    \] where $(\star)$ follows from the Fundamental Theorem of Arithmetic.
+    \vspace{1mm}
+    
+    In detail: Fix $s$ with $\text{Re}(s)>1$. If $M>\frac{\log N}{\log 2}$, then $p^m > N ~\forall $primes $p$. Now:
+    \begin{align*}
+        \prod_{p\le N}^{} \sum_{j=0}^{M} \frac{1}{p^{js}} = 1+ \frac{1}{2^s} + \frac{1}{3^s} + \ldots + \frac{1}{N^s} + \left(\text{extra terms }\frac{1}{n^s} \text{ for }n>N \right).
+    \end{align*}
+    Hence
+    \begin{align*}
+        \left|\sum_{n=1}^{\infty} \frac{1}{n^s} - \prod_{p\le N}^{} \sum_{j=0}^{m} \frac{1}{p^{js}} \right| \le \sum_{n=N+1}^{\infty} \frac{1}{n^\sigma}.
+    \end{align*}
+    Take the limit as $M \to \infty$ to get 
+    \begin{align*}
+        \left|\zeta(s)- \prod_{p\le N}^{} \left(1-\frac{1}{p^s}\right)^{-1}\right| = \sum_{n=N+1}^{\infty} \frac{1}{n^{\sigma}} \stackrel{N \to \infty}{\to} 0.
+    \end{align*}
+\end{proof}
+
 
 \end{document}
