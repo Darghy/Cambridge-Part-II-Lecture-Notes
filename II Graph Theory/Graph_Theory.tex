@@ -38,6 +38,7 @@
 \newtheorem{prop}[theorem]{Proposition}
 \newtheorem{example}{Example}[section]
 \newtheorem{defn}{Definition}[section]
+\newtheorem*{claim*}{Claim}
 
 \title{ Part II - Graph Theory
     \\ \large
@@ -997,7 +998,9 @@ e(K_{\frac{n}{r},\ldots,\frac{n}{r}}) = \frac{n^2}{r^2}{{r}\choose{2}} = \left(1
 \begin{defn}
     The \textbf{Turan graph} $T_{r,n}$ is the graph $K_{n_1,\ldots,n_r}$ where $\sum_{}^{} n_i=n$ and the $\{n_i\}$ are as equal as possible, i.e. $|n_i-n_j|\le 1 ~\forall i,j$.
 \end{defn}
-\textbf{Fact.} Let $G$ be an $r$--partite graph on $n$ vertices. Then $e(G) \le e(T_{r,n})$.
+\begin{lemma}\label{4.6}
+    Let $G$ be an $r$--partite graph on $n$ vertices. Then $e(G) \le e(T_{r,n})$.
+\end{lemma}
 \begin{proof}
     Let $G$ be a $r$--partite graph with maximal number of edges. First note $G$ is a complete $r$--partite graph $K_{n_1,\ldots,n_r}$ for some $n_1,\ldots,n_r$. If $\exists i,j$ such that $n_i \ge n_j +2$, move a vertex from part $i$ to part $j$. Then we gain $n_i-1$ edges and lose $n_j$ edges, so we get a graph with more edges, contradiction. Hence $|n_i-n_j|\le 1 ~\forall i,j$, so $G=T_{r,n}$.
 \end{proof}
@@ -1008,7 +1011,99 @@ e(K_{\frac{n}{r},\ldots,\frac{n}{r}}) = \frac{n^2}{r^2}{{r}\choose{2}} = \left(1
     Given $G$, we ''transform'' $G$ into a complete $r$--partite graph without decreasing the number of edges or creating any $K_{r+1}$'s.
 \end{proof}
 \begin{proof}
-    Say $V(G)=[n]$. Let $\alpha_1,\ldots,\alpha_r$ be transcendental numbers that are linearly independent over $\mathbb{Q}$ and define $\mu(S) = \sum_{i \in S}^{} \alpha_i$ for $S \subset [n]$.
+    Say $V(G)=[n]$. Let $\alpha_1,\ldots,\alpha_n >0$ be linearly independent over $\mathbb{Q}$ and define $\mu(S) = \sum_{i \in S}^{} \alpha_i$ for $S \subseteq [n]$.
+    
+    \marginpar{07 Nov 2022, Lecture 14}
+    \vspace{1mm}
+    
+    If $H$ is a graph on $n$ vertices, define $T(H)$ as follows: Let $x,y$ be a pair maximizing $\mu(\{x,y\})$ such that $N(x) \neq N(y)$ and $x \not\sim y$. If $\text{deg}(x) > \text{deg}(y)$ or $\text{deg}(x) = \text{deg}(y)$ but $\mu(N(x)) > \mu(N(y))$, define $T(H)$ to be $H-y$ along with a vertex $x'$ with $N(x') = N(x)$.
+    \vspace{1mm}
+    
+    \begin{claim*}
+        If $K_{r+1} \not\subset H$, then $K_{r+1} \not\subset T(H)$.
+    \end{claim*}
+    \begin{proof}
+        Assume for contradiction that $T(H)$ contains $K_{r+1}$, call it $K$. We must have $x' \in K$, because all other vertices stayed the same. But $x \not\in K$ since $x \not\sim x'$. But then $K \setminus \{x'\} \cup x$ is a $K_{r+1}$ in $H$, contradiction.
+    \end{proof}
+    Now consider the sequence, $G,T(G),T(T(G)),\ldots$.
+    \begin{claim*}
+        This sequence eventually stabilizes.
+    \end{claim*}
+    \begin{proof}
+        Note $e(T(H)) \ge e(H)$, so $e(T^{(i)}(H))$ is an increasing sequence. It is also bounded above, so eventually we reach a maximum. Now note
+        \[
+        \sum_{x \in [n]}^{} \mu(N_{T^(i)(G)}(x))
+        \]
+        is always increasing past that point, so eventually it stabilizes.
+    \end{proof}
+    So at some point, our transformation does nothing anymore. Let $G_{\infty}$ be the graph where we stop.
+    \begin{claim*}
+        $G_{\infty}$ is a complete $k$--partite graph for some $k \in \mathbb{N}$.
+    \end{claim*}
+    \begin{proof}
+        Let $k = \chi(G_{\infty})$ and let $c$ be a $k$--coloring of $G_{\infty}$ with $V(G_{\infty}) = C_1 \cup \ldots \cup C_k$, where $C_i = \{x \mid  c(x)=i\}$.
+
+        Note that if $x,y \in c(i)$, then $N(x)=N(y)$, otherwise $T(G_{\infty}) \neq G_{\infty}$. 
+        
+        Now let $x \in C_i$ and $y \in C_j$ for $i \neq j$. If $x \not\sim y$, then $x' \not\sim y ~\forall  x' \in C_i$. It follows that $~\forall x' \in C_i$ and $~\forall y' \in C_j$, $x' \not\sim y'$. We can now recolor $i,j$ to be the same color to get a $k-1$--coloring, contradiction. So $x \sim y ~\forall x \in C_i, ~\forall y \in C_j, ~\forall i\neq j$.
+    \end{proof}
+    So $G_{\infty}$ is complete $k$--partite for some $k$. Since $G_{\infty}$ does not contain $K_{r+1}$ by our first claim, we have $k\le r$. By Lemma \ref{4.6}, $e(G_{\infty}) \le e(T_{r,n})$ and also $e(G) \le e(G_{\infty})$, so we're done.
+\end{proof}
+
+\subsection*{The Zarankiewicz problem.} 
+
+Let $Z(n,t)$ be the maximal number of edges in a bipartite graph $G = (X \cup Y, E)$, with $|X|=|Y|=n$ and $K_{t,t} \not\subset G$.
+
+\begin{theorem}\label{4.8}
+    Let $t\ge 2$. Then $$Z(n,t) \le t^{\frac{1}{t}} n^{2-\frac{1}{t}} + tn.$$
+    In particular, if $n$ is large compared to $t$, we have $Z(n,t) \le 2n^{2-\frac{1}{t}}$. 
+\end{theorem}
+\begin{lemma}\label{4.9}
+    Let $t\ge 2$ be an integer. The function $$f_t(x) = \frac{x(x-1)\ldots(x-t+1)}{t!}$$ is convex for $x\ge t-1$.
+\end{lemma}
+\begin{proof}
+    Let $s=x-t+1$, so $f_t(s) = \frac{(s+t-1)(s+t-2)\ldots(s)}{t!}$ which is a polynomial with non-negative coefficients. So $f''(s)\ge 0$ if $s\ge 0 \iff x\ge t-1$.
+\end{proof}
+\begin{proof}[Proof of Theorem \ref{4.8}]
+    We may assume that $d(y)\ge t-1 ~\forall y \in Y$, since if $d(y)<t-1$, we could add an edge incident to $y$ without creating a $K_{t,t}$. Note
+    \[
+    |N(x_1) \cap\ldots \cap N(x_t)|\le t-1.
+    \]
+    Hence \[
+    (t-1){{n}\choose{t}} \ge \sum_{x_1,\ldots,x_t \in X \text{ distinct}}^{} |N(x_1) \cap\ldots \cap N(x_t)|.
+    \]
+    Rewrite the RHS as 
+    \begin{align*}
+        \sum_{x_1,\ldots,x_t \text{ distinct}}^{} \sum_{y}^{} \mathbbm{1}(y \sim x_1)\mathbbm{1}(y \sim x_2) \ldots \mathbbm{1}(Y\sim x_t) = \\
+        =\sum_{y}^{} \sum_{x_1,\ldots,x_t}^{} \mathbbm{1}(y \sim x_1)\ldots \mathbbm{1}(y \sim x_t) = \sum_{y}^{} {{d(y)\choose{t}}}.
+    \end{align*}
+    Let $\overline{d} = \frac{e(G)}{n}$. As $d(y)\ge t-1$, our function is convex by Lemma \ref{4.9}, so by Jensen's inequality, 
+    \begin{align*}
+        \sum_{y}^{} {{d(y)\choose{t}}} \ge n {{\bar{d}\choose{t}}}.
+    \end{align*}
+    So 
+    \begin{align*}
+        (n-1){{n}\choose{t}} \ge n {{\overline{d}}\choose{t}} \implies \frac{tn^t}{t!} \ge n \frac{(\overline{d}-t)^t}{t!} \\
+        \implies t^{\frac{1}{t}}n^{1-\frac{1}{t}} \ge \overline{d}-t \\
+        \implies t^{\frac{1}{t}}n^{1-\frac{1}{t}} \ge \frac{e(G)}{n}-t \\
+        \implies e(G) \le t^{\frac{1}{t}} n^{2-\frac{1}{t}} + tn. 
+    \end{align*}
+\end{proof}
+\textbf{Remarks.}
+\begin{itemize}
+    \item If $t=2$, then it is known that $Z(n,t)\ge c n^{\frac{3}{2}}$ for some constant $c>0$.
+    \item If $t=3$, it is known that $Z(n,t) \ge c n^{\frac{5}{3}}$ for some constant $c>0$.
+    \item $t=4$ is an open problem.
+\end{itemize}
+
+Non-examinable aside:
+\begin{theorem}[Non-examinable aside]
+    $\exists c>0$ such that for infinitely many $n$, $Z(n,2)\ge cn^{\frac{3}{2}}$. 
+\end{theorem}
+\begin{proof}[Proof idea:]
+    Think of $X$ as lines in a finite geometry and $Y$ as points, and we have an edge if a line contains a given point.
+
+    Let $\mathcal{L}= \mathbb{F}_p^2 \setminus \{(0,0)\}$ and $\mathcal{P}=\mathbb{F}_p^2$. For $(a,b) \in \mathcal{L}$ define $N((a,b)) = \{(x,ax+b) \mid x \in \mathbb{F}_p\}$.
 \end{proof}
 
 
