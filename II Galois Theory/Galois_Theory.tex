@@ -859,7 +859,7 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
         \item If $K/\mathbb{F}_p$ is a finite extension (so $K$ is a finite field), we have the Frobenius automorphism $\phi_p : K \to K, \phi_p(x)=x^p$. Then \[
         K^{\{\phi_p\}} = \{x \in K \mid x \text{ is a root of }T^p-T\} = \mathbb{F}_p.
         \]
-        So $K^{\text{(Aut)}(K/\mathbb{F}_p)} = \mathbb{F}_p$, i.e. $K/\mathbb{F}_p$ is a Galois extension.
+        So $K^{\text{Aut}(K/\mathbb{F}_p)} = \mathbb{F}_p$, i.e. $K/\mathbb{F}_p$ is a Galois extension.
     \end{itemize}
 \end{example}
 \begin{defn}
@@ -873,40 +873,40 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
         \item $L$ is a splitting field of a separable polynomial over $K$.
         \item $|\text{Aut}(L/K)|=[L:K]$ (recall we always have $\le $ here by Theorem \ref{9.1}).
     \end{enumerate}
-    If any of the above hold, then the minimal polynomial of any $x \in L$ is $m_{x,L}=\prod_{i=1}^{r} (T-x_i)$, where $\{x_1,x_2,\ldots,x_r\} = \{\sigma(x) \mid  x \in G\}$, the orbit of $x$ in $G$ (for $x_i$ distinct).
+    If any of the above hold, then the minimal polynomial of any $x \in L$ is $m_{x,K}=\prod_{i=1}^{r} (T-x_i)$, where $\{x_1,x_2,\ldots,x_r\} = \{\sigma(x) \mid  x \in G\}$, the orbit of $x$ in $G$ (for $x_i$ distinct).
 \end{theorem}
 \begin{proof}
-    (i) $\implies $ (ii) and the last part: Let $x \in L$, $\{x_1,\ldots,x_r\}$ the orbit of $x$ in $G$, $f = \prod_{}^{} (T-x_i)$, so $f(x)=0$. As $G$ permutes $\{x_i\}$, $f \in L^G[T] = K[T]$, so $m_{x,K} \mid f$. Also, since $m_{x,K}(\sigma(x)) = \sigma(m_{x,K}(x))=0$, every $x_i$ is a root of $m_{x,K}$. So $f = m_{x,K}$, and $x$ is separable over $K$, and $m_{x,K}$ splits in $L$, so $L/K$ is normal and separable.
+    (i) $\implies $ (ii) and the last part: Let $x \in L$, $\{x_1,\ldots,x_r\}$ the orbit of $x$ in $G$, $f = \prod_{}^{} (T-x_i)$, so $f(x)=0$. As $G$ permutes $\{x_i\}$, the coefficients of $f$ are fixed by $G$, so $f \in L^G[T] = K[T]$, so $m_{x,K} \mid f$. Also, since $m_{x,K}(\sigma(x)) = \sigma(m_{x,K}(x))=0$, every $x_i$ is a root of $m_{x,K}$, so $f = m_{x,K}$. So $x$ is separable over $K$, and $m_{x,K}$ splits in $L$, so $L/K$ is normal and separable.
     \vspace{1mm}
     
-    (i) $\implies$ (iii): By Theorem \ref{7.1}, $L$ is a splitting field for some $f \in K[T]$. Write $f = \prod_{}^{} q_ie^i$ where the $q_i$ are irreducible, distinct, and $e_i \ge 1$. As $L/K$ is separable, the $q_i$ are separable, so $g= \prod_{}^{} q_i$ is separable, and $L$ is also a splitting field for $g$.
+    (ii) $\implies$ (iii): By Theorem \ref{7.1}, $L$ is a splitting field for some $f \in K[T]$. Write $f = \prod_{}^{} q_i^{e^i}$ where the $q_i$ are irreducible, distinct, and $e_i \ge 1$. As $L/K$ is separable, the $q_i$ are separable, so $g= \prod_{}^{} q_i$ is separable, and $L$ is also a splitting field for $g$.
     \vspace{1mm}
     
-    (iii) $\implies$ (iv): Write $L=K(x_1,\ldots,x_k)$ for the splitting field of some separable $f$ with roots $x_i$. Take $M = L$ and apply Theorem \ref{8.5}. As $m_{x,K} \mid f$, the conditions in the theorem are satisfied, so $$|\text{Aut}(L/K)|=|\text{Hom}_K(L,M)|=[L : K].$$
+    (iii) $\implies$ (iv): Write $L=K(x_1,\ldots,x_k)$ for the splitting field of some separable $f$ with roots $x_i$. Take $M = L$ and apply Theorem \ref{8.5}. As $m_{x_i,K} \mid f$, the conditions in the theorem are satisfied, so $$|\text{Aut}(L/K)|=|\text{Hom}_K(L,M)|=[L : K].$$
 
-    (iv) $\implies$ (i): Suppose $|G|=[L:K]$ (for $G = \text{Aut}(L/K)$). Then $G \subset \text{Aut}(L/L^G) \subset \text{Aut}(L/K)$, so $G = \text{Aut}(L/L^G)$, and $[L : K] = |G| \le [L : L^G]$. As $K \subset L^G$, this implies that $L^G = K$ by tower law.
+    (iv) $\implies$ (i): Suppose $|G|=[L:K]$ (where $G = \text{Aut}(L/K)$). Then $$G \subset \text{Aut}(L/L^G) \subset \text{Aut}(L/K),$$ so $G = \text{Aut}(L/L^G)$ and $[L : K] = |G| \le [L : L^G]$. As $K \subset L^G$, this implies that $L^G = K$ by tower law.
 \end{proof}
 \begin{cor}\label{9.3}
     Let $L/K$ be a finite Galois extension. Then $L=K(x)$ for some $x$, separable over $K$, of degree $[L:K]$.
 \end{cor}
 \begin{proof}
-    By (ii), $L/K$ is separable, so by the primitive element theorem, $L=K(x)$ and the rest follows.
+    By Theorem \ref{9.2} (ii), $L/K$ is separable, so by the primitive element theorem, $L=K(x)$ and the result follows.
 \end{proof}
 
 \begin{theorem}[The Galois correspondence]
     Let $L/K$ be a finite Galois extension with Galois group $G = \text{Gal}(L/K)$.
     \begin{enumerate}[(a)]
-        \item Suppose $F \subset L$ with $K \subset F$. Then $L/F$ is also a Galois extension, $\text{Gal}(L/F)\subset \text{Gal}(L/K)$, and the map $F \mapsto \text{Gal}(L/F)$ is a bijection \[
+        \item Suppose $K \subset F\subset L$. Then $L/F$ is also a Galois extension, $\text{Gal}(L/F) \le \text{Gal}(L/K)$, and the map $F \mapsto \text{Gal}(L/F)$ is a bijection \[
         \{\text{intermediate fields } K \subset F \subset L\} \cong \{\text{subgroups }H \text{ of }G\}
         \]
-        whose inverse is the map taking $H$ to the fixed field $L^H$. This bijection is inclusion--reversing, and if $F=L^H$, then $[F : K] = [G : H]$.\footnote{$[G:H]$ is the index of $H$ in $G$.}
-        \item Let $\sigma \in G$, $H \subset G$ a subgroup and $F = L^H$. Then $\sigma H \sigma^{-1}$ corresponds to $\sigma F$.
-        \item We have equivalent statements for $H \subset G$:
+        whose inverse is the map taking $H$ to the fixed field $L^H$. This bijection is inclusion--reversing, and if $F=L^H$, then $[F : K] = [G : H]$.\footnote{$A\le B$ means $A$ is a subgroup of $B$, and $[G:H]$ is the index of $H$ in $G$.}
+        \item Let $\sigma \in G$, $H \le G$ a subgroup and $F = L^H$. Then $\sigma H \sigma^{-1}$ corresponds to $\sigma F$.
+        \item We have equivalent statements for $H \le G$:
         \begin{enumerate}[(i)]
             \item $L^H/K$ is Galois;
             \item $L^H/K$ is normal;
             \item $~\forall \sigma \in G, \sigma(L^H)=L^H$;
-            \item $H \subset G$ is a normal subgroup.
+            \item $H \le G$ is a normal subgroup.
         \end{enumerate} 
         If these hold, then $\text{Gal}(L^H/K)\cong G/H$.
     \end{enumerate}
@@ -920,7 +920,7 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
             But $L^{\text{Gal}(L/F)}=F$ as $L/F$ is Galois, i.e. $L^H = F$.
             \item $$H \mapsto L^H \mapsto \text{Gal}(L/L^H) \stackrel{?}{=} H.$$
             It is enough to show that $[L:L^H] \le |H|$, since certainly $H \subset \text{Gal}(L/L^H)$, and $|\text{Gal}(L/L^H)| \le [L : L^H]$. By Corollary \ref{9.3} we get $L=L^H(x)$, and $f = \prod_{\sigma \in H}^{} (T-\sigma(x)) \in L^H[T]$, with $x$ as a root. So $[L : L^H] = \text{deg}_{L^H}(x) \le \text{deg}(f) = |H|$. So we have a bijection. If $F \subset F'$, then $\text{Gal}(L/F') \subset \text{Gal}(L/F)$, so the bijection is inclusion--reversing. Finally, if $F=L^H$, then (as $L/K$ and $L/F$ are both Galois) \[
-            [F:K] = \frac{[L:K]}{L:F} = \frac{|\text{Gal}(L/K|}{|\text{Gal}(L/F)|} = \frac{|G|}{|H|} = [G:H].
+            [F:K] = \frac{[L:K]}{[L:F]} = \frac{|\text{Gal}(L/K)|}{|\text{Gal}(L/F)|} = \frac{|G|}{|H|} = [G:H].
             \]
         \end{itemize}
         \item Under (a), $\sigma H \sigma^{-1}$ corresponds to 
@@ -930,7 +930,7 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
         and $\sigma \tau \sigma^{-1}(x)=x \iff \tau \sigma^{-1}(x) = \sigma^{-1}(x) \iff \tau(y)=y$, where ${x = \sigma(y)}$. So $x \in L^{\sigma H \sigma^{-1}} \iff x = \sigma(y), y \in L^H$, i.e. $L^{\sigma H \sigma^{-1}} = \sigma F$.
         \item $L/K$ is separable, so $L^H/K$ is separable. So (i) $\iff$ (ii).
 
-        Let $F = L^H, x \in F$. Then $\{\text{roots of }m_{x,K}\}$ is the orbit of $x$ under $G$. So $m_{x,K}$ splits in $F$ if and only if $~\forall \sigma \in G, \sigma(x) \in F$. As this holds $~\forall x \in F$, $F$ is normal if and only if $\sigma F \subset F$. As $[\sigma F : K] = [F : K]$ ($\sigma F$ is $K$--isomorphic to $F$), this means $\sigma F = F$. By (b), this is equivalent to the statement $~\forall \sigma \in G$, $\sigma H \sigma^{-1} = H$, i.e. $H$ is a normal subgroup.
+        Let $F = L^H, x \in F$. Then $\{\text{roots of }m_{x,K}\}$ is the orbit of $x$ under $G$. So $m_{x,K}$ splits in $F$ if and only if $\forall \sigma \in G, \sigma(x) \in F$. As this holds $\forall x \in F$, $F$ is normal if and only if $\sigma F \subset F$. As $[\sigma F : K] = [F : K]$ ($\sigma F$ is $K$--isomorphic to $F$), this means $\sigma F = F$. By (b), this is equivalent to the statement $\forall \sigma \in G$, $\sigma H \sigma^{-1} = H$, i.e. $H$ is a normal subgroup.
         \vspace{1mm}
         
         Last part: as $~\forall \sigma \in G, \sigma F = F$, we have a homomorphism $G \to \text{Gal}(F/K)$ given by restricting $\sigma \in G$ to $F$. Its kernel is $H$ (since $F = L^H$), so $G/H$ is isomorphic to a subgroup of $\text{Gal}(F/K)$. But we have an isomorphism, as $[G:H] = [F:K]$ by (a).
@@ -986,7 +986,7 @@ So in the above example, we have a subgroup of $S_3$ of order $6$, so it must be
 $S_3$.
 
 \begin{defn}
-    The subgroup $\text{Gal}(f/K) \subset S_n$ given by the image $G$ is the \textbf{Galois group} of $f$ over $K$.
+    The subgroup $\text{Gal}(f/K) \subset S_n$ given by the image of $G$ is the \textbf{Galois group} of $f$ over $K$.
 \end{defn}
 \textbf{Note.} $[L:K] = |\text{Gal}(L/K)| = |\text{Gal}(f/K)|$, which is a subgroup of $S_n$, so it divides $n!$.
 
@@ -1129,5 +1129,7 @@ We consider polynomials of the form $T^n-1$ (and later $T^n-a$).
 \begin{proof}
     $[a]$ is obviously a homomorphism, and it is an automorphism since $\exists b$ with $ab \equiv 1 \pmod{n}$. So we have an injective map $(\mathbb{Z}/n\mathbb{Z})^{\times} \hookrightarrow \text{Aut}(C)$ by $a \mapsto [a]$, which is obviously a homomorphism. If $\phi \in \text{Aut}(C)$ and $g$ is a generator of $C$, then $\phi(g)=g^a$ for some $a \in (\mathbb{Z}/n\mathbb{Z})^{\times}$, so $\phi = [a]$, so we have an isomorphism.
 \end{proof}
+
+
 
 \end{document}
