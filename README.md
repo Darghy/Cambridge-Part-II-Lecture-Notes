@@ -10,6 +10,6 @@ These are my personal lecture notes from Michaelmas Term 2022 for Galois Theory,
 
 As per usual with these kinds of documents, assume all errors are made by me and not the lecturers. Feel free to modify/use these files for your own purposes (and if you feel up for it, message me if you do so - it'd make me happy to find out that these are useful for someone).
 
-## How do I take notes in LaTeX?
+## How do I take notes?
 
 I use LaTeX in VSCode on Windows. I am able type notes live due to my extensive usage of the [hypersnips](https://marketplace.visualstudio.com/items?itemName=draivin.hsnips) engine.
