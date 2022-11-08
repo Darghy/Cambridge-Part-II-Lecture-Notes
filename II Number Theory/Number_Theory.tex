@@ -350,7 +350,7 @@ In particular, by looking at orders of the LHS and the RHS above, we get $\phi(M
     \item more generally, $\sigma_k(n) = \sum_{d \mid n}^{} d^k$, so $\sigma_0 = \tau$ and $\sigma_1 = \sigma$.
 \end{itemize} 
 To prove this:
-\begin{lemma} % Lemma 2.4 in lectures
+\begin{lemma}\label{2.8} % Lemma 2.4 in lectures
     If $f : \mathbb{Z}^+ \to \mathbb{C}$ is multiplicative, then so is $g : \mathbb{Z}^+ \to \mathbb{C}$, defined by $g(n) = \sum_{d \mid n}^{} f(d)$.
 \end{lemma}
 \begin{proof}
@@ -1300,5 +1300,97 @@ The following result links $\zeta$ to the primes.
     \end{align*}
 \end{proof}
 
+\marginpar{08 Nov 2022, Lecture 15}
+
+\begin{cor}\label{5.9}
+    If $\text{Re}(s)>1$, then $\zeta(s)\neq 0$.
+\end{cor}
+\begin{proof}
+    If $\text{Re}(s) >1$, then 
+    \begin{align*}
+        \left[\prod_{p\le N}^{} \left(1-\frac{1}{p^s}\right)\right] \zeta(s) = \prod_{p>N}^{} \left(1-\frac{1}{p^s}\right)^{-1} = \prod_{p>N}^{} \left(1+\frac{1}{p^s}+\frac{1}{p^{2s}}+\ldots \right) \\
+        \implies \left|\prod_{p\le N}^{} \left(1-\frac{1}{p^s}\right)\zeta(s)\right| \ge 1-\sum_{n=N+1}^{\infty} \frac{1}{n^\sigma} \stackrel{N \to \infty}{\to} 1. 
+    \end{align*}
+    Hence $\zeta(s) \neq 0$.
+\end{proof}
+\begin{theorem}\label{5.10}
+    $\zeta(s)-\frac{1}{s-1}$ has an analytic continuation to $\text{Re}(s) > 0$.
+\end{theorem}
+\begin{proof}
+    If $\text{Re}(s)>2$ we have 
+    \begin{align*}
+        &\zeta(s)=\sum_{n=1}^{\infty} \frac{n-(n-1)}{n^s} =\sum_{n=1}^{\infty} n\left(\frac{1}{n^s}-\frac{1}{(n+1)^s}\right) = s \sum_{n=1}^{\infty} n \int_{n}^{n+1} \frac{\mathrm{d}x}{x^{s+1}} = \\
+        &=s \int_{1}^{\infty} \frac{\left\lfloor x \right\rfloor}{x^{s+1}} \mathrm{d}x = s \int_{1}^{\infty} \frac{\mathrm{d}x}{x^s} - s \int_{1}^{\infty} \frac{\{x\}}{x^{s+1}} \mathrm{d}x = \frac{s}{s-1} - s \int_{1}^{\infty} \frac{\{x\}}{x^{s+1}}\mathrm{d}x.
+    \end{align*}
+    Since $\{x\}$ is bounded, the second integral converges to an analytic function for $\text{Re}(s+1)>1$, i.e. $\text{Re}(s)>0$.
+\end{proof}
+For $\text{Re}(s)>0$, the \textbf{Gamma function} is defined as
+\[
+\Gamma(s)=\int_{0}^{\infty} e^{-x} x^{s-1} \mathrm{d}x.
+\] 
+This can be extended to a meromorphic\footnote{Analytic except on a set of isolated points.} function on $\mathbb{C}$ with simple poles at $s=0,-1,-2,\ldots$ using the rule $s \Gamma(s) = \Gamma(s+1)$. For an integer $n\ge 1$, $\Gamma(n)=(n-1)!$.
+\vspace{1mm}
+
+Theorem \ref{5.10} tells us that $\zeta$ extends to a meromorphic function on the set $\{s \in \mathbb{C} \mid \text{Re}(s)>0\}$ with just one pole at $s=1$ with residue 1. In fact, $\zeta$ extends to a meromorphic function on $\mathbb{C}$ and there are no further poles.
+
+Moreover, the completed zeta function \[
+\Xi(s)=\pi^{-\frac{s}{2}} \Gamma \left(\frac{s}{2}\right)\zeta(s)
+\] satisfies the functional equation $\Xi(1-s)=\Xi(s)$.
+\vspace{1mm}
+
+$\zeta$ has trivial zeroes at $s=-2,-4,-6,\ldots$. By Corollary \ref{5.9} and the functional equation, any further zeroes lie in the critical strip $0\le \text{Re}(s)\le 1$.
+
+The key step in the proof of the Prime Number Theorem is showing that $\zeta(s) \neq 0$ for $\text{Re}(s)=1$.
+
+\begin{theorem}[The Riemann Hypothesis]
+    All zeroes of $\zeta$ in the critical strip lie on the line $\text{Re}(s)=\frac{1}{2}$.
+\end{theorem}
+\begin{proof}
+    lol
+\end{proof}
+RH is equivalent to $$|\pi(x)-\text{li}(x)|\le \sqrt{x}\log x ~\forall x\ge 3,$$ where $\text{li}(t)=\int_{2}^{x} \frac{\mathrm{d}t}{\log t}$. Integrating by parts shows $\text{li}(x) \sim\frac{x}{\log x}$. Numerical evidence suggested to Gauss that $\text{li}(x)$ is a better approximation to $\pi(x)$ than $\frac{x}{\log x}$. We have $\pi(x)<\text{li}(x) ~\forall x \le 10^{21}$, but Littlewood showed that $\pi(x)-\text{li}(x)$ changes sign infinitely often.
+\vspace{1mm}
+
+A \textbf{Diriclet series} is a series of the form $$\sum_{n=1}^{\infty} \frac{a_n}{n^s}$$ where $(a_i) \in \mathbb{C}$. 
+
+A useful tool for manipulating the all the aforementioned series is the Möbius function. Let $f: \mathbb{N} \to \mathbb{C}$ be any function. Define $g : \mathbb{N} \to \mathbb{C}$ by $g(n)=\sum_{d \mid n}^{} f(d)$.
+
+\textbf{Question.} How do we compute $f$ from $g$?
+
+Let's compute $f(6)$. We have 
+\begin{align*}
+    &g(1)=f(1)\\
+    &g(2)=f(1)+f(2) \hspace{25mm} \implies f(6)=g(6)-g(3)-g(2)+g(1).\\
+    &g(3)=f(1)+f(3)\\
+    &g(6)=f(1)+f(2)+f(3)+f(6)
+\end{align*}
+\begin{defn}
+    The \textbf{Möbius function} $\mu : \mathbb{N} \to \{0,\pm 1\}$ is defined by 
+    \[
+    \mu(n) = \begin{cases}
+        (-1)^k &\text{ if } n=p_1p_2\ldots p_k \text{ is a product of distinct primes.}\\
+        0 &\text{ if }n \text{ is not square-free.}
+    \end{cases}
+    \]
+\end{defn}
+\textbf{Remark.} We have $\mu(1)=1$.
+\vspace{1mm}
+
+\textbf{Exercise.} $\mu$ is a multiplicative function. (This is on ES3).
+\vspace{1mm}
+
+Let $\nu(n) = \sum_{d \mid n}^{} \mu(d)$. By Lemma \ref{2.8}, $\nu$ is multiplicative. But $\nu(p^r) = \mu(1)+\mu(p)= 1 - 1 = 0$, so $\sum_{d \mid n}^{} \mu(d) = \begin{cases}
+    1 &\text{ if } n=1. \\
+    0 &\text{otherwise.}
+\end{cases}$
+\begin{prop}
+    If $g(n)=\sum_{d \mid n}^{} f(d)$, then $f(n)=\sum_{m \mid n}^{} \mu(m)g \left(\frac{n}{m}\right)$.
+\end{prop}
+\begin{proof}
+    \begin{align*}
+        \sum_{m \mid n}^{} \mu(m)g\left(\frac{n}{m}\right) &= \sum_{m \mid n}^{} \mu(m) \sum_{d \mid \frac{n}{m}}^{} f(d) = \\ 
+        =\sum_{d \mid n}^{} \left( \sum_{m \mid \frac{n}{d}}^{} \mu(m)\right)f(d) &+ \sum_{d \mid n}^{} \nu\left(\frac{n}{d} \right)f(d) = f(n).
+    \end{align*}
+\end{proof}
 
 \end{document}
