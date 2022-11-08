@@ -948,7 +948,92 @@ Let $(S_n)_n$ be the asset price vectors and $(\theta_n)_n$ the portfolios, with
     X_n = (1+r)X_{n-1} &+ \theta^\top_n(S_n -(1+r)S_{n-1}) \\ &\iff\\  \frac{X_n}{(1+r)^{n}} = X_0 &+ \sum_{k=1}^{n} \theta_k^\top\left(\frac{S_k}{(1+r)^k} - \frac{S_{k-1}}{(1+r)^{k-1}}\right).    
 \end{align*}
 
+So an investor's discounted wealth is the martingale transform of his portfolio with respect to the discounted risk asset prices.
 
+\marginpar{04 Nov 2022, Lecture 13}
+
+\subsection{Stopping times}
+\begin{defn}
+    Given a filtration $(\mathcal{F}_n)_{n\ge 0}$, a stopping time is a random variable $T$ taking values in $\{0,1,2,\ldots\} \cup \infty$ such that $\{T\le n\} \in \mathcal{F}_n ~\forall n\ge 0$. 
+\end{defn}
+\begin{example}
+    Let $(X_n)_n$ be an adapted process. Let $T = \inf \{n\ge 0 \mid X_n>0\}$ (with the convention that $\inf \emptyset = \infty$). Then the claim is that $T$ is a stopping time. Indeed, $\{T \le n\} = \bigcup_{k=0}^n \{X_k > 0\}$ and $\{X_k >0\} \in \mathcal{F}_k \subset \mathcal{F}_n$ for all $k\le n$ by adaptedness. Since $\mathcal{F}_n$ is closed under finite unions, we're done.
+\end{example}
+
+\textbf{Counterexample:} Let $(X_n)_{n\ge 0}$ be adapted and $T = \sup \{ n\ge 0 \mid X_n>0\}$. Then $T$ is not a stopping time in general.
+
+\begin{prop}
+    $T$ is a stopping time if and only if $\{T=n\} \in \mathcal{F}_n ~\forall n\ge 0$.
+\end{prop}
+\begin{proof}
+    If $\{T=n\} \in \mathcal{F}_n ~\forall n$, then $\{T\le n\} = \bigcup_{k=0}^n \{T=k\} \in \mathcal{F}_n$. Conversely, if $T$ is a stopping time, then $\{T=n\} = \{T\le n\} \cap \{T\le n-1\}^{c} \in \mathcal{F}_n$.
+\end{proof}
+
+\begin{defn}
+    Given an adapted process $(X_n)_{n\ge 0}$ and a stopping time $T$, \textbf{the process stopped at $T$} is the process \[
+    X_n^T = X_{n \wedge T},
+    \] 
+    where $a \wedge b = \min(a,b)$.
+\end{defn}
+
+\begin{prop}
+    $(X_n^T)_{n\ge 0}$ is the martingale transform of $(\mathbbm{1}_{\{n\le T\}})_{n\ge 1}$ with respect to $(X_n)_{n\ge 0}$. We can check that $(\mathbbm{1}_{\{n\le T\}})_{n\ge 1}$ is previsible:
+    \vspace{1mm}
+    
+    $\mathbbm{1}_{\{n \le T\}}$ is $\mathcal{F}_{n-1}$--measurable $\iff$ $\{n\le T\}\in \mathcal{F}_{n-1} \iff \{T\le n-1\}^{c} \in \mathcal{F}_{n-1}$ which is true, so we're done as $\sigma$--algebras are closed under complements. 
+    \vspace{1mm}
+    
+    Now check
+    \[
+    X_{n \wedge T} = X_0 + \sum_{k=1}^{n} \mathbbm{1}_{\{k\le T\}}(X_k-X_{k-1}).
+    \]
+\end{prop}
+\begin{theorem}
+    A stopped martingale is a martingale.
+\end{theorem}
+\begin{proof}
+    The martingale transform of a bounded previsible process with respect to a martingale is again a martingale, and $(\mathbbm{1}_{\{n\le T\}})_{n\ge 1}$ is bounded.
+\end{proof}
+\begin{theorem}[Optional sampling theorem]
+    Let $(X_n)_{n\ge 0}$ be a martingale and let $T$ be a bounded stopping time (i.e. $\exists c$ a constant such that $T\le c$ almost surely). Then
+    \[
+    \mathbb{E}[X_T]=X_0.
+    \]
+\end{theorem}
+\textbf{Remark.} Recall that under our conventions $X_0$ is a constant.
+\begin{proof}
+    Suppose that $T\le N$ almost surely. If $N$ is not random, then $X_T=X_{T \wedge N}$. But if $M_n=X_{n \wedge T}$, then $(M_n)_{n\ge 0}$ is a martingale. Now \[
+    \mathbb{E}[X_T]=\mathbb{E}[M_n] = \mathbb{E}[\mathbb{E}[M_n \mid \mathcal{F}_{n-1}]]=\mathbb{E}[M_{n-1}],
+    \]
+    so by induction $\mathbb{E}[M_n]=M_0$ and we're done.
+\end{proof}
+
+Aside on limit theorems in probability:
+\begin{theorem}[Monotone convergence theorem]
+    Suppose $0\le X_1\le X_2\le X_3\le \ldots$ and let $Z=\sup_n X_n = \lim_{n \to \infty} X_n$. Then $\mathbb{E}[Z]=\lim_{n \to \infty} \mathbb{E}[X_n]$. In other words,
+    \[
+    \mathbb{E}[\lim_{n \to \infty}X_n] = \lim_{n \to \infty}\mathbb{E}[X_n].
+    \]
+\end{theorem}
+\begin{theorem}[Dominated convergence theorem]
+    Suppose $X_n \to Z$ almost surely and there exists an integrable $Y$ such that $|X_n|\le Y$. Then $\mathbb{E}[Z]=\lim_{n \to \infty}\mathbb{E}[X_n]$.
+\end{theorem}
+End of aside.
+\begin{theorem}[Optional stopping theorem]
+    Let $(X_n)_{n\ge 0}$ be a martingale. Let $T$ be a stopping time and suppose that $|X_{n \wedge T}|\le Y ~\forall n$ and $\mathbb{E}[Y]<\infty$. Then $\mathbb{E}[X_T]=X_0$.
+\end{theorem}
+\begin{proof}
+    By optional sampling theorem, $\mathbb{E}[X_{n \wedge T}] = X_0$. By dominated convergence theorem, we're done since $X_{n \wedge T} \to X_T$ almost surely.
+\end{proof}
+
+\begin{example}
+    Let $(X_n)_n$ be a simple symmetric random walk, so $X_n = \xi_1+\ldots+\xi_n$ for $(\xi_i)_i$ i.i.d. with $\mathbb{P}(\xi_i= \pm 1)=\frac{1}{2}$. Then $(X_n)_n$ is a martingale. 
+    \vspace{1mm}
+    
+    Fix integers $a,b>0$. Let $T = \inf \{n\ge 0 \mid X_n \in \{-a,b\}\}$. We have $|X_{n \wedge T}|\le \max(a,b)$, so $\mathbb{E}[X_T]=0$ by optional stopping theorem. Hence we arrive at $-a \mathbb{P}(X_T=-a)+b\mathbb{P}(X_T=b)=0$, so $\mathbb{P}(X_T=-a)=\frac{b}{a+b}$ and $\mathbb{P}(X_T=b)=\frac{a}{a+b}$.
+\end{example}
+
+\textbf{Non-example.} Let $(X_n)_n$ be a simple symmetric random walk and $T= \inf \{n\ge 0 \mid X_n=-a\}$. Note that $X_T=-a$ almost surely, so $\mathbb{E}[X_T]=-a \neq 0$, seemingly a contradiction to optional stopping theorem. But $X_{n \wedge T}$ is not bounded from above, so we can't apply optional stopping theorem.
 
 \end{document}
 
