@@ -1100,11 +1100,76 @@ Non-examinable aside:
 \begin{theorem}[Non-examinable aside]
     $\exists c>0$ such that for infinitely many $n$, $Z(n,2)\ge cn^{\frac{3}{2}}$. 
 \end{theorem}
-\begin{proof}[Proof idea:]
-    Think of $X$ as lines in a finite geometry and $Y$ as points, and we have an edge if a line contains a given point.
+\begin{proof}
+    Think of $X$ as lines in a finite geometry and $Y$ as points, and we have an edge in our graph if a line contains a given point.
 
-    Let $\mathcal{L}= \mathbb{F}_p^2 \setminus \{(0,0)\}$ and $\mathcal{P}=\mathbb{F}_p^2$. For $(a,b) \in \mathcal{L}$ define $N((a,b)) = \{(x,ax+b) \mid x \in \mathbb{F}_p\}$.
+    For $p$ a prime, let $\mathcal{L}= \mathbb{F}_p^2 \setminus \{(0,0)\}$ and $\mathcal{P}=\mathbb{F}_p^2 \setminus \{(0,0)\}$. For $(a,b) \in \mathcal{L}$, define $N((a,b)) = \{(x,ax+b) \mid x \in \mathbb{F}_p\} \setminus \{(0,0)\}$.
+
+    \marginpar{09 Nov 2022, Lecture 15}
+    \vspace{1mm}
+    
+    Note that if we have two lines $(a,b), (a',b') \in \mathcal{L}$, then $|N(a,b) \cap N(a',b')|\le 1$, since if $(x,y)$ is in the intersection, then $y=ax+b,y=a'x+b'$. If $a'=a$, then $b=b'$ and we have the same line. Otherwise $x = \frac{-(b-b')}{a-a'}$ mod $p$, so $x$ (and hence $y$) is uniquely determined.
+    \vspace{1mm}
+    
+    Note $~\forall (a,b) \in \mathcal{L}$, $|N(a,b)|\ge p-1$, so $V(G)=2(p^2-1)=2n$ and $e(G)\ge (p-1)(p^2-1) \ge c p^3 = cn^{\frac{3}{2}}$ for an absolute constant $c$.
 \end{proof}
+End of aside.
 
+\subsection*{The Erdős--Stone theorem.}
+\begin{defn}
+    Let $H$ be a (fixed) graph and $n \in \mathbb{N}$. Define \[
+    \text{ex}(n,H) = \max \{e(G) \mid V(G)=n \text{ and } H \not\subset G\}.
+    \]
+\end{defn}
+\begin{example}
+    \begin{itemize}
+        \item We have $\text{ex}(n,K_{r+1}) = e(T_{r,n}) \le \left(1-\frac{1}{r}\right)\frac{n^2}{2}$.
+        \item We have $\text{ex}(P_k,n)=\frac{n(k-1)}{2}$.
+        \item We've basically shown $\text{ex}(K_{t,t},n)\le 2n^{2-\frac{1}{t}}+tn$.
+    \end{itemize}
+\end{example}
+\begin{theorem}[Erdős--Stone]
+    Let $H$ be a fixed graph, $H$ nonempty. Then
+    \begin{align*}
+        \lim_{n \to \infty}\frac{\text{ex}(n,H)}{{{n}\choose{2}}} = \left(1-\frac{1}{\chi(H)-1}\right).
+    \end{align*}
+\end{theorem}
+\textbf{Remarks.}
+\begin{itemize}
+    \item If $\chi(H)\ge 3$, then this determines the leading order term in $\text{ex}(n,t)$ for large $n$.
+    \item If $\chi(H)=2$, then this just says $\frac{\text{ex}(n,H)}{n^2}\to 0$. But we have a stronger result already: $H \subseteq K_{t,t}$ for $t=|H|$, so we (almost) know $\text{ex}(H,n)\le c n^{2-\frac{1}{t}}$.
+    \item It is easy to see that $\text{ex}(n,H)\ge (1-\frac{1}{\chi(H)-1})\frac{n^2}{2}$, since $H \not\subset T_{(\chi(H)-1),n}$.
+\end{itemize} 
+We sketch the proof of this. It is non-examinable.
+\begin{proof}[Sketch of proof, non-examinable]
+    We only consider $\chi(H)=3$. Let $K_3(t)$ be the complete $3$--partite graph with $t$ vertices in each part (i.e. $T_{3,3t}$). Note that it is enough to prove our theorem for $H=K_3(t) ~\forall t$, since $H \subseteq K_3(|H|)$.
+    \vspace{1mm}
+    
+    We prove the following:
+    \begin{theorem}
+        Let $\epsilon>0$, $t \in \mathbb{N}$, $G$ a graph with $|G|=n$ and \[
+        e(G)\ge \left(\frac{1}{2}+\epsilon \right)\frac{n^2}{2}
+        \]
+        where $n\ge n_0(\epsilon,t)$. Then $G \supset K_3(t)$.
+    \end{theorem}
+    \begin{lemma}
+        Let $G$ be a graph on $n$ vertices with average degree $\ge (\frac{1}{2}+\epsilon)n$ (in other words, $e(G) \ge (\frac{1}{2}+\epsilon)\frac{n^2}{2}$). Then $\exists \tilde{G}\subset G$ with minimum degree at least $(\frac{1}{2}+\frac{\epsilon}{2})m$, where $m=|\tilde{G}|\ge \frac{\epsilon^{\frac{1}{2}}n}{8}$.
+    \end{lemma}
+    \begin{proof}
+        Omitted, but the idea is to remove edges with degrees smaller than the number stated above and eventually we're left with a subgraph that works.
+    \end{proof}
+    \begin{proof}[Proof of theorem]
+        Let $\tilde{G}\subset G$ be a subgraph with $\delta(\tilde{G})\ge (\frac{1+\epsilon}{2})m$, $|\tilde{G}|=m$. Find a $K_{s,s}$ in $\tilde{G}$ with $s \approx \frac{10t}{\epsilon}$, call this graph $K$. Consider \[
+        e(Y,K)=\sum_{x \in K}^{} |N(x) \cap Y| = \sum_{x \in K}^{} \left( \text{deg}(x)-s \right) \ge \sum_{x \in K}^{} \left(\frac{1}{2}+\frac{\epsilon}{4}\right)m = \left(\frac{1}{2}+\frac{\epsilon}{4}\right)m |K|.
+        \]
+        But also $e(Y,K) = \sum_{y \in Y}^{} |N(y) \cap K|$, so \[
+        \left(\frac{1}{2}+\frac{\epsilon}{4}\right) |K|< \frac{1}{m} \sum_{y \in Y}^{} |N(y) \cap K| = (\star). 
+        \]
+        Let $\mathcal{B} = \{y \in Y \mid |N(y) \cap K| \ge (\frac{1}{2}+\frac{\epsilon}{8})|K|\}$. We claim $|\mathcal{B}|\ge \frac{\epsilon m}{8}$. Indeed, suppose not. Then \[
+            (\star)\le \frac{1}{m}\frac{\epsilon m}{8} |K| + \left(\frac{1}{2}+\frac{\epsilon}{8}\right) |K| = \left(\frac{1}{2}+\frac{\epsilon}{4}\right)|K|,
+        \] a contradiction.
+    \end{proof}
+    and now finish.
+\end{proof}
 
 \end{document}
