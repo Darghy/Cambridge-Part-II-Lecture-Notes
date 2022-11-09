@@ -152,22 +152,22 @@ The \textbf{elementary symmetric polynomials} are \[
 \end{enumerate}
 
 \begin{proof}[Proof of Theorem 2.1.]
-    Terminology: 
+    Terminology:
     \begin{itemize}
         \item A \textbf{monomial} is some $X_{I} = X_1^{i_1}\ldots X_n^{i_n}$ for some $I \in \mathbb{Z}_{\ge 0}^n$.
         \item Its \textbf{(total) degree} is $\sum_{}^{} i_\alpha$.
         \item A \textbf{term} $\beta$ is some $c X_I, 0 \neq c \in R$, so a polynomial is uniquely a sum of terms.
-        \item The total degree of $f$ is the maximal degree of any of the terms. 
-    \end{itemize}   
+        \item The total degree of $f$ is the maximal degree of any of the terms.
+    \end{itemize}
 
     Define a lexicographical ordering on monomials $X_I$ as follows: $X_I > X_J$ if either $i_1 > j_1$ or for some $1 \le r < n$, $i_1=j_1,\ldots, i_r = j_r$ and $i_{r+1} > j_{r+1}$. This is a \textbf{total ordering}: for each pair $I \neq J$, exactly one of $X_I > X_J$ or $X_J > X_i$ holds.
 
-    Existence: Let $d$ be the total degree of some symmetric polynomial $f$ and let $X_I$ be the lexicographically largest monomial in $f$ with coefficient $c \in R$. As $f$ is symmetric, we must have $i_1\ge i_2 \ge \ldots \ge i_n$ (if not, say $i_r < i_{r+1}$, then exchanging $X_r$ and $X_{r+1}$ gives a monomial occuring in $f$ which is bigger than $X_I$). 
+    Existence: Let $d$ be the total degree of some symmetric polynomial $f$ and let $X_I$ be the lexicographically largest monomial in $f$ with coefficient $c \in R$. As $f$ is symmetric, we must have $i_1\ge i_2 \ge \ldots \ge i_n$ (if not, say $i_r < i_{r+1}$, then exchanging $X_r$ and $X_{r+1}$ gives a monomial occuring in $f$ which is bigger than $X_I$).
     So $$X_I = X_1^{i_1-i_2}(X_1X_2)^{i_2-i_3}\ldots(X_1\ldots X_n)^{i_n}.$$
     Consider $g = s_1^{i_1-i_2}s_2^{i_2-i_3}\ldots s_{n-1}^{i_{n-1}-i_n}s_n^{i_n}$. The leading monomial (i.e. largest in lexicographical order) of $g$ is $X_I$, and $g$ is symmetric, so $f-cg$ is also symmetric, of total degree $\le d$, and its leading term is smaller (lexicographically) than $X_I$. As the set of monomials of degree $\le d$ is finite, this process terminates.
 
     \vspace{1mm}
-    
+
     Uniqueness: By induction on $n$. Say $G \in R[Y_1,\ldots,Y_n]$ with $$G(s_{n,1},\ldots,s_{n,n}) = 0.$$ We want to show $G = 0$. If $n=1$, this is trivial ($s_{1,1} = X_1$). If $G = Y_n^k H$ with $Y_n \nmid H$, then $s_{n.n}^k H(s_{n,1},\ldots,s_{n,n}) = 0$. As $s_{n,n} = X_1\ldots X_n$, $s_{n,n}$ is not a zero divisor in $R[X_1,\ldots,X_n]$, hence $H(s_{1,n},\ldots,s_{n,n}) = 0$. So we may assume WLOG that $G$ is not divisible by $Y_n$.
 
     Replace $X_n$ by 0. Then $$s_{n,r}(X_1,\ldots,X_{n-1},0) = \begin{cases}
@@ -178,7 +178,7 @@ The \textbf{elementary symmetric polynomials} are \[
 \end{proof}
 
 \begin{example}
-    Say $f = \sum_{i \neq j} X_i^2 X_j$ for some $n \ge 3$. Its leading term is ${X_1^2X_2 = X_1(X_1X_2)}$. Then $$s_1s_2 = \sum_{i}^{} \sum_{j<k}^{} X_iX_jX_k = \sum_{i \neq j}^{} X_i^2 X_j + 3 \sum_{i<j<k}^{} X_iX_jX_k.$$ 
+    Say $f = \sum_{i \neq j} X_i^2 X_j$ for some $n \ge 3$. Its leading term is ${X_1^2X_2 = X_1(X_1X_2)}$. Then $$s_1s_2 = \sum_{i}^{} \sum_{j<k}^{} X_iX_jX_k = \sum_{i \neq j}^{} X_i^2 X_j + 3 \sum_{i<j<k}^{} X_iX_jX_k.$$
     So $f = s_1s_2 - 3s_3$.
 \end{example}
 
@@ -196,7 +196,7 @@ Computing, say $\sum_{}^{} X_i^5$ by hand is tedious. But there are formulae for
     \frac{F'(T)}{F(T)} = \sum_{i=1}^{n} \frac{-X_i}{1-X_iT} = -\frac{1}{T} \sum_{i=1}^{n} \sum_{r=1}^{\infty} X_i^r T^r = -\frac{1}{T} \sum_{r=1}^{\infty} p_r T^r.
     \]
     Thus $-TF'(T) = s_1T - 2s_2T^2 + \ldots + (-1)^{n-1}ns_nT^n$ from our generating function above, but we also have (from the previous line) that $$-TF'(T) = F(T)\sum_{r=1}^{\infty} p_r T^r = (s_0 - s_1T + \ldots + (-1)^n s_n T^n)(p_1 T + p_2 T^2 + \ldots).$$
-    Comparing coefficients of $T^k$ gives the identity. 
+    Comparing coefficients of $T^k$ gives the identity.
 \end{proof}
 
 The \textbf{discriminant} polynomial is $D(X_1,\ldots,X_n) = \Delta(X_1,\ldots,X_n)^2$ where $\Delta = \prod_{i<j} (X_i-X_j)$. (Recall from IA Groups that applying $\sigma \in S_n$ to $\Delta$ multiplies $\Delta$ by $\text{sgn}(\sigma)$). So $D$ is symmetric. So $D(X_1,\ldots,X_n) = d(s_1,\ldots,s_n)$ for some polynomial $d$ (with coefficients in $\mathbb{Z}$).
@@ -219,10 +219,10 @@ Recall that a \textbf{field}  is a ring $K$ (commutative, nonzero, with a 1) in 
 \vspace{1mm}
 
 The \textbf{characteristic} of $K$ is the least positive integer $p$ (if it exists) such that $p \cdot 1_K = 0_K$, or 0 if no such $p$ exists.
-For example, $\mathbb{Q}$ has characteristic $0$, and $\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$ has characteristic $p$. 
+For example, $\mathbb{Q}$ has characteristic $0$, and $\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$ has characteristic $p$.
 \vspace{1mm}
 
-The characteristic $\text{char}(K)$ of $K$ is always either 0 or prime. Inside $K$, there is a smallest subfield, called the \textbf{prime subfield} of $K$, which is either isomorphic to $\mathbb{Q}$ (if $\text{char}(K)=0$) or to $\mathbb{F}_p$ (if $\text{char}(K)=p$). 
+The characteristic $\text{char}(K)$ of $K$ is always either 0 or prime. Inside $K$, there is a smallest subfield, called the \textbf{prime subfield} of $K$, which is either isomorphic to $\mathbb{Q}$ (if $\text{char}(K)=0$) or to $\mathbb{F}_p$ (if $\text{char}(K)=p$).
 
 \begin{prop}
     Let $\phi : K \to L$ be a homomorphism of fields. Then $\phi$ is an injection.
@@ -301,11 +301,11 @@ In fact, a slightly more general statement by taking $V=M$ in the above:
 \begin{proof}
     Let $\text{dim}_L V = d < \infty$. Then $V \cong L \oplus \ldots \oplus L = L^d$ as a $L$-vector space, so also certainly as a $K$-vector space. If $[L:K] = n < \infty$, then $L \cong K^n$ as a $K$-vector space, so $V = K^n \oplus \ldots \oplus K^n = K^{nd}$, so $\text{dim}_K V = [L : K] \cdot \text{dim}_L V$.
     \vspace{1mm}
-    
+
     If $V$ is finite-dimensional over $K$, then a $K$-basis for $V$ certainly spans $V$ over $L$. So if $\text{dim}_L V = \infty$, then $\text{dim}_K V = \infty$. Likewise, if $[L:K] = \infty$ and $V \neq \emptyset$, then $V$ has a infinite linearly independent subst, so $\text{dim}_K V = \infty$.
 \end{proof}
 Another important fact:
-\begin{prop}
+\begin{prop}\label{3.5}
     \begin{enumerate}[(i)]
         \item Let $K$ be a field and $G \subset K^\times$ a \textbf{finite} subgroup. Then $G$ is \textbf{cyclic}.
         \item If $K$ is finite, then $K^{\times}$ is cyclic.
@@ -316,12 +316,12 @@ Another important fact:
 
     (ii) is now obvious.
 \end{proof}
-\textbf{Remark.} If $K=\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$, the above says $\exists a \in \{1,\ldots,p-1\}$ such that $\mathbb{Z}/p\mathbb{Z} = \{0\} \cup \{a,a^2,\ldots,a^{p-1} \pmod{p}\}$. This $a$ is called a \textbf{primitive root} mod $p$. 
+\textbf{Remark.} If $K=\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$, the above says $\exists a \in \{1,\ldots,p-1\}$ such that $\mathbb{Z}/p\mathbb{Z} = \{0\} \cup \{a,a^2,\ldots,a^{p-1} \pmod{p}\}$. This $a$ is called a \textbf{primitive root} mod $p$.
 
 \marginpar{13 Oct 2022, Lecture 4}
 
 \begin{prop}
-    Let $R$ be a ring and $p$ a prime such that $p 1_{R} = 0_R$ (e.g. $R$ is a field of characteristic $p$). Then the map $$\phi_p: R \to R \text{ by }  \phi_p(x) = x^p$$ is a \textbf{homomorphism} from $R$ to itself, called the \textbf{Frobenius endomorphism} of $R$. 
+    Let $R$ be a ring and $p$ a prime such that $p 1_{R} = 0_R$ (e.g. $R$ is a field of characteristic $p$). Then the map $$\phi_p: R \to R \text{ by }  \phi_p(x) = x^p$$ is a \textbf{homomorphism} from $R$ to itself, called the \textbf{Frobenius endomorphism} of $R$.
 \end{prop}
 \begin{proof}
     We have to show that $\phi_q(1)=1, \phi_p(xy)= \phi_p(x)\phi_p(y)$ and $\phi_p(x+y)= \phi_p(x) + \phi_p(y)$. But the first two are obvious, and for the last one we get \[
@@ -332,7 +332,7 @@ Another important fact:
 \textbf{Remark.} This is a very important map. For example, this gives another proof of Fermat's little theorem $x^p \equiv x \pmod{p}$: induction on $x$ and $(x+1)^p \equiv x^p + 1 \pmod{p}$.
 
 \section{Algebraic elements and extensions}
-Let $L/K$ be an extension and $x \in L$. 
+Let $L/K$ be an extension and $x \in L$.
 \begin{defn}
     $x$ is \textbf{algebraic} over $K$ if $\exists$ a nonzero polynomial $f \in K[T]$ such that $f(x)=0$. If $x$ is not algebraic, we say it is \textbf{transcendental over} $K$.
 \end{defn}
@@ -342,7 +342,7 @@ Suppose $f \in K[T]$ with evaluation $f(x) \in L$. This gives a map $$\text{ev}_
 $I = \text{ker}(\text{ev}_x) \subset K[T]$ is an ideal ( $= \{f ~|~ f(x)=0\}$). As $\text{Im}(\text{ev}_x)$ is a subring of $L$, it is an integral domain. So $I$ is a \textbf{prime} ideal, so there are two possibilities:
 \begin{enumerate}[(i)]
     \item $I = \{0\} \implies $ the only $f$ with $f(x)=0$ is $f=0$, so $x$ is transcendental over $K$.
-    \item $I \neq \{0\}$. AS $K[T]$ is a PID, there exists a unique monic irreducible $g \in K[T]$ such that $I = (g)$. So $f(x) = 0 \iff f$ is a multiple of $g$. So $x$ is algebraic over $K$ and we call $g$ the \textbf{minimal polynomial} of $x$ over $K$, which we might write as $m_{x,K}$. It is the unique irreducible monic polynomial with $x$ as a root (and is the monic polynomial of least degree with $x$ as a root - this depends on $K$ as well as $x$). 
+    \item $I \neq \{0\}$. AS $K[T]$ is a PID, there exists a unique monic irreducible $g \in K[T]$ such that $I = (g)$. So $f(x) = 0 \iff f$ is a multiple of $g$. So $x$ is algebraic over $K$ and we call $g$ the \textbf{minimal polynomial} of $x$ over $K$, which we might write as $m_{x,K}$. It is the unique irreducible monic polynomial with $x$ as a root (and is the monic polynomial of least degree with $x$ as a root - this depends on $K$ as well as $x$).
 \end{enumerate}
 Some examples:
 \begin{itemize}
@@ -354,7 +354,7 @@ Some examples:
 \textbf{Terminology.} We say \textbf{the degree of $x$ over $K$} (where $x$ is algebraic over $K$) is the degree of $m_{x,K}$, written $\text{deg}_K(x)$ or $\text{deg}(x/K)$.
 \vspace{1mm}
 
-A ring/field-theoretic characterization of the notion of being algebraic: 
+A ring/field-theoretic characterization of the notion of being algebraic:
 \begin{prop}
     Let $L/K, x \in L$. The following are equivalent:
     \begin{enumerate}[(i)]
@@ -370,13 +370,13 @@ Recall $K[X] = \{p(x)\}$ and $K(x) = \{\frac{p(x)}{q(x)}~|~ q(x) \neq 0\}$ for $
 \begin{proof}
     (ii) $\implies $ (iii) and (iv) $\iff$ (v) are trivial.
     \vspace{1mm}
-    
+
     (iii) $\implies$ (iv) and (ii): Let $0 \neq y = g(x) \in K[x]$. Consider $K[x] \to K[x]$ by $z \mapsto yz$. It is a $K$-linear transformation, it is injective as $y\neq 0$. As $\text{dim}_K K[X] < \infty$, it is bijective. So $\exists $ s.t. $yz = 1$. So $K[x]$ is a field, equal to $K(x)$, and $[K(x):K]$ is finite-dimensional.
     \vspace{1mm}
-    
+
     (v) $\implies$ (i): WLOG $x\neq 0$, then $x^{-1} = a_0 + a_1x + \ldots + a_n x^n \in K[X]$ for $a_i$ not all equal to $0$, so $a_nx^{n+1} + \ldots + a_0x - 1 =0$, so $x$ is algebraic over $K$.
     \vspace{1mm}
-    
+
     (i) $\implies$ (iii) and the degree formula: The image of $\text{ev}_x : K[T] \to L$ is $K[X] \subset L$. $x$ is algebraic over $K \implies \text{ker}(\text{ev}_x) = (m_{x,K})$ is a maximal ideal (GRM, because $m$ is irreducible), so by the first isomorphism theorem, $K[T]/(m_{x,K}) \cong K[x]$. The LHS is a field, so $K[X]$ is a field. $m_{x,K}$ is monic of degree $d = \text{deg}_K(x)$, so $K[T]/(m_{x,K})$ has a $K$-basis $1,T,\ldots,T^{d-1}$. Hence $\text{dim}_K K[x] = d < \infty$ (this gives (iii)) and so $[K(x) : K] = d$ as well.
 \end{proof}
 \begin{cor}
@@ -388,7 +388,7 @@ Recall $K[X] = \{p(x)\}$ and $K(x) = \{\frac{p(x)}{q(x)}~|~ q(x) \neq 0\}$ for $
 \end{cor}
 \begin{proof}
     \begin{enumerate}[(i)]
-        \item If $x_n$ is algebraic over $K$, it is certainly algebraic over $K(x_1,\ldots,x_{n-1})$, so $[L : K(x_1,\ldots,x_{n-1})] < \infty$. So by tower law and induction on $n$, $[L:K] < \infty$. Conversely, if $[L:K] < \infty$, then the subfield $K(y)$ is finite over $K$ for all $y$ in $L$. So $y$ is algebraic over $K$ by the previous proposition. 
+        \item If $x_n$ is algebraic over $K$, it is certainly algebraic over $K(x_1,\ldots,x_{n-1})$, so $[L : K(x_1,\ldots,x_{n-1})] < \infty$. So by tower law and induction on $n$, $[L:K] < \infty$. Conversely, if $[L:K] < \infty$, then the subfield $K(y)$ is finite over $K$ for all $y$ in $L$. So $y$ is algebraic over $K$ by the previous proposition.
         \item $x \pm y, xy, \frac{1}{x} \in K(x,y)$, so by (i), every element of this field is algebraic.
         \item This clearly follows from (ii).
     \end{enumerate}
@@ -412,7 +412,7 @@ To actually find this polynomial, write $$z^{\frac{p-1}{2}}+z^{\frac{p-3}{2}} + 
     $x = \sqrt{m} + \sqrt{n}$ for $m,n \in \mathbb{Z}$, $m,n,mn$ not squares. We have \[
     n = (x - \sqrt{m})^2 \stackrel{\star}{=}  x^2 - 2\sqrt{m}x + m
     ,\] so $[\mathbb{Q}(x) : \mathbb{Q}(\sqrt{m})] \le 2$. Similarly, $[\mathbb{Q}(x) : \mathbb{Q}(\sqrt{n})] \le 2$. Also note that $\star$ implies that $\sqrt{m} \in \mathbb{Q}(x)$.
-    
+
     So (by the tower law), either $[\mathbb{Q}(x):\mathbb{Q}]=4$, or $[\mathbb{Q}(x):\mathbb{Q}]=2$ and $\mathbb{Q}(x)=\mathbb{Q}(m)=\mathbb{Q}(n)$ (since $m,n$ not squares implies $[\mathbb{Q}(m): \mathbb{Q}] = [\mathbb{Q}(n): \mathbb{Q}] = 2$). But then $\mathbb{Q}(m)=\mathbb{Q}(n) \implies \sqrt{m}=a+b\sqrt{n}$ for $a,b \in \mathbb{Q} \implies m = a^2 + b^2 n + 2ab \sqrt{n}$. So $ab=0$, whence either $b=0$, so $m=a^2$ is a square, or $a=0$, so $mn=b^2n^2$ is a square. This forces $[\mathbb{Q}(x): \mathbb{Q}] = 4$.
 \end{example}
 
@@ -431,7 +431,7 @@ To actually find this polynomial, write $$z^{\frac{p-1}{2}}+z^{\frac{p-3}{2}} + 
         \item $[L:K] <\infty \implies ~\forall x \in L, [K(x):K] <\infty \implies x$ is algebraic over $K$.
         \item $\implies$ follows by definition, $\impliedby$ follows by (i).
         \item Assume $M/K$ is algebraic. Then $~\forall x \in M$, $x$ is algebraic over $K$, so it is certainly algebraic over $L$. So $M/L$ is algebraic. As $L \subset M$, $L$ is algebraic over $K$.
-        
+
         The other direction follows from the following lemma:
         \begin{lemma}
             Suppose we have $M/L/K$ with $L/K$ algebraic. Let $x \in M$, and suppose $X$ is algebraic over $L$. Then $x$ is algebraic over $K$.
@@ -444,7 +444,7 @@ To actually find this polynomial, write $$z^{\frac{p-1}{2}}+z^{\frac{p-3}{2}} + 
 
 \begin{example}
     Say $K = \mathbb{Q}, L = \{x \in \mathbb{C} ~|~ x \text{ is algebraic over }\mathbb{Q}\}$, usually written $\overline{\mathbb{Q}}$.
-    Obviously $L/\mathbb{Q}$ is algebraic, but it is not finite - for every $n\ge 1, \sqrt[n]{2} \in L$, and so $[\mathbb{Q}(\sqrt[n]{2}): \mathbb{Q}] = n$ (as $T^n-2$ is irreducible over $\mathbb{Q}$). So as this holds for all $n$, $L$ cannot be finite over $\mathbb{Q}$. 
+    Obviously $L/\mathbb{Q}$ is algebraic, but it is not finite - for every $n\ge 1, \sqrt[n]{2} \in L$, and so $[\mathbb{Q}(\sqrt[n]{2}): \mathbb{Q}] = n$ (as $T^n-2$ is irreducible over $\mathbb{Q}$). So as this holds for all $n$, $L$ cannot be finite over $\mathbb{Q}$.
 \end{example}
 We will see other fields like $\overline{\mathbb{Q}}$ later on. They are called \textbf{algebraically closed fields}.
 
@@ -472,9 +472,9 @@ We say that a point $(x,y) \in \mathbb{R}^2$ is \textbf{constructible from} $(x_
 We say a real number $x \in \mathbb{R}$ is constructible if $(x,0)$ is constructible from $\{(0,0),(1,0)\}$. For example, every $x \in \mathbb{Q}$ is constructible, as is $\sqrt{2}$.
 \vspace{1mm}
 
-Now a purely algebraic notion: 
+Now a purely algebraic notion:
 \begin{defn}
-    Suppose $K \subset \mathbb{R}$ is a subfield. Say $K$ is \textbf{constructible}  if $\exists n\ge 0$ and a sequence of fields $\mathbb{Q}=F_0 \subset F_1 \subset \ldots\subset F_n \subset \mathbb{R}$ and $a_i \in F_i$ such that 
+    Suppose $K \subset \mathbb{R}$ is a subfield. Say $K$ is \textbf{constructible}  if $\exists n\ge 0$ and a sequence of fields $\mathbb{Q}=F_0 \subset F_1 \subset \ldots\subset F_n \subset \mathbb{R}$ and $a_i \in F_i$ such that
     \begin{enumerate}[(i)]
         \item $K \subset F_n$
         \item $F_i = F_{i-1}(a_i)$
@@ -494,18 +494,18 @@ Now a purely algebraic notion:
 
     So assume we have $\mathbb{Q} = F_0 \subset  \ldots \subset  F_n$ satisfying (ii) and (iii) and such that the coordinates of all points obtained after $k-1$ constructions lie in $F_n$. But elementary analytic geometry tells us that the intersection point of two lines has coordinates that are rational functions of the coordinates of $(P_i,Q_i)$ with rational coefficients. So if the $k^{\text{th}}$ construction is of type $A$, then $x,y$, the coordinates of the $k^{\text{th}}$ construction point, lie in $F_n$.
     \vspace{1mm}
-    
+
     For B and C, the coordinates of the two intersections can be written as $a \pm b\sqrt{e}, c \pm d\sqrt{e}$, where $a,e$ are rational functions of the coordinates of $\{P_i,Q_i\}$. So for the two newly constructed points, $x,y \in F_n(\sqrt{e})$, which is a constuctible extension of $\mathbb{Q}$.
 \end{proof}
 \textbf{Remark.} It is not hard to show that the converse is true: if $\mathbb{Q}(x)$ is a constructible extension of $\mathbb{Q}$, then $x$ is constructible.
 \vspace{1mm}
 
-\textbf{Classical problems:} 
+\textbf{Classical problems:}
 \begin{itemize}
     \item "Square the circle" -- construct a square with area equal to that of a given circle, i.e. construct $\sqrt{\pi}$. But since $\pi$ is transcendental, $\sqrt{\pi}$ is not constructible.
     \item "Duplicate the cube" -- Construct a cube with volume twice that of a given cube, i.e. construct $\sqrt[3]{2}$. But $[\mathbb{Q}(\sqrt[3]{2}) : \mathbb{Q}] = 3$, which is not a power of 2, so $\mathbb{Q}[\sqrt[3]{2}]$ and therefore $\sqrt[3]{2}$ is not constructible.
     \item "Trisect the angle". Say we are trying to trisect $\frac{2\pi}{3}$, which is certainly constructible. So if we can trisect $\frac{2\pi}{3}$, the angle $\frac{2\pi}{9}$ is constructible, i.e. the real numbers $\cos\left(\frac{2\pi}{9}\right)$ and $\sin\left(\frac{2\pi}{9}\right)$ are constructible. By the formula $\cos 3\theta = 4\cos^3\theta- 3\cos \theta$, $\cos\left(\frac{2\pi}{9}\right)$ is a root of $8X^3 - 6x + 1$ and $2\cos\left(\frac{2\pi}{9}\right) - 2$ is a root of $X^3 + 6X^2 + 9X + 3$. This is irreducible by Eisenstein, so $\text{deg}_{\mathbb{Q}}(\cos\left(\frac{2\pi}{9}\right)) = 3$. So a regular 9-gon is not constructible.
-\end{itemize} 
+\end{itemize}
 
 Later, Gauss proved that a regular $n$-gon is constructible if and only if $n$ is the product of a power of 2 and distinct primes of the form $2^{2^k}+1$ (Fermat primes).
 
@@ -518,7 +518,7 @@ For example, if $F=\mathbb{Q}$, then the Fundamental Theorem of Algebra says tha
 
 \begin{example}
     Take $K=\mathbb{F}_p$ and $f$ irreducible of degree $d > 1$. How to find $L$? The first step is to find an extension in which $f$ has at least one root.
-    
+
     The \textbf{key construction}: suppose $f \in K[T]$ is irreducible (and monic). Let $L_f = K[T]/(f)$. As $f$ is irreducible, $(f)$ is maximal, so $L_f$ is a field. By construction, if $x = T \pmod{(f)} \in L_f$ (i.e. just the coset $T+(f)$), then $f(x) = 0$, i.e. $L_f/K$ is a field extension in which $f$ has a root.
 \end{example}
 Questions: Is $L_f$ unique? How do we find the remaining roots?
@@ -529,7 +529,7 @@ Questions: Is $L_f$ unique? How do we find the remaining roots?
 We start off by redoing what we did last time.
 
 \begin{theorem}
-    Let $f \in K[T]$ be irreducible and monic. Let $L_f = K[T]/(f)$ and $t \subset L_f$ the residue class $T$ mod $(f)$. Then $L_f/K$ is a finite extension of fields, $[L_f : K] = \text{deg}(f)$ and $f$ is the minimal polynomial of $t$ over $K$. 
+    Let $f \in K[T]$ be irreducible and monic. Let $L_f = K[T]/(f)$ and $t \subset L_f$ the residue class $T$ mod $(f)$. Then $L_f/K$ is a finite extension of fields, $[L_f : K] = \text{deg}(f)$ and $f$ is the minimal polynomial of $t$ over $K$.
 \end{theorem}
 So we have an extension of $K$ in which $f$ has at least one root. To what extent is this unique?
 
@@ -553,13 +553,13 @@ Also recall that if $x$ is algebraic over $K$, then $K(x) \cong K[T]/(m_{x,K})$,
     $f(x)=0 \iff \text{ev}_x(f)=0$, where $\text{ev}_x : K[T] \to L$ is the homomorphism $g \mapsto g(x)$, i.e. "evaluate at $x$" $\iff \text{ker}(\text{ev}_x) = (f) \iff \text{ev}_x$ comes from a homomorphism $\sigma : K[T]/(f) \to L$ which is identity on $K$.
 \end{proof}
 \begin{cor}
-    If $L = K(x)$ for $x$ algebraic over $K$, then there exists a unique \textbf{isomorphism} $\sigma : L_f \to K(x)$ such that $\sigma(t)=x$, where $f=m_{x,K}$.  
+    If $L = K(x)$ for $x$ algebraic over $K$, then there exists a unique \textbf{isomorphism} $\sigma : L_f \to K(x)$ such that $\sigma(t)=x$, where $f=m_{x,K}$.
 \end{cor}
 \begin{proof}
     Take $L = K(x)$ in the above theorem.
 \end{proof}
 \begin{defn}
-    Let $x,y$ be algebraic over $K$. Say $x,y$ are \textbf{$K$-conjugate}  if they have the same minimal polynomial. 
+    Let $x,y$ be algebraic over $K$. Say $x,y$ are \textbf{$K$-conjugate}  if they have the same minimal polynomial.
 \end{defn}
 Then both $K(x)$ and $K(y)$ are isomorphic to $L_f$ (with $f=m_{x,K}=m_{y,K}$), and more precisely:
 \begin{cor}
@@ -583,20 +583,20 @@ It is useful for inductive arguments to have a generalization of Theorem \ref{6.
         \item If $x \in L$ is a root of $\sigma f$, then there exists a unique $\sigma$-homomorphism $\tau : L_f \to L$ such that $\tau(t)= x$.
         \item Every $\sigma$-homomorphism $L_f \to L$ is of this form and we have a bijection
         \begin{align*}
-            \{\sigma\text{-homomorphisms }L_f \to L\} \cong \{\text{roots of }\sigma f \text{ in }L\}. 
+            \{\sigma\text{-homomorphisms }L_f \to L\} \cong \{\text{roots of }\sigma f \text{ in }L\}.
         \end{align*}
     \end{enumerate}
 \end{theorem}
 \begin{example}
-    $\sigma$ might not be the obvious homomorphism. Take $K = \mathbb{Q}(\sqrt{2}) \subset \mathbb{R}$ and $L = \mathbb{C}$. There is a homomorphism $\sigma : K \to \mathbb{C}$ by $\sqrt{2} \mapsto -\sqrt{2}$. So if we take $f = T^2 - (1+\sqrt{2})$, so the map $L_f \stackrel{\tau}{\to} \mathbb{C}$ must take $t$ to $\pm \sqrt{1-\sqrt{2}} = \pm i \sqrt{\sqrt{2}-1} \in \mathbb{C}$. 
-    
+    $\sigma$ might not be the obvious homomorphism. Take $K = \mathbb{Q}(\sqrt{2}) \subset \mathbb{R}$ and $L = \mathbb{C}$. There is a homomorphism $\sigma : K \to \mathbb{C}$ by $\sqrt{2} \mapsto -\sqrt{2}$. So if we take $f = T^2 - (1+\sqrt{2})$, so the map $L_f \stackrel{\tau}{\to} \mathbb{C}$ must take $t$ to $\pm \sqrt{1-\sqrt{2}} = \pm i \sqrt{\sqrt{2}-1} \in \mathbb{C}$.
+
     If instead we take $\sigma$ to be the inclusion, then $\tau$ takes $t$ to $\sqrt{\sqrt{2}+1}$.
 \end{example}
 What about all roots?
 \begin{defn}
     Suppose $f \in K[T]$ is a nonzero polynomial. We say an extension $L/K$ is a \textbf{splitting field} for $f$ over $K$ if:
     \begin{enumerate}[(i)]
-        \item $f$ splits into linear factors in $L[T]$, 
+        \item $f$ splits into linear factors in $L[T]$,
         \item $L = K(x_1,\ldots,x_n)$, where the $x_i$ are the roots of $f$ in $L$.
     \end{enumerate}
 \end{defn}
@@ -609,7 +609,7 @@ What about all roots?
 \begin{proof}
     By induction on $\text{deg}(f)$ (for all $K$). If $\text{deg}(f)$ is 0 or 1, then $K$ is a spltting field, so we're done. So assume that for all fields $K'$ and all polynomials of degree $<\text{deg}(f)$ there is a splitting field.
     \vspace{1mm}
-    
+
     Consider $g$, an irreducible factor of $f$. Consider $K' = L_g = K[T]/(g)$ and let $x_1 = T$ mod $(g)$. Then $g(x_1)=0$, so $f = (T-x_1)f_1$ for $f_1 \in K'[T]$ and $\text{deg}(f_1)<\text{deg}(f)$. So by induction, $\exists$ a spltting field $L$ for $f_1$ over $K'$. Let $x_2,\ldots,x_n \in L$ be the roots of $f_1$ in $L$. Then $f$ splits into linear factors in $L$ with roots $x_1,\ldots,x_n$, and $L=K'(x_2,\ldots,x_n) = K(x_1,\ldots,x_n)$. So $L$ is a splitting field for $f$ over $K$.
 \end{proof}
 
@@ -635,15 +635,15 @@ Our next result is nontrivial, even for subfields of $\mathbb{C}$.
 \begin{proof}
     \begin{enumerate}[(i)]
         \item Induction on $n = [L:K]$. If $n=1$, then $L=K$ and we're done.
-        
+
         Now let $x \in L \setminus K$ be some root of an irreducible factor $g \in K[T]$ of $f$ with $\text{deg}(g)>1$. Let $y \in M$ be a root of $\sigma g \in M[T]$. By Theorem \ref{6.5}, there exists $\sigma_1 : K(x) \to M$ such that $\sigma_1(x) = y$ and $\sigma_1$ extends $\sigma.$ Now, $[L : K(x)] < [L : K]$, and $L$ is certainly a splitting field for $f$ over $K(x)$, and $\sigma_1 f =\sigma f$ splits in $M$. So by induction, we can extend $\sigma_1 : K(x) \to M$ to a homomorphism $\tau : L \to M$.
-        \item Assume $M$ is a splitting field for $\sigma f$ over $\sigma K$. Let $\tau$ be as in (i), and $\{x_i\}$ the roots of $f$ in $L$. Then the roots of $\sigma f$ in $M$ are just $\{\tau(x_i)\}$. So $M = \sigma K (\tau(x_1),\ldots,\tau(x_n)) = \tau L$ as $L = K(x_1,\ldots,x_n)$. So $\tau$ is an isomorphism. If $K \subset M$ and $\sigma$ is the inclusion map, then $\tau$ is a $K$-isomorphism $L \to M$. 
+        \item Assume $M$ is a splitting field for $\sigma f$ over $\sigma K$. Let $\tau$ be as in (i), and $\{x_i\}$ the roots of $f$ in $L$. Then the roots of $\sigma f$ in $M$ are just $\{\tau(x_i)\}$. So $M = \sigma K (\tau(x_1),\ldots,\tau(x_n)) = \tau L$ as $L = K(x_1,\ldots,x_n)$. So $\tau$ is an isomorphism. If $K \subset M$ and $\sigma$ is the inclusion map, then $\tau$ is a $K$-isomorphism $L \to M$.
     \end{enumerate}
 \end{proof}
 \begin{example}
     \begin{enumerate}[(i)]
-        \item $f = T^3-2 \in \mathbb{Q}[T]$. In $\mathbb{C}$, we have $$f=(T-\sqrt[3]{2})(T-\omega \sqrt[3]{2})(T-\omega^2\sqrt[3]{2}),$$ where $\omega = e^{2 \pi i /3}$. So a splitting field for $f$ over $\mathbb{Q}$ is $L=\mathbb{Q}(\sqrt[3]{2}, \omega) \subset \mathbb{C}$. 
-        
+        \item $f = T^3-2 \in \mathbb{Q}[T]$. In $\mathbb{C}$, we have $$f=(T-\sqrt[3]{2})(T-\omega \sqrt[3]{2})(T-\omega^2\sqrt[3]{2}),$$ where $\omega = e^{2 \pi i /3}$. So a splitting field for $f$ over $\mathbb{Q}$ is $L=\mathbb{Q}(\sqrt[3]{2}, \omega) \subset \mathbb{C}$.
+
         We have $[\mathbb{Q}[\sqrt[3]{2}] : \mathbb{Q}] = 3$, and $\mathbb{Q}(\sqrt[3]{2}) \subset \mathbb{R}$ but $\omega \not\in \mathbb{R}$, $\omega^2+w+1=0$, so $[L : \mathbb{Q}(\sqrt[3]{2})] = 2$ and $[L:\mathbb{Q}]=6$. In particular, $\frac{f}{(T-\sqrt[3]{2})}=T+\sqrt[3]{2}T+(\sqrt[3]{2})^2$ is irreducible in $\mathbb{Q}(\sqrt[3]{2})[T].$
         \item $f = \frac{T^5-1}{T-1} = T^4 + T^3+T^2+T+1 \in \mathbb{Q}[T]$. Let $z = e^{2\pi i/5}$. Then $f = \prod_{1\le a\le 4}^{} (T-z^{a})$. So $\mathbb{Q}(z)$ is already a splitting field for $f$ over $\mathbb{Q}$, and $[\mathbb{Q}(z):\mathbb{Q}]=4$.
         \item $f = T^3-2 \in \mathbb{F}_7[T]$. This is irreducible, as 2 is not a cube mod $7$. Consider $L=\mathbb{F}_7[X]/(X^3-2) = \mathbb{F}_7(x)$, where $x^3=2$. Now $2^3=1=4^3$ in $\mathbb{F}_7$, so $(2x)^3=(4x)^3=2$ and so $f = (T-2)(T-2x)(T-4x) \in L[T]$. Note that joining one root is not enough to get a splitting field.
@@ -654,14 +654,14 @@ Our next result is nontrivial, even for subfields of $\mathbb{C}$.
 \begin{defn}
     $L/K$ is a \textbf{normal} extension if $L/K$ is algebraic, and for every $x \in L$, $m_{x,K}$ splits into linear factors over $L$.
 \end{defn}
-\textbf{Remark.} The condition is equivalent to: for every $x \in L$, $L$ contains a splitting field for $m_{x,K}$. Or again, for every irreducible $f \in K[T]$, if $f$ has a root in $L$, then it splits in $L[T]$. 
+\textbf{Remark.} The condition is equivalent to: for every $x \in L$, $L$ contains a splitting field for $m_{x,K}$. Or again, for every irreducible $f \in K[T]$, if $f$ has a root in $L$, then it splits in $L[T]$.
 \begin{theorem}[Splitting fields are normal]\label{7.1}
     Let $L/K$ be a finite extension. Then $L/K$ is normal if and only if $L$ is the splitting field for some $f \in K[T]$ (not necessarily irreducible).
 \end{theorem}
 \begin{proof}
     $\implies $: Suppose $L/K$ is normal, and write $L=K(x_1,\ldots,x_n)$. Then $m_{x,K}$ splits in $L$, and $L$ is generated by the roots of $f = \prod_{i}^{} m_{x_i,K}$. So $L$ is a splitting field for $f$ over $K$.
     \vspace{1mm}
-    
+
     $\impliedby$: Suppose $L$ is a splitting field for $f \in K[T]$. Let $x \in L$ and let $g = m_{x,K}$ be its minimal polynomial. We want to show that $g$ splits in $L$. Let $M$ be a splitting field for $g$ over $L$ and $y \in M$ a root of $g$. We want to show that $y \in L$. Since $L$ is a splitting field for $f$ over $K$:
     \begin{itemize}
         \item $L$ is a splitting field for $f$ over $K(x)$.
@@ -674,7 +674,7 @@ Our next result is nontrivial, even for subfields of $\mathbb{C}$.
 
 A "field-theoretic" version of splitting fields:
 \begin{cor}[Normal closure]
-    Let $L/K$ be a finite extension. Then there exists a finite extension $M/L$ such that 
+    Let $L/K$ be a finite extension. Then there exists a finite extension $M/L$ such that
     \begin{enumerate}[(i)]
         \item $M/K$ is a normal extension,
         \item If $L \subset M' \subset M$ and $M'/K$ is normal, then $M'=M$.
@@ -687,7 +687,7 @@ $M$ is said to be a \textbf{normal closure} of $L/K$.
 
     Let $M'$ be as in (ii), then as $x_i \in M'$, $m_{x_i,K}$ splits in $M'$ (as $M'/K$ is normal). So $M'=M$.
     \vspace{1mm}
-    
+
     For uniqueness: any $M$ satisfying (i) must contain a splitting field for $f$, and by the above, (ii) implies that $M$ is a splitting field for $f$, so the result follows from uniqueness of splitting fields.
 \end{proof}
 
@@ -724,13 +724,13 @@ Observe that $\text{gcd}(f,g)$ is the same in $K[T]$ as in $L[T]$ for any extens
 \end{proof}
 
 \begin{example}
-    $\text{char}(K)=p>0$, $f = T^p - b, b \in K$. Then $f'=0$, so $\text{gcd}(f,f')=f \neq 1$. So $f$ is inseparable. Let $L$ be any extension of $K$ containing $a \in L$ such that $a^p = b$. Then $f=(T-a)^p = T^p + (-a)^p = T^p - b$. 
+    $\text{char}(K)=p>0$, $f = T^p - b, b \in K$. Then $f'=0$, so $\text{gcd}(f,f')=f \neq 1$. So $f$ is inseparable. Let $L$ be any extension of $K$ containing $a \in L$ such that $a^p = b$. Then $f=(T-a)^p = T^p + (-a)^p = T^p - b$.
 
     So $f$ has only one root in a splitting field. In fact, if $b$ isn't a $p^{\text{th}}$ power in $K$, then $f$ is irreducible (exercise!)
 \end{example}
 \begin{theorem}
     \begin{enumerate}[(i)]
-        \item Let $f \in K[T]$ be irreducible. Then $f$ is separable if and only if $f' \neq 0$. 
+        \item Let $f \in K[T]$ be irreducible. Then $f$ is separable if and only if $f' \neq 0$.
         \item If $\text{char}(K)=0$, then every irreducible polynomial in $K[T]$ is separable.
         \item If $\text{char}(K)=p>0$, then an irreducible $f \in K[T]$ is \textbf{inseparable} (i.e. not separable) if and only if $f=g(T^p)$ for some $g \in K[T]$.
     \end{enumerate}
@@ -739,17 +739,17 @@ Observe that $\text{gcd}(f,g)$ is the same in $K[T]$ as in $L[T]$ for any extens
     \begin{enumerate}[(i)]
         \item Assume WLOG that $f$ is monic. Then, as $f$ is irreducible, we have $\text{gcd}(f,f') = f$ or $1$. If $\text{gcd}(f,f')=f$, then as $\text{deg}(f')<\text{deg}(f)$, we must have $f'=0$ (and the converse is obvious - if the gcd is 1, then $f$ is separable).
         \item Write $f = \sum_{i=0}^{d} a_iT^i$, so $f' = \sum_{i=1}^{d} ia_iT^{i-1}$, so $f'=0 \iff ia_i = 0$ for all $1\le i\le d$. If $\text{char}(K)=0$, then $a_i=0 ~\forall i \implies f = a_0$ is a constant, so not irreducible.
-        \item Analogously to above, if $\text{char}(K)=p>0$, then $f'=0 \iff a_i=0$ for all $i$ not divisible by $p$ $\iff f=g(T^p) = \sum_{}^{} a_{i}T^{pi}$. 
+        \item Analogously to above, if $\text{char}(K)=p>0$, then $f'=0 \iff a_i=0$ for all $i$ not divisible by $p$ $\iff f=g(T^p) = \sum_{}^{} a_{i}T^{pi}$.
     \end{enumerate}
 \end{proof}
 We now go from polynomials to fields.
 \begin{defn}
-    Let $L/K$ be an extension. We say $x \in L$ is \textbf{separable} over $K$ if $x$ is algebraic over $K$ and its minimal polynomial $m_{x,K}$ is separable. We say $L/K$ is \textbf{separable} if $~\forall x \in L$, $x$ is separable over $K$. 
-    
+    Let $L/K$ be an extension. We say $x \in L$ is \textbf{separable} over $K$ if $x$ is algebraic over $K$ and its minimal polynomial $m_{x,K}$ is separable. We say $L/K$ is \textbf{separable} if $~\forall x \in L$, $x$ is separable over $K$.
+
     We say an extension is inseparable if it is not separable, i.e. some element is not separable over $K$.
 \end{defn}
 \begin{theorem}\label{8.4}
-    Let $x$ be algebraic over $K$, and $L/K$ any extension in which $m_{x,K}$ splits. Then $x$ is separable over $K$ if and only if there are exactly $\text{deg}_K(x)$ $K$--homomorphisms from $K(x) \to L$. 
+    Let $x$ be algebraic over $K$, and $L/K$ any extension in which $m_{x,K}$ splits. Then $x$ is separable over $K$ if and only if there are exactly $\text{deg}_K(x)$ $K$--homomorphisms from $K(x) \to L$.
 \end{theorem}
 \begin{proof}
     Recall from Theorem \ref{6.2} that the number of such homomorphisms is the number of roots of $m_{x,K}$ in $L$. This is equal to the degree of $x$ if and only if $x$ is separable, because the minimal polynomial splits.
@@ -757,10 +757,10 @@ We now go from polynomials to fields.
 
 \marginpar{27 Oct 2022, Lecture 10}
 
-\textbf{Notation}: We write $\text{Hom}_K(L,M)$ for the set of $K$--homomorphisms from $L$ to $M$ (not to be confused with $K$--linear maps $L$ to $M$). 
+\textbf{Notation}: We write $\text{Hom}_K(L,M)$ for the set of $K$--homomorphisms from $L$ to $M$ (not to be confused with $K$--linear maps $L$ to $M$).
 
 \begin{theorem}[Counting embeddings]\label{8.5}
-    Let $L=K(x_1,\ldots,x_k)$ be a finite extension of $K$, and $M/K$ any extension. Then $$|\text{Hom}_K(L,M)|\le [L : K]$$ with equality holding if and only if 
+    Let $L=K(x_1,\ldots,x_k)$ be a finite extension of $K$, and $M/K$ any extension. Then $$|\text{Hom}_K(L,M)|\le [L : K]$$ with equality holding if and only if
     \begin{enumerate}[(i)]
         \item $~\forall i, m_{x_i,K}$ splits into linear factors over $M$; and
         \item all the $x_i$ are separable over $K$.
@@ -768,20 +768,20 @@ We now go from polynomials to fields.
 \end{theorem}
 \textbf{Remark.} (i), (ii) are just saying that $m_{x_i,K}$ splits into distinct linear factors over $M$.
 
-\textbf{Remark.} There is an obvious variant of this: take any homomorphism $\sigma : K \to M$, then $|\{\sigma \text{-homomorphisms }L \to M\}| \le [L:K]$ with equality if and only if $~\forall i, \sigma m_{x_i,K}$ splits over $M$. 
+\textbf{Remark.} There is an obvious variant of this: take any homomorphism $\sigma : K \to M$, then $|\{\sigma \text{-homomorphisms }L \to M\}| \le [L:K]$ with equality if and only if $~\forall i, \sigma m_{x_i,K}$ splits over $M$.
 
 \begin{proof}
     Induction on $k$. $k=0$ is obvious.
-    
+
     Now write $K_1=K(x_1)$, $\text{deg}_{K}(x_1) = d = [K_1 : K]$. Then, by Theorem \ref{8.4}, $$|\text{Hom}_K(K_1,M)| = e = |\{\text{number of roots of }m_{x_1,K} \text{ in } M\}| \le d.$$
-    
+
     Let $\sigma : K_1 \to M$ be a $K$--homomorphism. Apply induction to $L/K_1$, so there exist at most $[L : K_1]$ extensions of $\sigma$ that are a homomorphism $L \to M$. Hence
     \[
     |\text{Hom}_K(L,M)| \le e [L:K_1] \le d[L:K_1] = [L:K].
     \]
     If equality holds, then $e=d$, i.e. $m_{x_1,K}$ has $d$ distinct roots in $M$. Replacing $x_1$ by another $x_i$, we get (i) and (ii).
     \vspace{1mm}
-    
+
     Conversely, assuming that (i) and (ii) hold, we see by Theorem \ref{8.4} that $|\text{Hom}_K(K_1,M)|=d$. (i) and (ii) still hold over $K_1$, so by induction on $k$, each $\sigma : K_1 \to M$ has $[L:K_1]$ extensions to $L \to M$, so $|\text{Hom}_K(L,M)|=[L:K]$.
 \end{proof}
 This result has two corollaries.
@@ -791,7 +791,7 @@ This result has two corollaries.
 \begin{proof}
     $L/K$ separable $\implies $ $x_i$ separable by definition.
     \vspace{1mm}
-    
+
     Conversely, assume all the $x_i$ are separable over $K$, and let $M$ be a normal closure (splitting field of $\prod_{i}^{} m_{x_i,K}$) over $L$. Then in Theorem \ref{8.5}, (i) and (ii) both hold, so $|\text{Hom}_K(L,M)|=[L:K]$. But if $x \in L$, then $L = K(x,x_1,\ldots,x_k)$ as well. So as all the $K$--embeddings are separable, by Theorem \ref{8.5}, $x$ is separable over $K$.
 \end{proof}
 \begin{cor}
@@ -854,7 +854,7 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
 \end{defn}
 \begin{example}
     \begin{itemize}
-        \item Simplest example: $\mathbb{C}/\mathbb{R}$ is Galois. 
+        \item Simplest example: $\mathbb{C}/\mathbb{R}$ is Galois.
         \item $\mathbb{Q}(i)/\mathbb{Q}$ is Galois.
         \item If $K/\mathbb{F}_p$ is a finite extension (so $K$ is a finite field), we have the Frobenius automorphism $\phi_p : K \to K, \phi_p(x)=x^p$. Then \[
         K^{\{\phi_p\}} = \{x \in K \mid x \text{ is a root of }T^p-T\} = \mathbb{F}_p.
@@ -878,10 +878,10 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
 \begin{proof}
     (i) $\implies $ (ii) and the last part: Let $x \in L$, $\{x_1,\ldots,x_r\}$ the orbit of $x$ in $G$, $f = \prod_{}^{} (T-x_i)$, so $f(x)=0$. As $G$ permutes $\{x_i\}$, the coefficients of $f$ are fixed by $G$, so $f \in L^G[T] = K[T]$, so $m_{x,K} \mid f$. Also, since $m_{x,K}(\sigma(x)) = \sigma(m_{x,K}(x))=0$, every $x_i$ is a root of $m_{x,K}$, so $f = m_{x,K}$. So $x$ is separable over $K$, and $m_{x,K}$ splits in $L$, so $L/K$ is normal and separable.
     \vspace{1mm}
-    
+
     (ii) $\implies$ (iii): By Theorem \ref{7.1}, $L$ is a splitting field for some $f \in K[T]$. Write $f = \prod_{}^{} q_i^{e^i}$ where the $q_i$ are irreducible, distinct, and $e_i \ge 1$. As $L/K$ is separable, the $q_i$ are separable, so $g= \prod_{}^{} q_i$ is separable, and $L$ is also a splitting field for $g$.
     \vspace{1mm}
-    
+
     (iii) $\implies$ (iv): Write $L=K(x_1,\ldots,x_k)$ for the splitting field of some separable $f$ with roots $x_i$. Take $M = L$ and apply Theorem \ref{8.5}. As $m_{x_i,K} \mid f$, the conditions in the theorem are satisfied, so $$|\text{Aut}(L/K)|=|\text{Hom}_K(L,M)|=[L : K].$$
 
     (iv) $\implies$ (i): Suppose $|G|=[L:K]$ (where $G = \text{Aut}(L/K)$). Then $$G \subset \text{Aut}(L/L^G) \subset \text{Aut}(L/K),$$ so $G = \text{Aut}(L/L^G)$ and $[L : K] = |G| \le [L : L^G]$. As $K \subset L^G$, this implies that $L^G = K$ by tower law.
@@ -907,7 +907,7 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
             \item $L^H/K$ is normal;
             \item $~\forall \sigma \in G, \sigma(L^H)=L^H$;
             \item $H \le G$ is a normal subgroup.
-        \end{enumerate} 
+        \end{enumerate}
         If these hold, then $\text{Gal}(L^H/K)\cong G/H$.
     \end{enumerate}
 \end{theorem}
@@ -923,7 +923,7 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
             [F:K] = \frac{[L:K]}{[L:F]} = \frac{|\text{Gal}(L/K)|}{|\text{Gal}(L/F)|} = \frac{|G|}{|H|} = [G:H].
             \]
         \end{itemize}
-        \item Under (a), $\sigma H \sigma^{-1}$ corresponds to 
+        \item Under (a), $\sigma H \sigma^{-1}$ corresponds to
         \begin{align*}
             L^{\sigma H \sigma^{-1}} = \{x \in L \mid \sigma \tau \sigma^{-1}(x)=x ~\forall \tau \in H\}
         \end{align*}
@@ -932,7 +932,7 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
 
         Let $F = L^H, x \in F$. Then $\{\text{roots of }m_{x,K}\}$ is the orbit of $x$ under $G$. So $m_{x,K}$ splits in $F$ if and only if $\forall \sigma \in G, \sigma(x) \in F$. As this holds $\forall x \in F$, $F$ is normal if and only if $\sigma F \subset F$. As $[\sigma F : K] = [F : K]$ ($\sigma F$ is $K$--isomorphic to $F$), this means $\sigma F = F$. By (b), this is equivalent to the statement $\forall \sigma \in G$, $\sigma H \sigma^{-1} = H$, i.e. $H$ is a normal subgroup.
         \vspace{1mm}
-        
+
         Last part: as $~\forall \sigma \in G, \sigma F = F$, we have a homomorphism $G \to \text{Gal}(F/K)$ given by restricting $\sigma \in G$ to $F$. Its kernel is $H$ (since $F = L^H$), so $G/H$ is isomorphic to a subgroup of $\text{Gal}(F/K)$. But we have an isomorphism, as $[G:H] = [F:K]$ by (a).
     \end{enumerate}
 \end{proof}
@@ -940,7 +940,7 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
 \begin{example}
     Let $K = \mathbb{Q}$, $L = \mathbb{Q}(\sqrt[3]{2},\omega) \subset \mathbb{C}$, $\omega = e^{2 \pi i /3}$. We know from before that $L$ is a splitting field for $T^3-2$, and $[L:\mathbb{Q}]=6$. So $L/\mathbb{Q}$ is the splitting field of a separable polynomial, hence it is Galois. Let $G = \text{Gal}(L/K)$, then  we also know $|G|=6$.
     \vspace{1mm}
-    
+
     What obvious subfields of $L$ do we see? We have $F_1 = \mathbb{Q}(\omega)$, $F_2 = \mathbb{Q}(\sqrt[3]{2})$ with $[F_1 : \mathbb{Q}] = 2, [F_2 : \mathbb{Q}] = 3$. Now draw a picture:
 
     \begin{figure}[H]
@@ -954,12 +954,12 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
             \node (1) [above right of =H_1] {$\{1\}$};
             \node (H_2) [below right of=1] {$H_2$};
             \node (G) [below right of =H_1] {$G$};
-            
-            \draw (Q) -- (F_1) node[midway,anchor=north east]{2} 
+
+            \draw (Q) -- (F_1) node[midway,anchor=north east]{2}
                 -- (L) node[midway, anchor=south east]{3}
                 -- (F_2) node[midway, anchor = south west]{2}
                 -- (Q) node[midway, anchor = north west]{3};
-            \draw (G) -- (H_1) node[midway,anchor=north east]{2} 
+            \draw (G) -- (H_1) node[midway,anchor=north east]{2}
                 -- (1) node[midway, anchor=south east]{3}
                 -- (H_2) node[midway, anchor = south west]{2}
                 -- (G) node[midway, anchor = north west]{3};
@@ -970,9 +970,9 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
 
     This gives us a subfield lattice with a corresponding subgroup lattice, where each field is the fixed field of the corresponding group. The numbers on the edges correspond to the degrees of field extensions on the left and the indices of the subgroups on the right.
     \vspace{1mm}
-    
+
     Since $|G|=6$, $G$ is isomorphic to either $C_6$ or $S_3$. Note that $F_2 / \mathbb{Q}$ is not normal, as $\omega \sqrt[3]{2} \not\in F_2$, so $H_2 = \text{Gal}(L/F_2)$ is not a normal subgroup. Hence $G$ is nonabelian, so $G \cong S_3$.
-    
+
     Hence we have $H_2 \cong \{(12),e\}$ (by relabeling if necessary) and we must have $H_1 \cong A_3$. We have two other subgroups $\{(13), e\}$ and $\{(23),e\}$. There are the \textbf{conjugates} of $H_2$, so the corresponding subfields are $\{\sigma F_2 \mid \sigma \in G\}$, which are $\mathbb{Q}(\omega \sqrt[3]{2}), \mathbb{Q}(\omega^2 \sqrt[3]{2})$ (the conjugates of $\sigma(\sqrt[3]{2})$, $\sigma \in G$ are the roots of the minimal polynomial).
 
     So this describes all $F$ with $\mathbb{Q} \subset F \subset L$.
@@ -980,9 +980,9 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
 
 In fact, we could have seen at once that $G \cong S_3$:
 
-Suppose $f \in K[T]$ is a separable polynomial, $x_1,\ldots,x_n$ are its roots in a splitting field $L$ (where $n=\text{deg}(f)$). Then $G = \text{Gal}(L/K)$ permutes the $\{x_i\}$ (as $f(\sigma x_i) = \sigma f(x_i) = 0$), and if $\sigma(x_i) = x_i ~\forall i$, then since $L = K(x_1,\ldots,x_n)$, $\sigma = \text{id}$. This gives an injective homomorphism $G \to S_n$. 
+Suppose $f \in K[T]$ is a separable polynomial, $x_1,\ldots,x_n$ are its roots in a splitting field $L$ (where $n=\text{deg}(f)$). Then $G = \text{Gal}(L/K)$ permutes the $\{x_i\}$ (as $f(\sigma x_i) = \sigma f(x_i) = 0$), and if $\sigma(x_i) = x_i ~\forall i$, then since $L = K(x_1,\ldots,x_n)$, $\sigma = \text{id}$. This gives an injective homomorphism $G \to S_n$.
 
-So in the above example, we have a subgroup of $S_3$ of order $6$, so it must be 
+So in the above example, we have a subgroup of $S_3$ of order $6$, so it must be
 $S_3$.
 
 \begin{defn}
@@ -1012,13 +1012,13 @@ where $\Delta = \prod_{1\le i < j \le n}^{} (x_i-x_j)^2$. The discriminant is no
 \begin{prop}
     Let $L$ be a splitting field over $K$ and $G$ a Galois group for a monic separable polynomial $f \in K[T]$. Assume $\text{char}(K)\neq 2$. Then the fixed field of $G \cap A_n$ is $K(\Delta)$.
     \vspace{1mm}
-    
+
     In particular, $\text{Gal}(f/K) \subset A_n$ if and only if $\text{Disc}(f)$ is a square in $K$.
 \end{prop}
 
 \begin{proof}
     \marginpar{03 Nov 2022, Lecture 13}
-    
+
     $\pi \in S_n$, and $\pi$ has a sign $\pm 1$, where $$\prod_{1\le i<j\le n}^{} (T_{\pi(i)}-T_{\pi(j)})=\text{sgn}(\pi)\prod_{1\le i<j\le n}^{} (T_i-T_j).$$
 
     So if $\sigma \in G$, then $\sigma(\Delta) = \text{sgn}(\sigma)\Delta$. As $\Delta \neq 0$ and $\text{char}(K)\neq 2$, this implies that $\Delta \in K \iff G \in A_n$ and $\Delta$ lies in the fixed field $F$ of $G \cap A_n$. As $[F: K] = [G : G \cap A_n] = \begin{cases}
@@ -1029,10 +1029,10 @@ where $\Delta = \prod_{1\le i < j \le n}^{} (x_i-x_j)^2$. The discriminant is no
 \begin{example}
     Take $n=3$ and $f = T^3+aT+b = \prod_{i=1}^{3} (T-X_i)$. Then $x_3 = -x_1-x_2$, $a = x_1x_2 - (x_1+x_2)^2$ and $b=x_1x_2(x_1+x_2)$. Thus \[
     \text{disc}(f) = ((x_1-x_2)(2x_1+x_2)(x_1+2x_2))^2 = -4a^3 - 27b^2.
-    \] 
+    \]
     So $\text{Gal}(f/K) \subset A_3 \iff -4a^3-27b^2$ is a square in $K$.
     \vspace{1mm}
-    
+
     For example, take $f = T^3-21T - 7 \in \mathbb{Q}[T]$, which is irreducible. Then $\text{disc}(f)=4 \cdot 21^3 - 27 \cdot  7 ^2 = (27\cdot 7)^2$. So $\text{Gal}(f/\mathbb{Q}) \subset A_3$. As $f$ is irreducible, the Galois group is \textbf{transitive}. So $\text{Gal}(f/\mathbb{Q}) = A_3$.
 \end{example}
 This allows us to compute the Galois group of any cubic polynomial (of say $\text{char}(K)\neq2,3$).
@@ -1051,7 +1051,7 @@ Let $p$ be a prime and $\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$. We aim to descri
 \begin{proof}
     Let $F$ be a field with $q=p^n$ elements. Then if $x \in F^{\times}, x^{q-1}=1$, so $~\forall x \in F, x^q = x$. So $f = \prod_{x \in F}^{} (T-x)$ splits into linear factors in $F$, and not in any proper subfield of $F$. So $F$ is a splitting field for $f$ over $\mathbb{F}_p$. By uniqueness of splitting fields, $F$ is unique up to isomorphism.
     \vspace{1mm}
-    
+
     Conversely, given $n$, let $q=p^n$, let $L/\mathbb{F}_p$ be a splitting field for $f = T^q - T$ and let $F \subset L$ be the fixed field of $\phi_p^n : x \mapsto x^q$. So $F$ is the set of roots of $f= T^q-T$ in $L$. So $|F|=q$ (and $F=L$).
 \end{proof}
 \textbf{Notation.}  We write $\mathbb{F}_q$ for any finite field with $q$ elements. By Theorem \ref{10.1}, any two are isomorphic, although there is no "preferred" or "canonical" isomorphism.
@@ -1067,7 +1067,7 @@ Let $p$ be a prime and $\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$. We aim to descri
 \begin{proof}
     $\text{Gal}(\mathbb{F}_{p^n}/\mathbb{F}_n) \cong \mathbb{Z}/n\mathbb{Z}$. The subgroups of $\mathbb{Z}/n\mathbb{Z}$ are $m\mathbb{Z}/n\mathbb{Z}$ for $m \mid n$. So by Galois correspondence, the subfields of $\mathbb{F}_{p^n}$ are the fixed fields of these subgroups, i.e. the subgroups $\langle\phi^m \rangle$, which have degree equal to the indices $[\mathbb{Z}/n\mathbb{Z} : m \mathbb{Z}/ n\mathbb{Z}] = m$.
 \end{proof}
-\textbf{Remark.} If $m \mid n$, then $\text{Gal}(\mathbb{F}_{p^n}/\mathbb{F}_{p^m}) = \langle \phi_p^m\rangle$ with order $\frac{n}{m}$.  
+\textbf{Remark.} If $m \mid n$, then $\text{Gal}(\mathbb{F}_{p^n}/\mathbb{F}_{p^m}) = \langle \phi_p^m\rangle$ with order $\frac{n}{m}$.
 \begin{theorem}\label{10.4}
     Let $f \in \mathbb{F}_p[T]$ be separable of degree $n\ge 1$ whose irreducible factors have degrees $n_1,\ldots,n_r$ with $\sum_{}^{} n_i =n$. Then $\text{Gal}(f/\mathbb{F}_p) \subset S_n$ is cyclic, generated by an element of cycle type $(n_1,\ldots,n_r)$. In particular, $|\text{Gal}(f/\mathbb{F}_p)|=\text{lcm}(n_1,\ldots,n_r)$.
 \end{theorem}
@@ -1098,7 +1098,7 @@ Let $p$ be a prime and $\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$. We aim to descri
         \item If $p=5$, then $f=(T+1)(\underbrace{T^3-T^2+T+1}_{\text{irreducible}})$. So by Corollary \ref{10.6}, we see that $\text{Gal}(f/\mathbb{Q})=G$ contains a 4--cycle and a 3--cycle, so $|G|$ is divisible by $12$ and so is either $S_4$ or $A_4$ (as it is the unique subgroup of $S_4$ of order 12). But $4$--cycles are odd, so $G = S_4$.
     \end{itemize}
 \end{example}
-\textbf{Remark.} If $\overline{f}$ is separable, then $\text{Disc}(f) \neq 0$, so $p \nmid \text{Disc}(f)$, i.e. $f$ is separable. 
+\textbf{Remark.} If $\overline{f}$ is separable, then $\text{Disc}(f) \neq 0$, so $p \nmid \text{Disc}(f)$, i.e. $f$ is separable.
 
 \textbf{Remark.} If $f$ is separable, then $\overline{f}$ will be separable for all but the finite set $\{p \mid \text{Disc}(f)\}$. So we have lots of values of $p$ to try.
 
@@ -1109,10 +1109,10 @@ There exist at least two proofs of Theorem \ref{10.5}. One of the proofs is diff
 \begin{proof}[Proof of Theorem \ref{10.5} (non-examinable)]
     Let $L=\mathbb{Q}(x_1,\ldots,x_n)$ be the splitting field for $f = \prod_{}^{} (T-x_i)$ of degree $N=[L:\mathbb{Q}]$. Consider $R = \mathbb{Z}[x_1,\ldots,x_n]$. As $f(x_i)=0$, $f$ is monic and every element of $R$ is a $\mathbb{Z}$--linear combination of $x_1^{\alpha_1},\ldots,x_n^{\alpha_n}$ for $0\le a_i\le n$. So $R$ is finitely generated as an abelian group. As $R \subset L \cong \mathbb{Q}^N$, we must have $R \cong \mathbb{Z}^M$ for $M\le N$. (In fact, $M=N$, but we don't prove that here).
     \vspace{1mm}
-    
+
     Now consider $\overline{R}=R/pR$, which has $p^M$ elements. Let $\overline{P}$ be a maximal ideal of $\overline{R}$, corresponding to an ideal $P$ of $R$ containing $pR$. Then $F = R/pR \cong \overline{R}/\overline{P}$ (by the isomorphism theorems) is a finite field with of characteristic $p$, so say it has $p^d$ elements. $F = \mathbb{F}_p(\overline{x_1},\ldots,\overline{x_n})$, where $\overline{x_i}=x_i+P \in F$ and $\overline{f}=\prod_{n=1}^{} (T-\overline{x_i})$. As $\overline{f}$ is separable, the $\overline{x_i}$ are distinct, so $F$ is a splitting field for $\overline{f}$.
     \vspace{1mm}
-    
+
     $G = \text{Gal}(f/\mathbb{Q})$ takes $R$ to itself (as it permutes the $x_i$). Let $H \subset G$ be the stabilizer of $P$, i.e. $\{\sigma \in G \mid \sigma P = P\}$. Then $H$ acts on $R/P = F$, permuting the $\overline{x_i}$'s in the same way as it permutes the $x_i$'s. So we have an injective homomorphism $H \hookrightarrow \text{Gal}(f/\mathbb{F}_p)$. It is enough to show that this is an isomorphism. Let $\{P_1,\ldots,P_r\}$ be the orbit of $G$ under $G$ ($P_i= \sigma P$ for some $\sigma \in G$). $P_i$ are all maximal ideals (because $P$ is), $R/P_i \cong R/P$ has $p^d$ elements as well. As the $P_i$ are maximal, $P_i+P_j = R$ if $i\neq j$. So by Chinese Remainder Theorem, $R/(P_1 \cap \ldots \cap P_r) \cong R/P_1 \times \ldots \times R/P_r$. As $p \in P_i$, $pR \subset P_1 \cap \ldots \cap P_r$, so \[
     p^N \ge p^M = |R/pR| \ge |R/(P_1 \cap \ldots \cap P_r)| = \prod_{i=1}^{r} |R/P_i| = p^{rd},
     \]
@@ -1123,13 +1123,71 @@ There exist at least two proofs of Theorem \ref{10.5}. One of the proofs is diff
 \section{Cyclotomic extensions}
 We consider polynomials of the form $T^n-1$ (and later $T^n-a$).
 
-\begin{lemma}
-    Let $C$ be a cyclic group of order $n \ge 2$ (written multiplicatively). If $a \in \mathbb{Z}$ and $(a,n)=1$, then the map $[a] : C \to C$ by $[a]g=g^a$ is an \textbf{automorphism} of $C$, and the map $$(\mathbb{Z}/n\mathbb{Z})^{\times} \to \text{Aut}(c), a \mapsto [a]$$ is an automorphism. 
+\begin{lemma}\label{11.1}
+    Let $C$ be a cyclic group of order $n \ge 2$ (written multiplicatively). If $a \in \mathbb{Z}$ and $(a,n)=1$, then the map $[a] : C \to C$ by $[a]g=g^a$ is an \textbf{automorphism} of $C$, and the map $$(\mathbb{Z}/n\mathbb{Z})^{\times} \to \text{Aut}(c), a \mapsto [a]$$ is an isomorphism.
 \end{lemma}
 \begin{proof}
     $[a]$ is obviously a homomorphism, and it is an automorphism since $\exists b$ with $ab \equiv 1 \pmod{n}$. So we have an injective map $(\mathbb{Z}/n\mathbb{Z})^{\times} \hookrightarrow \text{Aut}(C)$ by $a \mapsto [a]$, which is obviously a homomorphism. If $\phi \in \text{Aut}(C)$ and $g$ is a generator of $C$, then $\phi(g)=g^a$ for some $a \in (\mathbb{Z}/n\mathbb{Z})^{\times}$, so $\phi = [a]$, so we have an isomorphism.
 \end{proof}
 
+\marginpar{08 Nov 2022, Lecture 15}
 
+Let $K$ be a field and $n\ge 1$. Define $\mu_n(K)= \{x \in K \mid x^n=1\}$, the group of $n^{\text{th}}$ roots of unity in $K$ under multiplication. This is finite, hence cyclic (by Proposition \ref{3.5}), hence of order dividing $n$.
+\vspace{1mm}
+
+We say $\zeta \in \mu_n(K)$ is a \textbf{primitive} $n^{\text{th}}$ root of 1 if $\zeta$ has order exactly $n$ in $K^{\times}$. Such a $\zeta$ exists if and only if $\mu_n(K)$ has order $n$ (and then $\zeta$ is a generator for $\mu_n(K)$). In particular, $f=T^n-1$ has $n$ distinct roots, so it is separable.
+\vspace{1mm}
+
+In general, $T^n-1=f$ is separable $\iff (f,f')=1$ and since $f'=nT^{n-1}$, this holds if and only if $n\cdot 1_K \neq 0$.
+\vspace{1mm}
+
+\textbf{Important:} From now on, until the end of the section, assume that either $\text{char}(K)=0$ or $\text{char}(K)=p>0$ and $p \nmid n$ (in other words, that $f=T^n-1$ is separable).
+\vspace{1mm}
+
+Let $L/K$ be a splitting field for $T^n-1$ and let $G=\text{Gal}(L/K)$ ($L/K$ is Galois as $f$ is separable). Then $|\mu_n(L)|=n$, so there exists a primitive $n^{\text{th}}$ root of 1, $\zeta=\zeta_n \in L$. $L/K$ is called a \textbf{cyclotomic extension}.
+
+\begin{prop}\label{11.2}
+    \begin{enumerate}[(i)]
+        \item $L=K(\zeta)$.
+        \item There exists an injective homomorphism $\chi = \chi_n : G = \text{Gal}(L/K) \to (\mathbb{Z}/n\mathbb{Z})^\times$ such that if $\chi(\sigma)=a \pmod{n}$, then $\sigma(\zeta)=\zeta^a$. In particular, $G$ is abelian.
+        \item $\chi$ is an isomorphism if and only if $G$ acts transitively on the set of primitive roots of unity in $L$. ($\chi$ is called the \textbf{cyclotomic character}).
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[(i)]
+        \item $\mu_n(L)=\langle\zeta \rangle$, so the roots of $f=T^n-1$ are the powers of $\zeta$, so $L=K(\{\zeta^a\})=K(\zeta)$.
+        \item Consider the action on $G$ on $L$. It permutes the roots $\mu_n(L)$ and if $\zeta,\zeta' \in \mu_n(L)$, $\sigma \in G$, then $\sigma(\zeta \zeta') = \sigma(\zeta)\sigma(\zeta')$, so $\sigma$ acts as an automorphism on $\mu_n(L)$, and $\sigma(\zeta_n)=\zeta_n \iff \sigma=\text{id}$. So we have an injective homomorphism $G \hookrightarrow \text{Aut}(\mu_n(L)) \cong (\mathbb{Z}/n\mathbb{Z})^\times$ by Lemma \ref{11.1}.
+        \item $\zeta_n^a$ is primitive if and only if $(a,n)=1$, so the set of primitive $n^{\text{th}}$ roots of 1 is the set $\{\zeta^a \mid a \in (\mathbb{Z}/n\mathbb{Z})^\times\}$ which by (ii) equals the orbit of $\zeta$ under $G$. Hence the result follows.
+    \end{enumerate}
+\end{proof}
+\begin{example}
+    If $K=\mathbb{Q}$, take $L=\mathbb{Q}(e^{\frac{2 \pi i}{n}})$. What is the minimal polynomial of $e^{2\pi/n}$?
+\end{example}
+\begin{defn}
+    Let $K$ be a field satisfying the above earlier hypothesis. The $n^{\text{th}}$ \textbf{cyclotomic polynomial} is $\Phi_n(T)=\prod_{a \in (\mathbb{Z}/n\mathbb{Z})^\times}^{} (T-\zeta_n^a)$ (where the roots are the primitive $n^{\text{th}}$ roots of 1 in $L$, the splitting field for $T^n-1$). 
+\end{defn}
+As $G$ permutes the primitive $n^{\text{th}}$ roots of 1 in $L$, $\Phi_n \in L^G[T] = K[T]$. So we can rephrase (iii) in Proposition \ref{11.2} as saying that $\chi$ is surjective if and only if $\Phi_n \in K[T]$ is irreducible.
+\vspace{1mm}
+
+$\Phi_n$ doesn't really depend on $K$. In fact, $x \in L$ satisfies $x^n=1$ if and only if $x$ is a primitive root of 1 for some (unique) $d \mid n$. So $$T^n-1 = \prod_{d \mid n}^{} \Phi_d \implies \Phi_n = \frac{T^n-1}{\prod_{d \mid n, d\neq n}^{} \Phi(d)}.$$
+This gives an inductive definition of $\Phi_n$ and we see that $\Phi_n$ is the image in $K[T]$ of a polynomial in $\mathbb{Z}[T]$ which doesn't depend on $K$.
+
+For example, $\Phi_p = \frac{T^p-1}{T-1}=T^{p-1}+T^{p-2}+\ldots+T+1$, $\Phi_1 = T-1$, and $\Phi_{p^n} = \frac{T^{p^n}-1}{T^{p^{n-1}}-1} = \Phi_p(T^{p^{n-1}})$. Also, $\text{deg}(\Phi_n) = |(\mathbb{Z}/n\mathbb{Z})^\times|=\phi(n)$, the Euler phi function.
+\vspace{1mm}
+
+We have two special cases:
+\begin{theorem}[Irreducibility of cyclotomic polynomials]
+    Let $K=\mathbb{Q}$. Then $\chi_n$ is an isomorphism for every $n>1$. In particular, $[\mathbb{Q}(\zeta_n):\mathbb{Q}]=\phi(n)$, and $\Phi_n$ is irreducible over $\mathbb{Q}$.
+\end{theorem}
+\begin{proof}
+    By Proposition \ref{11.2}, these statements are all equivalent. So it suffices to prove that $\Phi_n$ is irreducible over $\mathbb{Q}$. If $n$ is prime (or a prime power), we can prove this using Eisenstein's criterion, but this doesn't work in the general case.
+
+    $\chi_n$ is an isomorphism if for all primes such that $(p,n)=1$, the class of $p \in (\mathbb{Z}/n\mathbb{Z})^\times$ lies in the image of $\chi$ (because we can factor $a$ with $(a,n)=1$ as a product of such primes).
+
+    Let $f$ be the minimal polynomial of $\zeta$ over $\mathbb{Q}$, and $g$ the minimal polynomial of $\zeta^p$ over $\mathbb{Q}$. If $f=g$, then $\zeta^a$ lies in the orbit of $G$ on $\zeta \implies p$ is in the image of $\chi$ and we're done.
+
+    If $f\neq g$, then $(f,g)=1$ and they both divide $T^n-1$, so $fg \mid T^n-1$. As $\zeta$ is a root of $g(T^p)$, $f \mid g(T^p)$. Reduce this modulo $p$ to get $\overline{f} = f \pmod{p} \in \mathbb{F}_p[T]$ that divides $g(T^p) = \overline{g}(T)^p$ (as we're in characteristic $p$) and as both $\overline{f}$ and $\overline{g}$ divide $T^n-1 \in \mathbb{F}_p[T]$, which is separable (as $p \nmid n$), this implies $\overline{f} \mid \overline{g}$. Hence $\overline{f}^2 \mid \overline{f}\overline{g} \mid T^n-1$, contradicting separability of $T^n-1$. Hence this case is impossible and we're done.
+\end{proof}
+So the minimal polynomial of $e^{2\pi/n}$ over $\mathbb{Q}$ is $\Phi_n(T)$.
 
 \end{document}
