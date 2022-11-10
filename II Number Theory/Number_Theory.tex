@@ -800,7 +800,7 @@ Three tricks to evaluate Legendre symbols:
     \begin{enumerate}[(i)]
         \item $\sum_{a=1}^{p-1} \left(\frac{a}{p} \right) = 0$
         \item $\sum_{a=1}^{p-1} a \left(\frac{a}{p} \right) \equiv 0\pmod{p}$ if $p > 3$.
-        \item $\sum_{a=1}^{p-1} \left(\frac{a(a+1)}{p} \right) \equiv -1$.
+        \item $\sum_{a=1}^{p-1} \left(\frac{a(a+1)}{p} \right) = -1$.
     \end{enumerate}
 \end{example}
 \begin{proof}
@@ -1390,6 +1390,105 @@ Let $\nu(n) = \sum_{d \mid n}^{} \mu(d)$. By Lemma \ref{2.8}, $\nu$ is multiplic
     \begin{align*}
         \sum_{m \mid n}^{} \mu(m)g\left(\frac{n}{m}\right) &= \sum_{m \mid n}^{} \mu(m) \sum_{d \mid \frac{n}{m}}^{} f(d) = \\ 
         =\sum_{d \mid n}^{} \left( \sum_{m \mid \frac{n}{d}}^{} \mu(m)\right)f(d) &+ \sum_{d \mid n}^{} \nu\left(\frac{n}{d} \right)f(d) = f(n).
+    \end{align*}
+\end{proof}
+
+\marginpar{10 Nov 2022, Lecture 16}
+
+\textbf{Notation.} Let $n \in \mathbb{N}$ and $p$ a prime. Then $\nu_p(n)$ denotes the exponent of $p$ in the prime factorization of $n$.
+
+\textbf{Remarks.}
+\begin{itemize}
+    \item We can write $n=p^{\nu_p(n)}b$ for $p \nmid b$.
+    \item $\nu_p(mn)=\nu_p(m)+\nu_p(n) ~\forall m,n \in \mathbb{N}$.
+    \item $\nu_p(n!)=\sum_{j=1}^{\infty} \left\lfloor \frac{n}{p^j} \right\rfloor$ (this is also on ES3).
+\end{itemize} 
+
+\begin{prop}\label{5.13}
+    Let $n \in \mathbb{N}$. Let $N={{2n}\choose{n}}$.
+    \begin{enumerate}[(i)]
+        \item We have $$\frac{2^{2n}}{2n}\le N\le 2^{2n}.$$
+        \item If $p^k \mid N$, then $p^k\le 2n$.
+        \item We have $$n^{\pi(2n)-\pi(n)}\le N \le (2n)^{\pi(2n)}.$$
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[(i)]
+        \item $$(1+1)^{2n}=\sum_{j=0}^{2n} {{2n}\choose{j}} = 2 + \sum_{j=1}^{2n-1} {{2n}\choose{j}}.$$
+        Hence $N\le 2^{2n} \le 2 +(2n-1)N \le 2nN$.
+        \item We have $N=\frac{(2n)!}{(n!)^2}$, so $$\nu_p(N) = \nu_p((2n)!) - 2\nu_p(n!) = \sum_{j=1}^{\infty} \left(\left\lfloor \frac{2n}{p^j} \right\rfloor- 2\left\lfloor \frac{n}{p^j} \right\rfloor\right).$$
+        But for $x \in \mathbb{R}$ we have $\left\lfloor 2x \right\rfloor- 2 \left\lfloor x \right\rfloor = \begin{cases}
+            0 &\text{ if } \{x\}<\frac{1}{2}. \\
+            1 &\text{ if } \{x\}\ge \frac{1}{2}. \\
+        \end{cases}$
+        If $p^k>2n$, then $\left\lfloor \frac{2n}{p^k} \right\rfloor=0$, so \[
+        \nu_p(N) = \sum_{j=1}^{k-1} \left(\left\lfloor \frac{2n}{p^j} \right\rfloor- 2\left\lfloor \frac{n}{p^j} \right\rfloor\right) \le k-1.
+        \]
+        Thus if $\nu_p(N)\ge k$, then $p^k \le 2n$.
+        \item \[
+        N = \frac{(2n)(2n-1)\ldots(n+1)}{n(n-1)\ldots 1} \ge \prod_{n<p<2n}^{} p \ge n^{\pi(2n)-\pi(n)}. 
+        \]
+        But also \[
+        N=\prod_{p\le 2n}^{} p^{\nu_p(n)} \le (2n)^{\pi(2n)}
+        \] by part (ii).
+    \end{enumerate}
+\end{proof}
+\begin{theorem}[Tchebychev]
+    $\exists c_2 > c_1 > 0$ such that $~\forall x\ge 4$,
+    \[
+    c_1 \frac{x}{\log x} \le \pi(x) \le c_2 \frac{x}{\log x}.
+    \]
+    Our proof will give $c_1 = \frac{\log 2}{2} \approx 0.346$ and $c_2 = 6\log 2 \approx 4.158$.
+\end{theorem}
+\begin{proof}[Proof of the upper bound.]
+    By Proposition \ref{5.13}, we have 
+    \begin{align*}
+        &n^{\pi(2n)-\pi(n)} \le N \le 2^{2n} \\
+        \implies &\pi(2n)-\pi(n) \le 2 \log 2 \frac{n}{\log n}. ~(\star)
+    \end{align*}
+    We prove by induction on $k$ that $\pi(2^k) \le 3 \frac{2^k}{k} ~\forall k\ge 1 ~(\dagger)$. This is obvious for $k\le 6$ as $\pi(x)\le \frac{x}{2} ~\forall x\ge 2$ even. Induction step: $$\pi(2^{k+1}) \stackrel{(\star)}{\le} \pi(2^k) + 2\log 2 \frac{2^k}{\log(2^k)} \stackrel{(\dagger)}{\le} 3\frac{2^k}{k} + 2\frac{2^k}{k} \le 6 \frac{2^k}{k+1} = 3\frac{2^{k+1}}{k+1}$$
+    as $\frac{5}{k}\le \frac{6}{k+1}$ for $k\ge 5$.
+    \vspace{1mm}
+    
+    $\frac{x}{\log x}$ is increasing for $~\forall x \ge e$ (as its derivative is $\frac{\log x-1}{(\log x)^2}$), so if $2^k\le x \le 2^{k+1}$, then 
+    \[
+    \pi(x) \le \pi(2^{k+1}) \le 3\frac{2^{k+1}}{k+1} < 6\frac{2^k}{k} = 6\log 2 \frac{2^k}{\log(2^k)}\le 6 \log 2 \frac{x}{\log x}.
+    \]
+\end{proof}
+\begin{proof}[Proof of the lower bound.]
+    By Proposition \ref{5.13}, we have 
+    \begin{align*}
+    &\frac{2^{2n}}{2n} \le N \le  (2n)^{\pi(2n)} \\
+    \implies &2n \log 2 - \log(2n) \le \pi(2n) \log(2n) \\
+    \implies &\pi(2n) \ge \log 2 \frac{2n}{\log(2n)} -1.
+    \end{align*}
+    So if $2n\le x\le 2n+2$, then $$\pi(x) \ge \pi(2n) \ge \log 2 \frac{(x-2)}{\log x}-1.$$
+    To complete the proof, it is enough to show that \[
+    \log 2 \frac{(x-2)}{\log x} \ge \frac{\log 2}{2} \frac{x}{\log x}.
+    \]
+    This is equivalent to $\frac{\log 2}{2}\frac{x}{\log x}\ge 1 + \frac{2\log2}{\log x}$, which is true for $x=16$ and hence for all $x\ge 16$ since the LHS is increasing and the LHS is decreasing.
+    \vspace{1mm}
+    
+    Finally, if $4\le x\le 16$, then $\frac{\log 2}{2}\frac{x}{\log x} \le 2 \le \pi(x)$.
+\end{proof}
+\begin{theorem}[Bertrand's postulate]
+    If $n>1$ is an integer, then there exists a prime with $n<p<2n$.
+\end{theorem}
+\begin{proof}
+    Let $N={{2n}\choose{n}}$.If $\frac{2n}{3}<p\le n$, then 
+    \begin{align*}
+        &\nu_p((2n)!) = 2 \text{ as } 2p\le 2n<3p. \\
+        &\nu_p((n)!) = 1 \text{ as } p\le n<2p.
+    \end{align*}
+    Hence $\nu_p(N)=0$. Suppose Bertrand's postulate is false. Then, using Proposition \ref{5.13} (ii),
+    \begin{align*}
+        N = \prod_{p\le \frac{2n}{3}}^{} p^{\nu_p(n)} \le \prod_{p \le \sqrt{2n}}^{} p^{\nu_p(n)}\prod_{p\le \frac{2n}{3}}^{} p \le (2n)^{\sqrt{2n}} \prod_{p\le \frac{2n}{3}}^{} p.
+    \end{align*}
+    On Example Sheet 3 we show that $\prod_{p\le m}^{} p = 4^m$, hence (again by Proposition \ref{5.13})
+    \begin{align*}
+        &\frac{2^{2n}}{2n} \le N \le (2n)^{\sqrt{2n}} 2^{\frac{4n}{3}} \\
+        \implies& 2^{\frac{2n}{3}} \le (2n)^{1+\sqrt{2n}} \\
+        \implies& 2n \log 2 \le 3(1+\sqrt{2n})\log2n.
     \end{align*}
 \end{proof}
 
