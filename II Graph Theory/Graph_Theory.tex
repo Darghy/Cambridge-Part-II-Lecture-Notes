@@ -1169,7 +1169,87 @@ We sketch the proof of this. It is non-examinable.
             (\star)\le \frac{1}{m}\frac{\epsilon m}{8} |K| + \left(\frac{1}{2}+\frac{\epsilon}{8}\right) |K| = \left(\frac{1}{2}+\frac{\epsilon}{4}\right)|K|,
         \] a contradiction.
     \end{proof}
-    and now finish.
+    and now finish, but we're out of time.
+\end{proof}
+
+\newpage
+
+\section{Ramsey Theory}
+
+\marginpar{11 Nov 2022, Lecture 16}
+
+\textbf{Fact.} Let $c$ be a 2--edge coloring of $K_6$. Then there exists a monochromatic $K_3$ (i.e. a triangle $T$) for which $c$ is constant on $E(T)$. 
+
+This is just saying "if we color the edges of a $K_6$, we get a monochromatic triangle".
+\begin{proof}
+    Let $x \in V(K_6)$. $x$ has 5 neighbors, so WLOG it has 3 red neighbors $y_1,y_2,y_3$. If there is no red triangle, then $y_1y_2,y_2y_3,y_3y_1$ are all blue, but then $y_1y_2y_3$ is a blue triangle.
+\end{proof}
+\begin{defn}
+    For $s\ge 2$, define $$R(s)= \min \{n \mid \text{every 2--edge coloring of }K_n \text{ contains a monochromatic }K_s\}.$$
+\end{defn}
+\begin{defn}
+    Let $s,t \ge 2$. Define \[
+    R(s,t) = \min \{n \mid \text{every 2--coloring of }K_n \text{ contains either a red }K_s \text{ or a blue }K_t\}.
+    \]
+\end{defn}
+Note that $R(s,t)=R(t,s)$ and $R(2,t)=t, R(s,2)=s$. We just showed that $R(3,3)=R(3)\le 6$ (in fact, $R(3)=6$).
+\begin{theorem}[Ramsey]
+    For all $s$, $R(s)$ exists.
+\end{theorem}
+This is implied by:
+\begin{theorem}[Ramsey, version 2]
+    For all $s,t$, $R(s,t)$ exists, and $\forall s,t\ge 2$, \[
+    R(s,t) \le R(s-1,t) + R(s,t-1).
+    \]
+\end{theorem}
+\begin{proof}
+    We induct on $s+t$. If $s,t\le 2$, we're done. 
+    
+    Given $s,t$, fix $n=\underbrace{R(s-1,t)}_{=a} +\underbrace{R(s,t-1)}_{=b}$. Let $c: E(K_n) \to \{\text{Red},\text{Blue}\}$ be given. Pick $x \in V(K_n)$ and let $N_{\text{red}}(x), N_{\text{blue}}(x)$ be the red and blue neighborhoods of $x$.
+    \vspace{1mm}
+    
+    If $|N_{\text{red}}(x)| \ge a$, then $N_{\text{red}}(x)$ contains either a red $K_{s-1}$, so this $K_{s-1}$ along with $x$ is a red $K_s$ in $K_n$, or a blue $K_t$.
+    \vspace{1mm}
+    
+    Similarly, if $|N_{\text{blue}}(x)| \ge b$, then we get either a blue $K_{t-1}$, which extends to a blue $K_t$, or a red $K_s$.
+    \vspace{1mm}
+    
+    If $|N_{\text{red}}(x)|<a$ and $|N_{\text{blue}}(x)|<b$, then $n \le (a-1)+(b-1) + 1 <a+b$, contradiction.
+\end{proof}
+\begin{defn}
+    For $k \in \mathbb{N}, s_1,\ldots,s_k \ge 2$, define 
+    \begin{align*}
+        &R_k(s_1,\ldots,s_k) = \\
+        \min \{n \mid \text{every }k \text{--coloring of }K_n &\text{ contains a monochromatic }K_{s_i} \text{ in color }i \text{ for some }i\}
+    \end{align*}
+\end{defn}
+\begin{theorem}[Multicolor Ramsey theorem]
+    For $s_1,\ldots,s_k$ and $k\ge 2$, the number $R_k(s_1,\ldots,s_k)$ exists.
+\end{theorem}
+\begin{proof}
+    Induct on $k$. We will show that
+    \begin{align*}
+        R_k(s_1,\ldots,s_k) \le R_2(s_1,R_{k-1}(s_2,\ldots,s_k)) = (\star).
+    \end{align*}
+    Say $(\star)=n$. Let $c$ be a $k$--coloring of $E(K_n)$. Now apply the 2--color Ramsey theorem to get either a subgraph $K_{s_i}$ which is monochromatic in $s_i$, or we get a $K_{R_{k-1}(s_2,\ldots,s_k)}$ on which color 1 does not appear. 
+
+    In the second case, induct on this complete graph to get a $K_{s_i}$ which is monochromatic in color $i$.
+\end{proof}
+
+\begin{theorem}
+    Let $c : \mathbb{N}^{(2)} \to \{\text{Red},\text{Blue}\}$. Then there exists an infinite monochromatic subset of $\mathbb{N}$.
+\end{theorem}
+\textbf{Remark.} This does not follow from the previous theorems, which only give proofs for larger and larger finite cliques.
+\begin{proof}
+    Given $c : \mathbb{N}^{(2)} \to \{\text{Red},\text{Blue}\}$, we construct a sequence $x_1,x_2,x_3,\ldots$ inductively as follows.
+    \vspace{1mm}
+    
+    Let $x_1 \in \mathbb{N}$. $x_1$ has either an infinite blue neighborhood or an infinite red neighborhood. Define $S_1$ to be either $N_{\text{red}}(x_1)$ or $N_{\text{blue}}(x_1)$, depending on which one is infinite. Choose $x_2 \in S_1$ and let $S_2 = S_1 \cap N_{\text{red}}(x_2)$ or $S_2= S_1 \cap N_{\text{blue}}(x_2)$ depending on which one is infinite. Continue this indefinitely.
+    \vspace{1mm}
+    
+    Note that the sets $F_i = \{x_ix_j \mid j > i\}$ are all monochromatic (but possibly some are blue and some are red). Call $x_i$ red if $F_i$ is monochromatic in red and call $x_i$ blue otherwise.
+
+    As every $x_i$ is either red or blue, we must have infinitely many red or infinitely many blue vertices, WLOG assume we have infinitely many red vertices. Then we're done, as $X= \{x_i \mid x_i \text{ is red}\}$ works.
 \end{proof}
 
 \end{document}
