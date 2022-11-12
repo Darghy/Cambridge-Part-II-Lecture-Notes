@@ -1209,7 +1209,7 @@ Now we consider $K=\mathbb{F}_p$. Recall that $\phi_p \in G$ is the map $\phi(x)
 \end{proof} 
 \textbf{Remarks.}
 \begin{itemize}
-    \item This almost gives another proof of the Irreducibility of $\Phi_n$ over $\mathbb{Q}$. By the reduction mod $p$ theorem, $\text{Gal}(\Phi_n/\mathbb{Q}) \supset \text{Gal}(\Phi_n/\mathbb{F}_p)$ as subgroups (up to conjugacy) of the symmetric group $S_{\phi(n)}$. It is not hard to show that $\chi_n(\text{Gal}(\Phi_n/\mathbb{Q})) \supset \chi_n(\text{Gal}(\Phi_n/\mathbb{F}_p)) = \langle p \rangle$. As this holds for all $p \nmid n$, we get $\chi(\text{Gal}(\Phi_n/\mathbb{Q}))=(\mathbb{Z}/n\mathbb{Z})^\times$.
+    \item This almost gives another proof of the irreducibility of $\Phi_n$ over $\mathbb{Q}$. By the reduction mod $p$ theorem, $\text{Gal}(\Phi_n/\mathbb{Q}) \supset \text{Gal}(\Phi_n/\mathbb{F}_p)$ as subgroups (up to conjugacy) of the symmetric group $S_{\phi(n)}$. It is not hard to show that $\chi_n(\text{Gal}(\Phi_n/\mathbb{Q})) \supset \chi_n(\text{Gal}(\Phi_n/\mathbb{F}_p)) = \langle p \rangle$. As this holds for all $p \nmid n$, we get $\chi(\text{Gal}(\Phi_n/\mathbb{Q}))=(\mathbb{Z}/n\mathbb{Z})^\times$.
     \item (iii) implies that the factorization of $\Phi_n$ over $\mathbb{F}_p$ is $\prod_{}^{} (\text{irred. of degree }r)$, which only depends on the order of $p$ mod $n$. For a general polynomial $f \in \mathbb{Z}[T]$, the factorization of $f$ mod $p$ doesn't follow any obvious pattern. Trying to answer this question is a part of the Langlands Program, and the case where there is a congruence pattern is when $\text{Gal}(f/\mathbb{Q})$ is abelian (''Class Field Theory'').
 \end{itemize}
 
@@ -1244,5 +1244,81 @@ Ruler--and--compass construction of a regular $n$--gon ($n\ge 3$) is equivalent 
     A regular $n$--gon is constructible if and only if $n$ is a power of 2 times a product of distinct primes, each of the form $2^{2^k}+1$.
 \end{theorem}
 \textbf{Remark.} When is $F_k=2^{2^k}+1$ prime? (These are called Fermat numbers). We have $F_1=5,F_2=17,F_3=257,F_4=65537$, which are all prime. Fermat conjectured that all $F_k$ are prime. However, Euler showed that $F_5 = 641 \cdot 6700417$. Since then, many $F_k$'s are known to be composite and none prime for $k>4$.
+
+\marginpar{12 Nov 2022, Lecture 17}
+
+\begin{proof}
+    Recall $x \in \mathbb{R}$ is constructible $\iff$ $\exists $ fields $Q=K_0 \subset K_1 \subset \ldots \subset K_m \ni x$ and $[K_{i+1}:K_i]=2 ~\forall i$. In particular, a necessary condition is that $\text{deg}_\mathbb{Q}(x)$ is a power of 2. In our case, $x=\cos(\frac{2\pi}{n}) = \frac{1}{2}(\zeta_n+\zeta_n^{-1})$ for $\zeta_n = e^{2\pi i/n}$, so $\zeta_n^2 - 2x \zeta_n + 1 =0.$
+
+    We have $x \in \mathbb{R}, \zeta_n \neq \mathbb{R}$, so $[\mathbb{Q}(\zeta_n):\mathbb{Q}(x)]=2$. So if $x$ is constructible, then $[\mathbb{Q}(\zeta_n):\mathbb{Q}]$ is a power of 2, but if $n=\prod_{i=1}^{r} p_i^{e_i}$, then
+    \[
+    [\mathbb{Q}(\zeta_n):\mathbb{Q}] = \phi(n) = \prod_{i}^{} p_i^{e_i-1}(p-1).
+    \]
+    So this is a power of 2 if and only if for all odd $p_i$, $e_i=1$ and $p_i-1$ is a power of 2.
+    \begin{lemma}
+        If $m$ is a positive integer such that $2^m+1$ is prime, then $m$ has to be a power of 2.
+    \end{lemma}
+    \begin{proof}
+        $2^{qr}+1 = (2^r+1)(2^{qr-r}+2^{qr-2r}+\ldots+1)$ if $q$ is odd.
+    \end{proof}
+    So we conclude that $\phi(n)$ is a power of 2 if and only if $n$ is of the required form, so $x$ being constructible implies $n$ is of the required form.
+    \vspace{1mm}
+    
+    For the other direction, suppose $\phi(n)=2^m$. Then $\mathbb{Q}(\zeta_n)/\mathbb{Q}$ is Galois, with Galois group $G \cong (\mathbb{Z}/n\mathbb{Z})^\times$ and $|G|=2^m$. Observe that there exist subgroups $G = H_0 \supset H_1 \supset H_2 \supset \ldots \supset H_n = \{e\}$ such that $[H_i:H_{i+1}]=2 ~\forall i$.
+
+    Indeed, as $2 \mid |G|$, $\exists \sigma \in G$ of order 2 (assuming $G \neq \{e\}$). Now take $H_{m-1} = \langle \sigma \rangle$. Then $G/H_{m-1}$ contains  a subgroup of order 2 by the same argument, which we call $H_{m-2}/H_{m-1}$. Continue this way to construct all $H_i$. Then $K_i = \mathbb{Q}(\zeta_n)^{H_i}$ satisfy $[K_{i+1}:K_i]= [H_i : H_{i+1}]=2$, so we're done.
+\end{proof}
+
+\section{Kummer extensions}
+
+Let $L=K(x)$, $x^n=a \in K$ (not necessarily $a=1$). We know these extensions are not necessarily Galois, for example $\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}$ is not Galois.
+
+Let us first prove a result of independent interest.
+\begin{theorem}[Linear independence of field embeddings]
+    Let $K,L$ be fields and let $\sigma_1,\ldots,\sigma_n : K \hookrightarrow L$ be distinct field homomorphisms. If $y_1,\ldots,y_n \in L$ such that $~\forall x \in K$, $y_1\sigma_1(x) + \ldots + y_n \sigma_n(x)=0$, then $y_i=0 ~\forall i$.
+
+    In other words, $\sigma_1,\ldots,\sigma_n$ are $L$--linearly independent elements of the set of functions $K \to L$, which is an $L$--vector space.
+\end{theorem}
+
+This is the special case $G=K^{\times}$ of a theorem in II Representation Theory:
+\begin{theorem}[Linear independence of characters]
+    For $G$ a group, $L$ a field, $s_1,\ldots,s_n : G \to L^{\times}$ group homomorphisms, we have that $\sigma_1,\ldots,\sigma_n$ are linearly independent over $L$.
+\end{theorem}
+\begin{proof}
+    Induction on $n$. $n=1$ is clear.
+
+    Now suppose that $n>1$ and we have elements $y_1,\ldots,y_n \in L$ such that $~\forall g \in G$, $y_1 \sigma_1(g) + \ldots + y_n \sigma_n(g) = 0 ~(\star).$ 
+
+    $\exists h \in G$ such that $\sigma_1(h) \neq\sigma_n(h)$. As $\sigma_i$ are homomorphisms, substitute $hg$ into $(\star)$ and we get \[
+    y_1 \sigma_1(h)\sigma_1(g) + \ldots y_n \sigma_n(h) \sigma_n(g).
+    \]
+    Multiply $(\star)$ by $\sigma_n(h)$ and subtract to get \[
+    y_1' \sigma_1(g) + \ldots + y_{n-1}' \sigma_{n-1}(g) = 0,
+    \]
+    where $y_i'=y_i(\sigma_i(h)-\sigma_n(h))$. As $\sigma_1(h) \neq \sigma_n(h)$, $y_1=0$. Then $(\star)$ is a linear dependence between $\sigma_2,\ldots,\sigma_n$, hence by induction, $y_2=\ldots=y_n=0$.
+\end{proof}
+Assume now that $n>1$ and $n\cdot 1_K \neq 0$.
+\begin{theorem}
+    Assume $K$ contains a primitive $n^{\text{th}}$ root $\zeta=\zeta_n$ of 1. Suppose $L/K$ is an extension with $L=K(x)$, $x^n=a \in K^{\times}$. Then
+    \begin{enumerate}[(i)]
+        \item $L/K$ is a splitting field for $f(T)=T^n-a$, and it is Galois with cyclic Galois group.
+        \item $[L:K]$ is the least $m\ge 1$ such that $x^m \in K$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    (i): As $\mu_n(K) = \{\zeta_n^i \mid 0\le i<n\}$ has $n$ elements, $f$ has $n$ distinct roots $\{\zeta_i x\}$ in $L$. So $L/K$ is a splitting field for the separable polynomial $f$, so it is Galois.
+
+    Let $\sigma \in \text{Gal}(L/K) = G$. Then $f(\sigma(x))=0$, so $\sigma(x) = \zeta^i x$ for some $i$ which is unique mod $n$. Define a map $\Theta : G \to \mu_n(K)=\{\zeta^i\} \cong \mathbb{Z}/n\mathbb{Z}$ by $\Theta(\sigma) = \frac{\sigma(x)}{x}$. The claim is that this is a homomorphism: let $\sigma, \tau \in G$, then as $\zeta \in K$, $\tau(\Theta(\sigma))=\Theta(\sigma)$, so \[
+    \Theta(\tau \sigma) = \frac{\tau \sigma(x)}{x} = \tau\left(\frac{\sigma(x)}{x}\right)  \frac{\tau(x)}{x} = \tau(\Theta(\sigma))\Theta(\tau)=\Theta(\sigma)\Theta(\tau).
+    \]
+    So $\Theta$ is a homomorphism, and $\Theta(\sigma)=1 \iff \sigma(x)=x \iff \sigma=\text{id}$, hence $\Theta$ is injective. So $G$ is isomorphic to a subgroup of a cyclic group, hence cyclic.
+    \vspace{1mm}
+    
+    (ii): If $m\ge 1$, since $L/K$ is Galois,
+    \begin{align*}
+        &x^m \in K \iff ~\forall \sigma \in G, \sigma(x^m)=x^m \iff\\
+        &\iff ~\forall \sigma \in G,\Theta(g)^m = 1 \iff |G|=[L:K] \text{ divides }m.
+    \end{align*}
+\end{proof}
 
 \end{document}
