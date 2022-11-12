@@ -1490,6 +1490,136 @@ Let $\nu(n) = \sum_{d \mid n}^{} \mu(d)$. By Lemma \ref{2.8}, $\nu$ is multiplic
         \implies& 2^{\frac{2n}{3}} \le (2n)^{1+\sqrt{2n}} \\
         \implies& 2n \log 2 \le 3(1+\sqrt{2n})\log2n.
     \end{align*}
+
+    \marginpar{12 Nov 2022, Lecture 17}
+
+    Choose $2n=2^{2x}$ (so $x = \frac{\log(2n)}{2\log 2}$), so
+    \begin{align*}
+        &\implies 2^{2x}\log 2 \le 3(1+2^x)2x \log 2 \\
+        &\implies 2^x \le 6x(1+2^{-x})
+    \end{align*}
+    If $x>5$, say $x=5(y+1)$ for some $y>0$, we get
+    \begin{align*}
+        &2^{5y} \le \frac{6}{32}5(y+1)(1+\frac{1}{32})\le y+1< e^y \\
+        &\implies 5y \log 2 < y,
+    \end{align*}
+    contradiction, so $x\le 5$ and so $n\le 2^9 = 512$. For $n<512$ it suffices to take $2,3,5,7,13,23,43,83,163,317,631$.
 \end{proof}
+\vspace{1mm}
+
+\textbf{Legendre's formula.} Let $p_n$ be the $n^{\text{th}}$ prime.
+
+\begin{defn}
+   Let $N_r(x) = |\{1\le n\le x \mid n \text{ is coprime to }a_1,a_2,\ldots,a_r\}|$ and let $A_i = \{1\le n\le x \mid p_i \mid n\}$, $A_i^c = \{1\le n\le x \mid p_i \nmid n \}$.
+\end{defn}
+By the inclusion--exclusion principle,
+\begin{align*}
+    &N_r(x)=|\bigcap_{i=1}^r A_i^c| = \left\lfloor x \right\rfloor - \sum_{i}^{} |A_i| + \sum_{i<j}^{} |A_i \cap A_j| - \ldots +(-1)^r |A_1 \cap \ldots \cap A_r| = \\
+    &=\left\lfloor x \right\rfloor - \sum_{i}^{} \left\lfloor \frac{x}{p_i} \right\rfloor + \sum_{i<j}^{} \left\lfloor \frac{x}{p_ip_j}  \right\rfloor-\ldots + (-1)^r \left\lfloor \frac{x}{p_1\ldots p_r} \right\rfloor.
+\end{align*}
+For ease of calculation, remember that $\left\lfloor \frac{x}{p_1p_2} \right\rfloor=\left\lfloor \frac{\left\lfloor \frac{x}{p_1} \right\rfloor}{p_2} \right\rfloor.$   
+
+\begin{theorem}[Legendre's formula]
+    Let $r=\pi(\sqrt{x})$. Then 
+    \begin{align*}
+        \pi(x) - \pi(\sqrt{x}) + 1 = N_r(x).
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    Every composite integer $n\le x$ is divisible by some prime $\le \sqrt{x}$. So if $1\le n\le x$, then
+    \begin{align*}
+        n \text{ coprime to } p_1,\ldots,p_r \iff n=1 \text{ or }n \text{ is a prime with } \sqrt{x}<n\le x.
+    \end{align*}
+\end{proof}
+\textbf{Remark.} If we set $P=p_1\ldots p_r$, then 
+\begin{align*}
+    &N_r(x) = |\{1\le n\le x \mid (n,P)=1\}| =\\
+    =\sum_{n=1}^{\left\lfloor x \right\rfloor} \sum_{d \mid (n,P)}^{} &\mu(d) = \sum_{d \mid P}^{} \mu(d) \sum_{n=1}^{\left\lfloor x \right\rfloor} \mathbbm{1}_{\{d \mid n\}} = \sum_{d \mid P}^{} \mu(d) \left\lfloor \frac{x}{d} \right\rfloor, 
+\end{align*}
+which is the same formula as above.
+
+\begin{defn}
+    A \textbf{Dirichlet series} is a series of the form $\sum_{n=1}^{\infty} \frac{a^n}{n^s}$ for some sequence $a_1,a_2,\ldots \in \mathbb{C}$. 
+\end{defn}
+\textbf{Remark.} If $|a_n|\le \text{const}\cdot n^k$ for all $n$ large enough for some $k$, then the series converges for $\text{Re}(s)>k+1$.
+
+Assuming absolute convergence, we can multiply two Dirichlet series:
+\begin{align*}
+    \sum_{m=1}^{\infty} \frac{a_m}{m^s} \sum_{n=1}^{\infty} \frac{b_n}{n^s} = \sum_{N=1}^{\infty} \frac{c_N}{N^s}
+\end{align*}
+where $N=mn$ and $c_N = \sum_{d \mid N}^{} a_db_{N/d}$.
+
+For example, for $\text{Re}(s)>2$, we get 
+\begin{align*}
+    \zeta(s)\zeta(s-1) = \sum_{m=1}^{\infty} \frac{1}{m^s}\sum_{n=1}^{\infty} \frac{n}{n^s} = \sum_{N=1}^{\infty} \frac{\sigma(N)}{N^s}
+\end{align*}
+where $\sigma(N)=\sum_{d \mid N}^{} d$.
+\vspace{1mm}
+
+The following until the end of the section is now non-examinable.
+
+\begin{defn}
+    Define the \textbf{von Mangoldt function} as 
+    \begin{align*}
+        \Lambda(n) = \begin{cases}
+            \log p &\text{ if } n=p^r \text{ is a prime power.}\\
+            0 &\text{ otherwise.}
+        \end{cases}
+    \end{align*} 
+\end{defn}
+\begin{lemma}
+    For $\text{Re}(s)>1$, we have \[
+    \frac{\zeta'(s)}{\zeta(s)} = -\sum_{n=1}^{\infty} \frac{\Lambda(n)}{n^s}.
+    \]
+\end{lemma}
+\begin{proof}
+    \begin{align*}
+        &\zeta(s) = \prod_{p}^{} \left(1-\frac{1}{p^s}\right)^{-1} \\
+        &\implies \log \zeta(s) = -\sum_{p}^{} \log (1-p^{-s}) \\
+        &\stackrel{\text{differentiate}}{\implies}  \frac{\zeta'(s)}{\zeta(s)} =- \sum_{p}^{} \frac{(\log p)p^{-s}}{1-p^{-s}} \\
+        &\implies \frac{\zeta'(s)}{\zeta(s)} = -\sum_{p}^{} \log p \sum_{j=1}^{\infty} p^{-js} = - \sum_{n=1}^{\infty} \frac{\Lambda(n)}{n^s}.
+    \end{align*}
+\end{proof}
+Let $\mathbbm{1}_{\text{prime}}(n) = \begin{cases}
+    1 &\text{ if }p \text{ is prime.}\\
+    0 &\text{ otherwise}.
+\end{cases}$ Then $\pi(x) = \sum_{n\le x}^{} \mathbbm{1}_{\text{prime}}(x)$. We should think about the von Mangoldt function as a modified version of this indicator function. Indeed, let 
+\[
+    \psi(x) = \sum_{n\le x}^{} \Lambda(n).  
+\]
+On Example Sheet 3, we will show that $\psi(x) \sim \pi(x)\log x$ as $x \to \infty$. The Prime Number Theorem is then equivalent to $\psi(x) \sim x$ as $x \to \infty$. This is proved by integrating 
+\begin{align*}
+    \frac{\zeta'(s)}{\zeta(s)} \frac{x^{s+1}}{s(s+1)}
+\end{align*} 
+around a suitable contour.
+\begin{theorem}[Dirichlet's theorem on primes in arithmatic progressions, 1839]
+    Let $N>1$ be an integer and $a \in \mathbb{Z}$ with $(a,N)=1$. Then there are infinitely many primes $p$ with $p \equiv a \pmod{N}$.
+
+    In other words, the arithmetic progression $a, a+N, a+2N,\ldots$ contains infinitely many primes.
+\end{theorem}
+
+Let $\chi : (\mathbb{Z}/n\mathbb{Z})^\times \to \mathbb{C}^{*}$ be a group homomorphism. Define $\overline{\chi} : \mathbb{Z} \to \mathbb{C}$ by $$a \mapsto \begin{cases}
+    \chi(a) &\text{ if } (a,N)=1.\\
+    0 &\text{ otherwise.}
+\end{cases}$$
+Let 
+\begin{align*}
+    L(s,\chi) = \sum_{n=1}^{\infty} \frac{\overline{\chi}(n)}{n^s},
+\end{align*}
+called the Dirichlet L--function.
+\begin{itemize}
+    \item  It can be shown that if $\chi \neq1$, then this converges for $\text{Re}(s)>0$.
+    \item Like $\zeta$, this has an Euler product 
+    \[
+    L(s,\chi) =\prod_{p \nmid n }^{} \left(1-\frac{\chi(p)}{p^s}\right)^{-1}.
+    \]
+    In a neighborhood of $s=1$, we have $$\log L(s,\chi) = \sum_{p \nmid N}^{} \frac{\chi(p)}{p^s} + (\text{a function bounded near }s=1).$$
+    Taking linear combinations of this formula (fixing $N$ and varying $\chi$), Dirichlet was able to show that 
+    \[
+    \sum_{p\equiv a\pmod{N}}^{} \frac{1}{p^s} \to \infty \text{ as } s \to 1,
+    \]
+    which then implies the theorem.
+\end{itemize} 
+The key step in the proof (that we completely glossed over) is to show that $L(1,\chi) \neq 0$ for $\chi \neq 1$.
 
 \end{document}
