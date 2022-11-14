@@ -1236,8 +1236,8 @@ This is implied by:
     In the second case, induct on this complete graph to get a $K_{s_i}$ which is monochromatic in color $i$.
 \end{proof}
 
-\begin{theorem}
-    Let $c : \mathbb{N}^{(2)} \to \{\text{Red},\text{Blue}\}$. Then there exists an infinite monochromatic subset of $\mathbb{N}$.
+\begin{theorem}[Infinite Ramsey]
+    Let $c : \mathbb{N}^{(2)} \to \{\text{Red},\text{Blue}\}$. Then there exists an infinite monochromatic complete subgraph of $\mathbb{N}$.
 \end{theorem}
 \textbf{Remark.} This does not follow from the previous theorems, which only give proofs for larger and larger finite cliques.
 \begin{proof}
@@ -1250,6 +1250,77 @@ This is implied by:
     Note that the sets $F_i = \{x_ix_j \mid j > i\}$ are all monochromatic (but possibly some are blue and some are red). Call $x_i$ red if $F_i$ is monochromatic in red and call $x_i$ blue otherwise.
 
     As every $x_i$ is either red or blue, we must have infinitely many red or infinitely many blue vertices, WLOG assume we have infinitely many red vertices. Then we're done, as $X= \{x_i \mid x_i \text{ is red}\}$ works.
+\end{proof}
+
+\marginpar{14 Nov 2022, Lecture 17}
+
+\textbf{Remarks.} 
+\begin{itemize}
+    \item We can prove a $k$--color theorem of infiite Ramsey using an analogous argument to before.
+    \item It can be hard to determine which of the two colors (or both) have the infinite monochromatic complete graph. 
+    
+    As an (easy) example, color $ij$ with $\max \{n \mid 2^n \mid i+j\}\pmod{2}$. Then we can find an infinite subgraph $\{2^2,2^4,2^6,\ldots\}$.
+
+    As a (hard) example, color $ij$ with red if $i+j$ has as even number of distinct prime factors and with blue otherwise. In this case, we don't know how to construct such a set explicitly. 
+    \item It is possible to deduce the existence of $R(s,t)$ from infinite Ramsey, but it requires a trick (but apparently it's not too hard, example sheet difficulty).
+\end{itemize} 
+
+\begin{theorem}[Ramsey for $r$--sets]
+    Let $c$ be a 2--coloring of $\mathbb{N}^{(r)}$ for some $r\ge 2.$ Then there exists $X \subseteq \mathbb{N}, |X|=\infty$ for which $X^{(r)}$ is monochromatic.
+\end{theorem}
+\begin{proof}
+    We induct on $r$. $r=2$ we've done already.
+    \vspace{1mm}
+    
+    We define a sequence $x_1,x_2,x_3,\ldots$ and a sequence of infinity sets $S_1 \supset S_2 \supset S_3 \ldots$. We start by choosing $x_1 \in \mathbb{N}$. Now consider the coloring \[
+    c_{x_1}(F)=c(x_1 \cup F),
+    \] where $F \in (\mathbb{N}-x_1)^{(r-1)}$. By induction, there exists a set $S_1 \subset \mathbb{N}-x_1$ such that $|S_1|=\infty$ and $S_1^{(r-1)}$ is monochromatic with respect to the coloring $c_{x_1}$. Now choose $x_2 \in S_1$ and only consider $x_2,x_3,\ldots$ inside of $S_1$.
+
+    Iterating this, we get a sequence of points $x_1,x_2,x_3,\ldots$ which has the property that $F_i = \{\{x_{i},x_{i_2},\ldots,x_{i_r}\} \mid i < i_2 < \ldots < i_r\}$ is monochromatic.
+
+    Call an $x_i$ red if $F_i$ is monochromatic in red or blue if it is monochromatic in blue. WLOG we may assume that there are infinitely many red $x_i$, so $X = \{x_i \mid x_i \text{ is red}\}$ works.
+\end{proof}
+\begin{defn}
+    For $r \in \mathbb{N}$, $s,t \ge 1$, define $R^{(r)}(s,t)$ to be the minimal value for $n$ for which every 2--coloring of $[n]^{(r)}$ contains either 
+    \begin{enumerate}[(a)]
+        \item $S \subseteq [n]$, $|S|=s$, $S^{(r)}$ is monochromatic red.
+        \item $T \subseteq [n]$, $|T|=t$, $T^{(r)}$ is monochromatic blue.
+    \end{enumerate}
+\end{defn}
+\textbf{Remark.} We get by pigeonhole that $R^{(1)}(s,t)=s+t-1$, and we also find $R^{(2)}(s,t)=R(s,t)$, $R^{(r)}(r,t)=t, R^{(r)}(s,r)=s$.
+\begin{proof}
+    Apply induction on $r$, and then on $s+t$. We will be done if $s\le r$ or $t\le r$.
+
+    \begin{lemma}
+        $$R^{(r)}(s,t)\le R^{(r-1)}(R^{(r)}(s-1,t),R^{(r)}(s,t-1))+1 = (\star).$$
+    \end{lemma}
+    \begin{proof}
+        Choose a vertex in a 2--colored set $[n]^{(r)}$ where $n\ge (\star)$. Let $x \in [n]$. Consider $c_x(F) = c(\{x\} \cup F)$, where $F = ([n]-x)^{(r-1)}$. We have either a set $S_1$ with $|S_1|=R^{(r)}(s-1,t)$ and $S_1^{(r-1)}$ is monochromatic red or a set $S_2$ with $|S_2| = R^{(r)}(s,t-1)$ and $S_2^{(r-1)}$ is monochromatic blue. We consider the first case, the second case being similar.
+
+        Apply Ramsey (the $r$--set version) to find either a set $A \subseteq S_1$ with $|A|=s-1$ and $A^{(r)}$ is monochromatic red (w.r.t. $c$), or $B \subseteq S_1$ with $|B|=t$ and $B^{(r)}$ is monochromatic blue. 
+
+        In the latter case, we're done. In the former case, consider $A \cup \{x\}$, which is monochromatic red and has size $s$.
+    \end{proof} 
+\end{proof}
+
+\subsubsection*{Quantitative approach to Ramsey theory}
+
+\textbf{Question.} How large is $R(s,t)$?
+\begin{prop}
+    For $s,t\ge 2$, we have \[
+    R(s,t) \le {{s+t-2}\choose{t-1}}
+    \]
+    and in particular, \[
+    R(s,s)\le 4^s.
+    \]
+\end{prop}
+\begin{proof}
+    Apply induction on $s+t$. We know $R(s,2)=s={s\choose{1}}$ and simiarly for $R(2,t)$.
+
+    Now assume the claim is true for $(s-1,t)$ and $(t,s-1)$. We proved before that $R(s,t)\le R(s-1,t)+R(s,t-1)$, so
+    \[
+        R(s,t)\le R(s-1,t)+R(s,t-1) \le {{s+t-3}\choose{s-2}} + {{s+t-3}\choose{s-1}} = {{s+t-2}\choose{s-2}}.
+    \]
 \end{proof}
 
 \end{document}
