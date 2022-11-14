@@ -1136,7 +1136,7 @@ End of aside.
     \]
     But $\left(\frac{-7}{p} \right)  = \left(\frac{-1}{p}\right)\left(\frac{7}{p}\right) = (-1)^{\frac{p-1}{2}}(-1)^{\frac{p-1}{2}}\left(\frac{p}{7}\right)=\left(\frac{p}{7}\right)$.
 
-    We conclude that $p = x^2+xy+2y^2$ for some $x,y \in \mathbb{Z}$ means that $p \equiv 1,2,4 \pmod{7}$ or $p=7$ (we check $p=2,7$ separately).
+    We conclude that $p = x^2+xy+2y^2$ for some $x,y \in \mathbb{Z}$ means that $p \equiv 1,2,4 \pmod{7}$ or $p=2,7$ (we check $p=2,7$ separately).
 \end{example}
 \begin{lemma}
     Let $p$ be an odd prime and $a \in \mathbb{Z}$. If $\left(\frac{a}{p} \right) =1$, then the congruence $x^2 \equiv a \pmod{p^n}$ is soluble $~\forall n\ge 1$.
@@ -1149,11 +1149,11 @@ End of aside.
 \end{proof}
 \textbf{Remark.} A similar argument shows that $a \in \mathbb{Z}$ with $a \equiv 1\pmod{8}$, then $x^2 \equiv a \pmod{2^n}$ is soluble $~\forall n\ge 1$.
 
-\textbf{Above example continued:} Write $n = 2^{\alpha}7^{\beta}p_1^{\gamma_1}\ldots p_{r}\gamma^r$ for $p_i$ distinct powers. Then
+\textbf{Above example continued:} Write $n = 2^{\alpha}7^{\beta}p_1^{\gamma_1}\ldots p_{r}^{\gamma_r}$ for $p_i$ distinct powers. Then
 \[
 x^2 \equiv -7 \pmod{4n} \text{ is soluble} \iff \begin{cases}
     &x^2 \equiv -7 \pmod{2^{\alpha+2}} \text{ is soluble.} \\
-    &x^2 \equiv -7 \pmod{7^{\beta+1}} \text{ is soluble.} \\
+    &x^2 \equiv -7 \pmod{7^{\beta}} \text{ is soluble.} \\
     &x^2 \equiv -7 \pmod{p_i^{\gamma_i}} \text{ is soluble}~\forall 1\le i\le r. \\
 \end{cases}
 \]
