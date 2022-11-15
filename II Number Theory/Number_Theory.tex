@@ -1622,4 +1622,127 @@ called the Dirichlet L--function.
 \end{itemize} 
 The key step in the proof (that we completely glossed over) is to show that $L(1,\chi) \neq 0$ for $\chi \neq 1$.
 
+\section{Continued fractions}
+
+\marginpar{15 Nov 2022, Lecture 18}
+
+The continued fraction algorithm systematically produces the best (for a given size of denominator) rational approximations to a given real number.
+
+\subsubsection*{Description of the algorithm.}
+
+We take $\theta \in \mathbb{R}$ (usually $\theta>0$), and define integers $a_0,a_1,a_2,\ldots$ as follows:
+\vspace{1mm}
+
+Let $a_0 = \left\lfloor \theta \right\rfloor$. Stop if $\theta = a_0$, otherwise write $\theta_0 = a_0 + \frac{1}{\theta_1}$.
+\vspace{1mm}
+
+Now let $a_1 = \left\lfloor \theta_1 \right\rfloor$. Stop if $\theta_1=a_1$, otherwise write $\theta_1 = a_1 + \frac{1}{\theta_2}$. Continue analogously.
+\vspace{1mm}
+
+If the algorithm stops, we get a \textbf{finite} continued fraction:
+\[
+\theta = a_0 + \frac{1}{a_1+\frac{1}{a_2+\frac{1}{a_3+\frac{1}{\ldots}}}} \stackrel{\text{def}}{=} [a_0,a_1,a_2,\ldots,a_n]. 
+\]
+Otherwise, the continued fraction is \textbf{infinite} and write $\theta = [a_0,a_1,a_2,\ldots]$.
+\begin{defn}
+    $a_0,a_1,a_2,\ldots$ are called \textbf{partial quotients}.     
+\end{defn}
+\begin{lemma}
+    The continued fraction of $\theta$ is finite $\iff$ $\theta \in \mathbb{Q}$.
+\end{lemma}
+\begin{proof}
+    $(\implies)$ is clear, multiply out and we get a rational number.
+    \vspace{1mm}
+    
+    $(\impliedby)$: Suppose $\theta \in \mathbb{Q}$, say $\theta=\frac{a}{b}$ for $a,b \in \mathbb{Z}, b>0$. By Euclid's algorithm, write 
+    \begin{align*}
+        &a=a_0b+r_1,~ 0\le r_1<b  &\theta=\frac{a}{b}=a_0+\frac{r_1}{b}\\
+        &b=a_1r_1+r_2,~ 0\le r_2<r_1 &\theta_1 = \frac{b}{r_1}=a_1+\frac{r_2}{r_1}\\
+        &r_1=a_2r_2+r_3, ~0\le r_3<r_2 &\theta_2 = \frac{r_1}{r_2}=a_2+\frac{r_3}{r_2}.
+    \end{align*}
+    We eventually get $r_n=0$, so the algorithm stops.
+\end{proof}
+Let $[a_0,a_1,a_2,\ldots]$ be an infinite continued fraction. This may be approximated by the finite continued fraction $[a_0,a_1,\ldots,a_n]$.
+\vspace{1mm}
+
+\textbf{Motivation}:
+\begin{align*}
+    &[a_0]=a_0 \\
+    &[a_0,a_1]=a_0+\frac{1}{a_1}=\frac{a_0a_1+1}{a_1}\\
+    &[a_0,a_1,a_2]=a_0 + \frac{a_2}{a_1a_2+1} = \frac{a_0a_1a_2+a_0+a_2}{a_1a_2+1}
+\end{align*}
+\begin{defn}
+    Given $a_0,a_1,a_2,\ldots$, we define sequences $(p_n)$ and $(q_n)$ as follows:
+    \begin{align*}
+        &p_0=a_0 &q_0=1 \\
+        &p_1=a_0a_1+1 &q_1=1 \\
+        &p_n=a_np_{n-1}+p_{n-2} &q_n=a_nq_{n-1}+q_{n-2} ~\forall n\ge 2. 
+    \end{align*}
+\end{defn}
+\textbf{Remark.} The $(q_n)$ are an increasing sequence of positive integers.
+\begin{lemma}
+    \begin{enumerate}[(i)]
+        \item For $n\ge 0$, we have $\frac{p_n}{q_n}=[a_0,a_1,\ldots,a_n]$.
+        \item Let $\beta>0$ be a real number. For $n\ge 2$, we have $$\frac{\beta p_{n-1}+p_{n-2}}{\beta q_{n-1}+q_{n-2}}=[a_0,a_1,\ldots,a_{n-1},\beta].$$
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    \begin{enumerate}[(i)]
+        \item Check above for $n=0,1$. The general case follows by part (ii) with $\beta=a_n$.
+        \item Induction on $n$. If $n=2$, $[a_0,a_1,\beta]=\frac{\beta(a_0a_1+1)+a_0}{\beta a_1+1} = \frac{\beta p_1 + p_0}{\beta q_1 + q_0}$.
+        \vspace{1mm}
+        
+        Suppose the claim is now true for $n$. Then
+        \begin{align*}
+            [a_0,\ldots,a_n,\beta] = [a_0,a_1,\ldots,a_{n-1},a_n+\frac{1}{\beta}]=\\
+            =\frac{(a_n+\frac{1}{\beta})p_{n-1}+p_{n-2}}{(a_n+\frac{1}{\beta})q_{n-1}+q_{n-2}} = \frac{\beta p_n + p_{n-1}}{\beta q_n + q_{n-1}},
+        \end{align*}
+        so the result is true for $n+1$ by induction.
+    \end{enumerate}
+\end{proof}
+\begin{defn}
+    The fraction $\frac{p_n}{q_n}$ is called a \textbf{convergent} to $\theta$.
+\end{defn}
+\begin{lemma}\label{6.3}
+    \begin{enumerate}[(i)]
+        \item For $n\ge 1$, we have $p_nq_{n-1}-p_{n-1}q_n = (-1)^{n-1}$.
+        \item For $n\ge 2$, we have $p_nq_{n-2}-p_{n-2}q_n = (-1)^na_n$.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    \begin{enumerate}[(i)]
+        \item By induction on $n$. For $n=1, p_1q_0-p_0q_1=(a_0a_1+1)-a_0a_1=1$.
+        Assuming the claim is now true for $n-1$, we get 
+        \begin{align*}
+            &p_nq_{n-1}-p_{n-1}q_n =\\& (a_np_{n-1}+p_{n-2})q_{n-1}+p_{n-1}(a_nq_{n-1}+q_{n-2}) = \\
+            &-(p_{n-1}q_{n-2}-p_{n-2}q_{n-1})=(-1)^{n-1}.
+        \end{align*}
+        \item
+        \begin{align*}
+            &p_nq_{n-2}-p_{n-2}q_n =\\& (a_np_{n-1}+p_{n-2})q_{n-2}-p_{n-2}(a_nq_{n-1}+q_{n-2}) =\\
+            & a_n(p_{n-1}q_{n-2}-p_{n-2}q_{n-1}) =(-1)^na_n
+        \end{align*}
+        by part (i).
+    \end{enumerate}
+\end{proof}
+\textbf{Remarks.}
+\begin{itemize}
+    \item Lemma \ref{6.3} (i) shows that $p_n$ and $q_n$ are coprime and that $$\frac{p_n}{q_n}-\frac{p_{n-1}}{q_{n-1}} = \frac{(-1)^{n-1}}{q_nq_{n-1}} \stackrel{n \to \infty}{\to} 0.$$
+    \item Lemma \ref{6.3} (ii) shows that \[
+    \frac{p_n}{q_n} - \frac{p_{n-2}}{q_{n-2}} = \frac{(-1)^na_n}{q_nq_{n-2}}.
+    \]
+    \item Therefore \[
+    \frac{p_0}{q_0}<\frac{p_2}{q_2}<\frac{p_4}{q_4}<\ldots < \frac{p_5}{q_5}<\frac{p_3}{q_3}<\frac{p_1}{q_1}.
+    \]
+    So the limit as $\lim_{n \to \infty}\frac{p_n}{q_n}$ exists. We will now show that this limit is exactly the number $\theta$, which justifies the notation $\theta = [a_0,a_1,\ldots]$ and calling $\frac{p_n}{q_n}$ the convergent fractions.
+\end{itemize} 
+\marginpar{17 Nov 2022, Lecture 19}
+\begin{theorem}
+    Let $\theta$ be an irrational number. Define $a_n,p_n,q_n$ as above. Then for all $n\ge 0$, we have
+    \[
+    \left|\theta - \frac{p_n}{q_n}\right| < \frac{1}{q_nq_{n-1}}.
+    \]
+\end{theorem}
+
+
 \end{document}
