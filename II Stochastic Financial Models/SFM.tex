@@ -1249,5 +1249,92 @@ So the optimal portfolio in this case is
     \theta^*_n = \frac{\eta_n^*}{S_{n-1}} = \frac{t^*}{\gamma(1+r)^{N-n}S_{n-1}}
 \end{align*}
 where $t^* = \text{argmin}~\mathbb{E}[e^{-t(\xi-(1+r))}]$.
+\vspace{1mm}
+
+Another example of optimal investment, this time with consumption:
+
+\marginpar{14 Nov 2022, Lecture 17}
+\vspace{1mm}
+
+Let us have the same setup as above: $r$ is the interest rate, $d=1$, $S_n=S_{n-1}\xi_n$ with $(\xi_n)_n$ IID. Let $c_n$ be the consumption between time $n-1$ and $n$, which is $\mathcal{F}_{n-1}$--measurable (so $(C_n)_n$ is previsible). Then our wealth is \[
+X_n = (1+r)(X_{n-1}-C_n) + \theta_n(S_n-(1+r)S_{n-1}).
+\]
+Let $\eta_n=S_{n-1}\theta_n$, then $(C_n,\eta_n)_{n\ge 1}$ are our controls. A natural goal is to try and maximize \[
+    \mathbb{E}\left[\sum_{k=1}^{N} U(C_k)+U(X_N)\right].
+\]
+The Bellman equations are 
+\begin{align*}
+    &V(N,x)=U(x)\\
+    &V(n-1,x) = \max_{c,\eta} \{U(c) + \mathbb{E}[V(n,(1+r)(x-c) + \eta(\xi-(1+r)))]\}
+\end{align*}
+where $\xi$ is IID, so has the distribution of $\xi_n ~\forall n$.
+
+Generally, we can now make no more progress. But if we assume that our utility function is CRRA, i.e. $U(x)=\frac{x^{1-R}}{1-R}$ for $R>0, R\neq 1$, then we can go further.
+\vspace{1mm}
+
+We guess that the solution is $V(n,x)=U(x)A_n$ (since the solution scales with $x$). This is true for $n=N$ with $A_N=1$. Assume now that $V(k,x)=A_k U(x)$ for some $k \in \mathbb{N}$. Then
+\begin{align*}
+    &V(k-1,x)= \max_{c,\eta} \{U(c)+\mathbb{E}[A_k U((1+r)(x-c)+\eta(\xi-(1+r)))]\} = \\
+    &\max_{c,\eta} \left\{U(x)\left(\frac{c}{x}\right)^{1-R} + A_k U(x)\mathbb{E}\left[\left((1+r)(1-\frac{c}{x})+\frac{\eta}{x}(\xi-(1+r))\right)^{1-R}\right]\right\} = (\star).
+\end{align*}
+Let $s=\frac{c}{x}$ and $t = \frac{\eta}{x-c}$ be our new controls. Let $t^* = \text{argmax }U((1+r)+t(\xi-(1+r)))$ and let $\alpha = (1-R)\max \mathbb{E}[U((1+r)+t(\xi-(1+r)))]$. So now
+\begin{align*}
+    (\star) = \max_s \left\{U(x)s^{1-R} + (1-s)^{1-R}A_k \alpha U(x) \right\}.
+\end{align*}
+At the maximum, $s^{-R}=(1-s)^{-R}A_k \alpha$, so $s^* = \frac{1}{1+(A_k \alpha)^{1/R}}$.
+\vspace{1mm}
+
+Hence $(\star)=U(x)A_{k-1}$, where for all $k$ we have
+\[
+A_{k} = \left(\frac{1-\alpha^{\frac{N-k+1}{R}}}{1-\alpha^{1/R}} \right)^R.
+\]
+So the optimal strategy has 
+\begin{align*}
+    &C_n^* = X_{n-1}^* s_n^* = \frac{X^{*}_{n-1}}{1+(A_n \alpha)^{1/R}} \\
+    &\theta_n^* = \frac{\eta_n^*}{S_{n-1}}- \frac{t^* (X_{n-1}^*-C_n^*)}{S_{n-1}}.
+\end{align*}
+\subsubsection{Infinite--horizon problems}
+Consider a controlled Markov process $(X_n^U)_n$ of the form $X_n^U = G(X_{n-1}^U,U_n,\xi_n)$ where $(\xi_n)_n$ are IID. Our problem is to maximize \[
+\mathbb{E}\left[\sum_{k=1}^{\infty} \beta^{k-1}f(U_k)\right]
+\]
+given $f$, $0<\beta<1$ and $X_0$.
+\vspace{1mm}
+
+The value function is $$\mathbb{E}\left[\sum_{k=1}^{\infty} \beta^{k-1}f(U_k) \mid  X_0 = x\right],$$
+and the Bellman equation is \[
+V(x) = \max_{u} \left\{f(u)+\beta \mathbb{E}[V(G(x,u,\xi))] \right\}
+\]
+where $\xi$ has the same distrution as $\xi_n ~\forall n$.
+
+\begin{theorem}
+    Suppose $f(u)\ge 0 ~\forall u$ and suppose that $V$ is nonnegative and solves the Bellman equation. Let $u^*(x) = \text{argmax }f(u) + \beta \mathbb{E}[V(G(x,u,\xi))]$ and let \[
+    X_n^* = \begin{cases}
+        X_0 &n=0\\
+        G(X_{n-1}^*,u^*(X_{n-1}^*),\xi_n) &n\ge 1.
+    \end{cases}
+    \]
+    If $\beta^n \mathbb{E}[V(X_n^*)] \to 0$ as $n \to \infty$, then $(U_n^*)^*$ is optimal.
+\end{theorem}
+\begin{proof}
+    Given $(U_n)_n$, let \[
+    M_n = \sum_{k=1}^{n} \beta^{k-1}f(u_k) + \beta^n V(X_n^U).
+    \]
+    Note $(M_n)_{n\ge 0}$ is a supermartingale, as \[
+    \mathbb{E}[M_n-M_{n-1} \mid \mathcal{F}_{n-1}] = \beta^{n-1}\left(f(U_n)+\beta \mathbb{E}[V(X_n^U) \mid \mathcal{F}_{n-1}] - V(X_{n-1})\right)\le 0
+    \] with equality if $U_n = U_n^*$. Now note that as $V\ge 0$,
+    \begin{align*}
+        &V(x)\ge V(x) - \beta^n \mathbb{E}[V(X_n^U)] = M_n - \beta^n \mathbb{E}[V(V_n^U)] \\
+        &\ge \mathbb{E}[M_n] - \beta^n \mathbb{E}[V(X_n^U)] = \mathbb{E}[\sum_{k=1}^{n} \beta^{k-1}f(U_k)] \to \mathbb{E}[\sum_{k=1}^{\infty} \beta^k f(U_k)]
+    \end{align*}
+    by monotone convergence theorem (as $f\ge 0$).
+    \vspace{1mm}
+    
+    For $U_n=U_n^*$, we have 
+    \begin{align*}
+        V(x)=\mathbb{E}[\sum_{k=1}^{n} \beta^{k-1}f(U_k)+\beta^n \mathbb{E}[V(X_n^*)]] \to \mathbb{E}[\sum_{k=1}^{\infty} \beta^{k-1}f(U_k^*)].
+    \end{align*}
+
+\end{proof}
+
 \end{document}
 
