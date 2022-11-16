@@ -898,13 +898,13 @@ Do we have an Euler-type theorem in this setting? Different cycles on the torus 
     Now take a path of maximal length $x_1\ldots x_l$. The claim is that there is no cycle in $G$ of length $l$. Indeed, if such a cycle did exist, then either $l=n$ and we're done, or $l<n$ and we can use this cycle to find a path of length $l+1$ in $G$, contradicting maximality.
     \vspace{1mm}
     
-    Observe that $N(x_1) \subset \{x_2,\ldots,x_{l-1}\}$ and $N(x_l) \subset \{x_2,\ldots,x_{l-1}\}$. Now define $N^-(x_1) = \{x_i \mid x_{i+1} \in N(x_1)\}$. Note $$|N^-(X_1) \cup N^-(x_l)| \le \{x_1,x_2,\ldots,x_{l-1}\}\le l-1\le n-1,$$ 
+    Observe that $N(x_1) \subset \{x_2,\ldots,x_{l-1}\}$ and $N(x_l) \subset \{x_2,\ldots,x_{l-1}\}$. Now define $N^-(x_1) = \{x_i \mid x_{i+1} \in N(x_1)\}$. Note $$|N^-(x_1) \cup N^-(x_l)| \le \{x_1,x_2,\ldots,x_{l-1}\}\le l-1\le n-1,$$ 
     but $|N^-(x_1)|,|N(x_2)| \ge \frac{n}{2}$. So there must exist $x_i$ in their intersection.
     \vspace{1mm}
     
     So we have $x_1 \ldots x_{i} x_l x_{l-1} \ldots x_{i+1} x_1$, a cycle of length $l$, a contradiction and we're done.
 \end{proof}
-\textbf{Remark.} Note that there's no interesting theorem of the form ''if $e(G) > K$, then $G$ is Hamiltonian'', since $K_{n-1} + x$ where $x$ has degree 1 is not Hamiltonian.
+\textbf{Remark.} Note that there's no interesting theorem of the form ''if $e(G) > k$, then $G$ is Hamiltonian'', since $K_{n-1} + x$ where $x$ has degree 1 is not Hamiltonian.
 
 \begin{theorem}\label{4.2}
     Let $G$ be a graph on $n$ vertices. Then $e(G) > \frac{n(k-1)}{2} \implies G$ contains a path of length $k$.
@@ -991,8 +991,8 @@ e(K_{\frac{n}{r},\ldots,\frac{n}{r}}) = \frac{n^2}{r^2}{{r}\choose{2}} = \left(1
     
     Hence let $K$ be a $K_r$ in $G$. Each vertex in $V(G)\setminus K$ has at most $r-1$ neighbors in $K$ (else we'd have $K_{r+1} \subset G$), So
     \begin{align*}
-        &e(G) \le {{k}\choose{2}} + (r-1)(n-r) + e(G\setminus K) \le \\
-        &\le {{k}\choose{2}} + (r-1)(n-r) + \left(1-\frac{1}{r}\right)\frac{(n-1)^2}{2} = \left(1-\frac{1}{r}\right)\frac{n^2}{2}.
+        &e(G) \le {{r}\choose{2}} + (r-1)(n-r) + e(G\setminus K) \le \\
+        &\le {{r}\choose{2}} + (r-1)(n-r) + \left(1-\frac{1}{r}\right)\frac{(n-r)^2}{2} = \left(1-\frac{1}{r}\right)\frac{n^2}{2}.
     \end{align*}
 \end{proof}
 \begin{defn}
@@ -1231,7 +1231,7 @@ This is implied by:
     \begin{align*}
         R_k(s_1,\ldots,s_k) \le R_2(s_1,R_{k-1}(s_2,\ldots,s_k)) = (\star).
     \end{align*}
-    Say $(\star)=n$. Let $c$ be a $k$--coloring of $E(K_n)$. Now apply the 2--color Ramsey theorem to get either a subgraph $K_{s_i}$ which is monochromatic in $s_i$, or we get a $K_{R_{k-1}(s_2,\ldots,s_k)}$ on which color 1 does not appear. 
+    Say $(\star)=n$. Let $c$ be a $k$--coloring of $E(K_n)$. Now apply the 2--color Ramsey theorem to get either a subgraph $K_{s_1}$ which is monochromatic in color $1$, or we get a $K_{R_{k-1}(s_2,\ldots,s_k)}$ on which color 1 does not appear. 
 
     In the second case, induct on this complete graph to get a $K_{s_i}$ which is monochromatic in color $i$.
 \end{proof}
@@ -1256,10 +1256,10 @@ This is implied by:
 
 \textbf{Remarks.} 
 \begin{itemize}
-    \item We can prove a $k$--color theorem of infiite Ramsey using an analogous argument to before.
+    \item We can prove a $k$--color version of infinite Ramsey using an analogous argument to before.
     \item It can be hard to determine which of the two colors (or both) have the infinite monochromatic complete graph. 
     
-    As an (easy) example, color $ij$ with $\max \{n \mid 2^n \mid i+j\}\pmod{2}$. Then we can find an infinite subgraph $\{2^2,2^4,2^6,\ldots\}$.
+    As an (easy) example, color $ij$ with $\max \{n : 2^n \mid i+j\}\pmod{2}$. Then we can find an infinite subgraph $\{2^2,2^4,2^6,\ldots\}$.
 
     As a (hard) example, color $ij$ with red if $i+j$ has as even number of distinct prime factors and with blue otherwise. In this case, we don't know how to construct such a set explicitly. 
     \item It is possible to deduce the existence of $R(s,t)$ from infinite Ramsey, but it requires a trick (but apparently it's not too hard, example sheet difficulty).
@@ -1272,7 +1272,7 @@ This is implied by:
     We induct on $r$. $r=2$ we've done already.
     \vspace{1mm}
     
-    We define a sequence $x_1,x_2,x_3,\ldots$ and a sequence of infinity sets $S_1 \supset S_2 \supset S_3 \ldots$. We start by choosing $x_1 \in \mathbb{N}$. Now consider the coloring \[
+    We define a sequence $x_1,x_2,x_3,\ldots$ and a sequence of infinite sets $S_1 \supset S_2 \supset S_3 \ldots$. We start by choosing $x_1 \in \mathbb{N}$. Now consider the coloring \[
     c_{x_1}(F)=c(x_1 \cup F),
     \] where $F \in (\mathbb{N}-x_1)^{(r-1)}$. By induction, there exists a set $S_1 \subset \mathbb{N}-x_1$ such that $|S_1|=\infty$ and $S_1^{(r-1)}$ is monochromatic with respect to the coloring $c_{x_1}$. Now choose $x_2 \in S_1$ and only consider $x_2,x_3,\ldots$ inside of $S_1$.
 
@@ -1288,20 +1288,17 @@ This is implied by:
     \end{enumerate}
 \end{defn}
 \textbf{Remark.} We get by pigeonhole that $R^{(1)}(s,t)=s+t-1$, and we also find $R^{(2)}(s,t)=R(s,t)$, $R^{(r)}(r,t)=t, R^{(r)}(s,r)=s$.
+
+\begin{lemma}
+    $$R^{(r)}(s,t)\le R^{(r-1)}(R^{(r)}(s-1,t),R^{(r)}(s,t-1))+1 = (\star).$$
+\end{lemma}
 \begin{proof}
-    Apply induction on $r$, and then on $s+t$. We will be done if $s\le r$ or $t\le r$.
+    Apply induction on $r$, and then on $s+t$. We will be done if $s\le r$ or $t\le r$. Choose a vertex in a 2--colored set $[n]^{(r)}$ where $n\ge (\star)$. Let $x \in [n]$. Consider $c_x(F) = c(\{x\} \cup F)$, where $F = ([n]-x)^{(r-1)}$. We have either a set $S_1$ with $|S_1|=R^{(r)}(s-1,t)$ and $S_1^{(r-1)}$ is monochromatic red or a set $S_2$ with $|S_2| = R^{(r)}(s,t-1)$ and $S_2^{(r-1)}$ is monochromatic blue. We consider the first case, the second case being similar.
 
-    \begin{lemma}
-        $$R^{(r)}(s,t)\le R^{(r-1)}(R^{(r)}(s-1,t),R^{(r)}(s,t-1))+1 = (\star).$$
-    \end{lemma}
-    \begin{proof}
-        Choose a vertex in a 2--colored set $[n]^{(r)}$ where $n\ge (\star)$. Let $x \in [n]$. Consider $c_x(F) = c(\{x\} \cup F)$, where $F = ([n]-x)^{(r-1)}$. We have either a set $S_1$ with $|S_1|=R^{(r)}(s-1,t)$ and $S_1^{(r-1)}$ is monochromatic red or a set $S_2$ with $|S_2| = R^{(r)}(s,t-1)$ and $S_2^{(r-1)}$ is monochromatic blue. We consider the first case, the second case being similar.
+    Apply Ramsey (the $r$--set version) to find either a set $A \subseteq S_1$ with $|A|=s-1$ and $A^{(r)}$ is monochromatic red (with respect to $c$), or $B \subseteq S_1$ with $|B|=t$ and $B^{(r)}$ is monochromatic blue. 
 
-        Apply Ramsey (the $r$--set version) to find either a set $A \subseteq S_1$ with $|A|=s-1$ and $A^{(r)}$ is monochromatic red (w.r.t. $c$), or $B \subseteq S_1$ with $|B|=t$ and $B^{(r)}$ is monochromatic blue. 
-
-        In the latter case, we're done. In the former case, consider $A \cup \{x\}$, which is monochromatic red and has size $s$.
-    \end{proof} 
-\end{proof}
+    In the latter case, we're done. In the former case, consider $A \cup \{x\}$, which is monochromatic red and has size $s$.
+\end{proof} 
 
 \subsubsection*{Quantitative approach to Ramsey theory}
 
@@ -1322,5 +1319,84 @@ This is implied by:
         R(s,t)\le R(s-1,t)+R(s,t-1) \le {{s+t-3}\choose{s-2}} + {{s+t-3}\choose{s-1}} = {{s+t-2}\choose{s-2}}.
     \]
 \end{proof}
+
+\marginpar{16 Nov 2022, Lecture 18}
+
+\textbf{Question.} How large are $R^{(r)}(s,t)$? We had
+\[
+R^{(r)}(s,t)=R^{(r-1)}(R^{(r)}(s-1,t),R^{(r)}(s,t-1))+1.
+\]
+So to get $R^{(r)}(s,t)$, we need to iterate $R^{(r-1)}$ $s+t$ times. Let's abstract this for a second. Let $f_1(x)=2x$, and define \[
+f_n(x)=\underbrace{f_{n-1}(f_{n-1}(\ldots f_{n-1}}_{x \text{ times}}(x))).
+\]
+Then $f_2(x)=x\cdot 2^x$, $f_3(x)=2^{2^{\ldots^{x}}}$ with the 2 being iterated $x$ times. So $f_4(1)=f_3(1)=2$ and $f_4(2)=f_3(f_3(2))=f_3(2^2)=2^{2^{2^{2}}} = 65536$, and $f_4(3)=f_3(f_3(f_3(2))) = 2^{2^{2^{2^{2}}}}= 2^{65536}$, which is a pretty big number.
+
+So our bound on $R^{(r)}(s,t)$ gives that it grows at least as fast as $f_{r}(s,t)$.
+
+\subsubsection*{Exact Ramsey numbers}
+
+We know $R(3)=R(3,3)=6.$ In fact, there are very few known Ramsey numbers. We know $R(4)=18$, but already $R(5)$ is unknown.
+
+\subsection{Lower bounds on $R(s)$}.
+
+First idea: take $s-1$ disjoint copies of graphs of size $s-1$ and color everything inside these graphs blue and every edge between different copies red. This gives us a graph with no monochromatic $K_s$ and tells us \[
+R(s)>(s-1)^2.
+\]
+This bound was thought to be close to the truth in the 1940s. However:
+\begin{theorem}[Erdös, 1940s]
+    For $s\ge 3$, \[
+    R(s)\ge s^{s/2}.
+    \]
+\end{theorem}
+\textbf{Idea:} Take a $K_n$ ($n=2^{s/2}$) and color each edge of our $K_n$ by flipping a fair independent coin. Then we show \[
+\mathbb{P}(K_n \text{ has a monochromatic }K_s)<1,
+\]
+which means there is some coloring without a monochromatic $K_s$, so we get our desired lower bound.
+\begin{proof}
+    Let $n\le 2^{s/2}$ be an integer. Color the edges as described above. 
+    \begin{align*}
+        &\mathbb{P}(\text{the coloring has a monochromatic }K_s) = \\
+        &\mathbb{P}(\bigcup_{k \in [n]^{(s)}} \{K \text{ is a monochromatic }K_s\}) \le \\
+        & \sum_{k \in [n]^{(s)}}^{} \mathbb{P}(K \text{ is a monochromatic }K_s) =\\
+        &{n \choose{s}} \cdot 2\cdot 2^{-{{n}\choose{2}}} < \frac{n^s}{s!}\cdot 2\cdot 2^{-\frac{s(s-1)}{2}} = \\
+        & 2\left(\frac{n}{(s!)^{\frac{1}{s}}}2^{-\frac{s-1}{2}}\right)^{s} \le 2 \left( \frac{s^{\frac{1}{2}}}{(s!)^{\frac{1}{s}}}\right)^{s} = (\star).
+    \end{align*}
+    But we know $s! \ge 2^{\frac{s}{2}+1}$ for $s\ge 3$, hence $(s!)^{\frac{1}{s}}\ge s^{\frac{1}{2}+\frac{1}{s}}$, so the above gives
+    \begin{align*}
+        (\star) \le 2 \left(\frac{1}{2^{\frac{1}{s}}}\right)^{s} \le 1.
+    \end{align*}
+    So $\mathbb{P}(\text{the coloring has a monochromatic }K_s)<1$, so there exists a coloring with no monochromatic $K_s$.
+\end{proof}
+\textbf{Remarks.}
+\begin{itemize}
+    \item We can think about this proof as follows: start with every possible coloring, and then go through every clique and remove every monochromatic $K_s$. Hence we want
+    \begin{align*}
+        2^{{n}\choose{2}} - 2^{{n}\choose{2}}\cdot 2\cdot 2^{-{{s}\choose{2}}} {{n}\choose{s}}\ge 1.
+    \end{align*}
+    This is the same calculation as we just did, but this is not as powerful of an approach.
+    \item This proof does not help us at all in constructing such a coloring. In fact, it is a major open problem to construct a coloring to show $R(s)>(1+\epsilon)^s$.
+    \item This is an example of a ''random graph'' argument.
+\end{itemize} 
+
+\section{Random graphs}
+
+Recall the Zarankiewicz number $(n,t)$: we have a bipartite graph $G$ with $V(G)=X \sqcup Y$, $|X|=|Y|=n$, how many edges can we add between $X$ and $Y$ before we get a $K_{t,t}$?
+
+We proved $Z(n,t)\le 2 n^{2-\frac{1}{t}}$ for $n$ much larger than $t$.
+
+\begin{theorem}
+    Let $t\ge 2$, then $Z(n,t)\ge \frac{1}{2}n^{2-\frac{2}{t+1}}$.
+\end{theorem}
+\textbf{Idea.} Take $X,Y$, a bipartition with $|X|=|Y|=n$ and include each edge $xy$ with $x \in X, y \in Y$ independently with probability $p$. Let $\mathcal{X}$ denote the number of $K_{t,t}$'s in $G$. Then 
+\begin{align*}
+    &\mathcal{X} = \sum_{A \in X^{(t)}, B \in Y^{(t)}}^{} \mathbbm{1}(\text{all edges between }A,B \text{ are in }G) \\
+    &\mathbb{E}[\mathcal{X}] = \sum_{A \in X^{(t)}, B \in Y^{(t)}}^{} \mathbb{P}(\text{all edges between }A,B \text{ are in }G) = \\
+    &={{n}\choose{t}}^2 p^{t^2} \le \frac{n^{2t}}{4} p^{t^2} = \frac{1}{4}\left(n^2 p^t\right)^t = (\star).
+\end{align*} 
+So if $p = n^{-\frac{2}{t}}$, then $(\star)\le \frac{1}{4}$. We have $\mathbb{P}(\mathcal{X}\ge 1)\le \frac{1}{4}$. Note $$\mathbb{E}[e(G)]=pn^2 = n^{2-\frac{2}{t}}.$$
+So \[
+\mathbb{P}\left(e(G)<\frac{pn^2}{2}\right) < \frac{1}{2}.
+\]
+So with probabiity $>\frac{1}{4}$ we have that $e(G)>\frac{1}{2} pn^2 = \frac{1}{2}n^{2-\frac{2}{t}}$ and $G \not\supset K_{t,t}$.
 
 \end{document}

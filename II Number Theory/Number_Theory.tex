@@ -1235,7 +1235,7 @@ The following result gives another proof of the infinitude of primes.
     There exist constants $a,b >0$ such that $\frac{ax}{\log x} < \pi(x) < \frac{bx}{\log x}$.
 \end{theorem}
 \begin{lemma}
-    If $\frac{p(x) \log x}{x}$ tends to a limit as $x \to \infty$, then that limit must be 1.
+    If $\frac{\pi(x) \log x}{x}$ tends to a limit as $x \to \infty$, then that limit must be 1.
 \end{lemma}
 \begin{proof}
     \begin{align*}
@@ -1286,7 +1286,7 @@ The following result links $\zeta$ to the primes.
     \] where $(\star)$ follows from the Fundamental Theorem of Arithmetic.
     \vspace{1mm}
     
-    In detail: Fix $s$ with $\text{Re}(s)>1$. If $M>\frac{\log N}{\log 2}$, then $p^m > N ~\forall $primes $p$. Now:
+    In detail: Fix $s$ with $\text{Re}(s)>1$. If $M>\frac{\log N}{\log 2}$, then $p^M > N ~\forall $primes $p$. Now:
     \begin{align*}
         \prod_{p\le N}^{} \sum_{j=0}^{M} \frac{1}{p^{js}} = 1+ \frac{1}{2^s} + \frac{1}{3^s} + \ldots + \frac{1}{N^s} + \left(\text{extra terms }\frac{1}{n^s} \text{ for }n>N \right).
     \end{align*}
@@ -1351,9 +1351,9 @@ The key step in the proof of the Prime Number Theorem is showing that $\zeta(s) 
 RH is equivalent to $$|\pi(x)-\text{li}(x)|\le \sqrt{x}\log x ~\forall x\ge 3,$$ where $\text{li}(t)=\int_{2}^{x} \frac{\mathrm{d}t}{\log t}$. Integrating by parts shows $\text{li}(x) \sim\frac{x}{\log x}$. Numerical evidence suggested to Gauss that $\text{li}(x)$ is a better approximation to $\pi(x)$ than $\frac{x}{\log x}$. We have $\pi(x)<\text{li}(x) ~\forall x \le 10^{21}$, but Littlewood showed that $\pi(x)-\text{li}(x)$ changes sign infinitely often.
 \vspace{1mm}
 
-A \textbf{Diriclet series} is a series of the form $$\sum_{n=1}^{\infty} \frac{a_n}{n^s}$$ where $(a_i) \in \mathbb{C}$. 
+A \textbf{Dirichlet series} is a series of the form $$\sum_{n=1}^{\infty} \frac{a_n}{n^s}$$ where $(a_i) \in \mathbb{C}$. 
 
-A useful tool for manipulating the all the aforementioned series is the Möbius function. Let $f: \mathbb{N} \to \mathbb{C}$ be any function. Define $g : \mathbb{N} \to \mathbb{C}$ by $g(n)=\sum_{d \mid n}^{} f(d)$.
+A useful tool for manipulating the all the aforementioned series is the Möbius function. Let $f: \mathbb{N} \to \mathbb{C}$ be any function. Define $g : \mathbb{N} \to \mathbb{C}$ by $$g(n)=\sum_{d \mid n}^{} f(d).$$
 
 \textbf{Question.} How do we compute $f$ from $g$?
 
@@ -1389,7 +1389,7 @@ Let $\nu(n) = \sum_{d \mid n}^{} \mu(d)$. By Lemma \ref{2.8}, $\nu$ is multiplic
 \begin{proof}
     \begin{align*}
         \sum_{m \mid n}^{} \mu(m)g\left(\frac{n}{m}\right) &= \sum_{m \mid n}^{} \mu(m) \sum_{d \mid \frac{n}{m}}^{} f(d) = \\ 
-        =\sum_{d \mid n}^{} \left( \sum_{m \mid \frac{n}{d}}^{} \mu(m)\right)f(d) &+ \sum_{d \mid n}^{} \nu\left(\frac{n}{d} \right)f(d) = f(n).
+        =\sum_{d \mid n}^{} \left( \sum_{m \mid \frac{n}{d}}^{} \mu(m)\right)f(d) &= \sum_{d \mid n}^{} \nu\left(\frac{n}{d} \right)f(d) = f(n).
     \end{align*}
 \end{proof}
 
@@ -1444,7 +1444,7 @@ Let $\nu(n) = \sum_{d \mid n}^{} \mu(d)$. By Lemma \ref{2.8}, $\nu$ is multiplic
     By Proposition \ref{5.13}, we have 
     \begin{align*}
         &n^{\pi(2n)-\pi(n)} \le N \le 2^{2n} \\
-        \implies &\pi(2n)-\pi(n) \le 2 \log 2 \frac{n}{\log n}. ~(\star)
+        \implies &\pi(2n)-\pi(n) \le 2 \log 2 \frac{n}{\log n} ~(\star).
     \end{align*}
     We prove by induction on $k$ that $\pi(2^k) \le 3 \frac{2^k}{k} ~\forall k\ge 1 ~(\dagger)$. This is obvious for $k\le 6$ as $\pi(x)\le \frac{x}{2} ~\forall x\ge 2$ even. Induction step: $$\pi(2^{k+1}) \stackrel{(\star)}{\le} \pi(2^k) + 2\log 2 \frac{2^k}{\log(2^k)} \stackrel{(\dagger)}{\le} 3\frac{2^k}{k} + 2\frac{2^k}{k} \le 6 \frac{2^k}{k+1} = 3\frac{2^{k+1}}{k+1}$$
     as $\frac{5}{k}\le \frac{6}{k+1}$ for $k\ge 5$.
@@ -1464,7 +1464,7 @@ Let $\nu(n) = \sum_{d \mid n}^{} \mu(d)$. By Lemma \ref{2.8}, $\nu$ is multiplic
     \end{align*}
     So if $2n\le x\le 2n+2$, then $$\pi(x) \ge \pi(2n) \ge \log 2 \frac{(x-2)}{\log x}-1.$$
     To complete the proof, it is enough to show that \[
-    \log 2 \frac{(x-2)}{\log x} \ge \frac{\log 2}{2} \frac{x}{\log x}.
+    \log 2 \frac{(x-2)}{\log x} - 1 \ge \frac{\log 2}{2} \frac{x}{\log x}.
     \]
     This is equivalent to $\frac{\log 2}{2}\frac{x}{\log x}\ge 1 + \frac{2\log2}{\log x}$, which is true for $x=16$ and hence for all $x\ge 16$ since the LHS is increasing and the LHS is decreasing.
     \vspace{1mm}
@@ -1475,7 +1475,7 @@ Let $\nu(n) = \sum_{d \mid n}^{} \mu(d)$. By Lemma \ref{2.8}, $\nu$ is multiplic
     If $n>1$ is an integer, then there exists a prime with $n<p<2n$.
 \end{theorem}
 \begin{proof}
-    Let $N={{2n}\choose{n}}$.If $\frac{2n}{3}<p\le n$, then 
+    Let $N={{2n}\choose{n}}$. If $\frac{2n}{3}<p\le n$, then 
     \begin{align*}
         &\nu_p((2n)!) = 2 \text{ as } 2p\le 2n<3p. \\
         &\nu_p((n)!) = 1 \text{ as } p\le n<2p.
@@ -1641,9 +1641,9 @@ Now let $a_1 = \left\lfloor \theta_1 \right\rfloor$. Stop if $\theta_1=a_1$, oth
 
 If the algorithm stops, we get a \textbf{finite} continued fraction:
 \[
-\theta = a_0 + \frac{1}{a_1+\frac{1}{a_2+\frac{1}{a_3+\frac{1}{\ldots}}}} \stackrel{\text{def}}{=} [a_0,a_1,a_2,\ldots,a_n]. 
+\theta = a_0 + \frac{1}{a_1+\frac{1}{a_2+\frac{1}{\ldots+\frac{1}{a_n}}}} \stackrel{\text{def}}{=} [a_0,a_1,a_2,\ldots,a_n]. 
 \]
-Otherwise, the continued fraction is \textbf{infinite} and write $\theta = [a_0,a_1,a_2,\ldots]$.
+Otherwise, the continued fraction is \textbf{infinite} and we write $\theta = [a_0,a_1,a_2,\ldots]$.
 \begin{defn}
     $a_0,a_1,a_2,\ldots$ are called \textbf{partial quotients}.     
 \end{defn}
