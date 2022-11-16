@@ -1274,7 +1274,7 @@ Ruler--and--compass construction of a regular $n$--gon ($n\ge 3$) is equivalent 
 Let $L=K(x)$, $x^n=a \in K$ (not necessarily $a=1$). We know these extensions are not necessarily Galois, for example $\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}$ is not Galois.
 
 Let us first prove a result of independent interest.
-\begin{theorem}[Linear independence of field embeddings]
+\begin{theorem}[Linear independence of field embeddings]\label{12.1}
     Let $K,L$ be fields and let $\sigma_1,\ldots,\sigma_n : K \hookrightarrow L$ be distinct field homomorphisms. If $y_1,\ldots,y_n \in L$ such that $~\forall x \in K$, $y_1\sigma_1(x) + \ldots + y_n \sigma_n(x)=0$, then $y_i=0 ~\forall i$.
 
     In other words, $\sigma_1,\ldots,\sigma_n$ are $L$--linearly independent elements of the set of functions $K \to L$, which is an $L$--vector space.
@@ -1282,7 +1282,7 @@ Let us first prove a result of independent interest.
 
 This is the special case $G=K^{\times}$ of a theorem in II Representation Theory:
 \begin{theorem}[Linear independence of characters]
-    For $G$ a group, $L$ a field, $s_1,\ldots,s_n : G \to L^{\times}$ group homomorphisms, we have that $\sigma_1,\ldots,\sigma_n$ are linearly independent over $L$.
+    For $G$ a group, $L$ a field, $\sigma_1,\ldots,\sigma_n : G \to L^{\times}$ group homomorphisms, we have that $\sigma_1,\ldots,\sigma_n$ are linearly independent over $L$.
 \end{theorem}
 \begin{proof}
     Induction on $n$. $n=1$ is clear.
@@ -1319,6 +1319,81 @@ Assume now that $n>1$ and $n\cdot 1_K \neq 0$.
         &x^m \in K \iff ~\forall \sigma \in G, \sigma(x^m)=x^m \iff\\
         &\iff ~\forall \sigma \in G,\Theta(g)^m = 1 \iff |G|=[L:K] \text{ divides }m.
     \end{align*}
+\end{proof}
+\marginpar{15 Nov 2022, Lecture 18}
+\begin{cor}
+    Assume $K$ contains a primitive $n^{\text{th}}$ root of unity and let $a \in K^\times$. Then $f=T^n-a$ is irreducible in $K[T]$ if and only if $a$ is not a $d^{\text{th}}$ power in $K$ for any $1 \neq d \mid n$.
+\end{cor}
+\begin{proof}
+    Let $L=K(x)$ for $x^n=a$. The minimal polynomial of $a$ divides $f$, so $f$ is irreducible $\iff |G|=[L:K]=n$. Suppose $n=md$ for $d \neq 1$. Then $a$ is a $d^{\text{th}}$ power in $K$ if and only if $x^m \in K$ (as $\zeta_n \in K$), which holds if and only if $|G| \mid m$.
+\end{proof}
+\textbf{Remark.} This doesn't hold in general if $\zeta_n \not\in K$, e.g. take $K=\mathbb{Q}$ and the polynomial $T^4+4$.
+\vspace{1mm}
+
+\textbf{Terminology.} Extensions of the form $L=K(\sqrt[n]{a})$, where $\zeta_n \in K$ are called \textbf{Kummer extensions}. 
+\begin{example}
+    $n=2, \text{char}(K)\neq 2$ and $\zeta_2 = -1 \in K$. Then $K(\sqrt{a})/K$ is quadratic if $a \not\in (K^\times)^2$ (i.e. $a$ is not a square). Conversely, every quadratic extension $L/K$ is $L=K(\sqrt{a})$ for some $a$ (by an example sheet question).
+\end{example}
+For general $n$ we have a converse to the above theorem:
+\begin{theorem}
+    Suppose $K$ contains $\zeta$, a primitive $n^{\text{th}}$ root of $1$ ($n>1$). Let $L/K$ be Galois with $\text{Gal}(L/K)$ cyclic of order $n$. Then $L=K(\sqrt[n]{a})$ for some $a \in K^\times$.
+\end{theorem}
+\begin{proof}
+    Let $G=\text{Gal}(L/K)=\{\sigma^i \mid 0\le i<n\}$. For $y \in L$, let $$x=R(y)=y + \zeta ^{-1}\sigma(y) + \ldots + \zeta^{-(n-1)}\sigma^{n-1}(y) = \sum_{j=0}^{n-1} \zeta^{-j}\sigma^j(y) \in L,$$
+    a \textbf{Lagrange resolvent}. Then $$\sigma(x)=\sum_{j=0}^{n-1} \zeta^{-j}\sigma^{j+1}(y)=\sum_{j=0}^{n-1} \zeta^{1-j}\sigma^{j}(y) = \zeta x.$$ 
+    Thus $\sigma(x^n)=x^n$, i.e. $x^n \in K$. By Theorem \ref{12.1} with $\{\sigma_i\} = \{1,\sigma,\ldots,\sigma^{n-1} : L \to L\}$, there exists $y$ such that $x\neq 0$. As $\sigma^i(x)=\zeta^i x$, the $\sigma^i(x)$ are distinct, so $\text{deg}_K(x)=n$ and so $L=K(x)$.
+\end{proof}
+\begin{example}
+    Suppose $L/\mathbb{Q}$ has degree 3 and is Galois. Then as $\zeta_3 \not\in \mathbb{Q}$, this is not a Kummer extension.
+\end{example}
+
+\section{Trace and norm}
+Let $L/K$ be an extension of degree $n$, so $L$ is an $n$--dimensional $K$--vector space. For $x \in L$, the map 
+\begin{align*}
+    &U_x : L \to L \\
+    &U_x(y) = xy
+\end{align*}
+is obviously $K$--linear (as it is $L$--linear). So it has a characteristic polynomial, determinant, and trace.
+\begin{defn}
+    The \textbf{trace} and \textbf{norm} of $x$ (relative to $L/K$) are defined as 
+    \begin{align*}
+        &\text{Tr}_{L/K}(x) = \text{tr }U_x \\
+        &N_{L/K}(x)=\det U_x.
+    \end{align*}
+    We will sometimes write $\text{tr}_K$, $\det_K$ if it is important to know the base field $K$.
+    \vspace{1mm}
+    
+    The \textbf{characteristic polynomial} of $x$ is 
+    \begin{align*}
+        f_{x,L/K} = (\text{char. poly. of }U_x)= {\det}_K(t I - U_x).
+    \end{align*}
+    Explicitly, let $e_1,\ldots,e_n$ be a basis for $L/K$. Then there exists a unique matrix $A=(a_{ij})$ such that $x e_i = \sum_{j}^{} a_{ji}e_j$, and then $\text{Tr}_{L/K}(x)=\text{tr}(A)$, etc.
+\end{defn}
+\begin{example}
+    Let $\mathbb{Q}(\sqrt{d})/\mathbb{Q}$ be quadratic with basis $\{1,\sqrt{d}\}$. Let $x=a+b\sqrt{d}$. Then \[
+    A = \begin{pmatrix} a & bd \\ b & a \end{pmatrix}
+    \] as $x \cdot 1 = a \cdot 1 + b \cdot  \sqrt{d}$ and $x \cdot \sqrt{d} = bd \cdot 1 + a \cdot \sqrt{d}$.
+    \vspace{1mm}
+    
+    We hence find $\text{Tr}_{L/K}(x)=2a, N_{L/K}(x)=a^2-db^2$.
+\end{example}
+\begin{example}
+    If we take $\mathbb{C}/\mathbb{R}$ with basis $\{1,i\}$, then the matrix of $U_{x+iy}$ is $\begin{pmatrix} x & -y\\y & x \end{pmatrix}$, which is the usual representation of complex numbers using $2\times 2$ real matrices (think Cauchy--Riemann).
+\end{example}
+\begin{lemma}
+    Take $x \in L, a \in K$ with $n = [L:K]$. Then
+    \begin{enumerate}[(i)]
+        \item $\text{Tr}_{L/K}(x+y) = \text{Tr}_{L/K}(x) + \text{Tr}_{L/K}(y)$ and $N_{L/K}(xy) = N_{L/K}(x) N_{L/K}(y)$.
+        \item $N_{L/K}(x)=0 \iff x=0$.
+        \item $\text{Tr}_{L/K}(1)=n, N_{L/K}(1)=1$.
+        \item $\text{Tr}_{L/K}(ax)=a \text{Tr}_{L/K}(x)$ and $N_{L/K}(ax)=a^n N_{L/K}(x)$ (so $\text{Tr}_{L/K}$ is $K$--linear and $N_{L/K}: L^\times \to K^\times$ is a homomorphism).
+    \end{enumerate}
+\end{lemma}
+\begin{proof}    
+    For (ii), $N_{L/K}(x) = \det(U_x) \neq 0 \iff U_x$ is invertible, which holds iff $x\neq0$.
+    \vspace{1mm}
+    
+    All other properties follow from the corresponding properties of trace and determinant of matrices.
 \end{proof}
 
 \end{document}
