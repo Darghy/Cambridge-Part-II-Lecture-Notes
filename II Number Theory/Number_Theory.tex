@@ -1675,12 +1675,12 @@ Let $[a_0,a_1,a_2,\ldots]$ be an infinite continued fraction. This may be approx
     Given $a_0,a_1,a_2,\ldots$, we define sequences $(p_n)$ and $(q_n)$ as follows:
     \begin{align*}
         &p_0=a_0 &q_0=1 \\
-        &p_1=a_0a_1+1 &q_1=1 \\
+        &p_1=a_0a_1+1 &q_1=a_1 \\
         &p_n=a_np_{n-1}+p_{n-2} &q_n=a_nq_{n-1}+q_{n-2} ~\forall n\ge 2. 
     \end{align*}
 \end{defn}
 \textbf{Remark.} The $(q_n)$ are an increasing sequence of positive integers.
-\begin{lemma}
+\begin{lemma}\label{6.2}
     \begin{enumerate}[(i)]
         \item For $n\ge 0$, we have $\frac{p_n}{q_n}=[a_0,a_1,\ldots,a_n]$.
         \item Let $\beta>0$ be a real number. For $n\ge 2$, we have $$\frac{\beta p_{n-1}+p_{n-2}}{\beta q_{n-1}+q_{n-2}}=[a_0,a_1,\ldots,a_{n-1},\beta].$$
@@ -1740,9 +1740,99 @@ Let $[a_0,a_1,a_2,\ldots]$ be an infinite continued fraction. This may be approx
 \begin{theorem}
     Let $\theta$ be an irrational number. Define $a_n,p_n,q_n$ as above. Then for all $n\ge 0$, we have
     \[
-    \left|\theta - \frac{p_n}{q_n}\right| < \frac{1}{q_nq_{n-1}}.
+    \left|\theta - \frac{p_n}{q_n}\right| < \frac{1}{q_nq_{n-1}} < \frac{1}{q_n^2}.
     \]
 \end{theorem}
-
+\begin{proof}
+    By the continued fraction algorithm, $\theta = [a_0,a_1,a_2,\ldots,a_n,\theta_{n+1}]$, where $\left\lfloor \theta_{n+1} \right\rfloor=a_{n+1}$. By Lemma \ref{6.2},
+    \[
+    \theta - \frac{p_n}{q_n}= \frac{\theta_{n+1} p_n + p_{n-1}}{\theta_{n+1} q_n + q_{n-1}} - \frac{p_n}{q_n} = \frac{p_{n-1}q_n-p_nq_{n-1}}{q_n(\theta_{n+1}q_n+q_{n-1})} = \frac{(-1)^n}{q_n(\theta_{n+1}q_n+q_{n-1})}.
+    \]
+    But $\theta_{n+1}q_n+q_{n-1} > a_{n+1}q_nq_{n-1} = q_{n+1}$, hence
+    \[
+        \left|\theta - \frac{p_n}{q_n}\right| < \frac{1}{q_nq_{n-1}}
+    \]
+    as desired.
+\end{proof}
+\begin{cor}\label{6.5}
+    $\frac{p_n}{q_n}\to \theta$ as $n \to \infty$. In particular,
+    \[
+        \frac{p_0}{q_0}<\frac{p_2}{q_2}<\frac{p_4}{q_4}<\ldots < \theta < \ldots< \frac{p_5}{q_5}<\frac{p_3}{q_3}<\frac{p_1}{q_1}.
+    \]
+\end{cor}
+\begin{theorem}\label{6.6}
+    Let $\theta$ be an irrational number. Let $p,q \in \mathbb{Z}$ with $0<q<q_{n+1}$. Then \[
+    |q \theta - p| \ge |q_n \theta - p_n|.
+    \]
+\end{theorem}
+\begin{cor}\label{6.7}
+    If $p,q \in\mathbb{Z}, q>0$ with $|\theta-\frac{p}{q}|<|\theta-\frac{p_n}{q_n}|$, then $q>q_n$.
+\end{cor}
+\begin{proof}[Proof of Corollary \ref{6.7}]
+    Suppose $q\le q_n$. Then by Theorem \ref{6.6}, \[
+    \left|\theta-\frac{p}{q}\right| \ge \frac{q_n}{q} \left|\theta-\frac{p_n}{q_n}\right| \ge \left|\theta-\frac{p_n}{q_n}\right|,
+    \]
+    contradiction, so $q>q_n$.
+\end{proof}
+\begin{proof}[Proof of Theorem \ref{6.6}]
+    Let us write $p = u p_n + v p_{n+1}, q=uq_n+vq_{n-1}$. Since $p_nq_{n+1}-p_{n+1}q_n = \pm 1$, we can find $u,v \in \mathbb{Z}$ satisfying the equations. If $v=0$, then the result is clear, so suppose $v \neq 0$. The hypothesis $0<q<q_{n+1}$ now implies that $u\neq 0$ and that $u,v$ have opposite signs. Now $$q \theta - p  = u(q_n \theta - p_n) + v (q_{n+1} \theta - p_{n+1}).$$
+    By Corollary \ref{6.5}, $q_{n} \theta - p_n$ and $q_{n+1} \theta - p_{n+1}$ have opposite signs, which implies that $u (q_n \theta - p_n)$ and $v(q_{n+1}\theta - p_{n+1})$ have the same sign. Hence (as $u\neq 0$) \[
+    |q \theta - p| = |u(q_n \theta - p_n)| + |v(q_{n+1}\theta - p_{n+1})|\ge |q_n \theta - p_n|.
+    \]
+\end{proof}
+\begin{theorem}
+    Let $\theta$ be an irrational number. 
+    \begin{enumerate}[(i)]
+        \item At least one of any two successive convergents satisfies $$\left|\theta-\frac{p}{q}\right|<\frac{1}{2q^2}.$$ 
+        \item Conversely, if $p,q \in \mathbb{Z}, q>0$ satisfy $\left|\theta-\frac{p}{q}\right|<\frac{1}{2q^2}$, then $\frac{p}{q}$ is a convergent, i.e. $\frac{p}{q}=\frac{p_n}{q_n}$ for some $n$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \begin{enumerate}[(i)]
+        \item Since $\theta-\frac{p_n}{q_n}$ and $\theta-\frac{p_{n+1}}{q_{n+1}}$ have opposite signs, Lemma \ref{6.3} gives \[
+        \left|\theta-\frac{p_n}{q_n}\right| + \left|\theta - \frac{p_{n+1}}{q_{n+1}}\right| = \left|\frac{p_n}{q_n}-\frac{p_{n+1}}{q_{n+1}} \right| = \frac{1}{q_nq_{n+1}}.
+        \]
+        If $\alpha \neq \beta$ are real numbers, then $(\alpha-\beta)^2>0 \implies \alpha \beta < \frac{1}{2}(\alpha^2+\beta^2)$, so \[
+        \left|\theta - \frac{p_n}{q_n} \right| + \left|\theta-\frac{p_{n+1}}{q_{n+1}}   \right| < \frac{1}{2} \left(\frac{1}{q_n^2}+\frac{1}{q_{n+1}^2} \right).
+        \] This proves (i).
+        \item Assume $\left|\theta-\frac{p}{q}\right|<\frac{1}{2q^2} ~(\dagger)$. Choose $n$ such that $q_n\le q <q_{n+1}$. Then \[
+        \left|\frac{p}{q}-\frac{p_n}{q_n}\right| \le \left|\theta-\frac{p}{q}\right| + \left|\theta-\frac{p_n}{q_n}\right| = \frac{1}{q} |q \theta - p| + \frac{1}{q_n} |q_n \theta - p_n|.
+        \]
+        As $q<q_{n+1}$, Theorem \ref{6.6} implies $|q \theta - p| \ge |q_n \theta - p_n|.$ Hence \[
+            \left|\frac{p}{q}-\frac{p_n}{q_n}\right| \le \left(\frac{1}{q}+\frac{1}{q_n}\right) \underbrace{|q \theta - p|}_{\le \frac{1}{2q} \text{ by }(\dagger)}
+        \]
+        Since $q_n\le q$, we get \[
+            \left|\frac{p}{q}-\frac{p_n}{q_n}\right| < \frac{1}{q_n q}.
+        \]
+        But $\left|\frac{p}{q}-\frac{p_n}{q_n}\right| = \left|\frac{pq_n-p_nq}{q_nq}\right|$, so if this is nonzero, then it is $\ge \frac{1}{qq_n}$, so hence $\frac{p}{q}=\frac{p_n}{q_n}$ and we're done.
+    \end{enumerate}
+\end{proof}
+\begin{example}
+    Compute the continued fraction for $\theta = \sqrt{14}$. We have   
+    \begin{align*}
+        &\theta = 3 + (\sqrt{14}-3).\\
+        &\theta_1 = \frac{1}{\sqrt{14}-3} = \frac{\sqrt{14}+3}{5} = 1 + \frac{\sqrt{14}-2}{5}.\\
+        & \theta_2 = \frac{5}{\sqrt{14}-2} = \frac{\sqrt{14}-2}{2} = 2 + \frac{\sqrt{14}-2}{2}.\\
+        &\theta_3 = \frac{2}{\sqrt{14}-2} = \frac{\sqrt{14}+2}{5} = 1 + \frac{\sqrt{14}-3}{5}.\\
+        &\theta_4 = \frac{5}{\sqrt{14}-3} = \sqrt{14}+3 = 6 + (\sqrt{14}-3).
+    \end{align*}
+    We now see this repeats, hence $\theta_5 = \theta_1$. We hence write \[
+    \sqrt{14} = [3,\overline{1,2,1,6}].
+    \]
+\end{example}
+Let us tabulate our results. We also keep track of $p_n^2-14q_n^2$ in the last column (since we will be looking at Pell's equations soon), from which we conclude that $x^2-14y^2=1$ has solutions, since we found $(x,y)=(15,4)$ and $(x,y)=(449,120)$.
+\begin{center}
+    \begin{tabular}{l|llll}
+    $n$ & $a_n$ & $p_n$ & $q_n$ & $p_n^2-14q_n^2$\\ \hline
+    0 & 3 & 3 & 1 & \hspace{6mm}-5\\
+    1 & 1 & 4 & 1 & \hspace{7mm}2\\
+    2 & 2 & 11 & 3 & \hspace{6mm}-5\\
+    3 & 1 & 15 & 4 & \hspace{7mm}1\\
+    4 & 6 & 101 & 27 & \hspace{6mm}-5\\
+    5 & 1 & 116 & 31 & \hspace{7mm}2\\
+    6 & 2 & 333 & 89 & \hspace{6mm}-5\\
+    7 & 1 & 449 & 120 & \hspace{7mm}1\\
+    \end{tabular}
+\end{center}
 
 \end{document}
