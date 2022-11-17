@@ -1333,8 +1333,84 @@ where $\xi$ has the same distrution as $\xi_n ~\forall n$.
     \begin{align*}
         V(x)=\mathbb{E}[\sum_{k=1}^{n} \beta^{k-1}f(U_k)+\beta^n \mathbb{E}[V(X_n^*)]] \to \mathbb{E}[\sum_{k=1}^{\infty} \beta^{k-1}f(U_k^*)].
     \end{align*}
-
 \end{proof}
+
+\subsubsection*{Optimal stopping problems}
+
+\marginpar{16 Nov 2022, Lecture 18}
+
+Given a Markov process of the form $X_n = G(n,X_{n-1},\xi_n)$ for $n\ge 1$ and $(\xi_n)_{n\ge 1}$ independent, our goal is to maximize $\mathbb{E}[f(X_T)]$ over stopping times $T\le N$ (for $N$ not random). 
+
+The Bellman equations are 
+\begin{align*}
+    &V(N,x)=f(x) ~\forall x\\
+    &V(n-1,x) = \max \{f(x), \mathbb{E}[V(G(n,x,\xi_n))]\} ~\forall x, 1\le n\le N.
+\end{align*}
+\begin{theorem}
+    Let $T^* = \inf \{n\ge 0 \mid V(n,X_n)=f(X_n)\}$. Then $T^*$ is optimal.
+\end{theorem}
+Let $\mathcal{S}$ and $\mathcal{C}$ be sets (standing for ''stop'' and ''continue'') defined as 
+\begin{align*}
+    &\mathcal{C}=\{(n,x) \mid V(n,x)>f(x)\}\\
+    &\mathcal{S}=\{(n,x) \mid V(n,x)=f(x)\}.
+\end{align*}
+So our Markov process wiggles around in space (draw a diagram) until it hits $S$, and we claim we should then immediately stop. This is strongly related to the concept of American and European contingent claims -- the owner of an American claim wants to solve the optimal stopping problem to know when to cash out his claim for the most money.
+\begin{proof}
+    Let $M_n = V(n,x_n)$ for $n\ge 0$. Note $M_n \ge f(x_n) ~\forall n$. Also, \[
+    M_{n-1} \ge \mathbb{E}[V(n,X_n) \mid \mathcal{F}_{n-1}] = \mathbb{E}[M_n \mid \mathcal{F}_n]
+    \] by the Bellman equations. So $(M_n)_n$ is a supermartingale. Hence for any stopping time $T\le N$, $\mathbb{E}[M_T]\le M_0 = V(0,X_0)$ by the optional sampling theorem, hence $\mathbb{E}[f(X_T)]\le V(0,X_0)$. So we have a bound, so we just want to show we can achieve it.
+
+    Note that $M_{n \wedge T^*}$ is a martingale, since on the set $\{n\le T^*\}$ we have $(n-1,X_{n-1}) \in \mathcal{C}$, so $V(n-1,X_{n-1})= \mathbb{E}[V(n,X_n) \mid \mathcal{F}_{n-1}]$. Hence \[
+    \mathbb{E}[f(X_{T^*})] = \mathbb{E}[V(T^*,X_{T^*})] = \mathbb{E}[M_{T^*}] = M_0 = V(0,X_0).
+    \]
+\end{proof}
+\subsection{Multiperiod arbitrage}
+\textbf{Setup:} We have interest rate $r$, $d$ risky assets with prices $(S_n)_n$ (which are adapted). An investor can pick a strategy $(\theta_n)_n$ (which is previsible), with $\theta_n$ denoting the portfolio between times $n-1$ and $n$. The investor's wealth at time $n$ is $X_n$, which evolves as 
+\begin{align*}
+    &X_n = (1+r)X_{n-1} + \theta_n^\top(S_n-(1+r)S_{n-1})\\
+    \implies &X_n = (1+r)^n X_0 + \sum_{k=1}^{n} (1+r)^{n-k}\theta_k^\top(S_k - (1+r)S_{k-1}).
+\end{align*}
+The investor holds $\theta^0_n = X_{n-1} - \theta_n^\top S_{n-1}$ in the risk--free asset between times $n-1$ and $n$.
+\begin{defn}
+    An \textbf{arbitrage} is a previsible process $(\phi_n)_{1\le n\le N}$ (for $N$ finite and not random) such that 
+    \begin{align*}
+        &\sum_{k=1}^{N} (1+r)^{N-k} \phi_k^\top(S_k-(1+r)S_{k-1})\ge 0 \text{ with probability 1.}\\
+        &\sum_{k=1}^{N} (1+r)^{N-k} \phi_k^\top(S_k-(1+r)S_{k-1})>0 \text{ with probability}> 0.
+    \end{align*}
+\end{defn}
+\begin{defn}
+    A measure $\mathbb{Q}$ equivalent to $\mathbb{P}$ is \textbf{risk--neutral} if $$\mathbb{E}^\mathbb{Q}[S_n \mid \mathcal{F}_{n-1}] = (1+r)S_{n-1} ~\forall n\ge 1.$$
+\end{defn}
+\begin{theorem}[Fundamental theorem of asset pricing]
+    In a finite time horizon market model, there is no arbitrage if and only if there exists a risk--neutral measure.
+\end{theorem}
+\subsection{The binomial model}
+We look at the Cox-Ross-Rubenstein binomial model.
+
+\textbf{Setup:} $r$ is the interest rate, we have $d=1$ risky asset with prices $S_n=S_{n-1}\xi_n$ for $n\ge 1$, where $S_0>0$ and the $(\xi_n)_n$ are IID with $\mathbb{P}(\xi_n=1+b)=p=1- \mathbb{P}(\xi_n = 1+a)$ where $-1<a<b$. We can now draw a tree of probabilities and stock prices.
+
+\begin{theorem}
+    There exists a risk--neutral measure on a finite horizon if and only if $a<r<b$. If the risk--neutral measure exists, then it is unique.
+\end{theorem}
+\begin{cor}
+    There is no arbitrage if and only if $a<r<b$ (by FTAP).
+\end{cor}
+\begin{proof}
+    Suppose a risk--neutral measure $\mathbb{Q}$ exists. Then 
+    \begin{align*}
+        &\mathbb{E}^{\mathbb{Q}}[S_n \mid \mathcal{F}_{n-1}] = (1+r)S_{n-1} = \\
+        &(1+b)S_{n-1}\mathbb{Q}(\xi_n=1+b \mid \mathcal{F}_{n-1}) + (1+a)S_{n-1}\mathbb{Q}(\xi_n=1+a \mid \mathcal{F}_{n-1}) \\
+        &\implies \mathbb{Q}(\xi_n = 1+b \mid \mathcal{F}_{n-1}) = \frac{r-a}{b-a}=q.
+    \end{align*}
+    Note $q \in (0,1) \iff a<r<b$ and there's only one solution.
+\end{proof}
+\begin{cor}[Consequence of the proof]
+    When $a<r<b$, then under the unique risk--neutral measure $\mathbb{Q}$, the $(\xi_n)_n$ are IID with $\mathbb{Q}(\xi_n=1+b)=q = 1 - \mathbb{Q}(\xi_n=1+a) ~\forall n$.
+\end{cor}
+\begin{proof}
+    Note that $\mathbb{Q}(\xi_n = 1+b \mid \mathcal{F}_{n-1})=q$ is independent of $\mathcal{F}_{n-1}$, so $\xi_n$ is independent of $\mathcal{F}_{n-1}$.
+\end{proof}
+
 
 \end{document}
 
