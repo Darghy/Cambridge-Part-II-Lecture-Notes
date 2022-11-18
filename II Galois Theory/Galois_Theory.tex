@@ -1380,7 +1380,7 @@ is obviously $K$--linear (as it is $L$--linear). So it has a characteristic poly
 \begin{example}
     If we take $\mathbb{C}/\mathbb{R}$ with basis $\{1,i\}$, then the matrix of $U_{x+iy}$ is $\begin{pmatrix} x & -y\\y & x \end{pmatrix}$, which is the usual representation of complex numbers using $2\times 2$ real matrices (think Cauchy--Riemann).
 \end{example}
-\begin{lemma}
+\begin{lemma}\label{13.1}
     Take $x \in L, a \in K$ with $n = [L:K]$. Then
     \begin{enumerate}[(i)]
         \item $\text{Tr}_{L/K}(x+y) = \text{Tr}_{L/K}(x) + \text{Tr}_{L/K}(y)$ and $N_{L/K}(xy) = N_{L/K}(x) N_{L/K}(y)$.
@@ -1395,5 +1395,86 @@ is obviously $K$--linear (as it is $L$--linear). So it has a characteristic poly
     
     All other properties follow from the corresponding properties of trace and determinant of matrices.
 \end{proof}
+
+\marginpar{17 Nov 2022, Lecture 19}
+
+\begin{theorem}\label{13.2}
+    Let $M/L/K$ be finite extensions. Then 
+    \begin{align*}
+        &\text{Tr}_{L/K}(\text{Tr}_{M/L}(x)) = \text{Tr}_{M/K}(x) \\
+        &N_{L/K}(N_{M/L}(x)) = N_{M/K}(x).
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    We prove this for the trace, since we won't use the result for norms. (But a proof for norms will be posted on the Moodle page).
+    \vspace{1mm}
+    
+    Choose bases $u_1,\ldots,u_m$ for $M/L$ and $v_1,\ldots, v_n$ for $L/K$. Let $(a_{ij})$ be the matrix of $U_{x,M/L}$, $(a_{ij}) \in \text{Mat}_{m \times m}(L)$. Then $\text{Tr}_{M/L}(x)=\sum_{i=1}^{m} a_{ii}$. For each $(i,j)$, let the matrix of $U_{a_{ij},L/K}$ be $A_{ij} \in \text{Mat}_{n \times n}(K)$, so that $$\text{Tr}_{L/K}(\text{Tr}_{M/L}(x)) = \sum_{i=1}^{m} \text{Tr}_{L/K}(a_{ii}) = \sum_{i=1}^{n} \text{tr}(A_{ii}).$$
+    In terms of the basis, $u_1v_1,\ldots,u_1v_n,u_2v_1,\ldots,u_mv_n$ is a basis for $M/K$ and the matrix of $U_{x,M/K}$ is $\begin{pmatrix} A_{11} & &\\ & \ddots & \\ & & A_{nn} \end{pmatrix}$, so $\text{Tr}_{M/K}(x)=\sum_{i=1}^{n} A_{ii}$.
+\end{proof}
+\begin{prop}\label{13.3}
+    Suppose $L=K(x)$. Let ${f = T^n + c_{n-1}T^{n-1} + \ldots + c_0 \in K[T]}$ be the minimal polynomial of $x$ over $K$. Then \[
+    f_{x,L/K}=f,~ \text{Tr}_{L/K}(x)=-c_{n-1},~ N_{L/K}(x)=(-1)^nc_0.
+    \]
+\end{prop}
+\begin{proof}
+    It is enough to prove the first statement (since $\det, \text{tr}$ are coefficients of the characteristic polynomial).
+
+    In terms of the basis $1,x,\ldots,x^{n-1}$ for $L/K$, the matrix for $U_x$ is \[
+    \begin{pmatrix}
+    0 & 0 & \ldots & 0 &-c_0\\
+    1 & 0 & \ldots & 0 &-c_1\\
+    0 & 1 & \ldots & 0 & -c_2 \\
+    \vdots & \vdots & \vdots & \vdots & \vdots \\
+    0 & 0 & \ldots & 1 & -c_{n-1} 
+    \end{pmatrix},
+    \]
+    since $U_x(x^i) = x^{i+1}$ and $U_x(x^{n-1})=- \sum_{}^{} c_jx^j$, and the characteristic polynomial of this matrix is $f$ (''Rational canonical form'' from IB Linear Algebra).
+\end{proof}
+\begin{cor}\label{13.4}
+    Assume $\text{char}(K)=p>0$, $L=K(x)$ with $x \not\in K, x^p \in K$. Then $\forall y \in L$, $\text{Tr}_{L/K}(y)=0$ and $N_{L/K}(y)=y^p$.
+\end{cor}
+\begin{proof}
+    Recall that $[L:K]=p$ (by Example Sheet 2, Q7). Hence it suffices to prove that the minimal polynomial of $x$ over $K$ is $T^p-x^p$.
+    
+    If $y \in K$, then by Lemma \ref{13.1}, $\text{Tr}_{L/K}(y)=py=0$ and $N_{L/K}(y)=y^p$. Otherwise, since $[L:K]$ is prime, $L=K(y)$, and if $y = \sum_{}^{} a_ix^i$ for $a_i \in K$, then $$b=y^p = (\sum_{}^{} a_ix^i)^p = \sum_{}^{} a_i^p (x^p)^i \in K.$$ So the minimal polynomial of $y$ is $T^p-b$, and we're done by Proposition \ref{13.3}.
+\end{proof}
+\begin{prop}
+    Let $L/K$ be a finite and separable extension of degree $n$. Let $\sigma_1,\ldots,\sigma_n : L \hookrightarrow M$ be the distinct $K$--homomorphisms into a normal closure $M$ for $L/K$. Then 
+    \begin{align*}
+        \text{Tr}_{L/K}(x) = \sum_{i=1}^{n} \sigma_i(x), ~ N_{L/K}(x)= \prod_{i=1}^{n} \sigma_i(x), ~ f_{x,L/K} = \prod_{i=1}^{n} (T-\sigma_i(x)). 
+    \end{align*}
+\end{prop}
+\textbf{Remark.} If $L/K$ is a finite Galois extension, then \[
+\text{Tr}_{L/K}(x) = \sum_{\sigma \in \text{Gal}(L/K)}^{} \sigma(x), \text{ etc.}
+\]
+\begin{proof}
+    It is enough to prove the statement for $f_{x,L/K}$. Let $(e_i)$ be a basis for $L/K$, and let $P = (\sigma_i(e_j)) \in \text{Mat}_{n \times n}(M)$. Since the $\sigma_i$ are linearly independent (by Theorem \ref{12.1}), there does not exist $(y_i) \in M$ such that $~\forall j$, $\sum_{i}^{} y_i \sigma_i(e_j) = 0$. So $P$ is nonsingular.
+
+    Let $A=(a_{ij})$ be the matrix of $U_x$. Then $xe_j = \sum_{r} a_{rj}e_r$, so \[
+    \sigma_i(x) \sigma_i(e_j) = \sum_{r}^{} \sigma_i(e_r)a_{rj} ~\forall i,j ~(\dagger).
+    \]
+    If $S$ is a diagonal matrix with $(i,i)^{\text{th}}$ entry $\sigma_i(x)$, then $(\dagger)$ is the matrix equation $SP=PA$. Hence $S = PAP^{-1}$, so $S,A$ are conjugate and therefore have the same characteristic polynomial, which for $S$ is $\prod_{}^{} (T-\sigma_i(x))$ and for $A$ is $f_{x,L/K}$.
+\end{proof}
+For the next theorem, note that since $\text{Tr}_{L/K}: L \to K$ is $K$--linear, it is either surjective or the zero map.
+\begin{theorem}\label{13.6}
+    Let $L/K$ be finite. Then \[
+    L/K \text{ is separable} \iff \text{Tr}_{L/K} \text{ is surjective.}
+    \]
+\end{theorem}
+\textbf{Remark.} If $\text{char}(K)=0$, then $\text{Tr}_{L/K}(1)=n \neq 0$, so the result is easy.
+\begin{proof}
+    Suppose $L/K$ is separable. Let $\{\sigma_1,\ldots,\sigma_n\} = \text{Hom}_K(L,M)$ for $M$ a normal closure of $L/K$. Then $\text{Tr}_{L/K}(x) = \sum_{}^{} \sigma_i(x).$ By Theorem \ref{12.1}, $\exists x$ such that $\sum_{}^{} \sigma_i(x) \neq 0$, so $\text{Tr}_{L/K}$ is nonzero.
+    \vspace{1mm}
+    
+    Conversely, suppose $L/K$ is inseparable. Then $\exists x \in L$ such that $K(x) \subsetneq K(x^p)$ (by Example Sheet 2, Q7, any $x$ inseparable over $K$ and not in $K$ will do). By Corollary \ref{13.4}, $\text{Tr}_{K(x)/K(x^p)} = 0$, so by Theorem \ref{13.2}, $\text{Tr}_{M/K}=0$.
+\end{proof}
+\begin{example}
+    Finite fields $\mathbb{F}_{q^n}$ over $\mathbb{F}_q$ (for $q$ a power of a prime $p$) are separable, so $\exists x \in \mathbb{F}_{q^n}$ such that $\text{Tr}_{\mathbb{F}_{q^n}/\mathbb{F}_q}(x)=1$. 
+    \vspace{1mm}
+    
+    Exercise: prove this directly using the fact that the multiplicative group is cyclic.
+\end{example}
+\textbf{Remark.} We can use Theorem \ref{13.6} to give another proof that if $M/L$ and $L/K$ are separable, then $M/K$ are separable.
 
 \end{document}
