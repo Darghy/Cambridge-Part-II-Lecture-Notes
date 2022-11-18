@@ -1394,9 +1394,79 @@ We proved $Z(n,t)\le 2 n^{2-\frac{1}{t}}$ for $n$ much larger than $t$.
     &={{n}\choose{t}}^2 p^{t^2} \le \frac{n^{2t}}{4} p^{t^2} = \frac{1}{4}\left(n^2 p^t\right)^t = (\star).
 \end{align*} 
 So if $p = n^{-\frac{2}{t}}$, then $(\star)\le \frac{1}{4}$. We have $\mathbb{P}(\mathcal{X}\ge 1)\le \frac{1}{4}$. Note $$\mathbb{E}[e(G)]=pn^2 = n^{2-\frac{2}{t}}.$$
-So \[
+So (we would like that)\[
 \mathbb{P}\left(e(G)<\frac{pn^2}{2}\right) < \frac{1}{2}.
 \]
 So with probabiity $>\frac{1}{4}$ we have that $e(G)>\frac{1}{2} pn^2 = \frac{1}{2}n^{2-\frac{2}{t}}$ and $G \not\supset K_{t,t}$.
+
+\marginpar{18 Nov 2022, Lecture 19}
+
+\begin{proof}
+    Let $G=(X \cup Y, E)$ with $X,Y$ disjoint, $|X|=|Y|=n$, and include each pair $xy \in E$ ($x \in X, y \in Y$) with probability $p=n^{-\frac{2}{t+1}}$. We let $\tilde{G}$ be theh graph $G$ with an edge deleted from each $K_{t,t}$. So $\tilde{G} \not\supset K_{t,t}$ by definition. But 
+    \begin{align*}
+        &e(\tilde{G}) \ge e(G) - (\# \text{ of }K_{t,t}\text{'s}) \\
+        &\mathbb{E}[e(\tilde{G})] \ge \mathbb{E}[e(G)] - \mathbb{E}[(\# \text{ of }K_{t,t}\text{'s})] = pn^2 - {{n}\choose{t}}^2 p^{t^2} \ge n^{2- \frac{2}{t+1}} - \frac{n^{2t}}{2}p^{t^2} =(\star).
+    \end{align*}
+    As we have
+    \begin{align*}
+        &n^{2t} p^{t^2} = (n^2 p^t)^t = (n^2 n^{-\frac{2t}{t+1}})^t = (n^{\frac{2t}{t+1}}) = n^{2-\frac{2}{t+1}},
+    \end{align*}
+    we conclude \[
+    (\star) \ge \frac{1}{2}n^{2-\frac{2}{t+1}},
+    \]
+    so there exists a graph $\tilde{G}$ which is $K_{t,t}$--free and has $e(\tilde{G}) \ge \frac{1}{2}n^{2-\frac{2}{t+1}}.$
+\end{proof}
+
+\textbf{Question.} Let $G$ have large $\chi(G)$. Can we say anything about the structure of $G$?
+
+\textbf{First idea:} If $\chi(G)>k$, does $G$ contain a $K_t$? 
+
+This is totally wrong - by an example sheet question, we have graphs with arbitrarily large $\chi(G)$ and no triangles.
+
+\textbf{Second idea:} If $\chi(G)$ is large, can we bound the girth of $G$ (i.e. the length of the shortest cycle in $G$).
+
+This is also wrong:
+\begin{theorem}[Erdös]\label{6.2}
+    For all $k,g\ge 3$, there exists a graph $G$ with $\chi(G)\ge k$ and girth $\ge g$.
+\end{theorem}
+\textbf{Fact.} (Markov) If $X$ is a random variable which takes only non--negative values, then $~\forall t>0$ we have $\mathbb{P}(X\ge t) \le \frac{\mathbb{E}[X]}{t}$.
+\vspace{1mm}
+
+\textbf{Fact.} Let $G$ be a graph. Then $\chi(G)=\frac{|G|}{\alpha(G)}$, where $\alpha(G)$ is the size of the largest independent set.
+\begin{proof}
+    Let $c$ be a coloring with $k=\chi(G)$ and let $C_i$ be the set of all vertices that got colored with color $i$. Then \[
+    |G|=|C_1|+\ldots+|C_k| \le k \alpha(G).
+    \]
+\end{proof} 
+\begin{proof}[Proof of Theorem \ref{6.2}]
+    Let $G$ be a random graph on $[n]$, where each edge $ij$ is included in $E(G)$ independently with probability $p=n^{-1+\frac{1}{g}}$. Let \[
+    X_i = \# \text{ of cycles in }G \text{ of length }i
+    \]
+    and let $X=X_3+\ldots+X_{g-1}$. By Markov, 
+    \begin{align*}
+        &\mathbb{P}(X \ge \frac{n}{2}) \le \frac{2}{n} \mathbb{E}[X] = \frac{2}{n} \sum_{i=3}^{g-1} \mathbb{E}[X_i] =\frac{2}{n} \sum_{i=3}^{g-1} \frac{n(n-1)\ldots(n-g+1)}{i}p^{i} \le \\
+        &\le \frac{2}{n}\sum_{i=3}^{g-1} (np)^i = \frac{2}{n} \sum_{i=3}^{g-1} n^{\frac{i}{g}} \le 10 n^{-\frac{1}{g}} < \frac{1}{2} 
+    \end{align*}
+    for $n$ large enough.  Let \[
+    Y = \# \text{ of independent sets of size}=\frac{n}{2k}.
+    \]
+    Let $s=\frac{n}{2k}$. We have (using $1-x \le e^{-x}$, which holds $~\forall x \in (0,1)$)
+    \begin{align*}
+        &\mathbb{P}(Y\ge 1) \le \mathbb{E}[Y] = {{n}\choose{s}}(1-p)^{{s\choose{2}}}\le n^s e^{-p {{s}\choose{2}}} \le \\
+        & (n^2 e^{-p(s-1)})^{\frac{s}{2}} \le (2n^2 e^{-\frac{n^{1/2}}{2k}})^{\frac{s}{2}} < \frac{1}{2}
+    \end{align*}
+    for $n$ sufficiently large.
+    \vspace{1mm}
+    
+    We conclude that $G$ has at most $\frac{n}{2}$ cycles of length $\le g-1$ with probability $>\frac{1}{2}$, and $G$ has $\alpha(G)\le \frac{n}{2k}$ with probability $>\frac{1}{2}$. 
+    \vspace{1mm}
+    
+    So there exists a graph that satisfies both conditions. Let $G$ be such a graph. Let $\tilde{G}$ be $G$ with a vertex deleted from each cycle of length $\le g-1$. So the girth of $\tilde{G}$ is $\ge g$, and \[
+    \chi(\tilde{G}) \ge \frac{|\tilde{G}|}{\alpha(\tilde{G})} \ge \frac{\frac{n}{2}}{\alpha(G)} \ge \frac{\frac{n}{2}}{\frac{n}{2k}} = k.
+    \]
+\end{proof}
+\begin{defn}[Binomial random graph]
+    For $n \in \mathbb{N}, p \in [0,1]$, define the \textbf{binomial random graph} to be the probability space $G(n,p)$ on all graphs on $n$ vertices, where each potential edge is included in the graph with probability $p$ independently.
+\end{defn}
 
 \end{document}
