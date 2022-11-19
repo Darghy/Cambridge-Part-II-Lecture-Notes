@@ -1394,7 +1394,7 @@ We proved $Z(n,t)\le 2 n^{2-\frac{1}{t}}$ for $n$ much larger than $t$.
     &={{n}\choose{t}}^2 p^{t^2} \le \frac{n^{2t}}{4} p^{t^2} = \frac{1}{4}\left(n^2 p^t\right)^t = (\star).
 \end{align*} 
 So if $p = n^{-\frac{2}{t}}$, then $(\star)\le \frac{1}{4}$. We have $\mathbb{P}(\mathcal{X}\ge 1)\le \frac{1}{4}$. Note $$\mathbb{E}[e(G)]=pn^2 = n^{2-\frac{2}{t}}.$$
-So (we would like that)\[
+So (by Markov's inequality, which we state on the next page)\[
 \mathbb{P}\left(e(G)<\frac{pn^2}{2}\right) < \frac{1}{2}.
 \]
 So with probabiity $>\frac{1}{4}$ we have that $e(G)>\frac{1}{2} pn^2 = \frac{1}{2}n^{2-\frac{2}{t}}$ and $G \not\supset K_{t,t}$.
@@ -1432,7 +1432,7 @@ This is also wrong:
 \textbf{Fact.} (Markov) If $X$ is a random variable which takes only non--negative values, then $~\forall t>0$ we have $\mathbb{P}(X\ge t) \le \frac{\mathbb{E}[X]}{t}$.
 \vspace{1mm}
 
-\textbf{Fact.} Let $G$ be a graph. Then $\chi(G)=\frac{|G|}{\alpha(G)}$, where $\alpha(G)$ is the size of the largest independent set.
+\textbf{Fact.} Let $G$ be a graph. Then $\chi(G)\ge \frac{|G|}{\alpha(G)}$, where $\alpha(G)$ is the size of the largest independent set.
 \begin{proof}
     Let $c$ be a coloring with $k=\chi(G)$ and let $C_i$ be the set of all vertices that got colored with color $i$. Then \[
     |G|=|C_1|+\ldots+|C_k| \le k \alpha(G).

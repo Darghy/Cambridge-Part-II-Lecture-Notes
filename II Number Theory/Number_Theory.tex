@@ -1737,7 +1737,7 @@ Let $[a_0,a_1,a_2,\ldots]$ be an infinite continued fraction. This may be approx
     So the limit as $\lim_{n \to \infty}\frac{p_n}{q_n}$ exists. We will now show that this limit is exactly the number $\theta$, which justifies the notation $\theta = [a_0,a_1,\ldots]$ and calling $\frac{p_n}{q_n}$ the convergent fractions.
 \end{itemize} 
 \marginpar{17 Nov 2022, Lecture 19}
-\begin{theorem}
+\begin{theorem}\label{6.4}
     Let $\theta$ be an irrational number. Define $a_n,p_n,q_n$ as above. Then for all $n\ge 0$, we have
     \[
     \left|\theta - \frac{p_n}{q_n}\right| < \frac{1}{q_nq_{n-1}} < \frac{1}{q_n^2}.
@@ -1780,7 +1780,7 @@ Let $[a_0,a_1,a_2,\ldots]$ be an infinite continued fraction. This may be approx
     |q \theta - p| = |u(q_n \theta - p_n)| + |v(q_{n+1}\theta - p_{n+1})|\ge |q_n \theta - p_n|.
     \]
 \end{proof}
-\begin{theorem}
+\begin{theorem}\label{6.8}
     Let $\theta$ be an irrational number. 
     \begin{enumerate}[(i)]
         \item At least one of any two successive convergents satisfies $$\left|\theta-\frac{p}{q}\right|<\frac{1}{2q^2}.$$ 
@@ -1834,5 +1834,113 @@ Let us tabulate our results. We also keep track of $p_n^2-14q_n^2$ in the last c
     7 & 1 & 449 & 120 & \hspace{7mm}1\\
     \end{tabular}
 \end{center}
+
+\marginpar{19 Nov 2022, Lecture 20}
+
+\begin{defn}
+    A continued fraction is \textbf{periodic} if it is of the form \[
+    [a_0,a_1,\ldots,a_{m-1},\overline{a_m,a_{m+1},\ldots,a_{m+n-1}}]
+    \]
+    and \textbf{purely periodic} if $m=0$.
+\end{defn}
+\textbf{Remark.} If $\phi=[\overline{a_0,\ldots,a_{n-1}}]$, then $\phi=[a_0,\ldots,a_{n-1},\phi] = \frac{\phi p_{n-1}-p_{n-2}}{\phi q_{n-1}-q_{n-2}}$, hence $a \phi^2 + b \phi + c = 0$ for some $a,b,c \in \mathbb{Z}, a\neq 0$. Hence $\phi = r + s \sqrt{d}$ for some $r,s \in \mathbb{Q}, s\neq 0, d>1$ squarefree. We say $\phi$ is a \textbf{quadratic irrational}.
+
+\begin{theorem}[Lagrange]
+    The continued fraction of $\theta$ is periodic $\iff$ $\theta$ is a quadratic irrational.
+\end{theorem}
+\begin{proof}
+    $(\implies )$: We have $\theta = [a_0,\ldots,a_{n-1},\phi]$, where $\phi$ is purely periodic. By the last remark, $\phi$, and hence $\theta$, is a quadratic irrational.
+    \vspace{1mm}
+    
+    $(\impliedby)$: Suppose $\theta$ is a root of $ax^2+bx+c=0$ for some $a,b,c \in \mathbb{Z}, a\neq0$. Let $f(x,y)=ax^2+bxy+cy^2$, so $f(\theta,1)=0$. If $\theta = [a_0,\ldots,a_n,\theta_{n+1}] = \frac{p_n \theta_{n+1} + p_{n-1}}{q_n \theta_{n+1} + q_{n-1}}$, then $f(p_n \theta_{n+1} + p_{n-1}, q_n \theta_{n+1} + q_{n-1})= 0 \implies \theta_{n+1}$ is a root of some quadratic $A_n x^2 + B_n x + C_n=0$ for some $A_n,B_n,C_n \in \mathbb{Z}$, where $A_n = f(p_n,q_n), C_n = f(p_{n-1}, q_{n-1})$, and $B_n^2-4A_nC_n = b^2-4ac$ (since $p_nq_{n-1}-p_{n-1}q_n=\pm 1$).
+    \vspace{1mm}
+    
+    Now the claim is that $f(p_n,q_n)$ is bounded independently of $n$.
+    
+    Assuming the claim, there are only finitely many possibilities for $A_n,B_n,C_n$, so there are only finitely many possibilities for $\theta_{n+1}$, so eventually we have $\theta_r=\theta_s$ for some $r \neq s$, so the continued fraction is periodic.
+    \begin{proof}[Proof of claim]
+        \begin{align*}
+            &f\left(\frac{p_n}{q_n},1\right) - f(\theta,1) = a\left(\left(\frac{p_n}{q_n}\right)^2 - \theta^2\right) + b\left(\frac{p_n}{q_n}-\theta\right) = \\
+            &\underbrace{\left(a \left(\frac{p_n}{q_n}+\theta\right) + b\right)}_{\to 2 a \theta + b \text{ as }n \to \infty } \cdot  \underbrace{\left(\frac{p_n}{q_n}- \theta\right)}_{|\cdot|<\frac{1}{q_n^2} \text{ by Theorem }\ref{6.4}}.
+        \end{align*}
+        Hence \[
+        \left|f \left(\frac{p_n}{q_n},1\right)\right|\le \text{const} \cdot \frac{1}{q_n^2} \implies |f(p_n,q_n)|\le \text{const}.
+        \]
+    \end{proof}
+\end{proof}
+
+\subsection*{Pell's equation}
+Let $d \in \mathbb{N}$ for $d$ not a square. We seek to solve $x^2-dy^2 = 1$ for $x,y \in \mathbb{Z}$. 
+
+We see we have the trivial solutions $(x,y)=(\pm 1,0)$.
+
+\begin{lemma}
+    If $(x,y) \in \mathbb{N}$ satisfy $x^2-dy^2=1$, then $\frac{x}{y}$ is a convergent to $\sqrt{d}.$ 
+\end{lemma}
+\begin{proof}
+    $x^2-dy^2=1 \implies (x-\sqrt{d}y)(x+\sqrt{d}y)=1$.Thus 
+    \begin{align*}
+        &0<x - \sqrt{d}y = \frac{1}{x+ \sqrt{d}y} < \frac{1}{2\sqrt{d}y} < \frac{1}{2y} \\
+        &\left|\frac{x}{y}-\sqrt{d}\right|<\frac{1}{2y^2},
+    \end{align*}
+    so we're done by Theorem \ref{6.8}.
+\end{proof}
+\begin{lemma}\label{6.11}
+    Let $\theta$ be a quadratic irrational with conjugate $\theta'$ (i.e. $\theta,\theta'$ are roots of $ax^2+bx+c=0$ for $a,b,c \in \mathbb{Z}, a \neq 0$). Then the continued fraction of $\theta$ is purely periodic $\iff$ $\theta>1$ and $-1<\theta'<0$.
+\end{lemma}
+\begin{proof}
+    Omitted, but can be found in Baker's \textit{A concise introduction to the theory of numbers}. 
+\end{proof}
+
+Let $d \in \mathbb{N}$ not a square. Let $a_0 = \left\lfloor \sqrt{d} \right\rfloor$, so $\sqrt{d}=a_0 + \frac{1}{\theta_1}$. Applying Lemma \ref{6.11} to $\theta_1 = \frac{1}{\sqrt{d}-a_0}$ shows that $\sqrt{d}=[a_0,\overline{a_1,\ldots,a_n}]$ (e.g. $\sqrt{14} = [3,\overline{1,2,1,6}]$ as we saw before).
+
+\begin{theorem}\label{6.12}
+    Let $d \in \mathbb{N}$ not a square. Then $x^2-dy^2 =1$ has a nontrivial solution in integers $x$ and $y$.
+\end{theorem}
+\begin{proof}
+    Write $\sqrt{d} = [a_0, \overline{a_1,\ldots,a_n}]$.
+    \vspace{1mm}
+    
+    We then have 
+    \begin{align*}
+        &\sqrt{d}=[a_0,\theta_1]=a_0+\frac{1}{\theta_1} \implies \theta_1 = \frac{1}{\sqrt{d}-a_0} \\
+        &\sqrt{d}=[a_0,a_1,\ldots,a_n,\theta_1]= \frac{\theta_1 p_n + p_{n-1}}{\theta_1 q_n + q_{n-1}} \\
+    \end{align*}
+    \begin{align*}
+        &\implies \sqrt{d} = \frac{p_n + (\sqrt{d}-a_0)p_{n-1}}{q_n + (\sqrt{d}-a_0)q_{n-1}} \\
+        &\implies (q_n + (\sqrt{d}-a_0)q_{n-1})\sqrt{d} = p_n + (\sqrt{d}-a_0)p_{n-1} \\
+        &\implies dq_{n-1} + (q_n-a_0q_{n-1})\sqrt{d} = p_n - a_0p_{n-1} + p_{n-1}\sqrt{d}.
+    \end{align*}
+    As $\sqrt{d}$ is irrational, equate coefficients to get 
+    \begin{align*}
+        \begin{cases}
+            p_{n-1} = q_n - a_0q_{n-1}\\
+            dq_{n-1} = p_n - a_0p_{n-1}
+        \end{cases}
+        \implies p_{n-1}^2 - d q_{n-1}^2 = p_{n-1}q_n - p_n q_{n-1} =(-1)^n.
+    \end{align*}
+    Hence Pell's equation has a solution \[
+    (x,y) = \begin{cases}
+        (p_{n-1},q_{n-1}) &\text{ if }n \text{ is even.}\\
+        (p_{2n-1},q_{2n-1}) &\text{ if }n \text{ is odd.}
+    \end{cases}
+    \]
+\end{proof}
+\begin{prop}
+    Let $U_d = \{x+y\sqrt{d} \mid x,y \in \mathbb{Z}, x^2-dy^2 = 1\}$. Then 
+    \begin{enumerate}[(i)]
+        \item $U_d$ is a subgroup of $\mathbb{R}^*$.
+        \item If $0<a<b$, then $U_d \cap [a,b]$ is finite.
+        \item $U_d \neq \{\pm 1\}$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    \begin{enumerate}[(i)]
+        \item Left as an exercise, not hard.
+        \item $a\le x + y \sqrt{d} \le b $ and $\frac{1}{b} \le x-y\sqrt{d} = \frac{1}{x+y\sqrt{d}} \le \frac{1}{a}$, so $x,y$ are bounded.
+        \item See Theorem \ref{6.12}.
+    \end{enumerate}
+\end{proof}
+We conclude that $U_d$ contains a least element $>1$, say $x_0+y_0\sqrt{d}$. Then $U_d = \{\pm (x_0+y_0\sqrt{d})^m \mid m \in \mathbb{Z}\}$.
 
 \end{document}
