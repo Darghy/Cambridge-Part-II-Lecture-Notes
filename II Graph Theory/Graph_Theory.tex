@@ -1468,5 +1468,91 @@ This is also wrong:
 \begin{defn}[Binomial random graph]
     For $n \in \mathbb{N}, p \in [0,1]$, define the \textbf{binomial random graph} to be the probability space $G(n,p)$ on all graphs on $n$ vertices, where each potential edge is included in the graph with probability $p$ independently.
 \end{defn}
+\marginpar{21 Nov 2022, Lecture 20}
+
+\textbf{Question.} For what values of $p \in (0,1)$ is $G \sim G(n,p)$ (a graph $G$ sampled from the probability space $G(n,p)$) likely to contain a triangle? Note that here we're thinking of $p=p(n)$ as a function of $n$, and we mostly only care about large values of $n$.
+\vspace{1mm}
+
+\textbf{Notation.} If $(a_n), (b_n)$ are sequences of nonnegative numbers and $b_n \neq 0$ for all sufficiently large $n$, then we write $a_n \ll b_n$ if $\lim_{n \to \infty} \frac{a_n}{b_n} \to 0$.
+\vspace{1mm}
+
+Now let $X$ be the random variable that counts the number of triangles in $G \sim G(n,p)$, so \[
+\mathbb{E}[X] = {{n}\choose{3}} p^3.
+\]
+Note that if $p \ll \frac{1}{n}$ (i.e. $pn \to 0$), then \[
+{{n}\choose{3}}p^3 \le n^3p^3 = (np)^3 \to 0.
+\]
+By Markov, $$\mathbb{P}(G \supset K_3) = \mathbb{P}(X\ge 1) \le \mathbb{E}[X] \to 0$$ for $p \ll \frac{1}{n}$.
+
+Note that if $p \gg \frac{1}{n}$ ($pn \to \infty$), then \[
+{{n}\choose{3}}p^3 \ge \frac{(n-3)^3 p^3}{6} \stackrel{\text{for }n\text{ large}}{\ge}  \frac{1}{10}(np)^3 \to \infty.
+\]
+
+\textbf{Question.} If $\mathbb{E}[X] \to \infty$, do we have $\mathbb{P}(G \supset K_3) \to 1$?
+\vspace{1mm}
+
+\textbf{Fact.} (Chebyshev) Let $X$ be a random variable and $t>0$. Then \[
+\mathbb{P}(|X - \mathbb{E}[X]| > t) \le \frac{\text{Var}(X)}{t^2}.
+\]
+\vspace{1mm}
+
+\textbf{Fact.} (Second moment method) Let $X$ be a random variable. Then \[
+\mathbb{P}(X = 0) \le \frac{\text{Var}(X)}{\mathbb{E}[X]^2}.
+\] 
+\begin{proof}
+    \[
+    \mathbb{P}(X = 0) \le \mathbb{P}(|X - \mathbb{E}[X]| \ge \mathbb{E}[X]) \le \frac{\text{Var}(X)}{\mathbb{E}[X]^2}.
+    \]
+\end{proof}
+\begin{theorem}
+    Let $G \sim G(n,p)$ and $X$ the number of triangles in $G$. Then \[
+    \lim_{n \to \infty} \mathbb{P}(G \supset K_3) = \begin{cases}
+        0 &\text{ if } p \ll \frac{1}{n}\\
+        1 &\text{ if } p \gg \frac{1}{n}.
+    \end{cases}
+    \]
+\end{theorem}
+\begin{proof}
+    If $p \ll \frac{1}{n}$, then $\mathbb{E}[X] \to 0$ by above, so $\mathbb{P}(G \supset K_3) = 0$ by above.
+    \vspace{1mm}
+    
+    If $p \gg \frac{1}{n}$, then we have \[
+    \mathbb{P}(X=0)\le \frac{\text{Var}(X)}{\mathbb{E}[X]},
+    \]
+    so we need to find $\text{Var}(X)$. Now 
+    \begin{align*}
+    &X = \sum_{\Delta \in [n]^3}^{} \mathbbm{1}(\Delta \text{ is a }K_3 \text{ in }G) \\
+    &X^2 = \sum_{\Delta_1,\Delta_2 \in [n]^3}^{} \mathbbm{1}(\Delta_1,\Delta_2 \text{ are }K_3\text{'s in }G) \\
+    &\mathbb{E}[X^2] = \sum_{\Delta_1,\Delta_2}^{} \mathbb{P}(\Delta_1,\Delta_2 \text{ are }K_3 \text{'s in }G).
+    \end{align*}
+    On the other hand, 
+    \begin{align*}
+        \mathbb{E}[X]^2 = \sum_{\Delta_1,\Delta_2}^{} \mathbb{P}(\Delta_1 \text{ is a }K_3 \text{ in }G) ~ \mathbb{P}(\Delta_2 \text{ is a }K_3 \text{ in }G).
+    \end{align*}
+    Hence, as triangles that don't share any edges cancel out,
+    \begin{align*}
+        &\text{Var}(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2 \le \\
+        &\le \sum_{\Delta_1,\Delta_2 \text{ share an edge}}^{} \mathbb{P}(\Delta_1,\Delta_2 \text{ are }K_s\text{'s in }G) + \sum_{\Delta_1}^{} \mathbb{P}(\Delta_1 \text{ is a }K_3 \text{ in }G) \le \\
+        &\le n^4 p^5 + \mathbb{E}[X].
+    \end{align*}
+    Thus \[
+    \frac{\text{Var}(X)}{\mathbb{E}[X]^2} \le \frac{n^4 p^5 + \mathbb{E}[X]}{\mathbb{E}[X]^2} \le \frac{C n^4 p^5}{(p^3n^3)^2} + \frac{1}{\mathbb{E}[X]} \le \frac{1}{pn^2} + \frac{1}{\mathbb{E}[X]} \to 0.
+    \]
+\end{proof}
+\textbf{Remarks.} 
+\begin{itemize}
+    \item We see a ''phase transition'' in $\mathbb{P}(G \supset K_3)$ -- it goes from 0 to 1 in a ''small'' interval.
+    \item What if $p = \frac{\lambda}{n}$ for $\lambda>0$ fixed? We then have \[
+    \lim_{n \to \infty} \mathbb{P}(G \supset K_3) = 1 - e^{-\lambda^2/6},
+    \]
+    but we will not prove this.
+    \item Question: is it true that \[
+        \mathbb{E}[\# \text{ of copies of }H] \to \infty \implies \mathbb{P}(G \supset H) \to 1?
+    \]
+    The answer to this is no in general (i.e. consider $H$ to be 1000 disjoint vertices and one triangle and think what happens\footnote{$\mathbb{E}[\# H] = {n\choose{1003}}p^3 \approx n^{1003}p^3$, which goes to infinity when $p = n^{-\frac{1003}{3}} \ll n^{-1}$.}). But if $K \subset H$ is the ''densest'' subgraph, then this is true.
+\end{itemize}
+
+\marginpar{23 Nov 2022, Lecture 21}
+
 
 \end{document}
