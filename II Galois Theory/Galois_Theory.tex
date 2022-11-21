@@ -1095,19 +1095,24 @@ Let $p$ be a prime and $\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$. We aim to descri
     $f = T^4 - 3T + 1$.
     \begin{itemize}
         \item If $p=2$, then $f = T^4+T+1 \pmod{2}$, which is irreducible (as it is not divisible by $T^2+T+1$, the only irreducible polynomial of degree 2).
-        \item If $p=5$, then $f=(T+1)(\underbrace{T^3-T^2+T+1}_{\text{irreducible}})$. So by Corollary \ref{10.6}, we see that $\text{Gal}(f/\mathbb{Q})=G$ contains a 4--cycle and a 3--cycle, so $|G|$ is divisible by $12$ and so is either $S_4$ or $A_4$ (as it is the unique subgroup of $S_4$ of order 12). But $4$--cycles are odd, so $G = S_4$.
+        \item If $p=5$, then $f=(T+1)(\underbrace{T^3-T^2+T+1}_{\text{irreducible}})$.
     \end{itemize}
+    So by Corollary \ref{10.6}, we see that $\text{Gal}(f/\mathbb{Q})=G$ contains a 4--cycle and a 3--cycle, so $|G|$ is divisible by $12$ and so is either $S_4$ or $A_4$ (as it is the unique subgroup of $S_4$ of order 12). But $4$--cycles are odd, so $G = S_4$.
 \end{example}
-\textbf{Remark.} If $\overline{f}$ is separable, then $\text{Disc}(f) \neq 0$, so $p \nmid \text{Disc}(f)$, i.e. $f$ is separable.
+\textbf{Remark.} If $\overline{f}$ is separable, then $\text{Disc}(\overline{f}) \neq 0$, so $p \nmid \text{Disc}(f)$, i.e. $f$ is separable.
+\vspace{1mm}
+
 
 \textbf{Remark.} If $f$ is separable, then $\overline{f}$ will be separable for all but the finite set $\{p \mid \text{Disc}(f)\}$. So we have lots of values of $p$ to try.
+\vspace{1mm}
+
 
 \textbf{Remark.} The meaning of $\text{Gal}(\overline{f}/\mathbb{F}_p) \subset \text{Gal}(f/\mathbb{Q})$: The identification of $\text{Gal}(f/\mathbb{Q})$ with a subgroup of $S_n$ depends on fixing a labeling/ordering of the roots. Taking a different ordering conjugates $\text{Gal}(f/\mathbb{Q})$ inside $S_n$ (by the permutation giving the reordering). So the above statement really means that $\text{Gal}(\overline{f}/\mathbb{F}_p)$ is conjugate to a subgroup of $\text{Gal}(f/\mathbb{Q})$.
 \vspace{1mm}
 
 There exist at least two proofs of Theorem \ref{10.5}. One of the proofs is difficult to understand, and will be posted on the Moodle page. The other proof has a flavor of algebraic number theory, but is self-contained and we present it here:
 \begin{proof}[Proof of Theorem \ref{10.5} (non-examinable)]
-    Let $L=\mathbb{Q}(x_1,\ldots,x_n)$ be the splitting field for $f = \prod_{}^{} (T-x_i)$ of degree $N=[L:\mathbb{Q}]$. Consider $R = \mathbb{Z}[x_1,\ldots,x_n]$. As $f(x_i)=0$, $f$ is monic and every element of $R$ is a $\mathbb{Z}$--linear combination of $x_1^{\alpha_1},\ldots,x_n^{\alpha_n}$ for $0\le a_i\le n$. So $R$ is finitely generated as an abelian group. As $R \subset L \cong \mathbb{Q}^N$, we must have $R \cong \mathbb{Z}^M$ for $M\le N$. (In fact, $M=N$, but we don't prove that here).
+    Let $L=\mathbb{Q}(x_1,\ldots,x_n)$ be the splitting field for $f = \prod_{}^{} (T-x_i)$ of degree $N=[L:\mathbb{Q}]$. Consider $R = \mathbb{Z}[x_1,\ldots,x_n]$. As $f(x_i)=0$, $f$ is monic and every element of $R$ is a $\mathbb{Z}$--linear combination of $x_1^{\alpha_1},\ldots,x_n^{\alpha_n}$ for $0\le \alpha_i\le N$. So $R$ is finitely generated as an abelian group. As $R \subset L \cong \mathbb{Q}^N$, we must have $R \cong \mathbb{Z}^M$ for $M\le N$. (In fact, $M=N$, but we don't prove that here).
     \vspace{1mm}
 
     Now consider $\overline{R}=R/pR$, which has $p^M$ elements. Let $\overline{P}$ be a maximal ideal of $\overline{R}$, corresponding to an ideal $P$ of $R$ containing $pR$. Then $F = R/pR \cong \overline{R}/\overline{P}$ (by the isomorphism theorems) is a finite field with of characteristic $p$, so say it has $p^d$ elements. $F = \mathbb{F}_p(\overline{x_1},\ldots,\overline{x_n})$, where $\overline{x_i}=x_i+P \in F$ and $\overline{f}=\prod_{n=1}^{} (T-\overline{x_i})$. As $\overline{f}$ is separable, the $\overline{x_i}$ are distinct, so $F$ is a splitting field for $\overline{f}$.
@@ -1116,7 +1121,7 @@ There exist at least two proofs of Theorem \ref{10.5}. One of the proofs is diff
     $G = \text{Gal}(f/\mathbb{Q})$ takes $R$ to itself (as it permutes the $x_i$). Let $H \subset G$ be the stabilizer of $P$, i.e. $\{\sigma \in G \mid \sigma P = P\}$. Then $H$ acts on $R/P = F$, permuting the $\overline{x_i}$'s in the same way as it permutes the $x_i$'s. So we have an injective homomorphism $H \hookrightarrow \text{Gal}(f/\mathbb{F}_p)$. It is enough to show that this is an isomorphism. Let $\{P_1,\ldots,P_r\}$ be the orbit of $G$ under $G$ ($P_i= \sigma P$ for some $\sigma \in G$). $P_i$ are all maximal ideals (because $P$ is), $R/P_i \cong R/P$ has $p^d$ elements as well. As the $P_i$ are maximal, $P_i+P_j = R$ if $i\neq j$. So by Chinese Remainder Theorem, $R/(P_1 \cap \ldots \cap P_r) \cong R/P_1 \times \ldots \times R/P_r$. As $p \in P_i$, $pR \subset P_1 \cap \ldots \cap P_r$, so \[
     p^N \ge p^M = |R/pR| \ge |R/(P_1 \cap \ldots \cap P_r)| = \prod_{i=1}^{r} |R/P_i| = p^{rd},
     \]
-    so $N \ge ^{rd}$. By the Orbit-Stabilizer Theorem, $r=[G:H] = \frac{N}{|H|}$, and because $H \hookrightarrow \text{Gal}(F/\mathbb{F}_p)$ (i.e. $H$ injects into $\text{Gal}(F/\mathbb{F}_p)$), we have $|H|\le d$ if and only if the above map is an isomorphism. So $N\le rd$. Hence $N=rd$, so $H \cong \text{Gal}(\overline{f}/\mathbb{F}_p)$.
+    so $N \ge rd$. By the Orbit-Stabilizer Theorem, $r=[G:H] = \frac{N}{|H|}$, and because $H \hookrightarrow \text{Gal}(F/\mathbb{F}_p)$ (i.e. $H$ injects into $\text{Gal}(F/\mathbb{F}_p)$), we have $|H|\le d$ if and only if the above map is an isomorphism. So $N\le rd$. Hence $N=rd$, so $H \cong \text{Gal}(\overline{f}/\mathbb{F}_p)$.
 \end{proof}
 \textbf{Remark.} If $\text{Gal}(f/\mathbb{Q})$ contains an element of cycle type $(n_1,\ldots,n_r)$, then it is a (hard!) fact that exist infinitely many primes such that $\overline{f}$ factors into irreducibles of degrees $n_1,\ldots,n_r$. This is called Chebotarov's density theorem -- it is a generalization of Dirichlet's theorem on primes in arithmetic progressions. This might be proved in II Number Fields.
 
@@ -1164,7 +1169,7 @@ Let $L/K$ be a splitting field for $T^n-1$ and let $G=\text{Gal}(L/K)$ ($L/K$ is
     If $K=\mathbb{Q}$, take $L=\mathbb{Q}(e^{\frac{2 \pi i}{n}})$. What is the minimal polynomial of $e^{2\pi/n}$?
 \end{example}
 \begin{defn}
-    Let $K$ be a field satisfying the above earlier hypothesis. The $n^{\text{th}}$ \textbf{cyclotomic polynomial} is $\Phi_n(T)=\prod_{a \in (\mathbb{Z}/n\mathbb{Z})^\times}^{} (T-\zeta_n^a)$ (where the roots are the primitive $n^{\text{th}}$ roots of 1 in $L$, the splitting field for $T^n-1$). 
+    Let $K$ be a field satisfying the above earlier hypothesis. The $n^{\text{th}}$ \textbf{cyclotomic polynomial} is $$\Phi_n(T)=\prod_{a \in (\mathbb{Z}/n\mathbb{Z})^\times}^{} (T-\zeta_n^a)$$ (where the roots are the primitive $n^{\text{th}}$ roots of 1 in $L$, the splitting field for $T^n-1$). 
 \end{defn}
 As $G$ permutes the primitive $n^{\text{th}}$ roots of 1 in $L$, $\Phi_n \in L^G[T] = K[T]$. So we can rephrase (iii) in Proposition \ref{11.2} as saying that $\chi$ is surjective if and only if $\Phi_n \in K[T]$ is irreducible.
 \vspace{1mm}
@@ -1189,12 +1194,13 @@ We have two special cases:
     If $f\neq g$, then $(f,g)=1$ and they both divide $T^n-1$, so $fg \mid T^n-1$. As $\zeta$ is a root of $g(T^p)$, $f \mid g(T^p)$. Reduce this modulo $p$ to get $\overline{f} = f \pmod{p} \in \mathbb{F}_p[T]$ that divides $g(T^p) = \overline{g}(T)^p$ (as we're in characteristic $p$) and as both $\overline{f}$ and $\overline{g}$ divide $T^n-1 \in \mathbb{F}_p[T]$, which is separable (as $p \nmid n$), this implies $\overline{f} \mid \overline{g}$. Hence $\overline{f}^2 \mid \overline{f}\overline{g} \mid T^n-1$, contradicting separability of $T^n-1$. Hence this case is impossible and we're done.
 \end{proof}
 So the minimal polynomial of $e^{2\pi/n}$ over $\mathbb{Q}$ is $\Phi_n(T)$.
+\vspace{1mm}
 
 \marginpar{10 Nov 2022, Lecture 16}
 
 Now we consider $K=\mathbb{F}_p$. Recall that $\phi_p \in G$ is the map $\phi(x)=x^p$, the Frobenius map, and $\phi_p$ generates $G$.
 \begin{prop}
-    Let $K=\mathbb{F}_p, (n,p)=1$. Then
+    Let $K=\mathbb{F}_p$ and $(n,p)=1$. Then
     \begin{enumerate}[(i)]
         \item $\chi_n : G \to \langle \phi \rangle \subset (\mathbb{Z}/n\mathbb{Z})^\times$ (the subgroup generated by a residue class mod $p$) and $\chi_n(\phi_p)=p \pmod{n}$.
         \item $[L:K]=r$, the order of $p$ mod $n$.
@@ -1218,9 +1224,13 @@ Now we consider $K=\mathbb{F}_p$. Recall that $\phi_p \in G$ is the map $\phi(x)
 Recall that if $p$ is an odd prime and $a \in \mathbb{Z}$ with $(a,p)=1$, then the Legendre symbol is defined as $\left( \frac{a}{p} \right) = \begin{cases}
     1 &\text{ if } a \text{ is a square mod }p.\\
     -1 &\text{ if not.}
-\end{cases}$ Euler's formula says $\left( \frac{a}{p} \right) \equiv a^{\frac{p-1}{2}} \pmod{p}$.
+\end{cases}$
+\vspace{1mm}
 
-Now let $q \neq p$ be another odd prime and say $n=q$. Then $L=K(\zeta_q)$ is a splitting field for $f=T^q-1 = (T-1)\Phi_q$. So on roots of $f$ in $L$, the Frobenius map $\phi_p$ has cycle type $(1,r,\ldots,r)$ with $\frac{q-1}{r}$ $r$--cycles. So its sign is $\text{sgn}(\phi_p) = (-1)^{r-1}\cdot (q-1)/r = (-1)^{(q-1)/r}$ and $2 \mid \frac{q-1}{r} \iff r \mid \frac{q-1}{2} \iff p^{\frac{q-1}{2}} \equiv 1 \pmod{q}$. So $\text{sgn}(\phi_p) = \left( \frac{p}{q} \right)$ by Euler's formula. But as $G = \langle \phi_p \rangle$, $\text{sgn}(\phi_p) = 1 \iff G \subset A_q$ (for $q=\text{deg}(f)$). But this holds if and only if $\text{Disc}(f)$ is a square in $\mathbb{F}_p$.
+Euler's formula says $\left( \frac{a}{p} \right) \equiv a^{\frac{p-1}{2}} \pmod{p}$. Now let $q \neq p$ be another odd prime and say $n=q$. Then $L=K(\zeta_q)$ is a splitting field for $f=T^q-1 = (T-1)\Phi_q$. So on roots of $f$ in $L$, the Frobenius map $\phi_p$ has cycle type $(1,r,\ldots,r)$ with $\frac{q-1}{r}$ $r$--cycles. 
+
+So its sign is $\text{sgn}(\phi_p) = (-1)^{r-1}\cdot (q-1)/r = (-1)^{(q-1)/r}$ and $2 \mid \frac{q-1}{r} \iff r \mid \frac{q-1}{2} \iff p^{\frac{q-1}{2}} \equiv 1 \pmod{q}$. So $\text{sgn}(\phi_p) = \left( \frac{p}{q} \right)$ by Euler's formula. But as $G = \langle \phi_p \rangle$, $\text{sgn}(\phi_p) = 1 \iff G \subset A_q$ (for $q=\text{deg}(f)$). But this holds if and only if $\text{Disc}(f)$ is a square in $\mathbb{F}_p$.
+\vspace{1mm}
 
 A lemma we prove on Example Sheet 3:
 \begin{lemma}
@@ -1237,6 +1247,7 @@ This is essentially Stickelberger's proof, although he didn't have Galois theory
 \vspace{1mm}
 
 \textbf{Application 2.} Construction of regular polygons.
+\vspace{1mm}
 
 Ruler--and--compass construction of a regular $n$--gon ($n\ge 3$) is equivalent to constructing $\cos(\frac{2\pi}{n})$.
 
@@ -1248,7 +1259,7 @@ Ruler--and--compass construction of a regular $n$--gon ($n\ge 3$) is equivalent 
 \marginpar{12 Nov 2022, Lecture 17}
 
 \begin{proof}
-    Recall $x \in \mathbb{R}$ is constructible $\iff$ $\exists $ fields $Q=K_0 \subset K_1 \subset \ldots \subset K_m \ni x$ and $[K_{i+1}:K_i]=2 ~\forall i$. In particular, a necessary condition is that $\text{deg}_\mathbb{Q}(x)$ is a power of 2. In our case, $x=\cos(\frac{2\pi}{n}) = \frac{1}{2}(\zeta_n+\zeta_n^{-1})$ for $\zeta_n = e^{2\pi i/n}$, so $\zeta_n^2 - 2x \zeta_n + 1 =0.$
+    Recall $x \in \mathbb{R}$ is constructible $\iff$ $\exists $ fields $\mathbb{Q}=K_0 \subset K_1 \subset \ldots \subset K_m \ni x$ and $[K_{i+1}:K_i]=2 ~\forall i$. In particular, a necessary condition is that $\text{deg}_\mathbb{Q}(x)$ is a power of 2. In our case, $x=\cos(\frac{2\pi}{n}) = \frac{1}{2}(\zeta_n+\zeta_n^{-1})$ for $\zeta_n = e^{2\pi i/n}$, so $\zeta_n^2 - 2x \zeta_n + 1 =0.$
 
     We have $x \in \mathbb{R}, \zeta_n \neq \mathbb{R}$, so $[\mathbb{Q}(\zeta_n):\mathbb{Q}(x)]=2$. So if $x$ is constructible, then $[\mathbb{Q}(\zeta_n):\mathbb{Q}]$ is a power of 2, but if $n=\prod_{i=1}^{r} p_i^{e_i}$, then
     \[
@@ -1275,7 +1286,7 @@ Let $L=K(x)$, $x^n=a \in K$ (not necessarily $a=1$). We know these extensions ar
 
 Let us first prove a result of independent interest.
 \begin{theorem}[Linear independence of field embeddings]\label{12.1}
-    Let $K,L$ be fields and let $\sigma_1,\ldots,\sigma_n : K \hookrightarrow L$ be distinct field homomorphisms. If $y_1,\ldots,y_n \in L$ such that $~\forall x \in K$, $y_1\sigma_1(x) + \ldots + y_n \sigma_n(x)=0$, then $y_i=0 ~\forall i$.
+    Let $K,L$ be fields and let $\sigma_1,\ldots,\sigma_n : K \hookrightarrow L$ be distinct field homomorphisms. If $y_1,\ldots,y_n \in L$ such that $\forall x \in K$, $y_1\sigma_1(x) + \ldots + y_n \sigma_n(x)=0$, then $y_i=0 ~\forall i$.
 
     In other words, $\sigma_1,\ldots,\sigma_n$ are $L$--linearly independent elements of the set of functions $K \to L$, which is an $L$--vector space.
 \end{theorem}
