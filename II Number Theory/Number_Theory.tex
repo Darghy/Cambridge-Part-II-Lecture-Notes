@@ -1943,4 +1943,99 @@ Let $d \in \mathbb{N}$ not a square. Let $a_0 = \left\lfloor \sqrt{d} \right\rfl
 \end{proof}
 We conclude that $U_d$ contains a least element $>1$, say $x_0+y_0\sqrt{d}$. Then $U_d = \{\pm (x_0+y_0\sqrt{d})^m \mid m \in \mathbb{Z}\}$.
 
+\section{Primality testing \& factoring}
+\marginpar{22 Nov 2022, Lecture 21}
+
+
+    We have two key questions:
+    \begin{enumerate}[(i)]
+        \item Given a large integer $N$, can we efficiently determine if $N$ is prime?
+        \item Given a large composite integer $N$, can we find a non--trivial factor of $N$?
+    \end{enumerate}
+
+Trial division up to $\sqrt{N}$ is not efficient. However, small factors are easily found by trial division. Accordingly we assume throughout this section that $N$ is odd.
+\vspace{1mm}
+
+Fermat's little theorem states that if $p$ is prime and $(a,p)=1$, then $a^{p-1} \equiv 1 \pmod{p}$. 
+\vspace{1mm}
+
+So for example, to prove $15$ is not prime, we can check that $2^{14}\equiv 4 \not\equiv 1 \pmod{15}$.
+\begin{defn}
+    $b$ is a \textbf{base} for $N$ if $(b,N)=1$. We usually take ${b \in \{1,2,\ldots,N-1\}}$.
+\end{defn}
+\begin{defn}
+    A composite integer $N$ is a (Fermat) \textbf{pseudoprime}  to the base $b$ if $b^{N-1} \equiv 1\pmod{N}$.
+\end{defn}
+\begin{example}
+    91 is a pseudoprime to the base $3$, as we can check:
+    \begin{align*}
+        3^6 \equiv 1 \pmod{7},~ 3^6 \equiv 1 \pmod{13} \implies 3^6 \equiv 1 \pmod{91} \implies 3^{90} \equiv 1 \pmod{91}.
+    \end{align*}
+\end{example}
+\begin{lemma}
+    For every integer $b>1$, there exist infinitely many pseudoprimes to the base $b$.
+\end{lemma}
+\begin{proof}
+    Let $p$ be any prime not dividing $2b(b^2-1)$. Let $N=\frac{b^{2p}-1}{b^2-1} \in \mathbb{Z}$.
+    \begin{enumerate}[(i)]
+        \item $N$ is composite: $N = \frac{b^p-1}{b-1}\frac{b^p+1}{b+1}$, where both factors are $\in \mathbb{Z}$ and $>1$.
+        \item If we can show that $2p \mid (N-1)$, say $N-1=2pm$ for some $m \in\mathbb{Z}$, then \[
+        b^{N-1} \equiv (b^{2p})^m \equiv 1 \pmod{N}.
+        \]
+        But $N-1 = \frac{b^{2p}-b^2}{b^2-1}=b^{2p-2}+b^{2p-4}+\ldots+b^4+b^2$, where the RHS is a sum of $p-1$ terms, all with the same parity, so as $p-1$ is even, $2 \mid (N-1)$.
+        \vspace{1mm}
+        
+        $(b,p)=1 \implies b^{p-1} \equiv 1\pmod{p} \implies b^{2p} -b^2 \equiv 0 \pmod{p}$, so $p \mid (b^{2p}-b^2)$, but $p \nmid b^2-1$, so $p \mid (N-1)$.
+        \vspace{1mm}
+        
+        Since $p$ is odd, it follows that $2p \mid (N-1)$, so we're done.
+    \end{enumerate}
+\end{proof}
+\textbf{Remark.} If $b_1^{N-1} \equiv 1\pmod{N}$, $b_2^{N-1} \equiv 1 \pmod{N}$, then $(b_1b_2)^{N-1} \equiv 1\pmod{N}$. So for $N$ an odd composite integer, $$\{b \in (\mathbb{Z}/n\mathbb{Z})^\times \mid N \text{ is a pseudoprime to the base }b\}$$ is a subgroup of $(\mathbb{Z}/n\mathbb{Z})^\times$. So if $\exists $ base $b$ such that $N$ is not a pseudoprime to the base $b$, then $N$ is not a pseudoprime for at least half the bases (since a proper subgroup has index $\ge 2$).
+
+\textbf{Problem:} $N$ might be a pseudoprime to all bases $b$. Such $N$ are called \textbf{Carmichael numbers} (see Example Sheet 4 for more on these).
+
+\begin{theorem}[Alford, Pomerance, Granville (1994)]
+    There are infinitely many Carmichael numbers.
+\end{theorem}
+In fact, they showed $|\{\text{Carmichael numbers }\le x\}|>x^{2/7}$ for $x$ sufficiently large.
+\vspace{1mm}
+
+Euler's criterion says that if $p$ is an odd prime and $(a,p)=1$, then $a^{\frac{p-1}{2}} \equiv \left( \frac{a}{p} \right) \pmod{p}$.
+\begin{defn}
+    An odd composite integer $N$ is an \textbf{Euler pseudoprime} to the base $b$ if $b^{\frac{N-1}{2}} \equiv \left( \frac{b}{N} \right) \pmod{N}$ (where the RHS is a Jacobi symbol). 
+\end{defn}
+\begin{example}
+    91 is not an Euler pseudoprime to the base 3. Indeed,
+    \begin{align*}
+        3^6 \equiv 1 \pmod{91} \implies 3^{45} \equiv 3^{3} \equiv 27 \pmod{91}.
+    \end{align*}
+\end{example}
+\textbf{Remark.} Since $\left( \frac{b_1b_2}{N} \right) =\left( \frac{b_1}{N} \right) \left( \frac{b_2}{N} \right)$ for Jacobi symbols, we again have that for $N$ odd and composite that \[
+\{b \in (\mathbb{Z}/n\mathbb{Z})^\times \mid N\text{ is an Euler pseudoprime to the base }b\}
+\]
+is a subgroup of $(\mathbb{Z}/n\mathbb{Z})^\times$.
+\begin{theorem}
+    Let $N$ be an odd composite integer. Then $\exists $ a base $b$ such that $N$ is not an Euler pseudoprime to the base $b$ (i.e. there is no analogue of the Carmichael numbers).
+\end{theorem}
+\begin{proof}
+    \begin{itemize}
+        \item Case 1: $N$ is squarefree. Write $N=pm$ for $p \nmid m, m\ge 3$. Pick $u \in \mathbb{Z}$ such that $\left( \frac{u}{p} \right) =-1$. By CRT, $\exists b \in \mathbb{Z}$ such that $\begin{cases}
+            &b \equiv u \pmod{p}\\
+            &b \equiv 1 \pmod{m}
+        \end{cases}$ (using here that $p$ and $m$ are coprime).
+        \vspace{1mm}
+        
+        Then $\left( \frac{b}{N} \right) = \left( \frac{b}{p} \right) \left( \frac{b}{m} \right) = -1$. But if $b^{\frac{N-1}{2}} \equiv -1 \pmod{N}$, then $1 \equiv -1 \pmod{m}$, a contradiction.
+        \item Case 2: $p^2 \mid N$. Write $N=p^r m$ for $r\ge 2$ and $p \nmid m$. By CRT, $\exists b \in\mathbb{Z}$ such that $\begin{cases}
+            &b \equiv p+1 \pmod{p^2}.\\
+            &b \equiv 1 \pmod{m}.
+        \end{cases}$
+        Then $(b,N)=1$ and \[
+        b^{N-1} \equiv (1+p)^{N-1} \equiv 1 + (N-1)p \not\equiv  1 \pmod{p^2}.
+        \]
+        So $b^{N-1} \not\equiv 1 \pmod{N}$. So $N$ is not a Fermat pseudoprime to the base $b$, hence not an Euler pseudoprime to the base $b$.
+    \end{itemize}
+\end{proof}
+
 \end{document}
