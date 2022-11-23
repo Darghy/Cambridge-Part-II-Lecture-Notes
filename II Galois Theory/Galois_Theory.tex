@@ -433,7 +433,7 @@ To actually find this polynomial, write $$z^{\frac{p-1}{2}}+z^{\frac{p-3}{2}} + 
         \item Assume $M/K$ is algebraic. Then $~\forall x \in M$, $x$ is algebraic over $K$, so it is certainly algebraic over $L$. So $M/L$ is algebraic. As $L \subset M$, $L$ is algebraic over $K$.
 
         The other direction follows from the following lemma:
-        \begin{lemma}
+        \begin{lemma}\label{4.4}
             Suppose we have $M/L/K$ with $L/K$ algebraic. Let $x \in M$, and suppose $X$ is algebraic over $L$. Then $x$ is algebraic over $K$.
         \end{lemma}
         \begin{proof}
@@ -1487,5 +1487,96 @@ For the next theorem, note that since $\text{Tr}_{L/K}: L \to K$ is $K$--linear,
     Exercise: prove this directly using the fact that the multiplicative group is cyclic.
 \end{example}
 \textbf{Remark.} We can use Theorem \ref{13.6} to give another proof that if $M/L$ and $L/K$ are separable, then $M/K$ are separable.
+
+\section{Algebraic closure}
+\begin{defn}
+    A field $K$ is \textbf{algebraically closed} if every nonconstant polynomial over $K[T]$ splits into linear factors over $K$.
+    \vspace{1mm}
+    
+    Equivalently, the only irreducibles over $K[T]$ are the linear polynomials.
+\end{defn}
+\begin{example}
+    $\mathbb{C}$ is algebraically closed (by FTA).
+\end{example}
+\begin{prop}\label{14.1}
+    The following conditions on a field $K$ are equivalent:
+    \begin{enumerate}[(i)]
+        \item $K$ is algebraically closed.
+        \item If $L/K$ is an extension, and $x \in L$ is algebraic over $K$, then $x \in K$.
+        \item If $L/K$ is algebraic, then $L=K$.
+    \end{enumerate}
+\end{prop}
+\begin{proof}
+    (i) $\implies$ (ii): Let $L,x$ be as in (ii). Let $f$ be the minimal polynomial of $x$ over $K$. Then $f$ is linear, so $x \in K$.
+    \vspace{1mm}
+    
+    (ii) $\implies$ (iii): By definition of being algebraic, all $x \in L$ are algebraic over $K$, so $x \in K \implies L=K$.
+    \vspace{1mm}
+    
+    (iii) $\implies$ (i): Let $f \in K[T]$ be irreducible and let $L=K[T]/(f)$, which is algebraic over $K$. Then (iii) tells us that $L=K$, so $f$ is linear.
+\end{proof}
+\begin{prop}\label{14.2}
+    Let $L/K$ be algebraic, and suppose that every irreducible $f \in K[T]$ splits into linear factors in $L[T]$. Then $L$ is algebraically closed. 
+\end{prop}
+\textbf{Remark.} $L$ is called an \textbf{algebraic closure} of $K$.
+\begin{proof}
+    Let $M/L$ be an extension and $x \in M$ algebraic over $L$. By Lemma \ref{4.4}, $x$ is algebraic over $K$. By our hypothesis, $m_{x,K} \in K[T]$ splits into linear factors over $L$. So $x \in L$, hence by (ii) in Proposition \ref{14.1}, $L$ is algebraically closed.
+\end{proof}
+\begin{cor}
+    $\overline{\mathbb{Q}} \subset \mathbb{C}$, the field of all algebraic complex numbers is algebraically closed (and is an algebraic closure of $\mathbb{Q}$).
+\end{cor}
+\begin{proof}
+    Apply Proposition \ref{14.2} to $\overline{\mathbb{Q}}/\mathbb{Q}$. The extension is algebraic, and if $f \in \mathbb{Q}[T]$ is irreducible, then by FTA $f$ splits into linear factors over $\mathbb{C}$, so $f = \prod_{}^{} (T-x_i) \in \mathbb{C}$, and $x_i \in \overline{\mathbb{Q}}$ by definition. So the hypotheses of $\ref{14.2}$ hold.
+\end{proof}
+By Proposition \ref{14.2}, an algebraic closure of $K$ is the same as an algebraic extension of $K$ which is algebraically closed. The main results we prove are:
+\begin{itemize}
+    \item Every field has an algebraic closure.
+    \item An algebraic closure is unique (up to isomorphism).
+\end{itemize}
+The main difficulty in proving these statements is set--theoretic - informally, we are trying to find a splitting field for all polynomials over $K$, which is difficult for an infinite collection.
+\vspace{1mm}
+
+\textbf{Special case:} Suppose $K$ is countable. Then so is $K[T]$ (by IA Numbers \& Sets), so enumerate the monic irreducibles as $(f_i)_{i\ge 1}$ in $K[T]$. Let $L_0 = K$ and for each $i\ge 1$, let $L_i$ be a splitting field for $f_i$ over $L_{i-1}$.
+\vspace{1mm}
+
+\textbf{Remark.} It is possible to do this without making random choices, i.e. without using axiom of choice.
+\vspace{1mm}
+
+We may assume that $L_{i-1} \subset L_i$ is a subfield (since if $\sigma: L_{i-1}\hookrightarrow L_i$, then replace $L_i$ with $L_{i-1} \sqcup (L_i - \sigma(L_{i-1}))$). Let $L = \bigcup_{i \ge 0} L_i$. Every $f_i$ splits in $L[T]$, so $L$ is an algebraic closure of $K$. 
+
+\begin{example}
+    $\mathbb{F}_p$ has an algebraic closure.
+\end{example}
+
+For general (uncountable) fields, we need some set--theoretic trick. So we use Zorn's lemma:
+\begin{lemma}[Zorn's lemma]
+    Let $S$ be a nonempty partially ordered set. Suppose that every chain in $S$ has an upper bound in $S$. Then $S$ has a maximal element.
+\end{lemma}
+\textbf{Explanation of terms:}
+\begin{itemize}
+    \item A binary relation $\le$ on a set $S$ is a \textbf{partial order} if $\forall x,y,z \in S$:
+    \begin{enumerate}[(i)]
+        \item $x\le x$.
+        \item $x\le y$ and $y\le z \implies x\le z$.
+        \item $x\le y$ and $y\le x \implies x=y$.
+    \end{enumerate}  
+    $(S,\le)$ is a \textbf{partially ordered set} or \textbf{poset}. It is a \textbf{totally ordered set} if moreover
+    \begin{enumerate}[(iv)]
+        \item $\forall x,y \in S$ either $x\le y$ or $y\le x$.
+    \end{enumerate}
+    So for example, $\mathbb{R}$ is totally ordered by the usual $\le$, and $\mathbb{R}^2$ is partially ordered by $x\le y \iff x_1\le y_1$ and $x_2\le y_2$.
+    \item A \textbf{chain} in a poset $(S,\le )$ is a subset $T \subset S$ which under $\le $ is totally ordered.
+    \item An \textbf{upper bound} for $T \subset S$ is an element $z \in S$ such that $\forall x \in T, x\le z$. (Note that we don't require $z \in T$ for this.)
+    \item An element $y \in S$ is \textbf{maximal} if $~\forall x \in S$, $y\le x \implies y=x$. 
+\end{itemize} 
+If $S$ is totally ordered, it is easy to see that it has at most one maximal element.
+\begin{example}
+    Say $V$ is a vector space (over a field $K$) (not necessarily of finite dimension). Then $V$ has a basis, i.e. $\exists B \subset V$ such that any finite subset of $B$ is linearly independent, and $~\forall v \in V$, $\exists b_1,\ldots,b_k \in B$ and $a_1,\ldots,a_k \in K$ such that $v = \sum_{1\le i\le k}^{} a_ib_i$.
+\end{example}
+\begin{proof}
+    $V = \{0\}$ is trivial (take $B=0$). Otherwise, let $S= \{\text{all subsets }X \subset V \text{ which are linearly independent}\}$ and order $S$ by inclusion: $X\le X'$ if $X \subset X'$. This gives a partial order, and $V \neq \{0\} \implies S \neq \emptyset$. 
+
+    Let $T \subset S$ be a chain. Let $Y = \bigcup_{X \in T} X$. We need to check $Y \in S$. For this, it is enough to check that any finite subset $\{y_1,\ldots,y_k\} \subset Y$ is linearly independent. Say $y_i \in X_i$ for $X_i \in T$. Since $T$ is a chain, we may after reordering assume that $X_1 \subset X_2 \subset \ldots \subset X_k$. So all $y_i$ are in $X_k$, so the $(y_i)$ are linearly independent.
+\end{proof}
 
 \end{document}

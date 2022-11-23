@@ -1592,10 +1592,10 @@ Note that if $p \gg \frac{1}{n}$ ($pn \to \infty$), then \[
     We now want to use the second moment method. 
     \begin{align*}
         &\text{Var}(I)=\mathbb{E}[I^2]-\mathbb{E}[I]^2 = \\
-        &\sum_{u,v \in V(G)}^{} \mathbb{P}(d(u)=0, d(v)=0) - \sum_{u,v}^{}  \mathbb{P}(d(u)=0)\mathbb{P}(d(v)=0) \le \\
-        &\mathbb{E}[I] + \sum_{u,v}^{} \left(\mathbb{P}(d(u)=d(v)=0)-\mathbb{P}(d(u)=0)\mathbb{P}(d(v)=0)\right) = \\
-        &\mathbb{E}[I] + \sum_{u,v}^{} \left((1-p)^{2(n-1)-1} - (1-p)^{2(n-1)}\right) \le \\
-        &\mathbb{E}[I] + n^2(1-p)^{2(n-1)} \left(\frac{1}{1-p}-1\right).
+        =&\sum_{u,v \in V(G)}^{} \mathbb{P}(d(u)=0, d(v)=0) - \sum_{u,v}^{}  \mathbb{P}(d(u)=0)\mathbb{P}(d(v)=0) \le \\
+        \le~ &\mathbb{E}[I] + \sum_{u,v}^{} \left(\mathbb{P}(d(u)=d(v)=0)-\mathbb{P}(d(u)=0)\mathbb{P}(d(v)=0)\right) = \\
+        =~ &\mathbb{E}[I] + \sum_{u,v}^{} \left((1-p)^{2(n-1)-1} - (1-p)^{2(n-1)}\right) \le \\
+        \le~ &\mathbb{E}[I] + n^2(1-p)^{2(n-1)} \left(\frac{1}{1-p}-1\right).
     \end{align*}
     Hence
     \begin{align*}
@@ -1625,7 +1625,7 @@ Note that if $p \gg \frac{1}{n}$ ($pn \to \infty$), then \[
         &(\star) \le \sum_{k=1}^{\epsilon n/4} n^k e^{-pk(n-k)} + \sum_{k=\epsilon n/4}^{n/2} 2^n e^{-(1+\epsilon)\frac{\log n}{n}k(n-k)} \le \\
         &\le \sum_{k=1}^{\epsilon n/4} \left(n e^{-(1+\epsilon)\frac{\log n}{n}(n-k)}\right)^k + \sum_{k=\epsilon n/4}^{n/2} \sum_{k=\epsilon n/4}^{n/2} 2^n \epsilon^{-(1+\epsilon)\frac{\log n}{n} \frac{\epsilon n}{4} \frac{n}{2}} \le \\
         &\le \sum_{k=1}^{\epsilon n/4} \left(ne^{-(1+\epsilon)\frac{\log n}{n}n(1-\epsilon/4)}\right)^k + \sum_{k=\epsilon n/4}^{n/2} \le \\
-        &\le \sum_{k=1}^{\epsilon n/4} \left( n e^{-\log n - \frac{3 \epsilon}{4}\log n} \right)^k + \sum_{k=\epsilon n/4}^{n/2}.
+        &\le \sum_{k=1}^{\epsilon n/4} \left( n e^{-\log n - \frac{3 \epsilon}{4}\log n} \right)^k + \sum_{k=\epsilon n/4}^{n/2} \to 0.
     \end{align*} 
 \end{proof}
 
