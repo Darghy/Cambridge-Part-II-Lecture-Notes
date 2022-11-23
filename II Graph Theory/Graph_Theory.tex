@@ -1554,5 +1554,79 @@ Note that if $p \gg \frac{1}{n}$ ($pn \to \infty$), then \[
 
 \marginpar{23 Nov 2022, Lecture 21}
 
+\textbf{Question.} For which $p$ is $G\sim G(n,p)$ likely to be connected? 
+\begin{theorem}\label{6.4}
+    Let $G \sim G(n,p)$, then $\forall \epsilon>0$ we have \[
+    \lim_{n \to \infty} \mathbb{P}(G \text{ is connected}) = \begin{cases}
+        1 &p\ge (1+\epsilon)\frac{\log n}{n}.\\
+        0 &p\le (1+\epsilon)\frac{\log n}{n}.
+    \end{cases}
+    \]
+\end{theorem}
+\textbf{Remark.} This is an example of a ''sharp threshold'', which has a different qualitative behavior than the property ''$G \supset K_3$, which is what we saw earlier.
+\begin{prop}
+    Let $G\sim G(n,p)$, then $\forall \epsilon>0$ we have \[
+    \lim_{n \to \infty}\mathbb{P}(G \text{ has an isolated vertex})=\begin{cases}
+        0 &p\ge (1+\epsilon)\frac{\log n}{n}.\\
+        1 &p\le (1-\epsilon)\frac{\log n}{n}.
+    \end{cases}
+    \]
+\end{prop}
+\begin{proof}
+    Let $I$ be the number of isolated vertices in $G \sim G(n,p)$. Then \[
+    \mathbb{E}[I]=n(1-p)^{n-1}.
+    \]
+    Note thta if $p \ge (1+\epsilon)\frac{\log n}{n}$, then (using $1-x \le e^{-x}$) \[
+        \mathbb{E}[I] = \frac{n(1-p)^n}{(1-p)} \le ne^{-pn} \le ne^{-(1+\epsilon)\frac{\log n}{n}n} = n \cdot n^{-(1+\epsilon)} = n^{-\epsilon} \to 0.
+    \]
+    So by Markov, $\mathbb{P}(G \text{ has an isolated vertex})= \mathbb{P}(I \ge 1) \le \mathbb{E}[I] \to 0$.
+    \vspace{1mm}
+    
+    If $p\le (1+\epsilon)\frac{\log n}{n}$, then \[
+    \mathbb{E}[I]=\frac{n(1-p)^{n}}{1-p} \ge ne^{-(1+\epsilon/4)pn} = (\star)
+    \]
+    for $n$ sufficiently large and $\epsilon$ sufficiently small. Now plug in $p$:
+    \[
+    (\star) \ge n e^{-(1+\epsilon/4)(1-e)\log n} = n e^{-\log n + \frac{3\epsilon}{4}\log n + \epsilon^2 \log n/4} \ge n^{3\epsilon/4} \to \infty.
+    \]
+    We now want to use the second moment method. 
+    \begin{align*}
+        &\text{Var}(I)=\mathbb{E}[I^2]-\mathbb{E}[I]^2 = \\
+        &\sum_{u,v \in V(G)}^{} \mathbb{P}(d(u)=0, d(v)=0) - \sum_{u,v}^{}  \mathbb{P}(d(u)=0)\mathbb{P}(d(v)=0) \le \\
+        &\mathbb{E}[I] + \sum_{u,v}^{} \left(\mathbb{P}(d(u)=d(v)=0)-\mathbb{P}(d(u)=0)\mathbb{P}(d(v)=0)\right) = \\
+        &\mathbb{E}[I] + \sum_{u,v}^{} \left((1-p)^{2(n-1)-1} - (1-p)^{2(n-1)}\right) \le \\
+        &\mathbb{E}[I] + n^2(1-p)^{2(n-1)} \left(\frac{1}{1-p}-1\right).
+    \end{align*}
+    Hence
+    \begin{align*}
+        \mathbb{P}(I=0) \le \frac{\text{Var}(I)}{\mathbb{E}[I]^2} \le \frac{1}{\mathbb{E}[I]} + \left(\frac{1}{1-p}-1\right) \to 0
+    \end{align*}
+    (since $p \to 0$ and $\mathbb{E}[I]\to \infty$).
+\end{proof}
+\begin{proof}[Proof of Theorem \ref{6.4}]
+    (0--statement): We want to show that if $p\le (1-\epsilon)\frac{\log n}{n}$, then $\lim_{n \to \infty} \mathbb{P}(G \text{ connected}) = 0$. But this follows from the fact that $$\mathbb{P}(G \text{is connected})\le \mathbb{P}(G \text{ has no isolated vertices}) \to 0$$
+    for this $p$ by above.
+    \vspace{1mm}
+    
+    (1--statement): Let $p\ge (1+\epsilon)\frac{\log n}{n}$. We need to show that 
+    \[
+    \mathbb{P}(G \text{ is connected}) \to 1 \text{ as }n \to \infty.
+    \]
+    But 
+    \begin{align*}
+        &\mathbb{P}(G \text{ is not connected}) = \\
+        &=\mathbb{P}(\exists A \subseteq V(G), 0\le |A|\le \frac{n}{2}, e(A,V(G)\setminus A)=0) = \\
+        & =\mathbb{P}\left( \bigcup_{A \subseteq V(G), 0\le |A|\le \frac{n}{2}} \{(e(A),V(G)\setminus A)=0\}\right) \le \\
+        &\le \sum_{A \in V(G), 1\le |A|\le \frac{n}{2}}^{} \mathbb{P}(e(A,V(G)\setminus A)=0) = \\
+        &= \sum_{k=1}^{n/2} {n\choose{k}}(1-p)^{k(n-k)} = (\star).
+    \end{align*}
+    Now we just need to show the last expression goes to zero, but we have
+    \begin{align*}
+        &(\star) \le \sum_{k=1}^{\epsilon n/4} n^k e^{-pk(n-k)} + \sum_{k=\epsilon n/4}^{n/2} 2^n e^{-(1+\epsilon)\frac{\log n}{n}k(n-k)} \le \\
+        &\le \sum_{k=1}^{\epsilon n/4} \left(n e^{-(1+\epsilon)\frac{\log n}{n}(n-k)}\right)^k + \sum_{k=\epsilon n/4}^{n/2} \sum_{k=\epsilon n/4}^{n/2} 2^n \epsilon^{-(1+\epsilon)\frac{\log n}{n} \frac{\epsilon n}{4} \frac{n}{2}} \le \\
+        &\le \sum_{k=1}^{\epsilon n/4} \left(ne^{-(1+\epsilon)\frac{\log n}{n}n(1-\epsilon/4)}\right)^k + \sum_{k=\epsilon n/4}^{n/2} \le \\
+        &\le \sum_{k=1}^{\epsilon n/4} \left( n e^{-\log n - \frac{3 \epsilon}{4}\log n} \right)^k + \sum_{k=\epsilon n/4}^{n/2}.
+    \end{align*} 
+\end{proof}
 
 \end{document}
