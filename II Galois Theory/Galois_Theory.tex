@@ -1663,15 +1663,21 @@ So if we let $\Delta=\prod_{i<j}^{} (x_i-x_j)$, $\Delta^2=\text{Disc}(f)$, then 
     \begin{tikzpicture}[node distance = 2cm]
         \node (K) {$K$};
         \node (K_1) [above of=Q] {$K_1=K(\Delta)$};
-        \node (L) [above of=K_1] {$L=K(x_1,x_2,x_3)$}
+        \node (L) [above of=K_1] {$L=K(x_1,x_2,x_3)$};
+        \node (G) [right of=K] {$G$};
+        \node (GA3) [above of=G] {$G \cap A_3$};
+        \node (1) [above of=GA3] {$\{1\}$};
 
-        \draw (K) -- (K_1) node[midway,anchor=north east]{2}
-            -- (L) node[midway, anchor=south east]{3};
+        \draw (K) -- (K_1) node[midway,anchor=east]{2 or 1}
+            -- (L) node[midway, anchor=east,text width=2cm]{3 if $f$ irred., 1 otherwise};
+        \draw (G) -- (GA3) node[midway, anchor=west]{}
+            -- (1) node[midway, anchor=west]{};
     \end{tikzpicture}
-    \captionsetup{labelformat=empty}
-\caption{\hspace{6mm} Fields \hspace{35mm} Groups}
 \end{figure}
 
-If $K_1 = K(\sqrt{\text{Disc}(f)})$, then this equals $L$ if $f$ is reducible. In the irreducible case, $L/K_1$ has Galois group $\cong \mathbb{Z}/3\mathbb{Z}$. If $\omega \in K_1$ is a primitive third root of unity, then $L$ *lecture recording ends.
+If $K_1 = K(\sqrt{\text{Disc}(f)})$, then this equals $L$ if $f$ is reducible. In the irreducible case, $L/K_1$ has Galois group $\cong \mathbb{Z}/3\mathbb{Z}$. If $\omega \in K_1$ is a primitive third root of unity, then $L$ *lecture recording ends*.
+
+
+
 
 \end{document}
