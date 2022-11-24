@@ -1411,6 +1411,96 @@ We look at the Cox-Ross-Rubenstein binomial model.
     Note that $\mathbb{Q}(\xi_n = 1+b \mid \mathcal{F}_{n-1})=q$ is independent of $\mathcal{F}_{n-1}$, so $\xi_n$ is independent of $\mathcal{F}_{n-1}$.
 \end{proof}
 
+\marginpar{18 Nov 2022, Lecture 19}
+
+\subsubsection*{Pricing and hedging European claims in the binomial model}
+\begin{defn}
+    A \textbf{European contingent claim} is an asset whose payout at some fixed time $N$ (the maturity date or the expiry date) is specified by a $\mathcal{F}_N$--measurable random variable $Y$.
+\end{defn}
+\begin{defn}
+    A claim is called \textbf{vanilla} if its payout is of the form $Y=g(S_N)$ (where $(S_n)_n$ are the prices of some given assets).
+    \vspace{1mm}
+    
+    A claim that is not vanilla (the payout depends on the whole path $(S_n)_n$) is called \textbf{exotic}. 
+\end{defn}
+\begin{example}
+    A European call option, where $g(x)=(x-K)^+$, is vanilla.
+\end{example}
+From now on, consider the binomial model with $r$ the interest rate, $d=1$, $S_n = S_{n-1}\xi_{n}$ for $(\xi_n)_n$ IID, $\mathbb{Q}(\xi_n=1+b)=q=\frac{r-a}{b-a}=1-\mathbb{Q}(\xi_n=1+a)$, where $-1<a<r<b$ are given.
+\vspace{1mm}
+
+\textbf{Motivation.} We want to price and hedge (i.e. find a replicating portfolio) a vanilla European claim with payout $Y=g(S_N)$.
+
+To replicate, we solve \[
+    \theta_N^0(1+r) + \theta_N S_N = g(S_N),
+\]
+where $\theta_N^0, \theta_N$, which are the amount in the bank and the number of shares respectively, are $\mathcal{F}_N$--measurable. So we solve 
+\begin{align*}
+    \begin{cases}
+        &\theta_N^0(1+r) + \theta_N S_{N-1}(1+b) = g(S_{N-1}(1+b))\\
+        &\theta_N^0(1+r) + \theta_N S_{N-1}(1+a) = g(S_{N-1}(1+a))
+    \end{cases}\\
+    \implies \theta_N = \frac{g(S_{N-1}(1+b))-g(S_{n-1}(1+a))}{S_{N-1}(b-a)}.
+\end{align*}
+Similarly $\theta_N^0$, the cost of replication, solves 
+\begin{align*}
+    &\theta_N^0 + \theta_N S_{N-1} = \frac{1}{1+r} \left(q g(S_{n-1}(1+b)) + (1-q)g(S_{N-1}(1+a))\right) =\\
+    &= \frac{1}{1+r} \mathbb{E}^\mathbb{Q}[g(S_N) \mid \mathcal{F}_{N-1}] = \pi_{N-1},     
+\end{align*}
+the time $N-1$ no arbitrage price.
+To get the time $N-2$ price, we solve the same process for the time $N-1$ no arbitrage price, etc.
+
+\begin{theorem}
+    Let 
+    \begin{align*}
+        &V(n,s) = \frac{\mathbb{E}^\mathbb{Q}[g(S_N) \mid S_{n}=s]}{(1+r)^{N-n}}, ~0\le n\le N \\
+        & \theta_n = \frac{V(n,S_{N-1}(1+b))-V(n,S_{n-1}(1+a))}{S_{N-1}(b-a)}.
+    \end{align*}
+    Let 
+    \begin{align*}
+        &X_0 = V(0,S_0)\\
+        &X_n = (1+r)X_{n-1} + \theta_n(S_n-(1+r)S_{n-1}) \text{ for }1\le n\le N.
+    \end{align*}
+    Then $X_n = V(n,S_n)$ for all $0\le n\le N$ and in particular $X_N=g(S_N)$ (by Markov chains). So $(\theta_n)_n$ is a replicating trading strategy for the claim.
+\end{theorem}
+\begin{proof}
+    Note that
+    \begin{align*}
+        (1+r)V(n-1,s) = qV(n,S(1+b)) + (1-q)V(n,S(1+a))
+    \end{align*}
+    since $(S_n)_n$ is a Markov chain. Now suppose $X_k=V(k,S_k)$ for $k\le n-1$, so \[
+    X_n=(1+r)V(n-1,S_{n-1}) + \theta_n(S_n-(1+r)S_{n-1}).
+    \]
+    Plug in the expression for $\theta_n$ given in the statement of the theorem to get
+    \begin{align*}
+        &X_n = qV(n,S_{n-1}(1+b)) + (1-q)V(n,S_{n-1}(1+a))+\\
+        &\frac{V(n,S_{n-1}(1+b))-V(n,S_{n-1}(1+a))}{b-a}(\xi_n-(1+r)) = \\
+        &= V(n,S_{n-1}(1+b))\left(\frac{\xi_n-(1+a)}{b-a}\right) + V(n,S_{n-1}(1+a))\left(\frac{1+b-\xi_n}{b-a}\right) = \\
+        &=V(n,S_n),
+    \end{align*}
+    since $\frac{\xi_n- (1+b)}{b-a} =\mathbbm{1}(\xi_n=1+a)=1-\mathbbm{1}(\xi_n=1+b)$. Hence we're done by induction.
+\end{proof}
+\textbf{Remark.} $M_n = (1+r)^{-n} V(n,S_n)$, the discounted prices of the claim, is a $\mathbb{Q}$--martingale (as it should be by FTAP). Note $V(n,S_n) = \mathbb{E}^\mathbb{Q}[g(S_N) \mid S_N] = \mathbb{E}^\mathbb{Q}[g(S_N) \mid \mathcal{F}_n]$, since $(S_n)_n$ is Markov.
+\vspace{1mm}
+
+Recall that $\mathbb{Q}$ is risk--neutral $\iff$ $\mathbb{E}[S_n \mid \mathcal{F}_{n-1}]=(1+r)S_{n-1} ~\forall n\ge 1 \iff \left(\frac{S_n}{(1+r)^n}\right)_{n\ge 0}$ is a $\mathbb{Q}$--martingale. So risk--neutral measures are sometimes called equivalent martingale measures (with respect to the bank account).
+
+\subsubsection*{American contingent claims}
+\begin{defn}
+    An \textbf{American claim} is specified by the adapted process $(Y_n)_{0\le n\le N}$. The owner of the claim chooses a stopping time $T\le N$ and receives the payout $Y_T$ at time $T$.
+\end{defn}
+\begin{example}
+    An American call option with payout $Y_n = (S_n=K)^+$.
+\end{example}
+\begin{theorem}
+    The no--arbitrage price of a vanilla American claim with payout $Y_n=G(S_n)$ for $0<-n\le N$ in the binomial model is $\pi_n = V(n,S_n)$ where $V(n,s)=g(s) ~\forall s$ and 
+    \begin{align*}
+        V(n-1,s) = \max \{g(s), \underbrace{\frac{1}{1+r}\left(qV(n,s(1+b)) + (1-q)V(n,s(1+a))\right)}_{=\frac{1}{1+r}\mathbb{E}^\mathbb{Q}[V(n,S_n)\mid S_{n-1}=s]}\}
+    \end{align*}
+    and an optimal exercise time is \[
+    T^* = \min \{n\ge 0 \mid V(n,S_n)=g(S_n)\}
+    \]
+\end{theorem}
 
 \end{document}
 
