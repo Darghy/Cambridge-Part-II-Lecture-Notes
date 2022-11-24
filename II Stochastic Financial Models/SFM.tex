@@ -1519,8 +1519,73 @@ A consequence of this:
     If $\left(\frac{Y_n}{(1+r)^n}\right)_{n\ge 0}$ is a submartingale under $\mathbb{Q}$, then an optimal exercise time is $T^*=N$. That is, the American claim is essentially a European claim with time $N$ payout $Y_N$.
 \end{theorem}
 \begin{proof}
-    7:30
+    The claim is that $\pi_n = \frac{\mathbb{E}[Y_N \mid \mathcal{F}_n]}{(1+r)^{N-n}}$ for all $0\le n \le N$. This is true for $n=N$, so we induct.
+    \vspace{1mm}
+    
+    Suppose it is true for $n=k$, then 
+    \begin{align*}
+        &\pi_{k-1} = \max \{Y_{k-1}, \frac{\mathbb{E}[\pi_k \mid \mathcal{F}_{k-1}]}{1+r}\} = \\
+        &= \max \{Y_{k-1}, \frac{1}{1+r}\mathbb{E}[\frac{\mathbb{E}[Y_{N} \mid \mathcal{F}_k]}{(1+r)^{N-k}}\mid \mathcal{F}_{k-1}]\} = \\
+        &= \max \{Y_{k-1}, \frac{\mathbb{E}[Y_N \mid \mathcal{F}_{k-1}]}{(1+r)^{N-k+1}}\} = \\
+        &= \frac{\mathbb{E}[Y_N \mid \mathcal{F}_{n-1}]}{(1+r)^{N-k+1}}
+    \end{align*}
+    since $\left(\frac{Y_n}{(1+r)^{n}}\right)_n$ is a submartingale, so we're done by induction.
 \end{proof}
+\begin{theorem}
+    Let $d=1$ and $(S_n)_n$ be the prices of the asset. Then $\frac{(S_n-k)^+}{(1+r)^n}$ is a submartingale under $\mathbb{Q}$.
+\end{theorem}
+\begin{proof}
+    Left as exercise. Hint: use conditional version of Jensen's inequality, the tower property, and the martingale property of $\left(\frac{S_n}{(1+r)^n}\right)_n$.
+\end{proof}
+
+We deduce that it is optimal to not exercise an American call early (i.e. we treat it as a European call).
+\vspace{1mm}
+
+Aside: So why doesn't this happen in real markets? It's because of some of the assumptions we made. A big one is that we assumed that there were no dividends - but actual stock does pay dividends. Another is that owning stock gives you a right to vote, so a big investor might exercise a lot of calls early to be able to steer the vote in a direction favorable for them. End of aside.
+
+\begin{defn}
+    A \textbf{put option} is the right, but not the obligation, to sell a given asset at a fixed price $K$ (called the strike price). The payout at time $n$ is $(K-S_n)^+$.
+\end{defn}
+Just like calls, put options can be both American and European.
+\vspace{1mm}
+
+\textbf{Remark.} Unlike calls, American puts usually have nontrivial optimal exercise times.
+\begin{theorem}
+    Consider a market with a stock, bank account, and a call option on the stock with maturity $N$ and strike $K$. Then a European put with maturity $N$ and strike $K$ can be replicated (i.e. attained).
+\end{theorem}
+\begin{proof}
+    Note that $(K-S_N)^+ = K-S_N + (S_N-K)^+$ (as $a^+ - (-a)^+ =a ~\forall a \in \mathbb{R}$), so hold $\theta_n^0 = \frac{K}{(1+r)^{N-n+1}}$ in the bank between $n-1$ and $n$, sell 1 stock and buy 1 call to replicate the payout of the put.
+\end{proof}
+\vspace{1mm}
+
+\textbf{Put-call parity formula}
+
+We have 
+\begin{align*}
+    P_n = \frac{K}{(1+r)^{N-n}} - S_n + C_n,
+\end{align*}
+where $P_n$ and $C_n$ are the no--arbitrage prices of the put and call.
+
+
+\section{Continuous--time finance}
+\textbf{Motivation:} In the binomial model, $S_n=S_0\xi_1\xi_2\ldots \xi_n$ where $(\xi_n)_n$ are IID and take values $1+a$ or $1+b$. Then \[
+\log S_n = \log S_0 + X_1 + \ldots + X_n,
+\]
+where $X_i = \log \xi_i$. This is a random walk. Let $\hat{S}_t = S_{t/\delta}$ for $t=n \delta$, $n \in \mathbb{Z}_{\ge 0}$, $\delta>0$ small. Hence \[
+\log \hat{S_t} = \log S_0 + \mu t + \sigma W_t, 
+\] 
+where $\mu = \frac{\mathbb{E}[X]}{\delta}$, $\sigma^2 = \frac{\text{Var}(X)}{\delta}$. This defines $W_t$, which has nice proprties. Note that $W_t-W_s$ for $0\le s<t$
+is independent of $W_n$ for $0\le u\le s$ (where $\frac{u}{\delta},\frac{s}{\delta},\frac{t}{\delta}$ are all integers). Note that \[
+W_t-W_s \approx N(0,t-s)
+\]
+when $\delta$ is very small (by the central limit theorem). End of motivation.
+\vspace{1mm}
+
+\begin{defn}
+    A \textbf{Brownian motion} $(W_t)_{t\ge 0}$ is a continuous process ($t \mapsto W_t$ is continuous) such that $W_0=0$, $W_t - W_s$ is independent of $\mathcal{F}_s$, where $\mathcal{F}_s=\sigma(W_u,  0\le u\le s)$, and $W_t-W_s \sim N(0,t-s) ~\forall 0\le s\le t$.
+\end{defn}
+
+*example picture of a path of Brownian motion*. This is erratic everywhere, and continues to be erratic when we zoom in, so the derivative of $t \mapsto W_t$ does not exist anywhere.
 
 \end{document}
 
