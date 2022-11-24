@@ -1346,7 +1346,7 @@ Assume now that $n>1$ and $n\cdot 1_K \neq 0$.
     $n=2, \text{char}(K)\neq 2$ and $\zeta_2 = -1 \in K$. Then $K(\sqrt{a})/K$ is quadratic if $a \not\in (K^\times)^2$ (i.e. $a$ is not a square). Conversely, every quadratic extension $L/K$ is $L=K(\sqrt{a})$ for some $a$ (by an example sheet question).
 \end{example}
 For general $n$ we have a converse to the above theorem:
-\begin{theorem}
+\begin{theorem}\label{12.5}
     Suppose $K$ contains $\zeta$, a primitive $n^{\text{th}}$ root of $1$ ($n>1$). Let $L/K$ be Galois with $\text{Gal}(L/K)$ cyclic of order $n$. Then $L=K(\sqrt[n]{a})$ for some $a \in K^\times$.
 \end{theorem}
 \begin{proof}
@@ -1675,9 +1675,90 @@ So if we let $\Delta=\prod_{i<j}^{} (x_i-x_j)$, $\Delta^2=\text{Disc}(f)$, then 
     \end{tikzpicture}
 \end{figure}
 
-If $K_1 = K(\sqrt{\text{Disc}(f)})$, then this equals $L$ if $f$ is reducible. In the irreducible case, $L/K_1$ has Galois group $\cong \mathbb{Z}/3\mathbb{Z}$. If $\omega \in K_1$ is a primitive third root of unity, then $L$ *lecture recording ends*.
+Let $K_1 = K(\sqrt{\text{Disc}(f)})$. This equals $L$ if $f$ is reducible. In the irreducible case, $L/K_1$ has Galois group $\cong \mathbb{Z}/3\mathbb{Z}$. If $\omega \in K_1$ is a primitive third root of unity, then $L(\omega)/K(\Delta,\omega)$ also has this Galois group and therefore $L(\omega) = K(\omega,\Delta,y)$ where $y^3 \in K(\omega,\Delta)$.
+\marginpar{24 Nov 2022, Lecture 22}
+\vspace{1mm}
 
+To do this explicitly: WLOG suppose $f=T^3+bT+c$, so $\Delta^2 = -4b^3-27c^2$. We have two cases:
+\begin{itemize}
+    \item If $b=0$, then the roots of $f$ are $\omega^i \sqrt[3]{c}$ (so let $y$ be any of these roots).
+    \item If $b\neq0$, then take $y$ to be a Lagrange resolvent. If the roots of $f$ in $L$ are $x_1,x_2,x_3$, take $y=x_1+\omega^2 x_2 + \omega x_3 = (1-\omega)(x_1 - \omega x_2)$ as $x_1+x_2+x_3=0$ and $y' = x_1 +\omega x_2 + \omega^2 x_3$. 
+    \vspace{1mm}
+    
+    Then $L(\omega)=K(\Delta,\omega,y)$ if and only if $y \neq 0$ (by the proof of the structure of Kummer extensions, Theorem \ref{12.5}). We can compute $y y' = -3b$, so $y \neq 0$, and $y+y' = y + y' + (x_1+x_2+x_3) = 3x_1$. So we compute \[
+    y^3 = \frac{1}{2}(-3\sqrt{-3}\Delta+27c)
+    \]
+    where $x_1 = y -3b/y$. This is the formula for the cubic.
+\end{itemize}
+\vspace{1mm}
 
+We now consider quartics. Let $f \in K[T]$ be monic, $\text{char}(K) \neq \{2,3\}$. Then $\text{Gal}(f/K)=S_4$. Consider the action of $S_4$ on the partitions $(12 \mid 34), (13 \mid 24), (14 \mid 23)$ of $\{1,2,3,4\}$. This gives us a homomorphism from $S_4$ to $S_3$ with kernel\footnote{$V$ is the Klein four group -- $V$ stands for ''vier'', the German word for ''four''.} $V= \{e,(12)(34),(13)(24),(14)(23)\}$. So this homomorphism is surjective.
+\vspace{1mm} 
 
+Now let $f$ have splitting field $L$ with roots $x_1,\ldots,x_4$. Assume $x_1+x_2+x_3+x_4=0$, i.e. $f=T^4+aT^2+bT+c$.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance = 2cm]
+        \node (K) {$K$};
+        \node (M) [above of=Q] {$M=L^{G \cap V}$};
+        \node (L) [above of=K_1] {$L$};
+        \node (G) [right of=K] {$G$};
+        \node (GA3) [above of=G] {$G \cap V$};
+        \node (1) [above of=GA3] {$\{1\}$};
+
+        \draw (K) -- (M) node[midway,anchor=east]{2 or 1}
+            -- (L) node[midway, anchor=east,text width=2cm]{3 if $f$ irred., 1 otherwise};
+        \draw (G) -- (GA3) node[midway, anchor=west]{}
+            -- (1) node[midway, anchor=west]{};
+    \end{tikzpicture}
+\end{figure}
+As $V \trianglelefteq S_4$, $G \cap V \trianglelefteq G$ and $\text{Gal}(M/K) = G/G \cap V \to S_4/V \cong S_3$. So we should be able to write $M$ as the splitting field of a cubic $g \in K[T]$.
+\vspace{1mm}
+
+Let $y_{12}= x_1+x_2=-(x_3+x_4)=-y_-34$, $y_{13}=x_1+x_3=-y_{24}$ and $y_{14}=x_1+x_4=-y_{23}$. Notice that $V \cap G$ maps $y_{12}$ to $y_{12}$ or $y_{34} = -y_{12}$, etc. So $y_{12}^2, y_{13}^2, y_{14}^2$ are fixed under $V \cap G$. If $y_{12}^2=y_{13}^2$, then either $y_{12}=y_{13} \implies x_2=x_3$, contradiction as our polynomial is separable, or $y_{12}=-y_{13} \implies 0=2x_1+2x_2+x_3=x_1-x_4$, a contradiction again.
+\vspace{1mm}
+
+So $\{y_{12},y_{13},y_{14}\}$ are the roots of a separable cubic $g \in K[T]$, called the \textbf{resolvent cubic}. Then $M=L^{G \mid V}$ is a splitting field of $g$. So $x_1 = \frac{1}{2}(y_{12}+y_{13}+y_{14})$, likewise for $x_2$, etc. and $L=M(y_{12},y_{13},y_{14})$. We compute 
+\begin{align*}
+    g = (T-y_{12}^2)(T-y_{13}^2)(T-y_{14}^2) = T^3 + 2aT^2 + (a^2-4c) T -b^2.
+\end{align*}
+In particular, notice that $y_{12}y_{13}y_{14}=b$, so $L=M(y_{12},y_{13})$ with $y_{12}^2, y_{13}^2 \in M$.
+\vspace{1mm}
+
+So we conclude that to solve $f=0$, we first solve the resolvent equation $g=0$ (a cubic), and then take at most 2 square roots.
+\vspace{1mm}
+
+What happens for quintics? See next section.
+
+\section{Solubility by radicals}
+Let $f \in K[T]$ be monic and let $\text{char}(K)=0$. What does it mean to have a ''formula'' for roots of $f$?
+\begin{defn}
+    An irreducible polynomial $f \in K[T]$ is \textbf{soluble by radicals} (over $K$) if there exist fields \[
+    K = K_0 \subset K_1 \subset \ldots \subset K_m
+    \] with $x \in K_m$ a root of $f$ and $K_i = K_{i-1}(y_i)$ where $y_i^{d_i} \in K_{i-1}$ for some $d_i\ge 1$.
+\end{defn}
+We are obviously free to join extra roots if we like. Then we see that $f$ is soluble by radicals over $K$ if $\exists d\ge 1$ and $K = K_0 \subset K_1 \subset \ldots \subset K_m$ such that:
+\begin{itemize}
+    \item $f$ has a root $x \in K_m$
+    \item $K_1 = K(\zeta_d)$ for $\zeta_d$ a primitive $d^{\text{th}}$ root of unity.
+    \item For $i>1$, $K_i=K_{i-1}(y_i)$ with $y_i^d = a_i \in K_{i-1}$.
+\end{itemize}
+Note that $K_1/K_0$ is Galois with abelian Galois group, and $K_i/K_{i-1}$ (for $i>1$) is Galois with Galois group a subgroup of $\mathbb{Z}/d\mathbb{Z}$ (it is a Kummer extension).
+\vspace{1mm}
+
+To get all the roots of $f$, look at a normal closure $M$ of $K_m$. This will contain a splitting field for $f/K$ (since $x \in M$ and $f$ is irreducible). To determine $M$, let $K_i' \subset M$ be a normal closure of $K_i$ (so $K_1' = K_1 = K(\zeta_d)$).
+\begin{prop}
+$$K_i' = K_{i-1}'(\{ \sqrt[d]{\sigma(a_i)} \mid \sigma \in \text{Gal}(K_{i-1}'/K) \}).$$
+\end{prop}
+\begin{proof}
+    Let $\sigma \in \text{Gal}(K_{i-1}'/K)$, then $\exists \overline{\sigma} \in \text{Gal}(K_i'/K)$ such that $\overline{\sigma}|_{K_{i-1}'} = \sigma$. Also $\overline{\sigma}(y_i) \in K_i'$, as $K_i'/K$ is Galois and $\overline{\sigma}(y_i)^d = \sigma(y_i^d) = \sigma(a_i)$.
+    \vspace{1mm}
+    
+    So RHS $\subset K_i'$, so it is enough to show that the RHS is normal. But the RHS is the splitting field over $K_{i-1}'$ of \[
+    \prod_{\sigma \in \text{Gal}(K_{i-1}'/K)}^{}(T^d-\sigma(a_i)) = g_i \in K[T].
+    \]
+    If $K_{i-1}'$ is the splitting field of some polynomial, say $h_{i-1}$, over $K$, then the RHS is a splitting field of $g_i h_{i-1}$ over $K$, so it is normal.
+\end{proof}
 
 \end{document}
