@@ -1502,5 +1502,25 @@ Recall that $\mathbb{Q}$ is risk--neutral $\iff$ $\mathbb{E}[S_n \mid \mathcal{F
     \]
 \end{theorem}
 
+\marginpar{21 Nov 2022, Lecture 20}
+
+In fact, a slightly more general theorem is true:
+
+\begin{theorem}
+    Suppose $(Y_n)_n$ specifies the payout of an American claim in a complete market. Then the price at time $n$ is 
+    \begin{align*}
+        &\pi_N=Y_N \\
+        &\pi_{n-1}=\max \{Y_{n-1},\frac{1}{1+r}\mathbb{E}^\mathbb{Q}[\pi_n \mid \mathcal{F}_{n-1}]\},
+    \end{align*}
+    where $\mathbb{Q}$ is a risk--neutral measure. Then an optimal exercise time is $T^* = \min \{n\ge 0 \mid \pi_n = Y_n\}$.
+\end{theorem}
+A consequence of this:
+\begin{theorem}
+    If $\left(\frac{Y_n}{(1+r)^n}\right)_{n\ge 0}$ is a submartingale under $\mathbb{Q}$, then an optimal exercise time is $T^*=N$. That is, the American claim is essentially a European claim with time $N$ payout $Y_N$.
+\end{theorem}
+\begin{proof}
+    7:30
+\end{proof}
+
 \end{document}
 
