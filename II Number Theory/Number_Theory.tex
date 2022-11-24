@@ -2037,5 +2037,87 @@ is a subgroup of $(\mathbb{Z}/n\mathbb{Z})^\times$.
         So $b^{N-1} \not\equiv 1 \pmod{N}$. So $N$ is not a Fermat pseudoprime to the base $b$, hence not an Euler pseudoprime to the base $b$.
     \end{itemize}
 \end{proof}
+\begin{cor}
+    \marginpar{24 Nov 2022, Lecture 22}
+    We have \[
+    \left|\{b \in (\mathbb{Z}/n\mathbb{Z})^\times \mid N \text{ is an Euler pseudoprime to base }b\}\right| \le \frac{1}{2}\phi(N).
+    \]
+\end{cor}
+\textbf{Soloray--Strassen primality test.}
+\vspace{1mm}
+
+Given $N$ an odd integer, we:
+\begin{itemize}
+    \item Test whether $b^{\frac{N-1}{2}} \equiv \left( \frac{b}{N} \right) \pmod{N}$ holds for some randomly chosen $b \in \{1,2,\ldots,N-1\}$.
+    \item If any of these fail, then $N$ is composite.
+    \item The probability that a composite number passes the test $k$ times for $k$ different bases is $\le \frac{1}{2^k}$.
+\end{itemize} 
+This is a probabilistic primality test, but it is very useful for practical purposes.
+\vspace{1mm}
+
+\textbf{Remark.} If $p$ is a prime, then $x^2 \equiv 1\pmod{p} \implies x \equiv \pm 1 \pmod{p}$.
+\vspace{1mm}
+
+Suppose $p$ is an odd prime and $a \in \mathbb{Z}$ such that $(a,p)=1$. Fermat's little theorem tells us that $a^{p-1} \equiv 1\pmod{p} \implies a^{\frac{p-1}{2}} \equiv \pm 1\pmod{p}$.
+\vspace{1mm}
+
+If $p\equiv 1\pmod{4}$ and $a^{\frac{p-1}{2}} \equiv 1 \pmod{p}$, then we deduce $a^{\frac{p-1}{4}} \equiv \pm 1\pmod{p}$. If $p\equiv 1\pmod{8}$ and $a^{\frac{p-1}{4}} \equiv 1\pmod{p}$, then $a^{\frac{p-1}{8}}\equiv \pm 1\pmod{p}$ and so on.
+
+\begin{defn}[Miller--Rabin]
+    Let $N$ be an odd integer. Write $N-1=2^s t$, where $s\ge 1$ and $t$ is odd. We say $N$ passes the strong (also known as Miller--Rabin) test to the base $b$ if either \[
+    b^t \equiv 1\pmod{N} \text{ or } b^{2^rt}\equiv -1\pmod{N}\text{ for some }0\le r<s.
+    \] 
+    If $N$ fails the strong test, then it is certainly composite. A composite number that passes the test is called a \textbf{strong pseudoprime} to the base $b$.
+\end{defn}
+\begin{theorem}\label{7.5}
+    If $N$ is a strong pseudoprime to the base $b$, then it is an Euler pseudoprime.
+\end{theorem}
+\begin{proof}
+    Omitted, see e.g. Koblitz' \textit{A Course in Number Theory and Cryptography}. 
+\end{proof}
+\begin{theorem}\label{7.6}
+    Let $N>9$ be an odd composite integer. Then \[
+    |\{b \in (\mathbb{Z}/n\mathbb{Z})^\times \mid N\text{ is a strong pseudoprime to the base }b\}| \le \frac{1}{4}\phi(N).
+    \]
+\end{theorem}
+We will prove this in the special case where $N$ is squarefree (but the general case is not too much harder).
+\begin{lemma}
+    Let $p$ be an odd prime and $m \in \mathbb{N}$ with $\nu_2(m)<\nu_2(p-1)$. Then
+    \begin{enumerate}[(i)]
+        \item $x^m \equiv 1\pmod{p}$ has exactly $(m,p-1)$ solutions.
+        \item $x^m \equiv -1\pmod{p}$ also has exactly $(m,p-1)$ solutions.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}[Outline of proof.]
+    \begin{enumerate}[(i)]
+        \item Use the fact that $(\mathbb{Z}/p\mathbb{Z})^\times$ is cyclic of order $p-1$.
+        \item $x^m \equiv -1\pmod{p} \iff \begin{cases}
+            &x^{2m} \equiv 1\pmod{p}.\\
+            &x^m \not\equiv 1 \pmod{p}.
+        \end{cases}$
+
+        But $\nu_2(m)<\nu_2(p-1) \implies (2m,p-1)=2(m,p-1)$, so apply (i) to both $m$ and $2m$ to conclude.
+    \end{enumerate}
+\end{proof}
+\begin{proof}[Proof of Theorem \ref{7.6} for $N$ squarefree]
+    Let $N=\prod_{i=1}^{k} p_1\ldots p_k$ for distinct primes, $k\ge 2$. Write $N-1=2^st$ and $p_i-1=2^{s_i}t_i$, where $s,s_i\ge 1$ and $t,t_i$ are odd. Note that $p_i \equiv 1 \pmod{2^{s_i}} \implies N \equiv 1\pmod{2^{\min(s_i)}} \implies {\min(s_i)\le s ~(\dagger)}$.
+    \vspace{1mm}
+    
+    Suppose $N$ is a strong pseudoprime to the base $b$, so either $b^t \equiv 1\pmod{N}$ or $b^{2^rt} \equiv -1\pmod{N}$ for some $0\le r<s$.
+    \vspace{1mm}
+    
+    In the latter case we have $b^{2^rt} \not\equiv 1 \pmod{p_i}, b^{2^{r+1}t} \equiv 1 \pmod{p_i}$. Hence $2^{r+1}$ divides the order of $b$ in $(\mathbb{Z}/p_i\mathbb{Z})^{\times}$ and hence divides $p_i-1=2^{s_i}t_i \implies r+1\le s_i$. Repeating this for all $i$ gives us that $r+1\le \min(s_i)$. 
+    \vspace{1mm}
+    
+    So if $N$ is a strong pseudoprime to the base $b$, then $b^m \equiv \pm 1 \pmod{N}$, where $m=2^{\min(s_i)-1}t ~(\ddagger)$ (so $\nu_2(m)<\nu_2(p_i-1)$).
+
+    So Lemma \ref{7.5} and CRT imply that the number of solutions to $(\ddagger)$ is $$2 \prod_{i=1}^{k} (m,p_i-1).$$
+
+    This number divides $2\prod_{i=1}^{k} \frac{p_i-1}{2} = \frac{\phi(N)}{2^{k-1}}$. If it is a proper factor or $k\ge 3$, then we're done. Otherwise, $k=2$ and $(m,p_i-1)=\frac{p_i-1}{2}$ for $i=1,2$. Then $p_i -1 \mid 2m = 2^{\min(s_i)}t \stackrel{(\dagger)}{\mid } 2^s t = N-1$, so
+    \begin{align*}
+        p_1-1 \mid N-1 = p_1p_2-1 = p_2(p_1-1) + (p_2-1) \implies p_1-1 \mid p_2-1 \implies p_1\le p_2.
+    \end{align*}
+    But the same argument gives $p_2\le p_1$, a contradiction and we're done.
+\end{proof}
 
 \end{document}
