@@ -1582,10 +1582,132 @@ when $\delta$ is very small (by the central limit theorem). End of motivation.
 \vspace{1mm}
 
 \begin{defn}
-    A \textbf{Brownian motion} $(W_t)_{t\ge 0}$ is a continuous process ($t \mapsto W_t$ is continuous) such that $W_0=0$, $W_t - W_s$ is independent of $\mathcal{F}_s$, where $\mathcal{F}_s=\sigma(W_u,  0\le u\le s)$, and $W_t-W_s \sim N(0,t-s) ~\forall 0\le s\le t$.
+    A \textbf{Brownian motion} $(W_t)_{t\ge 0}$ is a process with the following properties:
+    \begin{itemize}
+        \item It is a continuous process ($t \mapsto W_t$ is continuous)
+        \item $W_0=0$.
+        \item $W_t - W_s$ is independent of $\mathcal{F}_s$, where $\mathcal{F}_s=\sigma(W_u,  0\le u\le s)$
+        \item $W_t-W_s \sim N(0,t-s) ~\forall 0\le s\le t$.
+    \end{itemize}
 \end{defn}
 
 *example picture of a path of Brownian motion*. This is erratic everywhere, and continues to be erratic when we zoom in, so the derivative of $t \mapsto W_t$ does not exist anywhere.
+
+\marginpar{25 Nov 2022, Lecture 21}
+
+\subsection{Properties of Brownian motion}
+
+\begin{theorem}[Wiener, 1923]
+    Brownian motion exists.
+\end{theorem}
+\textbf{Remark.} In America, Brownian motion is called a Wiener process.
+
+\begin{theorem}
+    Brownian motion is a Markov process and a martingale (in its own filtration).
+\end{theorem}
+\begin{proof}
+    Martingale: $W_t$ is integrable since normal, and by independence and $W_t-W_s \sim N(0,t-s)$ we have $\mathbb{E}[W_t - W_s \mid \mathcal{F}_s] = \mathbb{E}[W_t-W_s]=0$.
+    \vspace{1mm}
+    
+    Markov: 
+    \begin{align*}
+        &\mathbb{E}[f(W_t) \mid \mathcal{F}_s] = \mathbb{E}[f(W_t-W_s+W_s) \mid \mathcal{F}_s] = \\
+        &=\mathbb{E}[f(W_t-W_s+x)]\mid_{x =W_s} = \mathbb{E}[f(W_t-W_s+W_s)\mid W_s] = \mathbb{E}[f(W_t) \mid W_s].
+    \end{align*}
+\end{proof}
+\begin{defn}
+    A Gaussian process $(X_t)_{t\ge 0}$ is such that for any $0\le t_0 < t_1 <\ldots < t_n$, the random variables $X_{t_0},X_{t_1},\ldots,X_{t_n}$ are jointly normal (Gaussian), i.e. $\sum_{i=1}^{n} a_i X_{t_i}$ is normal for any constants $a_0,\ldots,a_n$.
+\end{defn}
+\begin{theorem}
+    The following are equivalent:
+    \begin{enumerate}[(i)]
+        \item $(W_t)_{t\ge 0}$ is a Brownian motion.
+        \item $(W_t)_{t\ge 0}$ is a continuous Gaussian process such that $\mathbb{E}[W_t]=0 ~\forall t$ and $\mathbb{E}[W_s W_t]=s \wedge t = \min(s,t)$ for all $s,t$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    (i) $\implies$ (ii): Continuity follows from the definition of being Gaussian: $$\sum_{i=1}^{n} a_i W_{t_i} = \sum_{i=1}^{n} b_i(W_{t_i}-W_{t_{i-1}}) + b_0(W_{t_0}-0),$$
+    i.e. for any constants $(a_i)$ there exist constants $(b_i)$ such that this statement is true. We know $W_{t_i}-W_{T_{i-1}}$ are independent normals, and a linear combination of independent normals is normal. \vspace{1mm}
+    
+    We also have $\mathbb{E}[W_t]=0$ since $W_t - W_0 \sim N(0,t)$ and $W_0=0$.
+    \vspace{1mm}
+    
+    Finally, if $s<t$, then 
+    \begin{align*}
+        \mathbb{E}[W_sW_t]=\mathbb{E}[W_s ^2]+\mathbb{E}[W_s(W_t-W_s)]=\text{Var}(W_s) + \mathbb{E}[W_s]\mathbb{E}[W_s-W_t]=s.
+    \end{align*}
+    (ii) $\implies$ (i): We need to check that $W_t-W_s$ is independent of $W_u$ for $u\le s<t$. But note that 
+    \begin{align*}
+        \mathbb{E}[(W_t-W_s)W_u] = \mathbb{E}[W_tW_u] - \mathbb{E}[W_sW_u]= u-u=0,
+    \end{align*}
+    so $W_t-W_s$ and $W_u$ are uncorrelated and hence independent (as they're Gaussian).
+\end{proof}
+\begin{theorem}
+    Let $(W_t)_{t\ge 0}$ be a Brownian motion. Then the following are also Brownian motions:
+    \begin{enumerate}[(i)]
+        \item $(W_{t+T}-W_T)_{t\ge 0}$ for some constant $T\ge 0$.
+        \item $(c W_{t/c^2})_{t\ge 0}$ for some $c \neq 0$.
+        \item $(tW_{1/t})_{t\ge 0}$.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}[Proof of (iii)]
+    The Brownian law of large numbers says that $\frac{W_t}{t} \to 0$ almost surely as $t \to \infty$. Assuming this, our motion is Gaussian, clearly continuous, we have $\mathbb{E}[t W_{1/t}]=0$ since $W_{1/t} \sim N(0,1/t)$ and \[
+    \mathbb{E}[sW_{1/s}t W_{1/t}] = st \mathbb{E}[W_{1/s}W_{1/t}] = st \min\left(\frac{1}{s},\frac{1}{t}\right) = \min(s,t).
+    \]
+\end{proof}
+\subsubsection{Brownian reflection principle}
+\begin{theorem}
+    Let $T_a = \inf \{t>0 \mid W_t=a\}$ (and we let $\inf \emptyset = \infty$). Then $T_a< \infty$ almost surely for all $a$.
+\end{theorem}
+\begin{proof}
+    WLOG assume $a>0$. We need to show $\mathbb{P}(\sup_{t\ge 0} \{W_t>a\})=1 ~\forall a$. Let $Z = \sup_{t\ge 0}W_t$. Note $Z\ge W_0 = 0$. Now
+    \begin{align*}
+        \mathbb{P}(a < Z < b) = \mathbb{P}(a < \sup_t W_t < b) = \mathbb{P}(a < \sup_t c W_{t/c^2} <b) = \mathbb{P}\left(\frac{a}{c} < \sup_t W_t < \frac{b}{c}\right) = 0
+    \end{align*}
+    by sending $c \to \infty$. Hence $Z \in \{0,\infty\}$ almost surely. We want to show it is $\infty$. Let $\hat{Z} = \sup_{t\ge 1}(W_t-W_1)$. This has the same distribution as $Z$, so $\hat{Z}=0 \iff Z=0$. Let $p= \mathbb{P}(Z=0,\hat{Z}=0)=\mathbb{P}(\hat{Z}=0)<\mathbb{P}(W_1\le 0, \hat{Z}=0) = \frac{1}{2}p$ by independence, so $p=0$ and we're done. 
+\end{proof}
+\begin{theorem}
+    $(W_{T+t}-W_T)_{t\ge 0}$ is a Brownian motion independent of $(W_t)_{t\le T}$ for any finite stopping time $T$.
+\end{theorem}
+\begin{proof}
+    Omitted, but uses the strong Markov property of Brownian motion.
+\end{proof}
+\begin{theorem}[Reflection principle]
+    Let $(W_t)_{t\ge 0}$ be a Brownian motion. Let $\hat{W_t} = \begin{cases}
+        W_t &t\le T_a\\
+        2a-W_t &t>T_a.
+    \end{cases}$
+    Then $(\hat{W_t})_{t\ge 0}$ is a Brownian motion. We have the key formula:
+    \[
+    \mathbb{P}(\max_{0\le s\le t} W_s\ge a, W_t\le b) = \mathbb{P}(W_t\ge 2a-b).
+    \]
+\end{theorem}
+\begin{proof}
+    Let $M_t = \max_{0\le s\le t}W_s$.
+    Clearly $(\hat{W_t})_{t\ge 0}$ is a Brownian motion. Now note that $\{\hat{W_t} \ge 2a-b\} = \{T_a \le t\} \cap \{W_t \le b\} = $. Hence
+    \begin{align*}
+        \mathbb{P}(W_t \ge 2a-b) = \mathbb{P}(\hat{W_t} \ge 2a-b) = \mathbb{P}(M_t \ge a, W_t\le b).
+    \end{align*}
+\end{proof}
+\marginpar{25 Nov 2022, Lecture 22}
+
+Some consequences of this:
+\begin{itemize}
+    \item The joint distribution function satisfies
+    \begin{align*}
+        &F_{M_t,W_t}(a,b)=\mathbb{P}(M_t\le a,W_t\le b) = \mathbb{P}(W_t\le b) - \mathbb{P}(M_t\ge a, W_t\le b) = \\
+        &= F_{W_t}(b) + F_{W_t}(2a-b) - 1 = \Phi \left(\frac{b}{\sqrt{t}}\right) + \Phi \left(\frac{2a-b}{\sqrt{t}}\right)-1
+    \end{align*}
+    for $0\le a\le b$, where $\Phi(x) = \mathbb{P}(Z\le x)$ where $Z\sim N(0,1)$.
+    \item The joint density is 
+    \begin{align*}
+        f_{M_t,W_t}(a,b) = -2 f'_{W_t}(2a-b) = \frac{2(2a-b)}{t^{3/2}} \Psi\left(\frac{2a-b}{\sqrt{t}}\right),
+    \end{align*}
+    where $\Psi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}$. Note that $f_{W_t}(x)$ is defined as $f_{W_t}(x) = \frac{\Psi(\frac{x}{\sqrt{t}})}{\sqrt{t}}$, so $\Psi'(x)=-x\Psi(x)$. The LHS of the first formula is usually more useful for example sheet questions than the RHS.
+\end{itemize}
+\begin{example}
+    18:50.
+\end{example}
 
 \end{document}
 
