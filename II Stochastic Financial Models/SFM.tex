@@ -977,9 +977,11 @@ So an investor's discounted wealth is the martingale transform of his portfolio 
 \end{defn}
 
 \begin{prop}
-    $(X_n^T)_{n\ge 0}$ is the martingale transform of $(\mathbbm{1}_{\{n\le T\}})_{n\ge 1}$ with respect to $(X_n)_{n\ge 0}$. We can check that $(\mathbbm{1}_{\{n\le T\}})_{n\ge 1}$ is previsible:
+    $(X_n^T)_{n\ge 0}$ is the martingale transform of $(\mathbbm{1}_{\{n\le T\}})_{n\ge 1}$ with respect to $(X_n)_{n\ge 0}$.
+    \begin{proof}
+        We can check that $(\mathbbm{1}_{\{n\le T\}})_{n\ge 1}$ is previsible:
     \vspace{1mm}
-    
+
     $\mathbbm{1}_{\{n \le T\}}$ is $\mathcal{F}_{n-1}$--measurable $\iff$ $\{n\le T\}\in \mathcal{F}_{n-1} \iff \{T\le n-1\}^{c} \in \mathcal{F}_{n-1}$ which is true, so we're done as $\sigma$--algebras are closed under complements. 
     \vspace{1mm}
     
@@ -987,6 +989,8 @@ So an investor's discounted wealth is the martingale transform of his portfolio 
     \[
     X_{n \wedge T} = X_0 + \sum_{k=1}^{n} \mathbbm{1}_{\{k\le T\}}(X_k-X_{k-1}).
     \]
+    \end{proof}
+    
 \end{prop}
 \begin{theorem}
     A stopped martingale is a martingale.

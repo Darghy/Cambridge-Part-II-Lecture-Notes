@@ -2120,4 +2120,85 @@ We will prove this in the special case where $N$ is squarefree (but the general 
     But the same argument gives $p_2\le p_1$, a contradiction and we're done.
 \end{proof}
 
+\marginpar{26 Nov 2022, Lecture 23}
+\begin{theorem}[Bach, 1990]
+    Let $N$ be an odd composite integer. Then, assuming GRH, $N$ fails the strong test to base $b$ for some $b < 2(\log N)^2$.
+\end{theorem}
+Hence, conditional on GRH, this is a polynomial time primality test.
+\vspace{1mm}
+
+The first unconditional polynomial time primality test was found by Agrawal, Kayal and Saxena in 2002.
+\vspace{1mm}
+
+\textbf{Fermat factorization.}
+\begin{lemma}\label{7.9}
+    Let $N$ be an odd composite integer. Then there a bijection between factorizations of $N$ and writing $N$ as a difference of two squares.
+\end{lemma}
+\begin{proof}
+    $(\implies): $If $N$ is odd and $N=ab$ for $a>b$, then $a,b$ are both odd, so $r=\frac{a+b}{2}, s=\frac{a-b}{2}$ are both integers and $r^2-s^2=ab=N$.
+    \vspace{1mm}
+    
+    $(\impliedby)$: If $N=r^2-s ^2$, then $N=(r+s)(r-s)$.
+\end{proof}
+
+To factor $N$, take $r = \left\lfloor \sqrt{N} \right\rfloor+1, \left\lfloor \sqrt{N} \right\rfloor+2,\ldots$, and test whether $r^2-N$ is a square. If so, call that $\sigma ^2$, and we get our factorization by Lemma \ref{7.9}.
+\begin{example}
+    Suppose we want to factorize 200819. Then $\left\lfloor \sqrt{200819} \right\rfloor=448$, so try $r=449$. $449^2-N = 782$, which is not a square. Try $r=450$, so $450^2 - N = 1681 = 41^2$. Hence $N=450^2-41^2=409\cdot 491$.
+\end{example}
+\textbf{Remark.} Looping over $r$ is more efficient than looping over $s$.
+\vspace{1mm}
+
+In general, this method will factor any composite $N$, but this is no better than trial division unless $N$ has factors close to $\sqrt{N}$. 
+\vspace{1mm}
+
+Some small improvements:
+\begin{enumerate}[(i)]
+    \item Speed up our process by using congruences, e.g. $200819=r^2-s ^2 \implies r \equiv 0 \pmod{3}, r \equiv \pm 2 \pmod{5} \implies r \equiv 0,\pm 3 \pmod{15}$.
+    \item Try $r=\left\lfloor \sqrt{kN} \right\rfloor+1, \left\lfloor \sqrt{kN} \right\rfloor+2,\ldots$ for some small integer $k$. Is $r^2-kN$ is a square, say $kN=r^2-s ^2$, then $\gcd(r-s,N)$ might be a factor of $N$. 
+\end{enumerate}
+\textbf{Remark.} If $N=ab$ and $\frac{a}{b} \approx \frac{u}{v}$ for $u,v$ small integers with $u \equiv v\pmod{2}$, then putting $k=uv$ in (ii) works well. Indeed, $kN=uvab=(\frac{av+bu}{2})^2+(\frac{av-bu}{2})^2$, and the second term is fairly small, so we should find it quickly.
+
+\subsection{Factor base methods}
+
+\textbf{Idea.} We want to find $r,s$ with $r^2 \equiv s ^2 \pmod{N}$, but with $r \not\equiv \pm s\pmod{N}$. If we do that, then $\gcd(N,r-s)$ computed using Euclid's algorithm is a nontrivial factor of $N$.
+\vspace{1mm}
+
+To check this: if $\gcd(N,r-s)=1$, then as $N \mid r^2-s^2$, we get $N \mid r+s$, so $r \equiv -s \pmod{N}$, contradiction. Similarly, if $\gcd(N,r-s)=N$, then $N \mid r-s$, so $r \equiv s \pmod{N}$.
+\vspace{1mm}
+
+How do we find $r$ and $s$? Trying values of $r$ and hoping $r^2-N$ (or $r^2-kN$) is a square is just Fermat factorization. 
+\vspace{1mm}
+
+Instead, we look at several values of $r$ such that $r^2 \pmod{N}$ is ''small'', meaning we can factor it. Then look for a product of these small numbers that is a square.
+\begin{defn}
+    The \textbf{least absolute residue} of $b \pmod{N}$ is the unique integer $\langle b \rangle \in (-\frac{n}{2}, \frac{n}{2})$ with $\langle b \rangle \equiv b \pmod{N}$.
+\end{defn}
+\begin{defn}
+    A \textbf{factor base} $B$ is a finite set of primes together with $-1$.
+\end{defn}
+\begin{defn}
+    We say $b$ is a \textbf{$B$--number} if $\langle b^2 \rangle$ is a product of numbers from $B$ (with repetition allowed). 
+\end{defn}
+We have the \textbf{factor base method}:
+\begin{enumerate}[(1)]
+    \item Choose a suitable factor base $B$.
+    \item Find some $B$--numbers $b_1,\ldots,b_m$.
+    \item Find some subset $I \subset \{1,\ldots,m\}$ such that $\prod_{i \in I}^{} \langle b_i^2 \rangle$ is a square, say $c^2$.
+    \item Let $b=\prod_{i \in I}^{} b_i$. Then $b^2 \equiv c^2 \pmod{N}$.
+    \item Compute $(N,b-c)$ or $(N,b+c)$ and hope it gives a nontrivial factor of $N$. If not, keep going, i.e. try some more $B$--numbers.
+\end{enumerate} 
+\begin{example}
+    $B=\{-1,2,3\}$ and $N=4633$. $67,68,69$ are $B$--numbers mod $N$, as 
+    \begin{align*}
+        &67^2 \equiv -144 = -1 \cdot 2^{4} \cdot 3^2\pmod{N}\\
+        &68^2 \equiv -9 = -1 \cdot 3^2 \pmod{N}\\
+        &69^2 \equiv 128  = 2^7 \pmod{N}.
+    \end{align*}
+    We put $b=67\cdot 68 = 4556 = -77 \pmod{N}$ and $c = 2^2 3^2 \equiv 36 \pmod{N}$. Then $77^2 \equiv 36^2 \pmod{N}$. In fact, $N=(77-36)(77+36)=41\cdot 113$.
+\end{example}
+\textbf{Remarks.}
+\begin{itemize}
+    \item We want to work over $\mathbb{F}_2$. Write $B = \{\gamma_1,\ldots,\gamma_m\}$ for $\gamma_i=-1$ or a prime. Let $S(N,B)$ be the set of $B$--numbers mod $N$, which is not closed under multiplication. Then $b \in S(N,B)$ means $\langle b^2 \rangle = \gamma_1^{\alpha_1}\ldots \gamma_k^{\alpha_{k}}$ for some $\alpha_i \in \mathbb{Z}_{\ge 0}$. Define a map $\lambda : S(B) \to \mathbb{F}_2^k$ sending $b \mapsto (\alpha_1 \pmod{2}, \alpha_2 \pmod{2},\ldots,\alpha_k \pmod{2})$. In step 3, we seek $I \subset \{1,\ldots,m\}$ such that $\prod_{i \in I}^{} \langle b_i^2 \rangle$ is a square. Equivalently, we want $\sum_{i \in I}^{} \lambda(b_i) = 0$.
+\end{itemize}
+
 \end{document}
