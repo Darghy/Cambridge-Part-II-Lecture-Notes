@@ -1309,7 +1309,7 @@ This is the special case $G=K^{\times}$ of a theorem in II Representation Theory
     where $y_i'=y_i(\sigma_i(h)-\sigma_n(h))$. As $\sigma_1(h) \neq \sigma_n(h)$, $y_1=0$. Then $(\star)$ is a linear dependence between $\sigma_2,\ldots,\sigma_n$, hence by induction, $y_2=\ldots=y_n=0$.
 \end{proof}
 Assume now that $n>1$ and $n\cdot 1_K \neq 0$.
-\begin{theorem}
+\begin{theorem}\label{12.3}
     Assume $K$ contains a primitive $n^{\text{th}}$ root $\zeta=\zeta_n$ of 1. Suppose $L/K$ is an extension with $L=K(x)$, $x^n=a \in K^{\times}$. Then
     \begin{enumerate}[(i)]
         \item $L/K$ is a splitting field for $f(T)=T^n-a$, and it is Galois with cyclic Galois group.
@@ -1748,7 +1748,7 @@ Note that $K_1/K_0$ is Galois with abelian Galois group, and $K_i/K_{i-1}$ (for 
 \vspace{1mm}
 
 To get all the roots of $f$, look at a normal closure $M$ of $K_m$. This will contain a splitting field for $f/K$ (since $x \in M$ and $f$ is irreducible). To determine $M$, let $K_i' \subset M$ be a normal closure of $K_i$ (so $K_1' = K_1 = K(\zeta_d)$).
-\begin{prop}
+\begin{prop}\label{16.1}
 $$K_i' = K_{i-1}'(\{ \sqrt[d]{\sigma(a_i)} \mid \sigma \in \text{Gal}(K_{i-1}'/K) \}).$$
 \end{prop}
 \begin{proof}
@@ -1759,6 +1759,111 @@ $$K_i' = K_{i-1}'(\{ \sqrt[d]{\sigma(a_i)} \mid \sigma \in \text{Gal}(K_{i-1}'/K
     \prod_{\sigma \in \text{Gal}(K_{i-1}'/K)}^{}(T^d-\sigma(a_i)) = g_i \in K[T].
     \]
     If $K_{i-1}'$ is the splitting field of some polynomial, say $h_{i-1}$, over $K$, then the RHS is a splitting field of $g_i h_{i-1}$ over $K$, so it is normal.
+\end{proof}
+
+\marginpar{26 Nov 2022, Lecture 23}
+
+\begin{prop}
+    $\text{Gal}(K_i'/K_{i-1}')$ is abelian.
+\end{prop}
+\begin{proof}
+    This is just a variant of Theorem \ref{12.3}. Let $A=\text{Gal}(K_i'/K_{i-1}')$. We have $~\forall \tau \in A, \sigma \in \text{Gal}(K_{i-1}'/K)$ that $\tau\left(\sqrt[d]{\sigma(a_i)}\right)=\zeta_d^{m_{\sigma}}\sqrt[d]{\sigma(a_i)}$ for $m_\sigma \in \mathbb{Z}/d\mathbb{Z}$. Then $\tau \mapsto (m_\sigma)\in (\mathbb{Z}/d\mathbb{Z})^r$ for $r = |\text{Gal}(K_{i-1}'/K)|$ is an injective homomorphism $A \to (\mathbb{Z}/d\mathbb{Z})^r$. (For details, see the proof of Theorem \ref{12.3}).
+    \vspace{1mm}
+    
+    For $i=1$, $K_1'=K_1=K(\zeta_d)$, so its Galois group is a subgroup of $(\mathbb{Z}/d\mathbb{Z})^\times$.
+\end{proof}
+So we have the following picture:
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance = 2cm]
+        \node (K) {$\hspace{-2em}K=K_0$};
+        \node (Km) [above of=Q] {$K_{m-1}'$};
+        \node (M) [above of=K_1] {$M=K_m'$};
+        \node (G) [right of=K] {\hspace{5mm}$N_0=G=\text{Gal}(M/K)$};
+        \node (Nm) [above of=G] {$N_{m-1}$};
+        \node (1) [above of=GA3] {$\{1\}=N_m$};
+
+        \draw[dashed] (K) -- (Km) node[midway,anchor=east]{};
+        \draw (Km) -- (M) node[midway, anchor=east,text width=2cm]{};
+        \draw[dashed] (G) -- (Nm) node[midway, anchor=west]{};
+        \draw (Nm) -- (1) node[midway, anchor=west]{};
+    \end{tikzpicture}
+\end{figure}
+As $K_i'/K$ is normal, the $N_i$ are normal subgroups of $G$.
+
+\begin{defn}
+    A finite group $G$ is \textbf{soluble} (or \textbf{solvable}) if there exists a chain of normal subgroups $N_i \trianglelefteq G$ such that \[
+    G = N_0 \supset N_1 \supset \ldots \supset N_m = \{1\}
+    \]
+    such that $N_i/N_{i+1}$ is abelian $~\forall i$.
+\end{defn}
+\begin{example}
+    The simplest soluble nonabelian group is $S_3$. $1 \trianglelefteq A_3 \trianglelefteq S_3$ and $S_3/A_3 \cong \mathbb{Z}/2\mathbb{Z}$, $A_3 \cong \mathbb{Z}/3\mathbb{Z}$.
+    \vspace{1mm}
+    
+    Another example is $S_4 \supset A_4 \supset V \supset \{1\}$. We have $V \trianglelefteq S_4, A_4 \trianglelefteq S_4$ and the quotient groups from left to right are $\mathbb{Z}/2\mathbb{Z}, \mathbb{Z}/3\mathbb{Z}$ and $(\mathbb{Z}/2\mathbb{Z})^2$.
+\end{example}
+If $G=\text{Gal}(M/K)$ as above, then $N_i/N_{i+1}= \text{Gal}(K_i'/K_{i-1}')$ is abelian, hence $G$ is soluble.
+\begin{lemma}\label{16.3}
+    Every subgroup and quotient of a soluble group is soluble.
+\end{lemma}    
+\begin{proof}
+    Let $G=N_0 \trianglerighteq N_1 \ldots N_m = \{1\}$ with $N_i/N_{i+1}$ abelian. \vspace{1mm}
+    
+    If $H \subset G$ is a subgroup, then $H \cap N_i \trianglelefteq H$, and $(H \cap N_i)/(H \cap N_{i+1}) \to N_i/N_{i+1}$ is injective, so $(H \cap N_i)/(H \cap N_{i+1})$ are all abelian, so $H$ is soluble.
+    \vspace{1mm}
+    
+    For quotients: Suppose $\pi : G \to \overline{G} = G/H$ for $H$ normal. Then $\pi(N_i) \trianglelefteq \overline{G}$, and $N_i/N_{i+1} \to \pi(N_i)/\pi(N_{i+1})$ is surjective.
+\end{proof}
+\begin{theorem}[Abel--Ruffini]\label{16.4}
+    If $f \in K[T]$ is soluble by radicals over $K$, then $\text{Gal}(f/K)$ is soluble.
+\end{theorem}
+\begin{proof}
+    $\text{Gal}(L/K)=\text{Gal}(f/K) \cong \text{Gal}(M/K)/\text{Gal}(M/L)$. As $\text{Gal}(M/K)$ is soluble, the result follows from Lemma \ref{16.3}.
+\end{proof}
+\begin{prop}
+    If $n\ge 5$, then $S_n$ and $A_n$ are not soluble.
+\end{prop}
+\begin{proof}
+    $A_5 \subset S_5 \subset S_n$, so by Lemma \ref{16.3} it is enough to show that $A_5$ is not soluble. But $A_5$ is not abelian and it is simple\footnote{A reminder why $A_5$ is simple: Every normal subgroup has to be a union of conjugacy classes, so we can just write down the conjugacy classes and their sizes in $A_5$ to conclude -- we have 1 trivial subgroup, 24 5--cycles, 20 3--cycles and 15 (2,2)--permutations. No partial sum of these divides 60, so we're done.}. hence we're done.
+\end{proof}
+\begin{cor}
+    If $\text{deg}(f)=n\ge 5$ and $\text{Gal}(f/K)$ contains $A_n$, then $f$ is not soluble by radicals over $K$.
+\end{cor}
+The converse to Theorem \ref{16.4} also true and not difficult to show.
+\section{$\mathbb{C}$ is algebraically closed}
+We wants to prove $\mathbb{C}$ is algebraically closed without using complex analysis. We will use the following:
+\begin{enumerate}[(i)]
+    \item Every polynomial of odd degree over $\mathbb{R}$ has a root (by IVT).
+    \item Every quadratic over $\mathbb{C}$ splits into linears.
+    \item Every finite group $G$ has a 2--Sylow subgroup $H$, i.e. a subgroup such that $(G:H)$ is odd and $|H|=2^k$.
+    \item If $G$ is a $p$--group (i.e. $|G|=p^k$ for $k>0$), then $G$ has a subgroup of index $p$ (this follows since $G$ has nontrivial centre).
+\end{enumerate}
+\begin{theorem}
+    $\mathbb{C}$ is algebraically closed.
+\end{theorem}
+\begin{proof}
+    Let $K/\mathbb{C}$ be a finite extension and let $L \supset K$ be a normal closure over $\mathbb{R}$, so $G=\text{Gal}(L/\mathbb{R})$. We will show $L=\mathbb{C}$.
+    \vspace{1mm}
+    
+    Let $H \subset G$ be a Sylow 2--subgroup. Then $[L^H : \mathbb{R}] = (G:H)$ is odd. So if $x \in L^H$, then by (i), $x \in \mathbb{R}$, i.e. $L^H=\mathbb{R}$, so $H=G$, so $G$ is a 2--group. Let $G \supset G_1 = \text{Gal}(L/\mathbb{C})$ and $G_2 \subset G_1$ a subgroup of index 2 (which exists by (iv)). Then $[L^{G_2}:\mathbb{C}]=(G_1 : G_2) = 2$, contradicting (ii). Hence there is no subgroup of index 2, i.e. $G_1=\{e\}$, so $L=\mathbb{C}$ (see diagram on next page).
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[node distance = 2cm]
+            \node (R) {$\mathbb{R}$};
+            \node (C) [above of=R] {$\mathbb{C}$};
+            \node (K) [above right of=C] {$K$};
+            \node (L) [above right of=K] {$L$};
+            \node (1) [below right of=L] {$\{1\}$};
+            \node (H) [below of=1] {$H$};
+            \node (G) [below of=H] {$G$};
+            \node (LH) [below of=K] {$L^H$};
+    
+            \draw (R) -- (C) -- (K) -- (L);
+            \draw (G)  -- (H) node[midway, anchor=east]{odd} -- (1) node[midway, anchor=east]{$2^k$};
+            \draw (R) -- (LH) -- (L);
+        \end{tikzpicture}
+    \end{figure}
 \end{proof}
 
 \end{document}
