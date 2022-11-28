@@ -39,6 +39,8 @@
 \newtheorem{example}{Example}[section]
 \newtheorem{defn}{Definition}[section]
 
+
+
 \title{Part II - Stochastic Financial Models
     \\ \large
     Lectured by Dr M. R. Tehranchi
@@ -1103,7 +1105,7 @@ End of aside.
     Note $M_n = \sum_{k=1}^{n} \mathbbm{1}_{S<k\le T}(X_k-X_{k-1})$, and the indicator is bounded and previsible.
 \end{proof}
 \begin{theorem}[Optional sampling theorem]
-    Suppose $S \le T$ are bounded stopping times and $(X_n)_{n}$ is a submartingale. Then $\mathbb{E}[X_T]\ge \mathbb{E}[X_S]$.
+    Suppose $S \le T$ are bounded stopping times and $(X_n)_{n}$ is a submartingale. Then $\mathbb{E}[X_S]\le \mathbb{E}[X_T]$.
 \end{theorem}
 \begin{proof}
     Let $M_n = X_{n \wedge T} - X_{n \wedge S}$. Let $N$ be a constant such that $T\le N$ almost surely. Then $\mathbb{E}[M_n]\ge M_0=0$ because $(M_n)$ is a submartingale. Hence we're done, since $M_N = X_{T \wedge N} - X_{S \wedge N} = X_T-X_S$.
@@ -1153,7 +1155,7 @@ These notions are independent when $\mathbb{P}(G(n,x,\xi_n) \in A) = P(n,x,A)$.
 \subsubsection{Stochastic optimal control}
 
 \textbf{Goal:} Given (fixed, not random) $N$, functions $f$ and $g$, and a controlled process $(X_n^U)_n$, we want to maximize \[
-\mathbb{E}\left[\sum_{k=1}^{N} f(k,U_k)+g(x_K^U) \mid X_0=x \right]
+\mathbb{E}\left[\sum_{k=1}^{N} f(k,U_k)+g(X_N^U) \mid X_0=x \right]
 \] over controls $(U_n)_{1\le n\le N}$.
 
 We will make a blanket assumption that everything we need is integrable.
@@ -1181,7 +1183,7 @@ Setup: Given $\xi_1,\xi_2,\ldots$ independent random variables, a function $G(\c
 \vspace{1mm}
 
 Given $f(\cdot ,\cdot )$ and $g(\cdot)$, our goal is to maximize \[
-\mathbb{E}[\sum_{k=1}^{N} f(k,u_k)+g(X_N^U)]
+\mathbb{E}[\sum_{k=1}^{N} f(k,U_k)+g(X_N^U)]
 \]
 over the controls $(U_n)_n$.
 
@@ -1260,7 +1262,7 @@ Another example of optimal investment, this time with consumption:
 \marginpar{14 Nov 2022, Lecture 17}
 \vspace{1mm}
 
-Let us have the same setup as above: $r$ is the interest rate, $d=1$, $S_n=S_{n-1}\xi_n$ with $(\xi_n)_n$ IID. Let $c_n$ be the consumption between time $n-1$ and $n$, which is $\mathcal{F}_{n-1}$--measurable (so $(C_n)_n$ is previsible). Then our wealth is \[
+Let us have the same setup as above: $r$ is the interest rate, $d=1$, $S_n=S_{n-1}\xi_n$ with $(\xi_n)_n$ IID. Let $C_n$ be the consumption between time $n-1$ and $n$, which is $\mathcal{F}_{n-1}$--measurable (so $(C_n)_n$ is previsible). Then our wealth is \[
 X_n = (1+r)(X_{n-1}-C_n) + \theta_n(S_n-(1+r)S_{n-1}).
 \]
 Let $\eta_n=S_{n-1}\theta_n$, then $(C_n,\eta_n)_{n\ge 1}$ are our controls. A natural goal is to try and maximize \[
@@ -1494,7 +1496,7 @@ Recall that $\mathbb{Q}$ is risk--neutral $\iff$ $\mathbb{E}[S_n \mid \mathcal{F
     An \textbf{American claim} is specified by the adapted process $(Y_n)_{0\le n\le N}$. The owner of the claim chooses a stopping time $T\le N$ and receives the payout $Y_T$ at time $T$.
 \end{defn}
 \begin{example}
-    An American call option with payout $Y_n = (S_n=K)^+$.
+    An American call option with payout $Y_n = (S_n-K)^+$.
 \end{example}
 \begin{theorem}
     The no--arbitrage price of a vanilla American claim with payout $Y_n=G(S_n)$ for $0<-n\le N$ in the binomial model is $\pi_n = V(n,S_n)$ where $V(n,s)=g(s) ~\forall s$ and 

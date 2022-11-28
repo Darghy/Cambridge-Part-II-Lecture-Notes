@@ -1622,11 +1622,119 @@ Note that if $p \gg \frac{1}{n}$ ($pn \to \infty$), then \[
     \end{align*}
     Now we just need to show the last expression goes to zero, but we have
     \begin{align*}
-        &(\star) \le \sum_{k=1}^{\epsilon n/4} n^k e^{-pk(n-k)} + \sum_{k=\epsilon n/4}^{n/2} 2^n e^{-(1+\epsilon)\frac{\log n}{n}k(n-k)} \le \\
-        &\le \sum_{k=1}^{\epsilon n/4} \left(n e^{-(1+\epsilon)\frac{\log n}{n}(n-k)}\right)^k + \sum_{k=\epsilon n/4}^{n/2} \sum_{k=\epsilon n/4}^{n/2} 2^n \epsilon^{-(1+\epsilon)\frac{\log n}{n} \frac{\epsilon n}{4} \frac{n}{2}} \le \\
-        &\le \sum_{k=1}^{\epsilon n/4} \left(ne^{-(1+\epsilon)\frac{\log n}{n}n(1-\epsilon/4)}\right)^k + \sum_{k=\epsilon n/4}^{n/2} \le \\
-        &\le \sum_{k=1}^{\epsilon n/4} \left( n e^{-\log n - \frac{3 \epsilon}{4}\log n} \right)^k + \sum_{k=\epsilon n/4}^{n/2} \to 0.
+        (\star) &\le \sum_{k=1}^{\epsilon n/4} n^k e^{-pk(n-k)} + \sum_{k=\epsilon n/4}^{n/2} 2^n e^{-(1+\epsilon)\frac{\log n}{n}k(n-k)} \le \\
+        &\le \sum_{k=1}^{\epsilon n/4} \left(n e^{-(1+\epsilon)\frac{\log n}{n}(n-k)}\right)^k + \sum_{k=\epsilon n/4}^{n/2} 2^n \epsilon^{-(1+\epsilon)\frac{\log n}{n} \frac{\epsilon n}{4} \frac{n}{2}} \le \\
+        &\le \sum_{k=1}^{\epsilon n/4} \left(ne^{-(1+\epsilon)\frac{\log n}{n}n(1-\epsilon/4)}\right)^k + \sum_{k=\epsilon n/4}^{n/2} 2^n \epsilon^{-(1+\epsilon)\epsilon n\log n/8} \le \\
+        &\le \sum_{k=1}^{\epsilon n/4} \left( n e^{-\log n - \frac{3 \epsilon}{4}\log n} \right)^k + \sum_{k=\epsilon n/4}^{n/2} 2^n \epsilon^{-(1+\epsilon)\epsilon n\log n/8} \to 0.
     \end{align*} 
 \end{proof}
+\marginpar{28 Nov  2022, Lecture 23 - lecture 22 was cancelled due to strike action}
+
+\section{Algebraic graph theory}
+
+\begin{defn}
+    Let $G$ be a graph. The \textbf{diameter of} $G$ is defined as $$\text{diam}(G) = \max \{d(x,y) \mid x,y \in V(G)\}.$$ 
+\end{defn}
+
+We have $\text{diam}(G)=1 \iff G$ is complete $\iff {n\choose{2}}$ edges.
+\vspace{1mm}
+
+\textbf{Question.} Now let $\text{diam}(2)$. What is the minimum number of edges in a diameter 2 graph?
+\vspace{1mm}
+
+\textbf{Question.} What is the minimum $\Delta(G)$ over all graphs $G$ with $\text{diam}(G)=2$ on $n$ vertices?
+\vspace{1mm}
+
+\textbf{Fact.} Let $G$ be a graph with $\text{diam}(G)\ge 2$. Then $|G| \le \Delta^2+1$.
+\begin{proof}
+    Let $x \in V(G)$, then $V(G) = \{x\} \cup N(x) \cup N(N(x))\setminus N(x)$, so $$|V(G)| \le 1 + \Delta + \Delta(\Delta-1) = \Delta^2+1.$$
+\end{proof}
+\begin{defn}
+    A \textbf{Moore graph} is a graph for which $|G|=\Delta^2+1$.
+\end{defn}
+\textbf{Remarks.}
+\begin{itemize}
+    \item If $G$ is a Moore graph, then it is regular.
+    \item A Moore graph is triangle--free.
+    \item More generally, a graph $G$ is a Moore graph $\iff$ every distinct $x,y \in V(G)$ have a unique path of length $\le 2$ between them. 
+\end{itemize} 
+All of these follow from considering the equality case in the proof above.
+\begin{example}
+    \begin{itemize}
+        \item If $\Delta(G)=2$, then $C_5$ is a Moore graph.
+        \item If $\Delta(G)=3$, then the Petersen graph is a Moore graph.
+        \item If $\Delta(G)=4$, we can draw our graph: draw the root vertex, 4 of its children, and then three leaves for each of the children. Now the question is the following: can we add the rest of the edges between the leaves to end up with a unique path of length $\le 2$ between each pair of vertices? 
+    \end{itemize}
+\end{example}
+\begin{defn}
+    Let $G$ be a graph on vertex set $[n]$. We define the \textbf{adjacency matrix} of $G$ to be the $n\times n$ matrix $(A_G)_{xy} = \begin{cases}
+        1 &\text{ if }xy \in E(G)\\
+        0 &\text{ otherwise}
+    \end{cases}$ $~\forall x,y \in [n]$.
+\end{defn}
+\begin{example}
+    Let $G$ be the following graph.
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[node distance = 2cm]
+            \node (1) {$1$};
+            \node (2) [below right of=1] {$2$};
+            \node (5) [below left of=1] {$5$};
+            \node (4) [below of=5] {$4$};
+            \node (3) [below of=2] {$3$};
+            \draw (1)--(2)--(3)--(4)--(5)--(1);
+            \draw (2)--(5);
+        \end{tikzpicture}
+    \end{figure}
+    Then \[
+    A_G = \begin{pmatrix} 0&1&0&0&1\\1&0&1&0&1\\  0&1&0&1&0\\0&0&1&0&1\\1&1&0&1&0 \end{pmatrix}.
+    \]
+\end{example}
+
+\textbf{Fact.} $A_G$ is symmetric and $(A_G)_{x x}=0 ~\forall x \in V(G)$. So $\text{tr}(A)=0$.
+\vspace{1mm}
+
+\textbf{Fact.} Let $G$ be a graph and $A_G$ its adjacency matrix. Let $k \in \mathbb{N}$. Then 
+\begin{align*}
+    (A_G^k)_{xy} = \text{number of walks of length }k \text{ from }x \text{ to }y \text{ in }G.
+\end{align*}
+\begin{proof}
+    If $k=1$, then $xy \in E(G) \iff$ a path of length 1. If $k=2$, then 
+    \begin{align*}
+        (A_G^2)_{xy} = \sum_{z}^{} (A_G)_{xz} (A)_{zy} = \sum_{z}^{} \mathbbm{1}(x \sim z)\mathbbm{1}(z \sim y) = \text{the number of paths of length 2}.
+    \end{align*}
+    For $k\ge 3$, proceed by induction.
+\end{proof}
+We have that $A_G$ acts on $\mathbb{R}^n \to \mathbb{R}^n$ as a linear map. What does this say about $G$?
+\begin{example}
+    Let $G=C_4$, so $A_G = \begin{pmatrix} 0&1&0&1\\1&0&1&0\\0&1&0&1\\1&0&1&0 \end{pmatrix}$. Take some vector, e.g. $x= \begin{pmatrix} 1&2&-2&3 \end{pmatrix}^\top$. We can think of this as labeling our vertices of the graph.
+    Then $A_G x$ is just summing these labels for neighboring vertices, which gives us a new graph with labels $5,-1,5,-1$, i.e. $A_G x = \begin{pmatrix} 5 & -1 & 5 & -1 \end{pmatrix}^\top$.
+\end{example}
+\textbf{Fact.} If $A$ is a $n \times n$ symmetric matrix, then $A$ has real eigenvalues $\lambda_1 \ge \ldots \ge \lambda_n$. Moreover, there exist eigenvectors $u_1,\ldots,u_n$ which form an orthonormal basis of $\mathbb{R}^n$.
+\vspace{1mm}
+
+Thus, given a graph on $n$ vertices, we can talk about its eigenvalues $\lambda_1 \ge \ldots \ge \lambda_n$, which are the eigenvalues of $A_G$. We write $\lambda_{\max} = \lambda_1$ and $\lambda_{\min}= \lambda_n$.
+\vspace{1mm}
+
+Note that $\sum_{i=1}^{n} \lambda_i = \text{tr}(A) = 0$, so if $G$ is a nonempty graph, then $\lambda_{\max}>0$ and $\lambda_{\min}<0$.
+\vspace{1mm}
+
+Let's compute the eigenvalues of $C_4$. We can check that $\begin{pmatrix} 1&1&1&1 \end{pmatrix}^\top$ is an eigenvector with eigenvalue 2, preferably by thinking about it by summing neighboring labels. We also see that $A_G$ has rank 2, so we have 0 as an eigenvalue and two zero--eigenvectors. Since the eigenvalues sum to zero, the last eigenvalue must be $-2$ (with eigenvector $\begin{pmatrix} 1 & -1 & 1 & -1 \end{pmatrix}^\top$).
+\vspace{1mm}
+
+\textbf{Fact.} Let $A$ be a symmetric $n \times n$ matrix. Then 
+\begin{align*}
+    &\lambda_{\max} = \max_{x \in \mathbb{R}^n\setminus \{0\}} \frac{\langle x, Ax \rangle}{\langle x, x \rangle}\\
+    &\lambda_{\min} = \min_{x \in \mathbb{R}^n\setminus \{0\}} \frac{\langle x, Ax \rangle}{\langle x, x \rangle}
+\end{align*}
+\begin{prop}
+    Let $G$ be a graph.
+    \begin{enumerate}[(i)]
+        \item If $\lambda$ is an eigenvalue of $G$, then $|\lambda|\le \Delta(G)$.
+        \item Let $G$ be connected. Then $\Delta$ is an eigenvalue $\iff G$ is regular.
+        \item Let $G$ be connected. Then $-\Delta$ is an eigenvalue $\iff G$ is regular and bipartite.
+        \item $\lambda_{\max} \ge \delta(G)$.
+    \end{enumerate}
+\end{prop}
 
 \end{document}
