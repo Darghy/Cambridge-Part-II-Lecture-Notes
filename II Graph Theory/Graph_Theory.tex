@@ -1727,14 +1727,111 @@ Let's compute the eigenvalues of $C_4$. We can check that $\begin{pmatrix} 1&1&1
     &\lambda_{\max} = \max_{x \in \mathbb{R}^n\setminus \{0\}} \frac{\langle x, Ax \rangle}{\langle x, x \rangle}\\
     &\lambda_{\min} = \min_{x \in \mathbb{R}^n\setminus \{0\}} \frac{\langle x, Ax \rangle}{\langle x, x \rangle}
 \end{align*}
-\begin{prop}
+\begin{prop}\label{7.1}
     Let $G$ be a graph.
     \begin{enumerate}[(i)]
         \item If $\lambda$ is an eigenvalue of $G$, then $|\lambda|\le \Delta(G)$.
-        \item Let $G$ be connected. Then $\Delta$ is an eigenvalue $\iff G$ is regular.
+        \item Let $G$ be connected. Then $\Delta$ is an eigenvalue $\iff G$ is regular, $\mathbbm{1}=\begin{pmatrix} 1,\ldots,1 \end{pmatrix}^\top$ is the corresponding eigenvector, and $\Delta$ has multiplicity 1.
         \item Let $G$ be connected. Then $-\Delta$ is an eigenvalue $\iff G$ is regular and bipartite.
         \item $\lambda_{\max} \ge \delta(G)$.
     \end{enumerate}
 \end{prop}
+\begin{proof}
+    \marginpar{30 Nov 2022, Lecture 24}
+    \begin{enumerate}[(i)]
+        \item Let $\lambda$ be an eigenvalue with an eigenvector $x=(x_1,\ldots,x_n)^\top$. Let $x_i$ be such that $|x_i|$ is maximal. We may assume that $x_i=1$ by scaling. We have 
+        \begin{align*}
+            &\lambda = \lambda x_i = (\lambda x)_i = (Ax)_i = (Ax)_i = \sum_{j \sim i}^{} x_j\\
+            &|\lambda|= |\sum_{j\sim i }^{} x_j| \le \Delta.
+        \end{align*}
+        \item ($\impliedby$): If $G$ is regular, then $\mathbbm{1}=(1,\ldots,1)^\top$ is an eigenvector of $G$ with eigenvalue $\Delta$.
+        \vspace{1mm}
+        
+        $(\implies)$: For $\Delta$ is an eigenvalue of $G$, let $x=(x_1,\ldots,x_n)^\top$ be a corresponding eigenvector with $|x_i|$ maximal, and assume $x_i=1$. We have
+        \begin{align*}
+            \Delta = \Delta x_i = \sum_{j \sim i }^{} x_j \implies \text{deg}(i)=\Delta \text{ and } x_j=1 ~\forall j \sim i.
+        \end{align*}
+        Now repeat this argument on each of the neighbors of $i$ and continue until we reach every vertex in $G$ (as $G$ is connected) to see that $G$ is $\Delta$--regular and $x=(1,\ldots,1)^\top$. Since we've shown that $\mathbbm{1}$ is the only eigenvector possible for eigenvalue $\Delta$, we conclude that $\Delta$ has multiplicity 1.
+        \item $(\impliedby)$: If $G$ is bipartite and regular with bipartition $V(G) = X \sqcup Y$, then $x = (\underbrace{1,\ldots,1}_{|X|}, \underbrace{-1,\ldots,-1}_{|Y|})^\top$ is an eigenvector with eigenvalue $-\Delta$.
+        \vspace{1mm}
+        
+        $(\implies)$: Let $-\Delta$ be an eigenvalue of $G$ with corresponding eigenvector $x=(x_1,\ldots,x_n)$. Let $x_i$ be such that $|x_i|=1$ and assume that $x_i=1$. We have 
+        \begin{align*}
+            -\Delta = - \Delta x_i = \sum_{j \sim i}^{} x_j \implies \text{deg}(i)=\Delta \text{ and } x_j = -1 ~\forall j \sim i.
+        \end{align*}
+        Now repeat this for all $j \in N(i)$ to see that $\text{deg}(j)=\Delta$ and all $x_k = 1 ~\forall k \sim j \sim i$. Analogously keep repeating until we reach all vertices in $G$ and see that $G$ is $\Delta$--regular and $x = (1,\ldots,1,-1,\ldots,-1)$ up to a permutation of the coordinates. Moreover, $V(G) = \{j \mid x_j=1\} \cup \{j \mid x_j = -1\}$ defines a bipartition of $G$.
+        \item We know that
+        \begin{align*}
+            \lambda_{\max} = \max_{x \in \mathbb{R}^n\setminus 0}\frac{\langle x,Ax \rangle}{\langle x,x \rangle} \ge \frac{\langle \mathbbm{1},A \mathbbm{1} \rangle}{\langle \mathbbm{1},\mathbbm{1}\rangle} = \frac{1}{n} \sum_{i=1}^{n} \text{deg}(i) \ge \delta(G).
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+\begin{defn}
+    We say that a graph $G$ is \textbf{$(k,a,b)$--strongly regular} if:
+    \begin{itemize}
+        \item $G$ is $k$--regular.
+        \item For every $xy \in E(G)$, $|N(x) \cap N(y)| = a$.
+        \item For every $x \neq y, x \not\sim y$ in $G$, $|N(x) \cap N(y)|=b$.
+    \end{itemize}
+\end{defn}
+\begin{example}
+    \begin{itemize}
+        \item $C_4$ is $(2,0,2)$--strongly regular.
+        \item $C_5$ is $(2,0,1)$--strongly regular.
+        \item In fact, any Moore graph is $(k,0,1)$--strongly regular.
+    \end{itemize}
+\end{example}
+\begin{theorem}[Strongly regular graphs are rare]\label{7.2}
+    If there exists a $(k,a,b)$--strongly regular graph on $n$ vertices, then 
+    \begin{align*}
+        \frac{1}{2}\left((n-1) \pm \frac{(n-1)(b-a)-2k}{\sqrt{(a-b)^2+4(k-b)}} \right) \in \mathbb{Z}.
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    Let $A$ be the adjacency matrix of a $(k,a,b)$--strongly regular graph on $n$ vertices. Note that 
+    \[
+    (A^2)_{xy} = \begin{cases}
+        a &x \sim y.\\
+        b &x \not\sim y, x \neq y.\\
+        k &x=y.
+    \end{cases}
+    \]
+    This means that \[
+    A^2 = a A + B(J-I-A) + kI,
+    \]
+    where $J$ is the matrix of all ones. Hence \[
+    A^2+(b-a)A+(b-k)I-bJ=0 ~(\dagger).
+    \]
+    We know by Proposition \ref{7.1} that $k$ is an eigenvalue of $A$ with corresponding eigenvector $\mathbbm{1}=(1,\ldots,1)^\top$ and $k$ has multiplicity $1$. Let $\lambda$ be an eigenvalue with $\lambda \neq k$, and let $x$ be a corresponding eigenvector. Multiply $(\dagger)$ by $x$ to get that \[
+    \lambda^2 x + \lambda(b-a)x + (b-k)x = 0
+    \]
+    since $Jx = 0$, since $x \perp \mathbbm{1}$. Hence
+    \begin{align*}
+        &\lambda^2+\lambda(b-a)+(b-k)=0 \\
+        &\implies \lambda = \frac{1}{2} \left((a-b) \pm \sqrt{(b-a)^2 + 4(k-b)}\right).
+    \end{align*}
+    Let $\lambda,\mu$ be the solutions to this quadratic equation and assume that $\lambda$ has multipllicity $s$ and $\mu$ has multiplicity $t$. % *writes mu*. "FUCK, t"
+    We have 
+    \begin{align*}
+        k + s \lambda + t \mu = \sum_{i=1}^{n} \text{tr}(A) = 0,
+    \end{align*}
+    hence
+    \begin{align*}
+        \begin{cases}
+            &s \lambda + t \mu = -k\\
+            &s + t = n-1.
+        \end{cases} 
+    \end{align*}
+    Solve these for $s,t \in \mathbb{Z}$ to get the number in our theorem as desired.
+\end{proof}
+\begin{cor}
+    Let $G$ be a Moore graph with $\Delta(G)=k$. Then $k \in \{2,3,7,57\}$.
+\end{cor}
+\begin{proof}
+    The idea is that if $G$ is a Moore graph, then it is $(k,0,1)$--strongly regular on $k^2+1$ vertices. Hence we have \[
+    \frac{1}{2}\left(k^2 \pm  \frac{k^2-2k}{\sqrt{4k-3}}\right) \in \mathbb{Z},
+    \]
+    which gives $k \in \{2,3,7,57\}$.
+\end{proof}
 
 \end{document}
