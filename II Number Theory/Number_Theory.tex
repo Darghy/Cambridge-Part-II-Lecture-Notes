@@ -2132,10 +2132,10 @@ The first unconditional polynomial time primality test was found by Agrawal, Kay
 
 \textbf{Fermat factorization.}
 \begin{lemma}\label{7.9}
-    Let $N$ be an odd composite integer. Then there a bijection between factorizations of $N$ and writing $N$ as a difference of two squares.
+    Let $N$ be an odd positive integer. Then there a bijection between factorizations of $N=ab$ with $a\ge b>0$ and representations of $N$ as a difference of two squares, $r^2-^2$ for $r\ge s>0$, given by $a=r+s,b=r-s$ and $r=\frac{a+b}{2}, s=\frac{a-b}{2}$.
 \end{lemma}
 \begin{proof}
-    $(\implies): $If $N$ is odd and $N=ab$ for $a>b$, then $a,b$ are both odd, so $r=\frac{a+b}{2}, s=\frac{a-b}{2}$ are both integers and $r^2-s^2=ab=N$.
+    $(\implies):$ If $N$ is odd and $N=ab$ for $a>b$, then $a,b$ are both odd, so $r=\frac{a+b}{2}, s=\frac{a-b}{2}$ are both integers and $r^2-s^2=ab=N$.
     \vspace{1mm}
     
     $(\impliedby)$: If $N=r^2-s ^2$, then $N=(r+s)(r-s)$.
@@ -2198,7 +2198,82 @@ We have the \textbf{factor base method}:
 \end{example}
 \textbf{Remarks.}
 \begin{itemize}
-    \item We want to work over $\mathbb{F}_2$. Write $B = \{\gamma_1,\ldots,\gamma_m\}$ for $\gamma_i=-1$ or a prime. Let $S(N,B)$ be the set of $B$--numbers mod $N$, which is not closed under multiplication. Then $b \in S(N,B)$ means $\langle b^2 \rangle = \gamma_1^{\alpha_1}\ldots \gamma_k^{\alpha_{k}}$ for some $\alpha_i \in \mathbb{Z}_{\ge 0}$. Define a map $\lambda : S(B) \to \mathbb{F}_2^k$ sending $b \mapsto (\alpha_1 \pmod{2}, \alpha_2 \pmod{2},\ldots,\alpha_k \pmod{2})$. In step 3, we seek $I \subset \{1,\ldots,m\}$ such that $\prod_{i \in I}^{} \langle b_i^2 \rangle$ is a square. Equivalently, we want $\sum_{i \in I}^{} \lambda(b_i) = 0$.
+    \item We want to work over $\mathbb{F}_2$. Write $B = \{\gamma_1,\ldots,\gamma_m\}$ for $\gamma_i=-1$ or a prime. Let $S(N,B)$ be the set of $B$--numbers mod $N$, which is not closed under multiplication. Then $b \in S(N,B)$ means $\langle b^2 \rangle = \gamma_1^{\alpha_1}\ldots \gamma_k^{\alpha_{k}}$ for some $\alpha_i \in \mathbb{Z}_{\ge 0}$. Define a map 
+    \begin{align*}
+        &\lambda : S(B) \to \mathbb{F}_2^k \\
+        b \mapsto (\alpha_1~(\text{mod }2), &\alpha_2~(\text{mod }2),\ldots,\alpha_k~(\text{mod }2)).
+    \end{align*}
+    In step 3, we seek $I \subset \{1,\ldots,m\}$ such that $\prod_{i \in I}^{} \langle b_i^2 \rangle$ is a square. In other words, we want $\sum_{i \in I}^{} \lambda(b_i) = 0$, i.e. we seek a linear dependence relation between the $m$ elements $\lambda(b_1),\ldots,\lambda(b_m)$, which live in the $k$--dimensional vector space $\mathbb{F}_2^k$.
+
+    \marginpar{29 Nov 2022, Lecture 24}
+
+    So if $m \ge k+1$, then we are guaranteed to find a dependence relation. This gives $b^2 \equiv c^2 \pmod{N}$, which factors $N$ if $b \not\equiv \pm c \pmod{N}$.
+
+    \item How do we find $b$--numbers? We want $b$ such that $\langle b^2 \rangle$ is a product of small primes, so we look for $b$ such that $\langle b^2 \rangle$ is small. 
+    
+    One approach would be to choose integers close to $\sqrt{kN}$ (as in the example above). Another, even better approach is to use continued fractions. Assume $N$ is not a square (else we immediately get a factor, so we're done).
 \end{itemize}
+\begin{lemma}
+    Let $\frac{p_n}{q_n}$ be a convergent to $\sqrt{N}$. Then $|p_n^2 - N q_n^2|\le 2\sqrt{N}$.
+\end{lemma}
+\begin{proof}
+    Using Theorem \ref{6.4}, 
+    \begin{align*}
+        &|p_n^2-Nq_n^2| = q_n^2 \left|\frac{p_n}{q_n}-\sqrt{N}\right| \left|\frac{p_n}{q_n}+\sqrt{N}\right| < q_n^2 \frac{1}{q_n q_{n+1}} \left(2\sqrt{N}+\frac{1}{q_n q_{n+1}}\right) = \\
+        & \frac{1}{q_{n+1}} \left(2q_n\sqrt{N} + \frac{1}{q_{n+1}}\right) < \frac{2}{q_{n+1}} (q_{n}+1)\sqrt{N} \le 2\sqrt{N}
+    \end{align*}
+    since $q_n < q_{n+1}$.
+\end{proof}
+\textbf{Remarks.}
+\begin{enumerate}[(i)]
+    \item Since $2\sqrt{N}<\frac{1}{2}N$, it follows that $\langle p_n^2 \rangle = p_n^2 - N q_n^2$.
+    \item We only need to know $p_n \pmod{N}$, so in the recurrence $p_0=a_0, p_1 =a_0a_1+1, p_n = a_np_{n-1}+p_{n-2}$ we work mod $N$ throughout.
+\end{enumerate} 
+\begin{example}
+    Take $N=12403$. Choose $B = \{-1,2,3,5,7,11,13\}$.
+    \begin{center}
+        \begin{tabular}{l|lll}
+        $n$ & $a_n$ & $p_n \text{ mod }N$ & $\langle p_n^2 \rangle$ \\ \hline
+        0 & 111 & 111 & -82 \\
+        1 & 2 & 223 & 117 \\
+        2 & 1 & 334 & -71 \\
+        3 & 2 & 891 & 89 \\
+        4 & 2 & 2116 & -27 \\
+        5 & 7 & 3300 & 166 \\
+        6 & 1 & 5416 & -39 \\
+        \end{tabular}
+    \end{center}
+    Note we can factor $117 = 3^2 \cdot 13, -27 = -3^3, -39 =3 \cdot 13$. Hence 
+    \begin{align*}
+        &(223 \cdot 2116 \cdot 5416)^2 \equiv 3^6 \cdot 13^2 \pmod{N} \\
+        & \implies 1062^2 \equiv 351^2 \pmod{N}.
+    \end{align*}
+    We find $\gcd(N,1062-351)= 79$ and so $N = 79 \cdot 157$.
+\end{example}
+\textbf{Remark.} Other factor base methods include the Quadratic Sieve and the Number Fields sieve.
+\vspace{1mm}
+
+Another class of factoring algorithms are based on the idea that given a prime $p$ we can construct some interesting groups, e.g. $(\mathbb{Z}/p\mathbb{Z})^\times$ or $E(\mathbb{Z}/p\mathbb{Z})$ for $E$ an elliptic curve.
+\vspace{1mm}
+
+\textbf{Pollard's $p-1$ algorithm.}
+\vspace{1mm}
+
+This method works well if $N$ has a prime number $p$ such that $p-1$ is a product of small primes.
+\vspace{1mm}
+
+\begin{enumerate}[(1)]
+    \item Choose $k$ that is a product of lots of small primes, for example $k=m!$ or $k = \text{lcm}(1,\ldots,m)$.
+    \item Choose at random a small integer $a$ coprime to $N$.
+    \item Compute $a^k$ mod $N$ via repeated squaring.
+    \item Compute $\gcd(a^k-1,N)$ and hope it is a non-trivial factor of $N$. If not, repeat for other choices of $a$ and $k$.
+\end{enumerate}
+\textbf{Remark.} If $p$ is a prime factor of $N$ and $p-1 \mid k$, then $a^k \equiv 1 \pmod{p}$, so $p \mid \gcd(a^k-1,N)$, in which case we get a nontrivial factor of $N$ unless it so happens that $a^k \equiv 1\pmod{N}$.
+
+\begin{example}
+    Take $N=540143$. Try $k= \text{lcm}(1,\ldots,8)=840$ and $a=2$. We have $2^{840} \equiv 53047 \pmod{N}$. We find $\gcd(540143,53047-1)=421$, so we get $N = 421 \cdot 1283$.
+\end{example}
+\textbf{Remark.} $(\mathbb{Z}/p\mathbb{Z})^\times$ has order $p-1$, but $E(\mathbb{Z}/p\mathbb{Z})^\times$ has order in the range $[p+1-2\sqrt{p},p+1+2\sqrt{p}]$ (depending on the elliptic curve), so we have a better chance of finding a number with lots of small prime factors.
+
 
 \end{document}
