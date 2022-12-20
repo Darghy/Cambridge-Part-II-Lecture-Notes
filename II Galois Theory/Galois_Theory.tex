@@ -1866,4 +1866,73 @@ We wants to prove $\mathbb{C}$ is algebraically closed without using complex ana
     \end{figure}
 \end{proof}
 
+\section{Artin's theorem (etc.)}
+
+\marginpar{Nov 29 2022, Lecture 24}
+
+\begin{theorem}[Artin's theorem on invariants]
+    Let $L$ be a field and $G \subset \text{Aut}(L)$ a finite subgroup, so $L^G = \{x \in L \mid ~\forall \sigma \in G, \sigma(x)=x\}$ (a subfield of $L$). Then \[
+    [L:L^G] = |G|.
+    \]
+    (Compare this with Theorem \ref{9.2}, there is no $K$ involved.)
+    \vspace{1mm}
+    
+    In particular, $L/L^G$ is finite, so it is Galois, with Galois group $G$.
+\end{theorem}
+\begin{proof}
+    If we know $L/L^G$ is finite, then Theorem \ref{9.2} says $[L:L^G]=|G|$. Let $K=L^G$ and $x \in L$. Then if $\{\sigma_1(x), \ldots, \sigma_r(x)\}$ is the orbit of $G$ on $x$, then $x$ is a root of $f = \prod_{i=1}^{r} (T-\sigma_i(x)) \in L^G[T] = K[T]$, so $x$ is algebraic and separable over $K$ and $\text{deg}_K(x)\le |G|$.
+    \vspace{1mm}
+    
+    Choose $y \in L$ with $\text{deg}_K(y)$ maximal. We claim that $L = K(y)$ (so it is finite over $K$). If not, $\exists x \in L \setminus K(y)$. Then by above, $x, y$ are both algebraic and separable over $K$. So by the primitive element theorem, $\exists z \in L$ such that $K(z)=K(x,y) \supsetneq K(y)$. Hence $\text{deg}_K(z) > \text{deg}_K(y)$, contradiction.
+\end{proof}
+\textbf{Remark.} It is possible to build up Galois theory by starting with this theorem.
+
+\begin{example}
+    Let $k$ be a field and let $L=k(X_1,\ldots,X_n)=$ the field of fractions of $k[X_1,\ldots,X_n] = \{\frac{f}{g} \mid f,g \in k[X_1,\ldots,X_n], g\neq 0\}$. This is called the \textbf{field of rational functions} in $X_1,\ldots,X_n$.
+    \vspace{1mm}
+    
+    Let $G=S_n$ be the symmetric group permuting the $X_i$, so $G \subset \text{Aut}(L)$. Recall that $k[X_1,\ldots,X_n]^G  = k[s_1,\ldots,s_n]$, where $s_1=X_1+\ldots+X_n,\ldots, s_n = X_1\ldots X_n$ are the elementary symmetric polynomials, which have no nontrivial relations between them. So $k(s_1,\ldots,s_n) \subset L^G$.
+\end{example}
+\begin{theorem}
+    \[
+    L^G = k(s_1,\ldots,s_n).
+    \]
+\end{theorem}
+\begin{proof}
+    Let $\frac{f}{g} \in L^G$ with $f,g \in k[X_1,\ldots,X_n] = R$. So $~\forall \sigma \in G, \frac{f}{g} = \frac{\sigma f}{\sigma g}$. By Gauss' Lemma, $R$ is a UFD and $\{\text{units in }R\} = k^\times$. So $\sigma f = c_\sigma f, \sigma g = c_\sigma g$ for some $c_\sigma \in k^\times$. As $G$ is finite of order $N=n!$, $f = \sigma^N f = c_\sigma^N f$, so $c_{\sigma}^N = 1$.
+    \vspace{1mm}
+
+    But then $fg^{N-1}, g^N \in R^G = k[s_1,\ldots,s_n]$, so $\frac{f}{g}=\frac{fg^{N-1}}{g^N} \in k(s_1,\ldots,s_n)$.    
+\end{proof}
+So now let $L=k(X_1,\ldots,X_n), K=k(s_1,\ldots,s_n)=L^G$ (for $G=S_n$). Then $L/K$ is a finite Galois extension with Galois group $S_n$ (by Artin's theorem). 
+\vspace{1mm}
+
+Let $f=T^n - s_1T^{n-1} + \ldots + (-1)^n s_n \in K[T]$. Then in $L$, $f=\prod_{i=1}^{n} (T-x_i)$. So $L/K$ is a splitting field for $f$. So $\text{Gal}(f/K)=S_n$, i.e. ''the general polynomial of degree $n$'' has Galois group $S_n$. It is not hard (ES4, Q11) to use this to find some Galois extension with Galois group $G$ for every finite group $G$.
+\vspace{1mm}
+
+This is one of a number of theorems in ''Invariant theory'', where we take a ring $R$, a group $G \subset \text{Aut}(R)$ and ask what we can say about $R^G$. When we take $R=k[X_1,\ldots,X_n]$ and $G \subset S_n$, then knowing $R^G$ can help to compute Galois groups. For example, for $G=A_n$, 
+\[
+k[X_1,\ldots,X_n]^{A_n} = k[s_1,\ldots,s_n,\Delta]
+\]
+(for $\Delta=\prod_{i<j}^{} (X_i-X_j)$ with $\text{char}(k)\neq2$).
+
+\begin{example}
+    Take $k[X_1,X_2]=R$ (with $\text{char}(k)\neq2$), $G=\{1,\sigma\}$ for $\sigma: X_1 \mapsto -X_1, \sigma: X_2 \mapsto -X_2$. Then we can easily check that $$R^G = k[X_1^2,X_2^2, X_1X_2] \cong k[Y_1,Y_2,Y_3]/(Y_1Y_2-Y_3^2).$$
+    Geometrically, $\{Y_1Y_2=Y_3\} \subset \mathbb{R}^3$ is a double cone.
+\end{example}
+
+If we fix $K$ and $G$, it is not always the case that there a Galois extension $L/K$ with $\text{Gal}(L/K)=G$. For example, if $K$ is algebraically closed, then $L=K$, so $G=\{1\}$. As another example, if $K=\mathbb{F}_p$, then $\text{Gal}(L/K)$ is cyclic.
+\vspace{1mm}
+
+\textbf{An unsolved problem} (The inverse Galois problem): Is every finite $G$ the Galois group of some $L/\mathbb{Q}$?
+\vspace{1mm}
+
+On the extra example sheet, we will see that every abelian group is a Galois group over $\mathbb{Q}$. There is a famous theorem by Shafarevich which says that every finite soluble group is a galois group over $\mathbb{Q}$. Furthermore, we know this holds for most finite simple groups, e.g. the monster group is a Galois group over $\mathbb{Q}$. 
+\vspace{1mm}
+
+But for general nonabelian groups, the answer is unknown. A better question might be that can we understand $\text{Gal}(\overline{\mathbb{Q}}/\mathbb{Q})$, since the inverse Galois problem is equivalent to asking whether every finite group is a quotient of $\text{Gal}(\overline{\mathbb{Q}}/\mathbb{Q})$.
+\vspace{1mm}
+
+We might also ask what the representations of $\text{Gal}(\overline{\mathbb{Q}}/\mathbb{Q})$ are. This leads to the Langlands program.
+
 \end{document}
