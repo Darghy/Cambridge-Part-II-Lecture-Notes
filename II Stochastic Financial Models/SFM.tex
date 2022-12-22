@@ -1712,8 +1712,81 @@ Some consequences of this:
     where $\Psi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}$. Note that $f_{W_t}(x)$ is defined as $f_{W_t}(x) = \frac{\Psi(\frac{x}{\sqrt{t}})}{\sqrt{t}}$, so $\Psi'(x)=-x\Psi(x)$. The LHS of the first formula is usually more useful for example sheet questions than the RHS.
 \end{itemize}
 \begin{example}
-    18:50.
+    \begin{align*}
+        &\mathbb{E}[g(W_t)\mathbbm{1}_{\{M_t \ge a\}}] = \mathbb{E}[g(W_t) \mathbbm{1}_{\{M_t\ge a, W_t \ge a\}}] + \mathbb{E}[g(W_t)\mathbbm{1}_{\{M_t\ge a,W_t\le a\}}] = \\
+        &= \mathbb{E}[g(W_t) \mathbbm{1}\{W_t\ge a\}] + \mathbb{E}[g(2a-\tilde{W}_t) \mathbbm{1}_{\{\tilde{W}_t \ge a\}})]
+    \end{align*}
+    where $\tilde{W}_t = \begin{cases}
+        W_t &t \le T_a. \\
+        2a-W_t &t \ge T_a. 
+    \end{cases}$
+    So the above is 
+    \begin{align*}
+        \mathbb{E}[g(W_t) \mathbbm{1}\{W_t\ge a\}] + \mathbb{E}[g(2a-W_t) \mathbbm{1}_{\{W_t \ge a\}})] = \int_{0}^{\infty} (g(x)+g(2a-x)) \frac{\phi(\frac{x}{\sqrt{t}})}{\sqrt{t}} \mathrm{d}x.
+    \end{align*}
 \end{example}
+
+Another consequence:
+\begin{align*}
+    &F_{M_t,W_t}(a,b) = F_{W_t}(b)+F_{W_t}(2a-b)-1,\text{ so}\\
+    &F_{M_t}(a) = \mathbb{P}(M_t\le a) = \mathbb{P}(M_t\le a, W_t\le a) = 2 F_{W_t}(a)-1 = \mathbb{P}(F_{|W_t|}\le a).
+\end{align*}
+Note $M_t \sim |W_t|$.
+\vspace{1mm}
+
+Furthermore,
+\begin{align*}
+    \mathbb{P}(T_a\le t) = \mathbb{P}(M_t \ge a) = 2(1-F_{W_t}(a)) = 2F_{W_t}(-a)
+\end{align*}
+by the symmetry of the normal distribution.
+\vspace{1mm}
+
+So $T_a$ has distribution $f_{T_a}(t) = \frac{a}{t^{3/2}}\phi(\frac{a}{\sqrt{t}})$.
+
+\subsection{Cameron--Martin theorem}
+
+Motivation: On ES1 we showed that if $Z \sim N(0,1)$, then \[
+\mathbb{E}[e^{aZ-\frac{a^2}{2}}g(Z)] = \mathbb{E}[g(Z+a)].
+\]
+The proof was just change of variables inside an integral.
+\vspace{1mm}
+
+A generalization: Suppose $Z \sim N_n(0,I_n)$ is an $n$--dimensional standard normal. Then \[
+\mathbb{E}[e^{a^\top Z-\frac{|a|^2}{2}}g(Z)] = \mathbb{E}[g(Z+a)].
+\]
+The proof is exactly the same, coordinate by coordinate.
+
+\begin{theorem}[Cameron-Martin theorem]
+    Let $(W_t)_{t\ge 0}$ be a Brownian motion. Fix $T>0$ (not random) and $c \in \mathbb{R}$. Then, for suitable functions $g : C[0,T] \to \mathbb{R}$,
+    \[
+    \mathbb{E}[e^{cW_t - \frac{c^2}{2}T}g((W_t)_{0\le t\le T})] = \mathbb{E}[g((W_t+ct)_{0\le t\le T})].
+    \]
+\end{theorem}
+\begin{proof}[Proof (sketch).]
+    By measure theory, it is enough to consider $g$ of the form $g(w)=G(w(t_1),\ldots,w(t_n))$ for $0\le t_1 \le \ldots \le t_n \le T$. We can write $G$ as \[
+    G(\sqrt{t_1}z_1,\ldots,\sum_{i=1}^{n} \sqrt{t_i-t_{i-1}}z_i) = H\left(\frac{W(t_1)}{\sqrt{t_1}}, \frac{W(t_2)-W(t_1)}{\sqrt{t_2-t_1}},\ldots,\frac{W(t_n)-W(t_{n-1})}{\sqrt{t_n-t_{n-1}}}\right)
+    \] where $H=H(z_1,\ldots,z_n)$. Then 
+    \begin{align*}
+        &\mathbb{E}\left[H\left(\frac{W_{t_1}+ct_1}{\sqrt{t_1}}, \frac{W_{t_2}-W_{t_1}+c(t_2-t_1)}{\sqrt{t_2-t_1}},\ldots,\frac{W_{t_n}-W_{t_{n-1}}+c(t_n-t_{n-1})}{\sqrt{t_n-t_{n-1}}}\right)\right] =\\
+        &\mathbb{E}[g(W_t+ct)_{0\le t\le T}] = \mathbb{E}[H(Z_1+c\sqrt{t_1},Z_2+c\sqrt{t_2-t_1},\ldots,Z_n+c\sqrt{t_n-t_{n-1}})]
+    \end{align*}
+    where $Z_i = \frac{W_{t_i}-W_{t_{i-1}}}{\sqrt{t_i-t_{i-1}}} \sim N(0,1)$ independent. So the above is 
+    \begin{align*}
+        &= \mathbb{E}[H(Z+a)],
+    \end{align*}
+    where $a=(c\sqrt{t_i-t_{i-1}})_i$, so 
+    \begin{align*}
+        =\mathbb{E}[e^{a^\top Z - \frac{|a|^2}{2}}H(Z)].
+    \end{align*}
+    Finally note \[
+    a^\top Z = \sum_{}^{} a_i Z_i = \sum_{}^{} c \sqrt{t_i-t_{i-1}} \frac{W_{t_i}-W_{t_{i-1}}}{\sqrt{t_i-t_{i-1}}} = cW_T,
+    \]
+    so 
+    \begin{align*}
+        &|a|^2 = \sum_{}^{} c^2(t_i - t_{i-1}) = c^2 T = \mathbb{E}\left[e^{cW_t-\frac{c^2}{2}T}H\left(\frac{W_{t_1}}{\sqrt{t_1}},\ldots,\frac{W_{t_n}-W_{t_{n-1}}}{\sqrt{t_n-t_{n-1}}}\right)\right] =\\ 
+        &\mathbb{E}[e^{cW_t - \frac{c^2}{2}T}g((W_t)_{0\le t\le T})].
+    \end{align*}
+\end{proof}
 
 \end{document}
 
