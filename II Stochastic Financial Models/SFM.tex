@@ -1788,5 +1788,118 @@ The proof is exactly the same, coordinate by coordinate.
     \end{align*}
 \end{proof}
 
+\marginpar{28 Nov 2022, Lecture 23}
+
+\subsubsection{An application of Cameron--Martin}
+\begin{prop}
+    Let $(W_t)_{t\ge 0}$ be a Brownian motion, $c \in \mathbb{R}$, $a\ge 0$. Then 
+    \begin{align*}
+        \mathbb{P}(\max_{0\le t\le T}(W_t+ct)\le a) = \mathbb{P}(W_T \le a - cT) - e^{2ca}\mathbb{P}(W_T \ge a +cT).
+    \end{align*}
+\end{prop} 
+\begin{proof}
+    By Cameron-Martin (twice) and the reflection principle from last time,
+    \begin{align*}
+        &\mathbb{E}[\mathbbm{1}_{\{\max_{0\le t\le T}(W_t+ct) \le a\}}] = \mathbb{E}[e^{cW_T-c^2T/2}\mathbbm{1}_{\{\max_{0\le t\le T} W_t\le a\}}] \\
+        =& \mathbb{E}[e^{cW_t - c^2T/2}(1-\mathbbm{1}_{\{\max \ge a\}})] \\
+        =& \mathbb{E}[e^{cW_T-c^2T/2}]-\mathbb{E}[e^{cW_T-c^2T/2}\mathbbm{1}_{W_T\ge a}] - \mathbb{E}[e^{c(2a-W_T)-c^2T/2}\mathbbm{1}_{W_T\ge a}] \\
+        =&\mathbb{E}[e^{cW_T - c^2T/2}\mathbbm{1}_{\{W_{t}\le a\}}] - e^{2ac} \mathbb{E}[e^{-cW_T-c^2T/2}\mathbbm{1}_{\{W_T\ge a\}}] \\
+        =& \mathbb{E}[\mathbbm{1}_{\{W_T+cT\le a\}}] - e^{2ac} \mathbb{E}[\mathbbm{1}_{\{W_T-cT \ge a\}}].
+    \end{align*}
+    The idea here is ''use C--M to get rid of the drift, apply reflection principle, use C--M to put the drift back''.
+    \vspace{1mm}
+    
+    Alternatively, we could use pdf's everywhere to get that the above probability is \[
+    \Phi \left(\frac{a-ct}{\sqrt{t}}\right) - e^{2ca} \Phi \left(\frac{-a-ct}{\sqrt{t}}\right),
+    \]
+    where $\Phi(x) = \int_{0}^{x} \frac{e^{-s^2/2}}{\sqrt{2\pi}} \mathrm{d}s$.
+\end{proof}
+
+\subsubsection{Alternative formulation of Cameron-Martin.} 
+
+Let $(W_t)_{0\le t\le T}$ be a Brownian motion under $\mathbb{P}$. Fix $c \in \mathbb{R}$ and let $$\frac{d \mathbb{Q}}{d \mathbb{P}} = e^{cW_T-c^2T/2}$$ and $\hat{W}_t = W_t - ct ~\forall 0\le t\le T$. Then $(\hat{W}_t)_{0\le t\le T}$ is a Brownian motion under $\mathbb{Q}$.
+\begin{proof}
+    Fix a suitable functional $g : C[0,T] \to \mathbb{R}$. Then 
+    \begin{align*}
+        \mathbb{E}^\mathbb{Q}[g((\hat{W}_t)_{0\le t\le T})] = \mathbb{E}^{\mathbb{P}}[e^{cW_T-cT^2/2}g((W_t-ct)_{0\le t\le T})] = \mathbb{E}^{\mathbb{P}}[g((W_t)_{0\le t\le T})]
+    \end{align*}
+    by the first formulation of Cameron--Martin. Since $g$ is arbitrary, the probability law of $(W_t)_{0\le t\le T}$ under $\mathbb{P}$ is the same as that of $(\hat{W}_t)_{0\le t\le T}$ under $\mathbb{Q}$ and we're done.
+\end{proof}
+
+\subsection{The heat equation}
+\begin{prop}
+    Let $g$ be suitable and set $$U(t,x) = \mathbb{E}[g(x+\sqrt{t}Z)]$$ where $Z \sim N(0,1)$. Then $u$ solves \[
+    \frac{\partial u}{\partial t} = \frac{1}{2} \frac{\partial^2 u}{\partial x^2}
+    \] with initial condition $u(0,x)=g(x) ~\forall x$.
+\end{prop}
+\begin{proof}[Sketch of proof.]
+    If $g$ is smooth enough, then using ES1 and integration by parts,
+    \begin{align*}
+        \frac{\partial u}{\partial t} = \mathbb{E}\left[g'(x+\sqrt{t}Z)\frac{Z}{2\sqrt{t}}\right] = \frac{1}{2}\mathbb{E}[g''(x+\sqrt{t}Z)] = \frac{1}{2} \frac{\partial^2 u}{\partial x^2}.
+    \end{align*}
+\end{proof}
+\textbf{Remark.} If $g$ is not smooth, then use the formula \[
+u(t,x) = \int \frac{e^{-\frac{(y-x)^2}{2t}}}{\sqrt{2\pi t}}g(y) \mathrm{d}y.
+\]
+Then $x+\sqrt{t}Z \sim N(x,t)$, which is exactly the density in the above integral.
+
+\begin{prop}
+    Let $(W_t)_{0\le t\le T}$ be a Brownian motion and \[
+    \frac{\partial V}{\partial t} + \frac{1}{2}\frac{\partial^2 V}{\partial x^2} = 0.
+    \]
+    Then $(V(t,W_t))_{t\ge 0}$ is a martingale (again assuming suitability).
+\end{prop}
+\begin{proof}
+    Fix $T\ge 0$. Let $u(t,x) = V(T-t,x)$ and note that $\frac{\partial u}{\partial t} = \frac{1}{2} \frac{\partial^2 u}{\partial x^2}$. Now, since $W_T-W_t \sim N(0, T-t)$ is independent of $\mathcal{F}_t$ and $W_t$ is $\mathcal{F}_t$--measurable,
+    \begin{align*}
+        &\mathbb{E}[V(T,W_T) \mid \mathcal{F}_t)] \\ =& \mathbb{E}[V(T,x+\sqrt{T-t}Z)] \mid_{X=W_t} \\=& \mathbb{E}[u(0,x+\sqrt{T-t}Z)] \mid_{X=W_t} \\
+        =& u(T-t,x) \mid_{X=W_t} \\ =& V(t,W_t).
+    \end{align*}
+\end{proof}
+\subsection{The Black-Scholes model}
+We have interest rate $r$, $d=1$ (so one stock) with stock price at time $t$ given by \[
+S_t = S_0 e^{\mu t + \sigma W_t},
+\]
+where $(W_t)_{t\ge 0}$ is a Brownian motion and $\sigma>0$.
+
+\begin{theorem}
+    Fix $T > 0$. Let $c = \frac{r-u}{\sigma} - \frac{\sigma}{2}$ and let $\frac{d \mathbb{P}}{d \mathbb{Q}} = e^{c W_T - c^2T/2}$. Then $(e^{-rt}S_t)_{0\le t\le T}$ is a $\mathbb{Q}$--martingale, i.e. $\mathbb{Q}$ is a risk--neutral measure for the Black--Scholes model.
+\end{theorem}
+\begin{proof}
+    Let $\hat{W}_t = W_t - ct$ for $0\le t\le T$, so by Cameron--Martin, $(\hat{W}_t)_t$ is a $\mathbb{Q}$--Brownian motion. Now doing some algebra,
+    \begin{align*}
+        e^{-rt}S_t = S_0 e^{-\frac{\sigma^2}{2}t+\sigma \hat{W}_t},
+    \end{align*}
+    and this is a $\mathbb{Q}$--martingale by ES4 (compare this to the discrete--time proof on ES2).
+\end{proof}
+
+\begin{defn}
+    Let $Y$ be the payout of a European contigent claim in the Black--Scholes model. The B--S price of the claim is \[
+    \pi_t = e^{-r(T-t)}\mathbb{E}^\mathbb{Q}[Y \mid \mathcal{F}_t]
+    \]
+    for $0\le t\le T$.
+\end{defn}
+Note that $\pi_t e^{-rt} = e^{-rt} \mathbb{E}^\mathbb{Q}[Y \mid \mathcal{F}_t]$ is a martingale under $\mathbb{Q}$ as desired.
+\begin{prop}
+    Let $Y=g(S_T)$ be the payout of a vanilla claim. Then $\pi_t = V(t,S_t)$, where $Z\sim N(0,1)$ and \[
+    V(t,s) = e^{-r(T-t)} \mathbb{E}\left[g(s e^{(r-\sigma^2/2)(T-t)+\sigma\sqrt{T-t}Z})\right].
+    \]
+\end{prop}
+\begin{proof}
+    \begin{align*}
+        &\pi_t = e^{-r(T-t)} \mathbb{E}^\mathbb{Q}[g(S_T) \mid \mathcal{F}_t] \\
+        =& e^{-r(T-t)} \mathbb{E}^\mathbb{Q}[g(S_t e^{(r-\sigma^2/2)(T-t) + \sigma(\hat{W}_T-\hat{W}_t)}) \mid \mathcal{F}_t].
+    \end{align*}
+    Now note $\hat{W}_T - \hat{W}_t$ is independent of $\mathcal{F}_t$ and has the same distribution as $\sqrt{T-t}Z$.
+\end{proof}
+
+By a (tedious) change of variables, it turns out that $V$ solves \[
+\frac{\partial V}{\partial t} + s r \frac{\partial V}{\partial s} + \frac{1}{2}s ^2 \sigma^2 \frac{\partial^2 V}{\partial s ^2} = rV
+\]
+with boundary condition $V(T,s)=g(s) ~\forall s$.
+
+This is known as the \textbf{Black--Scholes PDE}. 
+
+
 \end{document}
 
