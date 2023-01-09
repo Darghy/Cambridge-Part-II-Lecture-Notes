@@ -1389,20 +1389,20 @@ We proved $Z(n,t)\le 2 n^{2-\frac{1}{t}}$ for $n$ much larger than $t$.
 \end{theorem}
 \textbf{Idea.} Take $X,Y$, a bipartition with $|X|=|Y|=n$ and include each edge $xy$ with $x \in X, y \in Y$ independently with probability $p$. Let $\mathcal{X}$ denote the number of $K_{t,t}$'s in $G$. Then 
 \begin{align*}
-    &\mathcal{X} = \sum_{A \in X^{(t)}, B \in Y^{(t)}}^{} \mathbbm{1}(\text{all edges between }A,B \text{ are in }G) \\
-    &\mathbb{E}[\mathcal{X}] = \sum_{A \in X^{(t)}, B \in Y^{(t)}}^{} \mathbb{P}(\text{all edges between }A,B \text{ are in }G) = \\
+    \mathcal{X} &= \sum_{A \in X^{(t)}, B \in Y^{(t)}}^{} \mathbbm{1}(\text{all edges between }A,B \text{ are in }G) \\
+    \mathbb{E}[\mathcal{X}] &= \sum_{A \in X^{(t)}, B \in Y^{(t)}}^{} \mathbb{P}(\text{all edges between }A,B \text{ are in }G) \\
     &={{n}\choose{t}}^2 p^{t^2} \le \frac{n^{2t}}{4} p^{t^2} = \frac{1}{4}\left(n^2 p^t\right)^t = (\star).
 \end{align*} 
 So if $p = n^{-\frac{2}{t}}$, then $(\star)\le \frac{1}{4}$. We have $\mathbb{P}(\mathcal{X}\ge 1)\le \frac{1}{4}$. Note $$\mathbb{E}[e(G)]=pn^2 = n^{2-\frac{2}{t}}.$$
 So (by Markov's inequality, which we state on the next page)\[
 \mathbb{P}\left(e(G)<\frac{pn^2}{2}\right) < \frac{1}{2}.
 \]
-So with probabiity $>\frac{1}{4}$ we have that $e(G)>\frac{1}{2} pn^2 = \frac{1}{2}n^{2-\frac{2}{t}}$ and $G \not\supset K_{t,t}$.
+So with probability $>\frac{1}{4}$ we have that $e(G)>\frac{1}{2} pn^2 = \frac{1}{2}n^{2-\frac{2}{t}}$ and $G \not\supset K_{t,t}$.
 
 \marginpar{18 Nov 2022, Lecture 19}
 
 \begin{proof}
-    Let $G=(X \cup Y, E)$ with $X,Y$ disjoint, $|X|=|Y|=n$, and include each pair $xy \in E$ ($x \in X, y \in Y$) with probability $p=n^{-\frac{2}{t+1}}$. We let $\tilde{G}$ be theh graph $G$ with an edge deleted from each $K_{t,t}$. So $\tilde{G} \not\supset K_{t,t}$ by definition. But 
+    Let $G=(X \cup Y, E)$ with $X,Y$ disjoint, $|X|=|Y|=n$, and include each pair $xy \in E$ ($x \in X, y \in Y$) with probability $p=n^{-\frac{2}{t+1}}$. We let $\tilde{G}$ be the graph $G$ with an edge deleted from each $K_{t,t}$. So $\tilde{G} \not\supset K_{t,t}$ by definition. But 
     \begin{align*}
         &e(\tilde{G}) \ge e(G) - (\# \text{ of }K_{t,t}\text{'s}) \\
         &\mathbb{E}[e(\tilde{G})] \ge \mathbb{E}[e(G)] - \mathbb{E}[(\# \text{ of }K_{t,t}\text{'s})] = pn^2 - {{n}\choose{t}}^2 p^{t^2} \ge n^{2- \frac{2}{t+1}} - \frac{n^{2t}}{2}p^{t^2} =(\star).
@@ -1429,7 +1429,7 @@ This is also wrong:
 \begin{theorem}[Erdös]\label{6.2}
     For all $k,g\ge 3$, there exists a graph $G$ with $\chi(G)\ge k$ and girth $\ge g$.
 \end{theorem}
-\textbf{Fact.} (Markov) If $X$ is a random variable which takes only non--negative values, then $~\forall t>0$ we have $\mathbb{P}(X\ge t) \le \frac{\mathbb{E}[X]}{t}$.
+\textbf{Fact.} (Markov) If $X$ is a random variable which takes only non--negative values, then $\forall t>0$ we have $\mathbb{P}(X\ge t) \le \frac{\mathbb{E}[X]}{t}$.
 \vspace{1mm}
 
 \textbf{Fact.} Let $G$ be a graph. Then $\chi(G)\ge \frac{|G|}{\alpha(G)}$, where $\alpha(G)$ is the size of the largest independent set.
@@ -1444,7 +1444,7 @@ This is also wrong:
     \]
     and let $X=X_3+\ldots+X_{g-1}$. By Markov, 
     \begin{align*}
-        &\mathbb{P}(X \ge \frac{n}{2}) \le \frac{2}{n} \mathbb{E}[X] = \frac{2}{n} \sum_{i=3}^{g-1} \mathbb{E}[X_i] =\frac{2}{n} \sum_{i=3}^{g-1} \frac{n(n-1)\ldots(n-g+1)}{i}p^{i} \le \\
+        &\mathbb{P}(X \ge \frac{n}{2}) \le \frac{2}{n} \mathbb{E}[X] = \frac{2}{n} \sum_{i=3}^{g-1} \mathbb{E}[X_i] =\frac{2}{n} \sum_{i=3}^{g-1} \frac{n(n-1)\ldots(n-i+1)}{i!}p^{i} \le \\
         &\le \frac{2}{n}\sum_{i=3}^{g-1} (np)^i = \frac{2}{n} \sum_{i=3}^{g-1} n^{\frac{i}{g}} \le 10 n^{-\frac{1}{g}} < \frac{1}{2} 
     \end{align*}
     for $n$ large enough.  Let \[
@@ -1453,7 +1453,7 @@ This is also wrong:
     Let $s=\frac{n}{2k}$. We have (using $1-x \le e^{-x}$, which holds $~\forall x \in (0,1)$)
     \begin{align*}
         &\mathbb{P}(Y\ge 1) \le \mathbb{E}[Y] = {{n}\choose{s}}(1-p)^{{s\choose{2}}}\le n^s e^{-p {{s}\choose{2}}} \le \\
-        & (n^2 e^{-p(s-1)})^{\frac{s}{2}} \le (2n^2 e^{-\frac{n^{1/2}}{2k}})^{\frac{s}{2}} < \frac{1}{2}
+        & (n^2 e^{-p(s-1)})^{\frac{s}{2}} = \left(\frac{n^2}{e^{(\frac{n}{2k}-1)n^{-1+\frac{1}{g}}}}\right)^{s/2} < \frac{1}{2}
     \end{align*}
     for $n$ sufficiently large.
     \vspace{1mm}
@@ -1492,7 +1492,7 @@ Note that if $p \gg \frac{1}{n}$ ($pn \to \infty$), then \[
 \vspace{1mm}
 
 \textbf{Fact.} (Chebyshev) Let $X$ be a random variable and $t>0$. Then \[
-\mathbb{P}(|X - \mathbb{E}[X]| > t) \le \frac{\text{Var}(X)}{t^2}.
+\mathbb{P}(|X - \mathbb{E}[X]| \ge t) \le \frac{\text{Var}(X)}{t^2}.
 \]
 \vspace{1mm}
 
@@ -1517,7 +1517,7 @@ Note that if $p \gg \frac{1}{n}$ ($pn \to \infty$), then \[
     \vspace{1mm}
     
     If $p \gg \frac{1}{n}$, then we have \[
-    \mathbb{P}(X=0)\le \frac{\text{Var}(X)}{\mathbb{E}[X]},
+    \mathbb{P}(X=0)\le \frac{\text{Var}(X)}{\mathbb{E}[X]^2},
     \]
     so we need to find $\text{Var}(X)$. Now 
     \begin{align*}
@@ -1559,7 +1559,7 @@ Note that if $p \gg \frac{1}{n}$ ($pn \to \infty$), then \[
     Let $G \sim G(n,p)$, then $\forall \epsilon>0$ we have \[
     \lim_{n \to \infty} \mathbb{P}(G \text{ is connected}) = \begin{cases}
         1 &p\ge (1+\epsilon)\frac{\log n}{n}.\\
-        0 &p\le (1+\epsilon)\frac{\log n}{n}.
+        0 &p\le (1-\epsilon)\frac{\log n}{n}.
     \end{cases}
     \]
 \end{theorem}
@@ -1576,26 +1576,26 @@ Note that if $p \gg \frac{1}{n}$ ($pn \to \infty$), then \[
     Let $I$ be the number of isolated vertices in $G \sim G(n,p)$. Then \[
     \mathbb{E}[I]=n(1-p)^{n-1}.
     \]
-    Note thta if $p \ge (1+\epsilon)\frac{\log n}{n}$, then (using $1-x \le e^{-x}$) \[
-        \mathbb{E}[I] = \frac{n(1-p)^n}{(1-p)} \le ne^{-pn} \le ne^{-(1+\epsilon)\frac{\log n}{n}n} = n \cdot n^{-(1+\epsilon)} = n^{-\epsilon} \to 0.
+    Note that if $p \ge (1+\epsilon)\frac{\log n}{n}$, then (using $1-x \le e^{-x}$) \[
+        (1-p)\mathbb{E}[I] = n(1-p)^n \le ne^{-pn} \le ne^{-(1+\epsilon)\frac{\log n}{n}n} = n \cdot n^{-(1+\epsilon)} = n^{-\epsilon} \to 0.
     \]
     So by Markov, $\mathbb{P}(G \text{ has an isolated vertex})= \mathbb{P}(I \ge 1) \le \mathbb{E}[I] \to 0$.
     \vspace{1mm}
     
-    If $p\le (1+\epsilon)\frac{\log n}{n}$, then \[
+    If $p\le (1-\epsilon)\frac{\log n}{n}$, then \[
     \mathbb{E}[I]=\frac{n(1-p)^{n}}{1-p} \ge ne^{-(1+\epsilon/4)pn} = (\star)
     \]
     for $n$ sufficiently large and $\epsilon$ sufficiently small. Now plug in $p$:
     \[
-    (\star) \ge n e^{-(1+\epsilon/4)(1-e)\log n} = n e^{-\log n + \frac{3\epsilon}{4}\log n + \epsilon^2 \log n/4} \ge n^{3\epsilon/4} \to \infty.
+    (\star) \ge n e^{-(1+\epsilon/4)(1-\epsilon)\log n} = n e^{-\log n + \frac{3\epsilon}{4}\log n + \epsilon^2 \log n/4} = n^{\frac{3\epsilon}{4} + \frac{\epsilon^2}{4}} \to \infty.
     \]
     We now want to use the second moment method. 
     \begin{align*}
         &\text{Var}(I)=\mathbb{E}[I^2]-\mathbb{E}[I]^2 = \\
-        =&\sum_{u,v \in V(G)}^{} \mathbb{P}(d(u)=0, d(v)=0) - \sum_{u,v}^{}  \mathbb{P}(d(u)=0)\mathbb{P}(d(v)=0) \le \\
-        \le~ &\mathbb{E}[I] + \sum_{u,v}^{} \left(\mathbb{P}(d(u)=d(v)=0)-\mathbb{P}(d(u)=0)\mathbb{P}(d(v)=0)\right) = \\
-        =~ &\mathbb{E}[I] + \sum_{u,v}^{} \left((1-p)^{2(n-1)-1} - (1-p)^{2(n-1)}\right) \le \\
-        \le~ &\mathbb{E}[I] + n^2(1-p)^{2(n-1)} \left(\frac{1}{1-p}-1\right).
+        &=\sum_{u,v \in V(G)}^{} \mathbb{P}(d(u)=0, d(v)=0) - \sum_{u,v}^{}  \mathbb{P}(d(u)=0)\mathbb{P}(d(v)=0) \\
+        &\le \mathbb{E}[I] + \sum_{u,v}^{} \left(\mathbb{P}(d(u)=d(v)=0)-\mathbb{P}(d(u)=0)\mathbb{P}(d(v)=0)\right) \\
+        &= \mathbb{E}[I] + \sum_{u,v}^{} \left((1-p)^{2(n-1)-1} - (1-p)^{2(n-1)}\right) \\
+        &\le \mathbb{E}[I] + n^2(1-p)^{2(n-1)} \left(\frac{1}{1-p}-1\right).
     \end{align*}
     Hence
     \begin{align*}
@@ -1604,7 +1604,7 @@ Note that if $p \gg \frac{1}{n}$ ($pn \to \infty$), then \[
     (since $p \to 0$ and $\mathbb{E}[I]\to \infty$).
 \end{proof}
 \begin{proof}[Proof of Theorem \ref{6.4}]
-    (0--statement): We want to show that if $p\le (1-\epsilon)\frac{\log n}{n}$, then $\lim_{n \to \infty} \mathbb{P}(G \text{ connected}) = 0$. But this follows from the fact that $$\mathbb{P}(G \text{is connected})\le \mathbb{P}(G \text{ has no isolated vertices}) \to 0$$
+    (0--statement): We want to show that if $p\le (1-\epsilon)\frac{\log n}{n}$, then $\lim_{n \to \infty} \mathbb{P}(G \text{ connected}) = 0$. But this follows from the fact that $$\mathbb{P}(G \text{ is connected})\le \mathbb{P}(G \text{ has no isolated vertices}) \to 0$$
     for this $p$ by above.
     \vspace{1mm}
     
@@ -1615,17 +1615,17 @@ Note that if $p \gg \frac{1}{n}$ ($pn \to \infty$), then \[
     But 
     \begin{align*}
         &\mathbb{P}(G \text{ is not connected}) = \\
-        &=\mathbb{P}(\exists A \subseteq V(G), 0\le |A|\le \frac{n}{2}, e(A,V(G)\setminus A)=0) = \\
-        & =\mathbb{P}\left( \bigcup_{A \subseteq V(G), 0\le |A|\le \frac{n}{2}} \{(e(A),V(G)\setminus A)=0\}\right) \le \\
-        &\le \sum_{A \in V(G), 1\le |A|\le \frac{n}{2}}^{} \mathbb{P}(e(A,V(G)\setminus A)=0) = \\
+        &=\mathbb{P}(\exists A \subseteq V(G), 1\le |A|\le \frac{n}{2}, e(A,V(G)\setminus A)=0) \\
+        & =\mathbb{P}\left( \bigcup_{A \subseteq V(G), 0\le |A|\le \frac{n}{2}} \{(e(A),V(G)\setminus A)=0\}\right) \\
+        &\le \sum_{A \in V(G), 1\le |A|\le \frac{n}{2}}^{} \mathbb{P}(e(A,V(G)\setminus A)=0) \\
         &= \sum_{k=1}^{n/2} {n\choose{k}}(1-p)^{k(n-k)} = (\star).
     \end{align*}
     Now we just need to show the last expression goes to zero, but we have
     \begin{align*}
-        (\star) &\le \sum_{k=1}^{\epsilon n/4} n^k e^{-pk(n-k)} + \sum_{k=\epsilon n/4}^{n/2} 2^n e^{-(1+\epsilon)\frac{\log n}{n}k(n-k)} \le \\
-        &\le \sum_{k=1}^{\epsilon n/4} \left(n e^{-(1+\epsilon)\frac{\log n}{n}(n-k)}\right)^k + \sum_{k=\epsilon n/4}^{n/2} 2^n \epsilon^{-(1+\epsilon)\frac{\log n}{n} \frac{\epsilon n}{4} \frac{n}{2}} \le \\
-        &\le \sum_{k=1}^{\epsilon n/4} \left(ne^{-(1+\epsilon)\frac{\log n}{n}n(1-\epsilon/4)}\right)^k + \sum_{k=\epsilon n/4}^{n/2} 2^n \epsilon^{-(1+\epsilon)\epsilon n\log n/8} \le \\
-        &\le \sum_{k=1}^{\epsilon n/4} \left( n e^{-\log n - \frac{3 \epsilon}{4}\log n} \right)^k + \sum_{k=\epsilon n/4}^{n/2} 2^n \epsilon^{-(1+\epsilon)\epsilon n\log n/8} \to 0.
+        (\star) &\le \sum_{k=1}^{\epsilon n/4} n^k e^{-pk(n-k)} + \sum_{k=\epsilon n/4}^{n/2} 2^n e^{-(1+\epsilon)\frac{\log n}{n}k(n-k)} \\
+        &\le \sum_{k=1}^{\epsilon n/4} \left(n e^{-(1+\epsilon)\frac{\log n}{n}(n-k)}\right)^k + \sum_{k=\epsilon n/4}^{n/2} 2^n e^{-(1+\epsilon)\frac{\log n}{n} \frac{\epsilon n}{4} \frac{n}{2}} \\
+        &\le \sum_{k=1}^{\epsilon n/4} \left(ne^{-(1+\epsilon)\frac{\log n}{n}n(1-\epsilon/4)}\right)^k + \sum_{k=\epsilon n/4}^{n/2} 2^n e^{-(1+\epsilon)\epsilon n\log n/8} \\
+        &\le \sum_{k=1}^{\epsilon n/4} \left( n e^{-\log n - \frac{3 \epsilon}{4}\log n + \frac{\epsilon^2}{4}\log n} \right)^k + \sum_{k=\epsilon n/4}^{n/2} 2^n e^{-(1+\epsilon)\epsilon n\log n/8} \to 0.
     \end{align*} 
 \end{proof}
 \marginpar{28 Nov  2022, Lecture 23 - lecture 22 was cancelled due to strike action}
