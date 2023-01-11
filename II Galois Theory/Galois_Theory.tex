@@ -1421,7 +1421,7 @@ is obviously $K$--linear (as it is $L$--linear). So it has a characteristic poly
     \vspace{1mm}
     
     Choose bases $u_1,\ldots,u_m$ for $M/L$ and $v_1,\ldots, v_n$ for $L/K$. Let $(a_{ij})$ be the matrix of $U_{x,M/L}$, $(a_{ij}) \in \text{Mat}_{m \times m}(L)$. Then $\text{Tr}_{M/L}(x)=\sum_{i=1}^{m} a_{ii}$. For each $(i,j)$, let the matrix of $U_{a_{ij},L/K}$ be $A_{ij} \in \text{Mat}_{n \times n}(K)$, so that $$\text{Tr}_{L/K}(\text{Tr}_{M/L}(x)) = \sum_{i=1}^{m} \text{Tr}_{L/K}(a_{ii}) = \sum_{i=1}^{n} \text{tr}(A_{ii}).$$
-    In terms of the basis, $u_1v_1,\ldots,u_1v_n,u_2v_1,\ldots,u_mv_n$ is a basis for $M/K$ and the matrix of $U_{x,M/K}$ is $\begin{pmatrix} A_{11} & &\\ & \ddots & \\ & & A_{nn} \end{pmatrix}$, so $\text{Tr}_{M/K}(x)=\sum_{i=1}^{n} A_{ii}$.
+    In terms of the basis, $u_1v_1,\ldots,u_1v_n,u_2v_1,\ldots,u_mv_n$ is a basis for $M/K$ and the matrix of $U_{x,M/K}$ is $\begin{pmatrix} A_{11} & &\\ & \ddots & \\ & & A_{nn} \end{pmatrix}$, so $\text{Tr}_{M/K}(x)=\sum_{i=1}^{n} \text{tr}(A_{ii})$.
 \end{proof}
 \begin{prop}\label{13.3}
     Suppose $L=K(x)$. Let ${f = T^n + c_{n-1}T^{n-1} + \ldots + c_0 \in K[T]}$ be the minimal polynomial of $x$ over $K$. Then \[
@@ -1478,7 +1478,7 @@ For the next theorem, note that since $\text{Tr}_{L/K}: L \to K$ is $K$--linear,
     Suppose $L/K$ is separable. Let $\{\sigma_1,\ldots,\sigma_n\} = \text{Hom}_K(L,M)$ for $M$ a normal closure of $L/K$. Then $\text{Tr}_{L/K}(x) = \sum_{}^{} \sigma_i(x).$ By Theorem \ref{12.1}, $\exists x$ such that $\sum_{}^{} \sigma_i(x) \neq 0$, so $\text{Tr}_{L/K}$ is nonzero.
     \vspace{1mm}
     
-    Conversely, suppose $L/K$ is inseparable. Then $\exists x \in L$ such that $K(x) \subsetneq K(x^p)$ (by Example Sheet 2, Q7, any $x$ inseparable over $K$ and not in $K$ will do). By Corollary \ref{13.4}, $\text{Tr}_{K(x)/K(x^p)} = 0$, so by Theorem \ref{13.2}, $\text{Tr}_{M/K}=0$.
+    Conversely, suppose $L/K$ is inseparable. Then $\exists x \in L$ such that $K(x) \supsetneq K(x^p)$ (by Example Sheet 2, Q7, any $x$ inseparable over $K$ and not in $K$ will do). By Corollary \ref{13.4}, $\text{Tr}_{K(x)/K(x^p)} = 0$, so by Theorem \ref{13.2}, $\text{Tr}_{M/K}=0$.
 \end{proof}
 \begin{example}
     Finite fields $\mathbb{F}_{q^n}$ over $\mathbb{F}_q$ (for $q$ a power of a prime $p$) are separable, so $\exists x \in \mathbb{F}_{q^n}$ such that $\text{Tr}_{\mathbb{F}_{q^n}/\mathbb{F}_q}(x)=1$. 
