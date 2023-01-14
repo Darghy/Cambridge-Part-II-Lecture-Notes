@@ -1645,7 +1645,7 @@ We have $\text{diam}(G)=1 \iff G$ is complete $\iff {n\choose{2}}$ edges.
 \textbf{Question.} What is the minimum $\Delta(G)$ over all graphs $G$ with $\text{diam}(G)=2$ on $n$ vertices?
 \vspace{1mm}
 
-\textbf{Fact.} Let $G$ be a graph with $\text{diam}(G)\ge 2$. Then $|G| \le \Delta^2+1$.
+\textbf{Fact.} Let $G$ be a graph with $\text{diam}(G)\le 2$. Then $|G| \le \Delta^2+1$.
 \begin{proof}
     Let $x \in V(G)$, then $V(G) \subseteq \{x\} \cup N(x) \cup N(N(x))\setminus N(x)$, so $$|V(G)| \le 1 + \Delta + \Delta(\Delta-1) = \Delta^2+1.$$
 \end{proof}
