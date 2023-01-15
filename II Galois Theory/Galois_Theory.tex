@@ -1785,7 +1785,7 @@ $$K_i' = K_{i-1}'(\{ \sqrt[d]{\sigma(a_i)} \mid \sigma \in \text{Gal}(K_{i-1}'/K
 So we have the following picture:
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[node distance = 2cm]
+    \begin{tikzpicture}[node distance = 2.5cm]
         \node (K) {$\hspace{-2em}K=K_0$};
         \node (Km) [above of=Q] {$K_{m-1}'$};
         \node (M) [above of=K_1] {$M=K_m'$};
@@ -1829,7 +1829,7 @@ If $G=\text{Gal}(M/K)$ as above, then $N_i/N_{i+1}= \text{Gal}(K_i'/K_{i-1}')$ i
     If $f \in K[T]$ is soluble by radicals over $K$, then $\text{Gal}(f/K)$ is soluble.
 \end{theorem}
 \begin{proof}
-    $\text{Gal}(L/K)=\text{Gal}(f/K) \cong \text{Gal}(M/K)/\text{Gal}(M/L)$. As $\text{Gal}(M/K)$ is soluble, the result follows from Lemma \ref{16.3}.
+    $\text{Gal}(f/K)=\text{Gal}(L/K) \cong \text{Gal}(M/K)/\text{Gal}(M/L)$. As $\text{Gal}(M/K)$ is soluble, the result follows from Lemma \ref{16.3}.
 \end{proof}
 \begin{prop}
     If $n\ge 5$, then $S_n$ and $A_n$ are not soluble.
@@ -1842,12 +1842,12 @@ If $G=\text{Gal}(M/K)$ as above, then $N_i/N_{i+1}= \text{Gal}(K_i'/K_{i-1}')$ i
 \end{cor}
 The converse to Theorem \ref{16.4} also true and not difficult to show.
 \section{$\mathbb{C}$ is algebraically closed}
-We wants to prove $\mathbb{C}$ is algebraically closed without using complex analysis. We will use the following:
+We want to prove $\mathbb{C}$ is algebraically closed without using complex analysis. We will use the following:
 \begin{enumerate}[(i)]
     \item Every polynomial of odd degree over $\mathbb{R}$ has a root (by IVT).
     \item Every quadratic over $\mathbb{C}$ splits into linears.
     \item Every finite group $G$ has a 2--Sylow subgroup $H$, i.e. a subgroup such that $(G:H)$ is odd and $|H|=2^k$.
-    \item If $G$ is a $p$--group (i.e. $|G|=p^k$ for $k>0$), then $G$ has a subgroup of index $p$ (this follows since $G$ has nontrivial centre).
+    \item If $G$ is a $p$--group (i.e. $|G|=p^k$ for $k>0$), then $G$ has a subgroup of index $p$ (this follows since $G$ has nontrivial centre, so it contains an element of order $p$, so quotient out by the subgroup it generates and induct via correspondence theorem).
 \end{enumerate}
 \begin{theorem}
     $\mathbb{C}$ is algebraically closed.
@@ -1856,7 +1856,7 @@ We wants to prove $\mathbb{C}$ is algebraically closed without using complex ana
     Let $K/\mathbb{C}$ be a finite extension and let $L \supset K$ be a normal closure over $\mathbb{R}$, so $G=\text{Gal}(L/\mathbb{R})$. We will show $L=\mathbb{C}$.
     \vspace{1mm}
     
-    Let $H \subset G$ be a Sylow 2--subgroup. Then $[L^H : \mathbb{R}] = (G:H)$ is odd. So if $x \in L^H$, then by (i), $x \in \mathbb{R}$, i.e. $L^H=\mathbb{R}$, so $H=G$, so $G$ is a 2--group. Let $G \supset G_1 = \text{Gal}(L/\mathbb{C})$ and $G_2 \subset G_1$ a subgroup of index 2 (which exists by (iv)). Then $[L^{G_2}:\mathbb{C}]=(G_1 : G_2) = 2$, contradicting (ii). Hence there is no subgroup of index 2, i.e. $G_1=\{e\}$, so $L=\mathbb{C}$ (see diagram on next page).
+    Let $H \subset G$ be a Sylow 2--subgroup. Then $[L^H : \mathbb{R}] = (G:H)$ is odd. So if $x \in L^H$, then by (i), $x \in \mathbb{R}$, i.e. $L^H=\mathbb{R}$, so $H=G$, so $G$ is a 2--group. Let $G \supset G_1 = \text{Gal}(L/\mathbb{C})$ and $G_2 \subset G_1$ a subgroup of index 2 (which exists by (iv)). Then $[L^{G_2}:\mathbb{C}]=(G_1 : G_2) = 2$, contradicting (ii). Hence there is no subgroup of index 2, i.e. $G_1=\{e\}$, so $L=\mathbb{C}$ (see also diagram).
     \begin{figure}[H]
         \centering
         \begin{tikzpicture}[node distance = 2cm]
