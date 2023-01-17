@@ -1899,7 +1899,93 @@ By a (tedious) change of variables, it turns out that $V$ solves \[
 with boundary condition $V(T,s)=g(s) ~\forall s$.
 
 This is known as the \textbf{Black--Scholes PDE}. 
+\vspace{1mm}
 
+\marginpar{30 Nov 2022, Lecture 24}
 
+To recap: the stock price at time $t$ is $S_t=S_0 e^{\mu t + \sigma W_t}$ for $(W_t)_{t\ge 0}$ a Brownian motion. Then the Black--Scholes price of a vanilla claim is \[
+\pi_t = e^{-r(T-t)}\mathbb{E}^\mathbb{Q}[g(S_t) \mid \mathcal{F}_t] = V(t,S_t),
+\]
+where \[
+V(t,s) = e^{-r(T-t)}\mathbb{E}\left[g(s \exp \left((r-\frac{\sigma^2}{2})(T-t)+\sigma \sqrt{T-t} Z\right)\right]
+\]
+for $Z \sim N(0,1)$ a standard normal. This satisfies the Black--Scholes PDE \[
+\frac{\partial V}{\partial t} + rs \frac{\partial V}{\partial s} + \frac{1}{2}s ^2 \sigma^2 \frac{\partial^2 V}{\partial s ^2} = rV.
+\]
+A way to derive this: notice that \[
+V(t,s) = e^{-r \delta} \mathbb{E}[V(t+\delta,S_{t+\delta}) \mid S_t=s]
+\]
+(from the martingale property on $(e^{-rt}\pi_t)_{t\ge 0}$). Now \[
+V(t,s) = e^{-r \delta} \mathbb{E}[V(t+\delta, s \xi)]
+\]
+for $\xi = \exp \left((r-\frac{\sigma^2}{2})\delta + \sigma \sqrt{\delta} Z\right)$. We Taylor expand this to get
+\begin{align*}
+    e^{r \delta}V(t,s) = \mathbb{E}[V(t,s)] + \frac{\partial V}{\partial t}\delta + \frac{\partial V}{\partial s}(s\xi -s) + \frac{1}{2}\frac{\partial^2 V}{\partial t^2}\delta^2 + \frac{\partial^2 V}{\partial t \partial s} \delta s (\xi-1) + \frac{1}{2}\frac{\partial^2 V}{\partial s ^2}s^2(\xi-1)^2 + \text{other terms}. 
+\end{align*}
+We get 
+\begin{align*}
+    &\mathbb{E}[\xi -1] = e^{r \delta} - 1 \approx r \delta \\
+    &\mathbb{E}[(\xi-1)^2] = e^{(2r+\sigma^2)\delta}-2e^{r \delta} + 1 \approx \sigma ^2 \delta
+\end{align*}
+and the other terms are of lower degree order. Now divide by $\delta$, take the limit, and we get the above expression.
+\vspace{1mm}
+
+In the binomial model, to replicate the claim at time $t$ with respect to the event $\{S_{t-\delta}=s\}$, we have to hold \[
+\frac{V(t,s(1+b))-V(t,s(1+a))}{s(b-a)} \approx \frac{\partial V}{\partial s}(t,s)
+\]
+shares of the underlying asset between times $t-\delta$ and $t$. These partial derivatives have names: $\frac{\partial V}{\partial s}$ is known as the \textbf{delta} of the claim and $\frac{\partial^2 V}{\partial s^2}$ is known as the \textbf{gamma}.\footnote{Gamma is the change in delta, so we can think of getting the right delta at some point in time and then changing it using gamma.} 
+\begin{prop}
+    If the payout function $g$ is increasing, then delta is nonnegative. If $g$ is convex, then gamma is nonnegative. 
+\end{prop}
+\begin{proof}
+    By example sheet 1 and the formula $V(s,t) = e^{-r(T-t)}\mathbb{E}^\mathbb{Q}[\text{stuff}]$.
+\end{proof}
+\vspace{2mm}
+
+The Black-Scholes price of a European call with maturity $T$ and strike $K$ is \[
+\pi_t = S_t \Phi(d_1) - Ke^{-r(T-t)}\Phi(d_2)
+\]
+for 
+\begin{align*}
+    &d_1 = \frac{\log\frac{S_t}{K}}{\sigma\sqrt{T-t}}+(\frac{r}{\sigma}+\frac{\sigma}{2})\sqrt{T-t}\\
+    &d_2 = \frac{\log\frac{S_t}{K}}{\sigma\sqrt{T-t}}+(\frac{r}{\sigma}-\frac{\sigma}{2})\sqrt{T-t}.
+\end{align*}
+Here $\Phi(x)=\int_{-\infty}^{\infty} \frac{e^{-s^2/2}}{\sqrt{2\pi}} \mathrm{d}s$, the CDF of the normal distribution.
+\vspace{1mm}
+
+\textbf{Derivation:} Let $\delta = T -t$ and $\xi = e^{(r-\frac{\sigma^2}{2})(T-t)+\sigma \sqrt{T-t} Z}$. Then
+\begin{align*}
+    V(t,s) &= e^{-r \delta}\mathbb{E}\left[(s\xi-K)^{+}\right] \\
+    &= e^{-r \delta}\mathbb{E}[(s \xi -K) \mathbbm{1}_{\xi > K/s}] \\
+    &= s \mathbb{E}[e^{-r \delta}\xi \mathbbm{1}_{\xi > K/s}] - e^{-r \delta}K \mathbb{P}(\xi > K/s).
+\end{align*}
+Note $\mathbb{P}(\xi > K/s) = 1 - \Phi(-d_2) = \Phi(d_2)$, and by change of variables formula for normal random variables (as on ES1), the law of $\xi$ under $\overline{\mathbb{P}}$ is the same as the law of $e^{\sigma^2 \delta}\xi$ under $\mathbb{P}$ (here $\frac{\overline{\mathbb{P}}}{\mathbb{P}}=e^{-r \delta}\xi$), so \[
+\mathbb{E}[e^{-r \delta}\mathbbm{1}_{\{\xi > K/s\}}] = \mathbb{P}(\xi > Ke^{-\sigma^2 \delta}/s) = 1 - \Phi(-d_2 - \sigma\sqrt{\delta}) = \Phi(d_1)
+\]
+and we're done.
+\begin{prop}
+    The delta of a European call option is $\frac{\partial V}{\partial s} = \Phi(d_1)$.
+\end{prop}
+\begin{proof}
+    Since $\frac{\partial }{\partial x} (x-K)^{+} = \mathbbm{1}_{\{x > K\}}$, we get
+    \[
+    \frac{\partial V}{\partial s} = e^{-r(T-t)}\mathbb{E}[\mathbbm{1}_{\{Z>-d_2\}}e^{(r-\frac{\sigma^2}{2})(T-t)+\sigma\sqrt{T-t}Z}] = \Phi(d_1).
+    \]
+\end{proof}
+\vspace{2mm}
+
+\textbf{Barriers:} We can also price some exotic barrier--type options. Given the payout $Y$ of a European claim and a given barrier $B$, the:
+\begin{itemize}
+    \item down--and--out version of the claim is a European claim $Y \mathbbm{1}_{\inf_{0\le t\le T}S_t >B}$ (i.e. if the price dips below some level, you don't get a payout (an opportunity to buy/sell)).
+    \item up--and--out version is $Y \mathbbm{1}_{\max_{0\le t\le T}S_t <B}$.
+    \item up--and--in version is $Y \mathbbm{1}_{\max_{0\le t\le T}S_t >B}$.
+    \item down--and--in version is $Y \mathbbm{1}_{\inf_{0\le t\le T}S_t \le B}$.
+\end{itemize} 
+\begin{prop}
+    The Black--Scholes price of an up--and--out with payout $g(S_T)\mathbbm{1}_{\{\max S_t < B\}}$ is the same as that of a vanilla claim with payout $$g(S_T)\mathbbm{1}_{\{S_T < b\}} - \left(\frac{B}{S_0}\right)^{\frac{2r}{\sigma^2}-1}g\left(\frac{B^2S_T}{S_0^2}\right)\mathbbm{1}_{\{S_T\le \frac{S_0^2}{B}\}}.$$
+\end{prop}
+\begin{proof}
+    See official lecture notes.
+\end{proof}
 \end{document}
 
