@@ -42,7 +42,8 @@
 
 \title{Part II - Number Fields
     \\ \large
-    Lectured by  
+    Lectured by Prof. I. Grojnowski
+
 }
 
 \author{Artur Avameri}
@@ -81,7 +82,7 @@ This is one of the three deep undergraduate courses, the others being Algebraic 
     A \textbf{number field} is a finite extension over $\mathbb{Q}$.
 \end{defn}
 \begin{defn}
-    For $\mathbb{Q} \subset L$ a number field, $\alpha \in L$ is an \textbf{algebraic integer} if $\exists f \in \mathbb{Z}[X]$ monic such that $f(\alpha)=0$. 
+    For $\mathbb{Q} \subset L$ a number field, $\alpha \in L$ is an \textbf{algebraic integer} if $\exists f \in \mathbb{Z}[x]$ monic such that $f(\alpha)=0$. 
     \vspace{1mm}
     
     We write $\mathcal{O}_L = \{\alpha \in L \mid \alpha \text{ is an algebraic integer}\}$, the "integers of $L$".
@@ -90,10 +91,10 @@ This is one of the three deep undergraduate courses, the others being Algebraic 
     $\mathcal{O}_{\mathbb{Q}} = \mathbb{Z}$, i.e. $\alpha \in \mathbb{Q}$ is an algebraic integer if and only if $\alpha \in \mathbb{Z}$.
 \end{lemma}
 \begin{proof}
-    $(\impliedby)$: if $\alpha \in \mathbb{Z}$, then $f(x)=x-\alpha$ is a monic polynomial in $\mathbb{Z}[X]$ such that $f(\alpha)=0$.
+    $(\impliedby)$: if $\alpha \in \mathbb{Z}$, then $f(x)=x-\alpha$ is a monic polynomial in $\mathbb{Z}[x]$ such that $f(\alpha)=0$.
     \vspace{1mm}
     
-    $(\implies)$: Let $\alpha \in \mathbb{Q}$ with $\alpha=\frac{r}{s}$ for $r,s$ coprime in $\mathbb{Z}$. Say $f(x)=x^n+a_{n-1}x^{n-1}+\ldots+a_0 \in \mathbb{Z}[X]$ such that $f(\alpha)=0$. Clear denominators to get \[
+    $(\implies)$: Let $\alpha \in \mathbb{Q}$ with $\alpha=\frac{r}{s}$ for $r,s$ coprime in $\mathbb{Z}$. Say $f(x)=x^n+a_{n-1}x^{n-1}+\ldots+a_0 \in \mathbb{Z}[x]$ such that $f(\alpha)=0$. Clear denominators to get \[
     r^n + a_{n-1}r^{n-1}s + \ldots + a_0s^n = 0.
     \] 
     But $s$ divides everything but the first term, so $s \mid r^n$. If $s \neq 1$, then let $p \mid s$ for $p$ a prime, then $p \mid r$, contradicting $\gcd(r,s)=1$.
@@ -109,13 +110,17 @@ Recall from Galois Theory that for $\alpha,\beta \in L$ and $K \subset L$, if $\
 \begin{defn}
     Let $R \subset S$ be rings. Then
     \begin{enumerate}[(i)]
-        \item $\alpha \in S$ is \textbf{integral over $R$} if there exists a monic polynomial $f(x)=x^n + a_{n-1}x^{n-1} + \ldots + a_0 \in R[X]$ such that $f(\alpha)=0$.
+        \item $\alpha \in S$ is \textbf{integral over $R$} if there exists a monic polynomial $f(x)=x^n + a_{n-1}x^{n-1} + \ldots + a_0 \in R[x]$ such that $f(\alpha)=0$.
         \item $S$ is \textbf{integral over $R$} if all $\alpha \in S$ are integral over $R$.
-        \item $S$ is \textbf{finitely generated over $R$} (abbreviated to f.g. $/R$) if there exist elements $\alpha_1,\ldots,\alpha_n \in S$ such that any element of $S$ can be written as an $R$--linear combination $\alpha_1,\ldots,\alpha_n$, i.e. if the map $R^n \to S$ taking $(r_1,\ldots,r_n) \to \sum_{}^{} r_i \alpha_i$ is surjective. 
+        \item $S$ is \textbf{finitely generated over $R$} (abbreviated to f.g. $/R$) if there exist elements $\alpha_1,\ldots,\alpha_n \in S$ such that any element of $S$ can be written as an $R$--linear combination of $\alpha_1,\ldots,\alpha_n$, i.e. if the map $R^n \to S$ taking $(r_1,\ldots,r_n) \to \sum_{}^{} r_i \alpha_i$ is surjective. 
     \end{enumerate}
 \end{defn}
 \begin{example}
-    Say we have a number field arising from the following picture: *picture*
+    Say we have a number field $L$ arising from
+    \begin{tikzcd} % [row sep=small]
+        \mathbb{Q}\arrow[r, phantom, sloped, "\subset"] & L\\
+        \mathbb{Z}\arrow[r, phantom, sloped, "\subset"]\arrow[u, phantom, sloped, "\subset"] & \mathcal{O}_L\arrow[u, phantom, sloped, "\subset"]
+    \end{tikzcd}.
 
     Then $\alpha \in L$ is an algebraic integer $\iff$ $\alpha$ is integral over $\mathbb{Z}$ (this follows by definition), and $\mathcal{O}_L$ is integral over $\mathbb{Z}$ (once we know it is a ring).
 \end{example}
@@ -154,7 +159,7 @@ Recall from Galois Theory that for $\alpha,\beta \in L$ and $K \subset L$, if $\
     If $A \subset B \subset C$ are ring extensions with $B/A$ integral and $C/B$ integral, then $C/A$ is integral.
 \end{cor}
 \begin{proof}
-    If $c \in C$, let $f(x)=\sum_{i=0}^{N} b_i x^i$ be the monic polynomial over $B[x]$ it satisfies. Set $B_0 = A[b_0,\ldots,b_{N}]$ and $C_0=B[c]$, then $B_0/A$ is finitely generated as $b_0,\ldots,b_N \in B$ are algebraic over $A$, $C_0$ is finitely generated over $B_0$ as $c$ is integral over $B_0$, hence $C_0$ is finitely generated over $A$, so $C$ is integral over $A$ by Theorem \ref{1.4}.
+    If $c \in C$, let $f(x)=\sum_{i=0}^{N} b_i x^i$ be the monic polynomial over $B[x]$ it satisfies. Set $B_0 = A[b_0,\ldots,b_{N}]$ and $C_0=B_0[c]$, then $B_0/A$ is finitely generated as $b_0,\ldots,b_N \in B$ are algebraic over $A$, $C_0$ is finitely generated over $B_0$ as $c$ is integral over $B_0$, hence $C_0$ is finitely generated over $A$, so $C$ is integral over $A$ by Theorem \ref{1.4}.
 \end{proof}
 \textbf{Remark.} $C$ could have had infinitely many generators, for example $C = \{\alpha \in \mathbb{C} \mid \alpha \text{ is an algebraic integer}\}$, which is why we passed to $C_0$.
 \vspace{1mm}
