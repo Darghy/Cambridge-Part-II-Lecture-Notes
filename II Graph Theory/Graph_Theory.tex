@@ -537,8 +537,9 @@ Let $G$ be a graph. Let $\lambda(G) = \min \{|W| ~|~ W \subseteq E(G), G-W \text
 \begin{defn}
     We say paths $P_1,\ldots,P_k$ are \textbf{edge disjoint} if $$E(P_i) \cap E(P_j) = \emptyset ~\forall i\neq j.$$
 \end{defn}
+
 \begin{theorem}[Menger, edge version]\label{2.7}
-    Let $G$ be a connected graph and $a,b \in V(G), a \neq b$. Then, every $W \subseteq E(G)$ that separates $a$ from $b$ having size $\ge k \implies \exists k$ edge disjoint $a-b$ paths $P_1,\ldots,P_k$.
+    Let $G$ be a connected graph and $a,b \in V(G), a \neq b$. Then, every $W \subseteq E(G)$ that separates $a$ from $b$ having size $\ge k$ implies the existence of $k$ edge disjoint $a-b$ paths $P_1,\ldots,P_k$.
 \end{theorem}
 \begin{defn}
     Let $G$ be a graph. The \textbf{line graph} of $G$, denoted $L(G)$, is defined to be the graph 
@@ -658,7 +659,7 @@ Also, this is the best we can do, since $K_4$ is planar - there is no "three col
 \begin{proof}
     Apply induction on $|G|$. The claim is clearly is true for $|G|\le 3$. 
 
-    Note that we may assume that $\Delta\ge 3$ (where $\Delta=\Delta(G)$).
+    Note that we may assume that $\Delta\ge 3$ (where $\Delta=\Delta(G)$) and that the graph is $\Delta$--regular.
     \vspace{1mm}
     
     \textbf{Claim 1.} If $G$ is 3-connected, then we're done.
@@ -753,7 +754,7 @@ Note that an edge coloring of $G$ corresponds exactly to a vertex coloring of th
 \vspace{1mm}
 
 \textbf{Remarks.} \begin{itemize}
-    \item $\chi'(G) = \begin{cases}
+    \item $\chi'(C_n) = \begin{cases}
         2 &\text{ if } n \text{ even.} \\
         3 &\text{ if } n \text{ odd.}
     \end{cases}$
@@ -806,7 +807,7 @@ We say the components of this graph are $\{i,j\}$--components.
 
 \marginpar{31 Oct 2022, Lecture 11}
 
-If $G$ is planar, we know that$\chi(G) \le 5$. (And really $\chi(G)\le 4$). If $G$ is drawn on a surface $S$, can we say anything about $\chi(G)$?
+If $G$ is planar, we know that $\chi(G) \le 5$. (And really $\chi(G)\le 4$). If $G$ is drawn on a surface $S$, can we say anything about $\chi(G)$?
 \vspace{1mm}
 
 $K_7$ can be drawn on a torus without edge crossings, so we definitely don't have a 4 color theorem for the torus:
@@ -898,8 +899,8 @@ Do we have an Euler-type theorem in this setting? Different cycles on the torus 
     Now take a path of maximal length $x_1\ldots x_l$. The claim is that there is no cycle in $G$ of length $l$. Indeed, if such a cycle did exist, then either $l=n$ and we're done, or $l<n$ and we can use this cycle to find a path of length $l+1$ in $G$, contradicting maximality.
     \vspace{1mm}
     
-    Observe that $N(x_1) \subset \{x_2,\ldots,x_{l-1}\}$ and $N(x_l) \subset \{x_2,\ldots,x_{l-1}\}$. Now define $N^-(x_1) = \{x_i \mid x_{i+1} \in N(x_1)\}$. Note $$|N^-(x_1) \cup N^-(x_l)| \le \{x_1,x_2,\ldots,x_{l-1}\}\le l-1\le n-1,$$ 
-    but $|N^-(x_1)|,|N(x_2)| \ge \frac{n}{2}$. So there must exist $x_i$ in their intersection.
+    Observe that $N(x_1) \subset \{x_2,\ldots,x_{l-1}\}$ and $N(x_l) \subset \{x_2,\ldots,x_{l-1}\}$. Now define $N^-(x_1) = \{x_i \mid x_{i+1} \in N(x_1)\}$. Note $$|N^-(x_1) \cup N(x_l)| \le \{x_1,x_2,\ldots,x_{l-1}\}\le l-1\le n-1,$$ 
+    but $|N^-(x_1)|,|N(x_l)| \ge \frac{n}{2}$. So there must exist $x_i$ in their intersection.
     \vspace{1mm}
     
     So we have $x_1 \ldots x_{i} x_l x_{l-1} \ldots x_{i+1} x_1$, a cycle of length $l$, a contradiction and we're done.
@@ -933,7 +934,7 @@ Do we have an Euler-type theorem in this setting? Different cycles on the torus 
     If $k=1$, we're done. Now assume $k\ge 2$ and apply induction on $n$, $n=2$ being clear.
     \vspace{1mm}
     
-    For the induction step, given a graph $G$ on $n\ge 3$ vertices, first note that $\frac{n(k-1)}{2} < e(G) \le \frac{n(n-1)}{2} \implies k \le n$. 
+    For the induction step, given a graph $G$ on $n\ge 3$ vertices, first note that $\frac{n(k-1)}{2} < e(G) \le \frac{n(n-1)}{2} \implies k < n$. 
     \vspace{1mm}
     
     We may assume that $G$ is connected: say $C_1,\ldots,C_r$ are the components of $G$ and $|C_i|=n_i$. Then $\sum_{i=1}^{r} e(G[C_i]) = e(G) > \frac{n(k-1)}{2}$, so since $\sum_{i=1}^{r} n_i = n$, \[
@@ -960,17 +961,17 @@ Do we have an Euler-type theorem in this setting? Different cycles on the torus 
 \begin{proof}
     Assume for contradiction that $K_3 \not\subset G$. We may assume that $n\ge 3$. Consider $x \sim y$. We have $d(x) + d(y) \le n$, else we have a triangle (since $x,y$ have a common neighbor by pigeonhole). Thus
     \begin{align*}
-    n e(G) = \sum_{x\sim y}^{} (d(x)+d(y)) = \frac{1}{2}\sum_{x}^{} \sum_{y}^{} (d(x)+d(y))\mathbbm{1}(x\sim y) = \\
+    n e(G) \ge \sum_{x\sim y}^{} (d(x)+d(y)) = \frac{1}{2}\sum_{x}^{} \sum_{y}^{} (d(x)+d(y))\mathbbm{1}(x\sim y) = \\
     \sum_{x}^{} \sum_{y}^{} d(x) \mathbbm{1}(x\sim y) = \sum_{x}^{} d(x) \sum_{y}^{} \mathbbm{1}(x\sim y) = \sum_{x}^{} d(x)^2.
     \end{align*}
     Now by Jensen,
     \begin{align*}
-        ne(G) = n \left(\frac{1}{n} \sum_{x}^{} d(x)^2\right) &\ge n \left(\frac{1}{n}\sum_{x}^{} d(x) \right)^2 = n \left(\frac{2e(G)}{n} \right)^2 \\
+        ne(G) \ge n \left(\frac{1}{n} \sum_{x}^{} d(x)^2\right) &\ge n \left(\frac{1}{n}\sum_{x}^{} d(x) \right)^2 = n \left(\frac{2e(G)}{n} \right)^2 \\
         \implies &e(G) \le \frac{n^2}{4}.
     \end{align*}
 \end{proof}
 \begin{defn}
-    We say that a graph $G=(V,E)$ is \textbf{$r$--partite} if there is a partition of $V = V_1 \sqcup V_2 \sqcup \ldots \sqcup V_r$ such that $\forall xy \in E$, $\exists V_i,V_j, i \neq j$ s.t. $x \in V_1$ and $y \in V_j$. This is the same as saying $\chi(G)\le r$.
+    We say that a graph $G=(V,E)$ is \textbf{$r$--partite} if there is a partition of $V = V_1 \sqcup V_2 \sqcup \ldots \sqcup V_r$ such that $\forall xy \in E$, $\exists V_i,V_j, i \neq j$ s.t. $x \in V_i$ and $y \in V_j$. This is the same as saying $\chi(G)\le r$.
 \end{defn}
 \begin{defn}
     Given $n_1,\ldots,n_r \in \mathbb{Z}_{\ge 0}$, define $K_{n_1,\ldots,n_r}$ to be the \textbf{complete $r$--partite graph} where $V = V_1 \sqcup V_2 \sqcup \ldots \sqcup V_r$, $|V_i|=n_i ~\forall i$, and $\forall x \in V_i, y \in V_j, i \neq j, xy \in E(K_{n_1,\ldots,n_r})$. 
@@ -1032,7 +1033,7 @@ e(K_{\frac{n}{r},\ldots,\frac{n}{r}}) = \frac{n^2}{r^2}{{r}\choose{2}} = \left(1
     \begin{proof}
         Note $e(T(H)) \ge e(H)$, so $e(T^{(i)}(H))$ is an increasing sequence. It is also bounded above, so eventually we reach a maximum. Now note
         \[
-        \sum_{x \in [n]}^{} \mu(N_{T^(i)(G)}(x))
+        \sum_{x \in [n]}^{} \mu(N_{T^{(i)}(G)}(x))
         \]
         is always increasing past that point, so eventually it stabilizes.
     \end{proof}
@@ -1074,7 +1075,7 @@ Let $Z(n,t)$ be the maximal number of edges in a bipartite graph $G = (X \cup Y,
     \]
     Rewrite the RHS as 
     \begin{align*}
-        \sum_{x_1,\ldots,x_t \text{ distinct}}^{} \sum_{y}^{} \mathbbm{1}(y \sim x_1)\mathbbm{1}(y \sim x_2) \ldots \mathbbm{1}(Y\sim x_t) = \\
+        \sum_{x_1,\ldots,x_t \text{ distinct}}^{} \sum_{y}^{} \mathbbm{1}(y \sim x_1)\mathbbm{1}(y \sim x_2) \ldots \mathbbm{1}(y\sim x_t) = \\
         =\sum_{y}^{} \sum_{x_1,\ldots,x_t}^{} \mathbbm{1}(y \sim x_1)\ldots \mathbbm{1}(y \sim x_t) = \sum_{y}^{} {{d(y)\choose{t}}}.
     \end{align*}
     Let $\overline{d} = \frac{e(G)}{n}$. As $d(y)\ge t-1$, our function is convex by Lemma \ref{4.9}, so by Jensen's inequality, 
@@ -1083,7 +1084,7 @@ Let $Z(n,t)$ be the maximal number of edges in a bipartite graph $G = (X \cup Y,
     \end{align*}
     So 
     \begin{align*}
-        (n-1){{n}\choose{t}} \ge n {{\overline{d}}\choose{t}} \implies \frac{tn^t}{t!} \ge n \frac{(\overline{d}-t)^t}{t!} \\
+        (t-1){{n}\choose{t}} \ge n {{\overline{d}}\choose{t}} \implies \frac{tn^t}{t!} \ge n \frac{(\overline{d}-t)^t}{t!} \\
         \implies t^{\frac{1}{t}}n^{1-\frac{1}{t}} \ge \overline{d}-t \\
         \implies t^{\frac{1}{t}}n^{1-\frac{1}{t}} \ge \frac{e(G)}{n}-t \\
         \implies e(G) \le t^{\frac{1}{t}} n^{2-\frac{1}{t}} + tn. 
@@ -1137,7 +1138,7 @@ End of aside.
 \textbf{Remarks.}
 \begin{itemize}
     \item If $\chi(H)\ge 3$, then this determines the leading order term in $\text{ex}(n,t)$ for large $n$.
-    \item If $\chi(H)=2$, then this just says $\frac{\text{ex}(n,H)}{n^2}\to 0$. But we have a stronger result already: $H \subseteq K_{t,t}$ for $t=|H|$, so we (almost) know $\text{ex}(H,n)\le c n^{2-\frac{1}{t}}$.
+    \item If $\chi(H)=2$, then this just says $\frac{\text{ex}(n,H)}{n^2}\to 0$. But we have a stronger result already: $H \subseteq K_{t,t}$ for $t=|H|$, so we (almost) know $\text{ex}(n,H)\le c n^{2-\frac{1}{t}}$.
     \item It is easy to see that $\text{ex}(n,H)\ge (1-\frac{1}{\chi(H)-1})\frac{n^2}{2}$, since $H \not\subset T_{(\chi(H)-1),n}$.
 \end{itemize} 
 We sketch the proof of this. It is non-examinable.
@@ -1316,7 +1317,7 @@ This is implied by:
 
     Now assume the claim is true for $(s-1,t)$ and $(t,s-1)$. We proved before that $R(s,t)\le R(s-1,t)+R(s,t-1)$, so
     \[
-        R(s,t)\le R(s-1,t)+R(s,t-1) \le {{s+t-3}\choose{s-2}} + {{s+t-3}\choose{s-1}} = {{s+t-2}\choose{s-2}}.
+        R(s,t)\le R(s-1,t)+R(s,t-1) \le {{s+t-3}\choose{s-2}} + {{s+t-3}\choose{s-1}} = {{s+t-2}\choose{s-1}}.
     \]
 \end{proof}
 
@@ -1337,7 +1338,7 @@ So our bound on $R^{(r)}(s,t)$ gives that it grows at least as fast as $f_{r}(s,
 
 We know $R(3)=R(3,3)=6.$ In fact, there are very few known Ramsey numbers. We know $R(4)=18$, but already $R(5)$ is unknown.
 
-\subsection{Lower bounds on $R(s)$}.
+\subsection{Lower bounds on $R(s)$}
 
 First idea: take $s-1$ disjoint copies of graphs of size $s-1$ and color everything inside these graphs blue and every edge between different copies red. This gives us a graph with no monochromatic $K_s$ and tells us \[
 R(s)>(s-1)^2.
@@ -1345,7 +1346,7 @@ R(s)>(s-1)^2.
 This bound was thought to be close to the truth in the 1940s. However:
 \begin{theorem}[Erdös, 1940s]
     For $s\ge 3$, \[
-    R(s)\ge s^{s/2}.
+    R(s)\ge 2^{s/2}.
     \]
 \end{theorem}
 \textbf{Idea:} Take a $K_n$ ($n=2^{s/2}$) and color each edge of our $K_n$ by flipping a fair independent coin. Then we show \[
@@ -1358,10 +1359,10 @@ which means there is some coloring without a monochromatic $K_s$, so we get our 
         &\mathbb{P}(\text{the coloring has a monochromatic }K_s) = \\
         &\mathbb{P}(\bigcup_{k \in [n]^{(s)}} \{K \text{ is a monochromatic }K_s\}) \le \\
         & \sum_{k \in [n]^{(s)}}^{} \mathbb{P}(K \text{ is a monochromatic }K_s) =\\
-        &{n \choose{s}} \cdot 2\cdot 2^{-{{n}\choose{2}}} < \frac{n^s}{s!}\cdot 2\cdot 2^{-\frac{s(s-1)}{2}} = \\
-        & 2\left(\frac{n}{(s!)^{\frac{1}{s}}}2^{-\frac{s-1}{2}}\right)^{s} \le 2 \left( \frac{s^{\frac{1}{2}}}{(s!)^{\frac{1}{s}}}\right)^{s} = (\star).
+        &{n \choose{s}} \cdot 2\cdot 2^{-{{s}\choose{2}}} < \frac{n^s}{s!}\cdot 2\cdot 2^{-\frac{s(s-1)}{2}} = \\
+        & 2\left(\frac{n}{(s!)^{\frac{1}{s}}}2^{-\frac{s-1}{2}}\right)^{s} \le 2 \left( \frac{2^{\frac{1}{2}}}{(s!)^{\frac{1}{s}}}\right)^{s} = (\star).
     \end{align*}
-    But we know $s! \ge 2^{\frac{s}{2}+1}$ for $s\ge 3$, hence $(s!)^{\frac{1}{s}}\ge s^{\frac{1}{2}+\frac{1}{s}}$, so the above gives
+    But we know $s! \ge 2^{\frac{s}{2}+1}$ for $s\ge 3$, hence $(s!)^{\frac{1}{s}}\ge 2^{\frac{1}{2}+\frac{1}{s}}$, so the above gives
     \begin{align*}
         (\star) \le 2 \left(\frac{1}{2^{\frac{1}{s}}}\right)^{s} \le 1.
     \end{align*}
@@ -1639,7 +1640,7 @@ Note that if $p \gg \frac{1}{n}$ ($pn \to \infty$), then \[
 We have $\text{diam}(G)=1 \iff G$ is complete $\iff {n\choose{2}}$ edges.
 \vspace{1mm}
 
-\textbf{Question.} Now let $\text{diam}(2)$. What is the minimum number of edges in a diameter 2 graph?
+\textbf{Question.} Now let $\text{diam}(G)=2$. What is the minimum number of edges in a diameter 2 graph?
 \vspace{1mm}
 
 \textbf{Question.} What is the minimum $\Delta(G)$ over all graphs $G$ with $\text{diam}(G)=2$ on $n$ vertices?
@@ -1742,7 +1743,7 @@ Let's compute the eigenvalues of $C_4$. We can check that $\begin{pmatrix} 1&1&1
         \item Let $\lambda$ be an eigenvalue with an eigenvector $x=(x_1,\ldots,x_n)^\top$. Let $x_i$ be such that $|x_i|$ is maximal. We may assume that $x_i=1$ by scaling. We have 
         \begin{align*}
             &\lambda = \lambda x_i = (\lambda x)_i = (Ax)_i = \sum_{j \sim i}^{} x_j\\
-            &|\lambda|= |\sum_{j\sim i }^{} x_j| \le \Delta.
+            \implies &|\lambda|= |\sum_{j\sim i }^{} x_j| \le \Delta.
         \end{align*}
         \item ($\impliedby$): If $G$ is regular, then $\mathbbm{1}=(1,\ldots,1)^\top$ is an eigenvector of $G$ with eigenvalue $\Delta$.
         \vspace{1mm}

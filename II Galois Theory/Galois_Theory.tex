@@ -339,7 +339,7 @@ Let $L/K$ be an extension and $x \in L$.
 Suppose $f \in K[T]$ with evaluation $f(x) \in L$. This gives a map $$\text{ev}_x : K[T] \to L, f \mapsto f(x),$$ which is obviously a homomorphism of rings.
 \vspace{1mm}
 
-$I = \text{ker}(\text{ev}_x) \subset K[T]$ is an ideal ( $= \{f ~|~ f(x)=0\}$). As $\text{Im}(\text{ev}_x)$ is a subring of $L$, it is an integral domain. So $I$ is a \textbf{prime} ideal, so there are two possibilities:
+$I = \text{ker}(\text{ev}_x) \subset K[T]$ is an ideal ( $= \{f ~|~ f(x)=0\}$). As $\text{Im}(\text{ev}_x)$ is a subring of $L/I$, it is an integral domain. So $I$ is a \textbf{prime} ideal, so there are two possibilities:
 \begin{enumerate}[(i)]
     \item $I = \{0\} \implies $ the only $f$ with $f(x)=0$ is $f=0$, so $x$ is transcendental over $K$.
     \item $I \neq \{0\}$. AS $K[T]$ is a PID, there exists a unique monic irreducible $g \in K[T]$ such that $I = (g)$. So $f(x) = 0 \iff f$ is a multiple of $g$. So $x$ is algebraic over $K$ and we call $g$ the \textbf{minimal polynomial} of $x$ over $K$, which we might write as $m_{x,K}$. It is the unique irreducible monic polynomial with $x$ as a root (and is the monic polynomial of least degree with $x$ as a root - this depends on $K$ as well as $x$).
@@ -566,7 +566,10 @@ Then both $K(x)$ and $K(y)$ are isomorphic to $L_f$ (with $f=m_{x,K}=m_{y,K}$), 
     $x,y$ are $K$-conjugate if and only there exists a $K$-isomorphism $\sigma : K(x) \to K(y)$ with $\sigma(x)=y$.
 \end{cor}
 \begin{proof}
-    By Corollary 6.3, $\impliedby $follows since $~\forall  g \in K[T], \sigma(g(x))=g(\sigma(x))$, so $x,y$ have the same minimal polynomial.
+    ($\implies)$: By Corollary 6.3.
+    \vspace{1mm}
+    
+    ($\impliedby$): Follows since $~\forall  g \in K[T], \sigma(g(x))=g(\sigma(x))$, so $x,y$ have the same minimal polynomial.
 \end{proof}
 So the roots of an irreducible polynomial are algebraically indistinguishable.
 \vspace{1mm}
@@ -646,7 +649,7 @@ Our next result is nontrivial, even for subfields of $\mathbb{C}$.
 
         We have $[\mathbb{Q}[\sqrt[3]{2}] : \mathbb{Q}] = 3$, and $\mathbb{Q}(\sqrt[3]{2}) \subset \mathbb{R}$ but $\omega \not\in \mathbb{R}$, $\omega^2+w+1=0$, so $[L : \mathbb{Q}(\sqrt[3]{2})] = 2$ and $[L:\mathbb{Q}]=6$. In particular, $\frac{f}{(T-\sqrt[3]{2})}=T+\sqrt[3]{2}T+(\sqrt[3]{2})^2$ is irreducible in $\mathbb{Q}(\sqrt[3]{2})[T].$
         \item $f = \frac{T^5-1}{T-1} = T^4 + T^3+T^2+T+1 \in \mathbb{Q}[T]$. Let $z = e^{2\pi i/5}$. Then $f = \prod_{1\le a\le 4}^{} (T-z^{a})$. So $\mathbb{Q}(z)$ is already a splitting field for $f$ over $\mathbb{Q}$, and $[\mathbb{Q}(z):\mathbb{Q}]=4$.
-        \item $f = T^3-2 \in \mathbb{F}_7[T]$. This is irreducible, as 2 is not a cube mod $7$. Consider $L=\mathbb{F}_7[X]/(X^3-2) = \mathbb{F}_7(x)$, where $x^3=2$. Now $2^3=1=4^3$ in $\mathbb{F}_7$, so $(2x)^3=(4x)^3=2$ and so $f = (T-2)(T-2x)(T-4x) \in L[T]$. Note that joining one root is not enough to get a splitting field.
+        \item $f = T^3-2 \in \mathbb{F}_7[T]$. This is irreducible, as 2 is not a cube mod $7$. Consider $L=\mathbb{F}_7[X]/(X^3-2) = \mathbb{F}_7(x)$, where $x^3=2$. Now $2^3=1=4^3$ in $\mathbb{F}_7$, so $(2x)^3=(4x)^3=2$ and so $f = (T-x)(T-2x)(T-4x) \in L[T]$. Note that adjoining one root is enough to get a splitting field.
     \end{enumerate}
 \end{example}
 \section{Normal extensions}
@@ -873,13 +876,13 @@ We now want to have a notion of when $L/K$ has ''many'' symmetries.
         \item $L$ is a splitting field of a separable polynomial over $K$.
         \item $|\text{Aut}(L/K)|=[L:K]$.
     \end{enumerate}
-    If any of the above hold, then the minimal polynomial of any $x \in L$ is $m_{x,K}=\prod_{i=1}^{r} (T-x_i)$, where $\{x_1,x_2,\ldots,x_r\} = \{\sigma(x) \mid  x \in G\}$, the orbit of $x$ in $G$ (for $x_i$ distinct).
+    If any of the above hold, then the minimal polynomial of any $x \in L$ is $m_{x,K}=\prod_{i=1}^{r} (T-x_i)$, where $\{x_1,x_2,\ldots,x_r\} = \{\sigma(x) \mid  \sigma \in G\}$, the orbit of $x$ in $G$ (for $x_i$ distinct).
 \end{theorem}
 \begin{proof}
     (i) $\implies $ (ii) and the last part: Let $x \in L$, $\{x_1,\ldots,x_r\}$ the orbit of $x$ in $G$, $f = \prod_{}^{} (T-x_i)$, so $f(x)=0$. As $G$ permutes $\{x_i\}$, the coefficients of $f$ are fixed by $G$, so $f \in L^G[T] = K[T]$, so $m_{x,K} \mid f$. Also, since $m_{x,K}(\sigma(x)) = \sigma(m_{x,K}(x))=0$, every $x_i$ is a root of $m_{x,K}$, so $f = m_{x,K}$. So $x$ is separable over $K$, and $m_{x,K}$ splits in $L$, so $L/K$ is normal and separable.
     \vspace{1mm}
 
-    (ii) $\implies$ (iii): By Theorem \ref{7.1}, $L$ is a splitting field for some $f \in K[T]$. Write $f = \prod_{}^{} q_i^{e^i}$ where the $q_i$ are irreducible, distinct, and $e_i \ge 1$. As $L/K$ is separable, the $q_i$ are separable, so $g= \prod_{}^{} q_i$ is separable, and $L$ is also a splitting field for $g$.
+    (ii) $\implies$ (iii): By Theorem \ref{7.1}, $L$ is a splitting field for some $f \in K[T]$. Write $f = \prod_{}^{} q_i^{e_i}$ where the $q_i$ are irreducible, distinct, and $e_i \ge 1$. As $L/K$ is separable, the $q_i$ are separable, so $g= \prod_{}^{} q_i$ is separable, and $L$ is also a splitting field for $g$.
     \vspace{1mm}
 
     (iii) $\implies$ (iv): Write $L=K(x_1,\ldots,x_k)$ for the splitting field of some separable $f$ with roots $x_i$. Take $M = L$ and apply Theorem \ref{8.5}. As $m_{x_i,K} \mid f$, the conditions in the theorem are satisfied, so $$|\text{Aut}(L/K)|=|\text{Hom}_K(L,M)|=[L : K].$$
@@ -1008,7 +1011,7 @@ Recall from Section 2 that we defined the \textbf{discriminant}: if $f \in K[T]$
 \[
 \text{Disc}(f) = \Delta^2 \in K,
 \]
-where $\Delta = \prod_{1\le i < j \le n}^{} (x_i-x_j)^2$. The discriminant is nonzero if and only if $f$ is separable.
+where $\Delta = \prod_{1\le i < j \le n}^{} (x_i-x_j)$. The discriminant is nonzero if and only if $f$ is separable.
 \begin{prop}
     Let $L$ be a splitting field over $K$ and $G$ a Galois group for a monic separable polynomial $f \in K[T]$. Assume $\text{char}(K)\neq 2$. Then the fixed field of $G \cap A_n$ is $K(\Delta)$.
     \vspace{1mm}
@@ -1143,7 +1146,7 @@ Let $K$ be a field and $n\ge 1$. Define $\mu_n(K)= \{x \in K \mid x^n=1\}$, the 
 We say $\zeta \in \mu_n(K)$ is a \textbf{primitive} $n^{\text{th}}$ root of 1 if $\zeta$ has order exactly $n$ in $K^{\times}$. Such a $\zeta$ exists if and only if $\mu_n(K)$ has order $n$ (and then $\zeta$ is a generator for $\mu_n(K)$). In particular, $f=T^n-1$ has $n$ distinct roots, so it is separable.
 \vspace{1mm}
 
-In general, $T^n-1=f$ is separable $\iff (f,f')=1$ and since $f'=nT^{n-1}$, this holds if and only if $n\cdot 1_K \neq 0$.
+In general, $f(T)=T^n-1$ is separable $\iff (f,f')=1$ and since $f'=nT^{n-1}$, this holds if and only if $n\cdot 1_K \neq 0$.
 \vspace{1mm}
 
 \textbf{Important:} From now on, until the end of the section, assume that either $\text{char}(K)=0$ or $\text{char}(K)=p>0$ and $p \nmid n$ (in other words, that $f=T^n-1$ is separable).
@@ -1166,7 +1169,7 @@ Let $L/K$ be a splitting field for $T^n-1$ and let $G=\text{Gal}(L/K)$ ($L/K$ is
     \end{enumerate}
 \end{proof}
 \begin{example}
-    If $K=\mathbb{Q}$, take $L=\mathbb{Q}(e^{\frac{2 \pi i}{n}})$. What is the minimal polynomial of $e^{2\pi/n}$?
+    If $K=\mathbb{Q}$, take $L=\mathbb{Q}(e^{\frac{2 \pi i}{n}})$. What is the minimal polynomial of $e^{2\pi i/n}$?
 \end{example}
 \begin{defn}
     Let $K$ be a field satisfying the above earlier hypothesis. The $n^{\text{th}}$ \textbf{cyclotomic polynomial} is $$\Phi_n(T)=\prod_{a \in (\mathbb{Z}/n\mathbb{Z})^\times}^{} (T-\zeta_n^a)$$ (where the roots are the primitive $n^{\text{th}}$ roots of 1 in $L$, the splitting field for $T^n-1$). 
@@ -1189,16 +1192,16 @@ We have two special cases:
 
     $\chi_n$ is an isomorphism if for all primes such that $(p,n)=1$, the class of $p \in (\mathbb{Z}/n\mathbb{Z})^\times$ lies in the image of $\chi$ (because we can factor $a$ with $(a,n)=1$ as a product of such primes).
 
-    Let $f$ be the minimal polynomial of $\zeta$ over $\mathbb{Q}$, and $g$ the minimal polynomial of $\zeta^p$ over $\mathbb{Q}$. If $f=g$, then $\zeta^a$ lies in the orbit of $G$ on $\zeta \implies p$ is in the image of $\chi$ and we're done.
+    Let $f$ be the minimal polynomial of $\zeta$ over $\mathbb{Q}$, and $g$ the minimal polynomial of $\zeta^p$ over $\mathbb{Q}$. If $f=g$, then $\zeta^p$ lies in the orbit of $G$ on $\zeta \implies p$ is in the image of $\chi$ and we're done.
 
     If $f\neq g$, then $(f,g)=1$ and they both divide $T^n-1$, so $fg \mid T^n-1$. As $\zeta$ is a root of $g(T^p)$, $f \mid g(T^p)$. Reduce this modulo $p$ to get $\overline{f} = f \pmod{p} \in \mathbb{F}_p[T]$ that divides $g(T^p) = \overline{g}(T)^p$ (as we're in characteristic $p$) and as both $\overline{f}$ and $\overline{g}$ divide $T^n-1 \in \mathbb{F}_p[T]$, which is separable (as $p \nmid n$), this implies $\overline{f} \mid \overline{g}$. Hence $\overline{f}^2 \mid \overline{f}\overline{g} \mid T^n-1$, contradicting separability of $T^n-1$. Hence this case is impossible and we're done.
 \end{proof}
-So the minimal polynomial of $e^{2\pi/n}$ over $\mathbb{Q}$ is $\Phi_n(T)$.
+So the minimal polynomial of $e^{2\pi i/n}$ over $\mathbb{Q}$ is $\Phi_n(T)$.
 \vspace{1mm}
 
 \marginpar{10 Nov 2022, Lecture 16}
 
-Now we consider $K=\mathbb{F}_p$. Recall that $\phi_p \in G$ is the map $\phi(x)=x^p$, the Frobenius map, and $\phi_p$ generates $G$.
+Now we consider $K=\mathbb{F}_p$. Recall that $\phi_p \in G$ is the map $\phi(x)=x^p$, the Frobenius map, and $\phi_p$ generates $G$. Also, $L = L(\zeta)$ is a splitting field for $T^n-1$ (with $n>1, n\cdot 1_K \neq 0$), $\zeta = \zeta_n$ is a primitive root of unity, and we have our cyclotomic character $\chi_n$.
 \begin{prop}
     Let $K=\mathbb{F}_p$ and $(n,p)=1$. Then
     \begin{enumerate}[(i)]
@@ -1239,7 +1242,7 @@ A lemma we prove on Example Sheet 3:
 
 So in our case, $f=T^q-1 = \prod_{a=0}^{q-1} (T-\zeta_q^a)$ and $f'=qT^{q-1}$. So as $q$ is odd, 
 \begin{align*}
-    \text{Disc}(f) = (-1)^{q(q-1)/2} \prod_{a=0}^{q-1} q (\zeta_q^a)^{q-1} = (-1)^{(q-1)/2}q^q \zeta_q^{q-1} = (-1)^{\frac{q-1}{2}}q^q.
+    \text{Disc}(f) = (-1)^{q(q-1)/2} \prod_{a=0}^{q-1} q (\zeta_q^a)^{q-1} = (-1)^{(q-1)/2}q^q (\zeta_q^{q-1})^{{q \choose 2}} = (-1)^{\frac{q-1}{2}}q^q.
 \end{align*}
 So $\left( \frac{p}{q} \right)  = \left( \frac{\text{Disc}(f)}{p} \right) =\left( \frac{(-1)^{(q-1)/2}q}{p} \right) = \left( \frac{q}{p} \right) (-1)^{(p-1)(q-1)/4}$, which gives quadratic reciprocity.
 
@@ -1319,7 +1322,7 @@ Assume now that $n>1$ and $n\cdot 1_K \neq 0$.
 \begin{proof}
     (i): As $\mu_n(K) = \{\zeta_n^i \mid 0\le i<n\}$ has $n$ elements, $f$ has $n$ distinct roots $\{\zeta_i x\}$ in $L$. So $L/K$ is a splitting field for the separable polynomial $f$, so it is Galois.
 
-    Let $\sigma \in \text{Gal}(L/K) = G$. Then $f(\sigma(x))=0$, so $\sigma(x) = \zeta^i x$ for some $i$ which is unique mod $n$. Define a map $\Theta : G \to \mu_n(K)=\{\zeta^i\} \cong \mathbb{Z}/n\mathbb{Z}$ by $\Theta(\sigma) = \frac{\sigma(x)}{x}$. The claim is that this is a homomorphism: let $\sigma, \tau \in G$, then as $\zeta \in K$, $\tau(\Theta(\sigma))=\Theta(\sigma)$, so \[
+    Let $\sigma \in \text{Gal}(L/K) = G$. Then $f(\sigma(x))=0$, so $\sigma(x) = \zeta^i x$ for some $i$ which is unique mod $n$. Define a map $\Theta : G \to \mu_n(K)=\{\zeta^i\} \cong (\mathbb{Z}/n\mathbb{Z})^{\times}$ by $\Theta(\sigma) = \frac{\sigma(x)}{x}$. The claim is that this is a homomorphism: let $\sigma, \tau \in G$, then as $\zeta \in K$, $\tau(\Theta(\sigma))=\Theta(\sigma)$, so \[
     \Theta(\tau \sigma) = \frac{\tau \sigma(x)}{x} = \tau\left(\frac{\sigma(x)}{x}\right)  \frac{\tau(x)}{x} = \tau(\Theta(\sigma))\Theta(\tau)=\Theta(\sigma)\Theta(\tau).
     \]
     So $\Theta$ is a homomorphism, and $\Theta(\sigma)=1 \iff \sigma(x)=x \iff \sigma=\text{id}$, hence $\Theta$ is injective. So $G$ is isomorphic to a subgroup of a cyclic group, hence cyclic.
