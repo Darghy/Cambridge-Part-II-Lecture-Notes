@@ -1178,7 +1178,7 @@ As $G$ permutes the primitive $n^{\text{th}}$ roots of 1 in $L$, $\Phi_n \in L^G
 \vspace{1mm}
 
 $\Phi_n$ doesn't really depend on $K$. In fact, $x \in L$ satisfies $x^n=1$ if and only if $x$ is a primitive root of 1 for some (unique) $d \mid n$. So $$T^n-1 = \prod_{d \mid n}^{} \Phi_d \implies \Phi_n = \frac{T^n-1}{\prod_{d \mid n, d\neq n}^{} \Phi(d)}.$$
-This gives an inductive definition of $\Phi_n$ and we see that $\Phi_n$ is the image in $K[T]$ of a polynomial in $\mathbb{Z}[T]$ which doesn't depend on $K$.
+This gives an inductive definition of $\Phi_n$ and we see that $\Phi_n$ is the image in $K[T]$ as a polynomial in $\mathbb{Z}[T]$ which doesn't depend on $K$.
 
 For example, $\Phi_p = \frac{T^p-1}{T-1}=T^{p-1}+T^{p-2}+\ldots+T+1$, $\Phi_1 = T-1$, and $\Phi_{p^n} = \frac{T^{p^n}-1}{T^{p^{n-1}}-1} = \Phi_p(T^{p^{n-1}})$. Also, $\text{deg}(\Phi_n) = |(\mathbb{Z}/n\mathbb{Z})^\times|=\phi(n)$, the Euler phi function.
 \vspace{1mm}
@@ -1201,7 +1201,7 @@ So the minimal polynomial of $e^{2\pi i/n}$ over $\mathbb{Q}$ is $\Phi_n(T)$.
 
 \marginpar{10 Nov 2022, Lecture 16}
 
-Now we consider $K=\mathbb{F}_p$. Recall that $\phi_p \in G$ is the map $\phi(x)=x^p$, the Frobenius map, and $\phi_p$ generates $G$. Also, $L = L(\zeta)$ is a splitting field for $T^n-1$ (with $n>1, n\cdot 1_K \neq 0$), $\zeta = \zeta_n$ is a primitive root of unity, and we have our cyclotomic character $\chi_n$.
+Now we consider $K=\mathbb{F}_p$. Recall that $\phi_p \in G$ is the map $\phi(x)=x^p$, the Frobenius map, and $\phi_p$ generates $G$. Also, $L = K(\zeta)$ is a splitting field for $T^n-1$ (with $n>1, n\cdot 1_K \neq 0$), $\zeta = \zeta_n$ is a primitive root of unity, and we have our cyclotomic character $\chi_n$.
 \begin{prop}
     Let $K=\mathbb{F}_p$ and $(n,p)=1$. Then
     \begin{enumerate}[(i)]
@@ -1214,7 +1214,7 @@ Now we consider $K=\mathbb{F}_p$. Recall that $\phi_p \in G$ is the map $\phi(x)
     $\phi_p(\zeta)=\zeta^p$, and $L=K(\zeta)$, so $\chi(\phi_p)=p$, hence $\chi_n(G)=\langle p \rangle$ and $[L:K] = |G| = |\langle p \rangle| =$ the order of $p$ mod $n$. This implies (i) and (ii).
     \vspace{1mm}
     
-    If $(a,n)=1$, then when is $\phi_p^k(\zeta^a)=\zeta^a \iff \phi_p^k(\zeta)=\zeta \iff r \mid k$. So the orbits of $\phi_p$ on $\{\zeta^a \mid (a,n)=1\}$, i.e. the set of roots of $\Phi_n$, all have length $r$, which implies (iii). 
+    If $(a,n)=1$, then we have $\phi_p^k(\zeta^a)=\zeta^a \iff \phi_p^k(\zeta)=\zeta \iff r \mid k$. So the orbits of $\phi_p$ on $\{\zeta^a \mid (a,n)=1\}$, i.e. the set of roots of $\Phi_n$, all have length $r$, which implies (iii). 
 \end{proof} 
 \textbf{Remarks.}
 \begin{itemize}
@@ -1859,7 +1859,7 @@ We want to prove $\mathbb{C}$ is algebraically closed without using complex anal
     Let $K/\mathbb{C}$ be a finite extension and let $L \supset K$ be a normal closure over $\mathbb{R}$, so $G=\text{Gal}(L/\mathbb{R})$. We will show $L=\mathbb{C}$.
     \vspace{1mm}
     
-    Let $H \subset G$ be a Sylow 2--subgroup. Then $[L^H : \mathbb{R}] = (G:H)$ is odd. So if $x \in L^H$, then by (i), $x \in \mathbb{R}$, i.e. $L^H=\mathbb{R}$, so $H=G$, so $G$ is a 2--group. Let $G \supset G_1 = \text{Gal}(L/\mathbb{C})$ and $G_2 \subset G_1$ a subgroup of index 2 (which exists by (iv)). Then $[L^{G_2}:\mathbb{C}]=(G_1 : G_2) = 2$, contradicting (ii). Hence there is no subgroup of index 2, i.e. $G_1=\{e\}$, so $L=\mathbb{C}$ (see also diagram).
+    Let $H \subset G$ be a Sylow 2--subgroup. Then $[L^H : \mathbb{R}] = (G:H)$ is odd. So if $x \in L^H$, then by (i), its minimal polynomial has to be linear, so $x \in \mathbb{R}$, i.e. $L^H=\mathbb{R}$, so $H=G$, so $G$ is a 2--group. Let $G \supset G_1 = \text{Gal}(L/\mathbb{C})$ and $G_2 \subset G_1$ a subgroup of index 2 (which exists by (iv)). Then $[L^{G_2}:\mathbb{C}]=(G_1 : G_2) = 2$, contradicting (ii). Hence there is no subgroup of index 2, i.e. $G_1=\{e\}$, so $L=\mathbb{C}$ (see also diagram).
     \begin{figure}[H]
         \centering
         \begin{tikzpicture}[node distance = 2cm]
